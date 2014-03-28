@@ -19,17 +19,7 @@
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100; //everybody
 
-/**
- * edit_strength_need.php -- strength and needs management.
- *
- * Copyright (c) 2005 Grasslands Regional Division #6
- * All rights reserved
- *
- * Created: March 11, 2005
- * By: M. Nielsen
- * Modified: February 17
- *
- */
+
 
 /*   INPUTS: $_GET['uid']  or $_POST['uid']
  *

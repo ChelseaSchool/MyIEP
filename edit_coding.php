@@ -15,17 +15,7 @@
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 50; //Teaching Staff
 
-/**
- * edit_coding.php -- change student code.
- *
- * Copyright (c) 2005 Grasslands Regional Division #6
- * All rights reserved
- *
- * Created: March 11, 2006
- * By: M. Nielsen
- * Modified: February 17, 2007 M. Nielsen
- *
- */
+
 
 /*   INPUTS: $_GET['uid'],$_POST['uid']
  *

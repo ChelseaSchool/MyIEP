@@ -17,17 +17,7 @@
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 0; //only super administrator
 
-/**
- * school_info.php -- add school.
- *
- * Copyright (c) 2005 Grasslands Regional Division #6
- * All rights reserved
- *
- * Created: March 26, 2005
- * By: M. Nielsen
- * Modified:
- *
- */
+
 
 /*   INPUTS: $_GET['student_id']
  *

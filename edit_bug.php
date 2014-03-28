@@ -167,14 +167,7 @@ $enum_options_type = mysql_enum_values("bugs","status");
             @import "<?php echo IPP_PATH;?>layout/greenborders.css";
         -->
     </style>
-    <!-- All code Copyright &copy; 2005 Grasslands Regional Division #6.
-         -Concept and Design by Grasslands IPP Design Group 2005
-         -Programming and Database Design by M. Nielsen, Grasslands
-          Regional Division #6
-         -User Interface Design and Educational Factors by P Stoddart,
-          Grasslands Regional Division #6
-         -CSS and layout images are courtesy A. Clapton.
-     -->
+    
     <SCRIPT LANGUAGE="JavaScript">
       function confirmChecked() {
           var szGetVars = "strengthneedslist=";

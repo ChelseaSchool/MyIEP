@@ -243,12 +243,7 @@ if(isset($_POST['ACTION']) && $_POST['ACTION']=="Add" && isset($_POST['add_usern
             @import "<?php echo IPP_PATH;?>layout/greenborders.css";
         -->
     </style>
-    <!-- All code Copyright &copy; 2005 Grasslands Regional Division #6.
-         -Concept and Design by Grasslands IPP Focus Group 2005
-         -Programming and Database Design by M. Nielsen, Grasslands
-          Regional Division #6
-         -CSS and layout images are courtesy A. Clapton.
-     -->
+    
      <script language="javascript" src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script>
      <script language="javascript" src="<?php echo IPP_PATH . "include/autocomplete.js"; ?>"></script>
      <?php

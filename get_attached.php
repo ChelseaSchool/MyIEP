@@ -10,17 +10,7 @@
 
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100;
-/**
- * get_attached.php -- eGPS main menu
- *
- * Copyright (c) 2005 Grasslands Regional Division #6
- * All rights reserved
- *
- * Created: July 26, 2005
- * By: M. Nielsen
- * Modified:  June 27,2006
- * By: M. Nielsen
- */
+
 
 /*
  *  Inputs: _GET of student_id,table,uid

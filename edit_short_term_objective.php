@@ -16,17 +16,7 @@
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100; //everybody check within
 
-/**
- * edit_short_term_objectives.php -- strength and needs management.
- *
- * Copyright (c) 2005 Grasslands Regional Division #6
- * All rights reserved
- *
- * Created: February 6, 2006
- * By: M. Nielsen
- * Modified: April 19,2006
- *
- */
+
 
 /*   INPUTS:
  *           $_GET['sto']

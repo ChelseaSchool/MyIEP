@@ -18,17 +18,7 @@
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 60; //TA
 
-/**
- * coding.php -- change student code.
- *
- * Copyright (c) 2005 Grasslands Regional Division #6
- * All rights reserved
- *
- * Created: July 16, 2005
- * By: M. Nielsen
- * Modified: Nov 28, 2005
- * Modified: February 17, 2007
- */
+
 
 /*   INPUTS: $_GET['student_id']
  *

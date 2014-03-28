@@ -8,17 +8,7 @@
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100; //everybody
 
-/**
- * medical_info.php  //students general medical information.
- *
- * Copyright (c) 2005 Grasslands Regional Division #6
- * All rights reserved
- *
- * Created: July 26, 2005
- * By: M. Nielsen
- * Modified: February 17, 2007. M. Nielsen
- *
- */
+
 
 /*   INPUTS: $_GET['student_id'] || $_PUT['student_id']
  *

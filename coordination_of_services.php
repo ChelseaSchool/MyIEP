@@ -18,17 +18,7 @@
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100; //everybody
 
-/**
- * coordination_of_services.php
- *
- * Copyright (c) 2005 Grasslands Regional Division #6
- * All rights reserved
- *
- * Created: July 25, 2005
- * By: M. Nielsen
- * Modified: March 11, 2005
- *
- */
+
 
 /*   INPUTS: $_GET['student_id'] || $_POST['student_id']
  *
