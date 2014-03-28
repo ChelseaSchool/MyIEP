@@ -1,0 +1,102 @@
+<?php
+
+/**@BUG Everything is commented? Can't find comment to close
+ * @DETAILS
+ * #NOTES
+ * 1. Absract: configurable values on install
+ * 2. should be handled by install wizard; default values or example values are ok; required values should be clearly marked as such
+ * 3. page needs copyright header per GPL recommendation
+ */
+    //***************USER CONFIGURABLE**************
+    
+
+    //page stuff
+    $page_title = "MyIEP Special Education Program Management";
+    $IPP_PAGE_ROOT = "http://192.168.0.103"; //the root page.
+
+    //path to large logo for branding
+    $page_logo_path = IPP_PATH . "images/banner.png";
+
+    $IPP_ORGANIZATION = "Your School District"; //organization name
+    $IPP_ORGANIZATION_ADDRESS1 = "123 - 1st Avenue";
+    $IPP_ORGANIZATION_ADDRESS2 = "Brooks, Alberta";
+    $IPP_ORGANIZATION_ADDRESS3 = "T1R 1L2";
+
+    //user database
+    $mysql_user_database = "ipp";
+    $mysql_user_username = "ipp";
+    $mysql_user_password = "ipp";
+    $mysql_user_host = "localhost";
+    $mysql_user_table = "users";
+    $mysql_user_select_login = "login_name";
+    $mysql_user_append_to_login = "";                  //if  we use email
+                                                       // addys to verify
+                                                       // login names via pop blank for nothing.
+
+    $mysql_user_select_password = "unencrypted_password";
+
+    //to use a different user database (ie an existing common source):
+    $mysql_data_database = "ipp";
+    $mysql_data_username = "ipp";
+    $mysql_data_password = "ipp";
+    $mysql_data_host = "localhost";
+
+    //Email related. If you enable email notifications
+    //the system uses the usernames for this system
+    //appended to the $append_to_username field.
+    $enable_email_notification = TRUE; //true if you want to get ipp handovers notices, etc
+    $append_to_username = "";  //if we use email addresses
+    $email_reply_address = "no-reply@fully.qualified.domain.name"; //Address to send the email from
+    $mail_host = "localhost";
+
+    //security
+    $IPP_TIMEOUT = "60"; //minutes to timeout a login.
+    
+    //colours
+    $IPP_BGCOLOUR1 = "#E0E2F2";   //the main background colour
+
+
+    //minimum permission levels 0 is toplevel...100 is everybody
+    /*
+     *  0 Super Administrator
+     * 10 Administrator
+     * 20 Assistant Administrator
+     * 30 Principal
+     * 40 Vice Principal
+     * 50 Teaching Staff
+     * 60 Teaching Assistant
+     * 100 Login Only
+     *
+     */
+
+    $IPP_MIN_DELETE_STUDENT_PERMISSION = 0; //super-administrator only
+    $IPP_MIN_DELETE_GUARDIAN_NOTES = 50; //Teaching Staff and up with write permission.
+    $IPP_MIN_DELETE_SUPERVISOR_PERMISSION = 30; //Principals and up with write permission
+    $IPP_MIN_DELETE_STRENGTH_NEED_PERMISSION = 50; //Teaching staff and up with write permission
+    $IPP_MIN_DELETE_STUDENT_CODING_PERMISSION = 50; //Teaching staff and up with write permission
+    $IPP_MIN_DELETE_COORDINATION_OF_SERVICES = 50; //Teaching staff and up with write permission.
+    $IPP_MIN_DELETE_PERFORMANCE_TESTING = 50; //Teaching staff and up with write permission.
+    $IPP_MIN_DELETE_MEDICAL_INFO = 50; //Teaching staff and up with write permission.
+    $IPP_MIN_DELETE_MEDICATION_PERMISSION = 50; //Teaching staff and up with write permission.
+    $IPP_MIN_DELETE_TESTING_TO_SUPPORT_CODE = 50; //Teaching staff and up with write permission.
+    $IPP_MIN_DELETE_GRADES_REPEATED_PERMISSION= 50; //Teaching staff and up with write permission.
+    $IPP_MIN_DELETE_AREA_PERMISSION=20; //Asst Admin and up (Delete global program area).
+    $IPP_MIN_VIEW_LIST_ALL_STUDENTS=20; //Can see all students in system Assistant Admin & up
+    $IPP_MIN_VIEW_LIST_ALL_LOCAL_STUDENTS=50; //can see all local students teachers and up
+    $IPP_MIN_DELETE_OBJECTIVE_PERMISSION=30; //Principals and up with write permission
+    $IPP_MIN_DELETE_PROGRAM_AREA=50; //Teaching staff and up with write permission.
+    $IPP_MIN_DELETE_ASSISTIVE_TECHNOLOGY=50; //Teaching staff and up with write permission
+    $IPP_MIN_DELETE_TRANSITION_PLAN = 50; //Teaching staff and up with write permission
+    $IPP_MIN_DELETE_ACCOMODATION = 50; //Teaching staff and up with write permission.
+    $IPP_MIN_DELETE_SNAPSHOT = 50; //Teaching staff and up with assign permission
+    $IPP_MIN_DELETE_ANECDOTAL = 60; //Teaching Assistants and up with write permission
+    $IPP_MIN_DELETE_BACKGROUND_INFORMATION_PERMISSION = 50; //Teaching staff and up with write permission.
+    $IPP_MIN_DELETE_BUG_PERMISSION = 0; //Super Admin (bug management);
+    $IPP_MIN_EDIT_BUG_PERMISSION = 0; //Super Admin (bug management);
+    $IPP_MIN_DELETE_SCHOOL_HISTORY = 50; //Teaching staff and up with write permissions.
+    $IPP_MIN_DELETE_SCHOOL = 0; //super admin can delete a school
+    $IPP_MIN_EDIT_SCHOOL = 0; //super admin can edit school information.
+
+    $IPP_CURRENT_VERSION=1.0; //This version
+
+?>
