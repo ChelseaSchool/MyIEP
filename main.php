@@ -91,16 +91,15 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Navigation <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="#">Students</a></li>
+                <li><a href="./manage_student.php">Students</a></li>
                 <li class="divider"></li>
-                <li><a href="#">Reset Password</a></li>
-                <li><a href="#">Goals Database</a></li>
-                <li><a href="#">Archive</a></li>
-                <li><a href="#">Audit</a></li>
-                <li><a href="#">Manage Codes</a></li>
-                <li><a href="#">Goals Database</a></li>
-                <li><a href="#">Manage Schools</a></li>
-                <li><a href="#">View Logs</a></li>
+                <li><a href="change_ipp_password.php">Reset Password</a></li>
+                <li><a href="superuser_add_goals.php">Goals Database</a></li>
+                <li><a href="./student_archive.php">Archive</a></li>
+                <li><a href="./user_audit.php">Audit</a></li>
+                <li><a href="superuser_manage_coding.php">Manage Codes</a></li>
+                <li><a href="school_info.php">Manage Schools</a></li>
+                <li><a href="superuser_view_logs.php">View Logs</a></li>
               </ul>
             </li>
           </ul>
@@ -126,8 +125,6 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
         <p>MyIEP is a Web-based IEP Management system under active development by students at <a href="http://chelseaschool.edu">Chelsea School</a> in Hyattsville, MD.</p>
         <p>&copy; 2014 Chelsea School - <a href="http://www.gnu.org/licenses/gpl-2.0.html">GPLv2</a>.</p>
         <p><a class="btn btn-primary btn-lg" href="about.php" role="button">Learn More &raquo;</a></p>
-        
-        <?php if ($system_message) { echo "<p>" . $system_message . "</p>";} ?>
       </div>
     </div>
 
@@ -135,7 +132,7 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
 
 
 <p><center>Access to the following sections is restricted.</center></p>
-
+<?php if ($system_message) { echo "<p>" . $system_message . "</p>";} ?>
     <div class="container">
       <!-- Example row of columns -->
       <div class="row">
