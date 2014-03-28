@@ -40,7 +40,7 @@ function getNumUsers() {
 /** @fn 		getUserSchoolCode($egps_username="")
  *  @brief		get school code of selected user (by egps_username)
  *  @detail		traps and logs errors
- *  @remark		changed addslashes to mysql_real_escape_string - but why was addslashes() there? 
+ *  @remark		changed mysql_real_escape_string to mysql_real_escape_string - but why was mysql_real_escape_string() there? 
  * @param 		$egps_username
  * @return		row with school code 
  */
@@ -76,7 +76,7 @@ function isLocalAdministrator($egps_username="") {
         return NULL;
     }
 
-    $query = "SELECT is_local_ipp_administrator FROM support_member WHERE egps_username='" . addslashes($egps_username) . "'";
+    $query = "SELECT is_local_ipp_administrator FROM support_member WHERE egps_username='" . mysql_real_escape_string($egps_username) . "'";
     $result = mysql_query($query);
     if(!$result) {
         $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$query'<BR>";

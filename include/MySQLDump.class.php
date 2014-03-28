@@ -52,7 +52,7 @@ function list_values($tablename) {
         for ($i=0;$i < $broj_polja;$i++) {
             $vrednost = trim($row[$i]);
             $vrednost = str_replace("\n",'',$vrednost);
-            if (!is_integer($vrednost)) { $vrednost = "'".addslashes($vrednost)."'"; } 
+            if (!is_integer($vrednost)) { $vrednost = "'".mysql_real_escape_string($vrednost)."'"; } 
             $buffer .= $vrednost.', ';
         }
         $buffer = substr($buffer,0,count($buffer)-3);

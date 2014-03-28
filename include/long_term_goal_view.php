@@ -2,7 +2,7 @@
 /* @file
  * @remarks
  * 1. line 23 needs clarification and perhaps justification
- * 2. Relies on addslashes() builtin function to escape output; standardize on alternative contemporary best practice
+ * 2. Relies on mysql_real_escape_string() builtin function to escape output; standardize on alternative contemporary best practice
  * 3. Copyright header to be updated per license recommendation
  * 4. Check HTML standardization against James' findings
  */
@@ -91,7 +91,7 @@ if($our_permission == "WRITE" || $our_permission == "ASSIGN" || $our_permission 
 
 //************** validated past here SESSION ACTIVE WRITE PERMISSION CONFIRMED****************
 
-$student_query = "SELECT * FROM student WHERE student_id = " . addslashes($student_id);
+$student_query = "SELECT * FROM student WHERE student_id = " . mysql_real_escape_string($student_id);
 $student_result = mysql_query($student_query);
 if(!$student_result) {
     $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$student_query'<BR>";
@@ -113,7 +113,7 @@ if(isset($_GET['add_long_term_goal']) && $have_write_permission) {
             } else {
                 $area_type_id = $_GET['area_type_id'];
             }
-            $insert_goal_query="INSERT INTO long_term_goal (goal,student_id,review_date,area_type_id) VALUES ('" . addslashes($_GET['description']) . "',$student_id,'" . addslashes($_GET['review_date']) . "'," . addslashes($area_type_id) . ")";
+            $insert_goal_query="INSERT INTO long_term_goal (goal,student_id,review_date,area_type_id) VALUES ('" . mysql_real_escape_string($_GET['description']) . "',$student_id,'" . mysql_real_escape_string($_GET['review_date']) . "'," . mysql_real_escape_string($area_type_id) . ")";
             $insert_goal_result = mysql_query($insert_goal_query);
             if(!$insert_goal_result) {
                 $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$insert_goal_query'<BR>";

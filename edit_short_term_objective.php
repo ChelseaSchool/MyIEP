@@ -124,20 +124,39 @@ if(!$student_result) {
     IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
 } else {$student_row= mysql_fetch_array($student_result);}
 
-?> 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
-<HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
-    <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
-    
-    <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
-    <SCRIPT LANGUAGE="JavaScript">
+?>
+<!DOCTYPE HTML>
+<HTML><
+</HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="Rik Goldman">
+<link rel="shortcut icon" href="./assets/ico/favicon.ico">
+
+<title>MyIEP</title>
+
+<!-- Bootstrap core CSS -->
+<link href="./css/bootstrap.min.css" rel="stylesheet">
+
+
+
+<!-- Just for debugging purposes. Don't actually copy this line! -->
+<!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+<script language="javascript"
+	src='&lt;?php echo IPP_PATH . "include/popcalendar.js"; ?&gt;'
+	type="text/javascript"></script>
+<SCRIPT LANGUAGE="JavaScript" type="text/javascript">
       function confirmChecked() {
           var szGetVars = "strengthneedslist=";
           var szConfirmMessage = "Are you sure you want to modify/delete the following:\n";
@@ -164,111 +183,110 @@ if(!$student_result) {
       }
     </SCRIPT>
 </HEAD>
-    <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("long_term_goal_view.php?student_id=$student_id"); ?></center>
-                    </td></tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
 
-                        <center>
-                          <table>
-                            <tr><td>
-                              <center><p class="header">- Edit Short Term Objective (<?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?>)-</p></center>
-                            </td></tr>
-                          </table>
-                        </center>
-                        <BR>
+<BODY>
+	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">MyIEP</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Home</a></li>
+					<li><a href="about.php">About</a></li>
+					<li><a href="index.php">Logout</a></li>
+				</ul>
 
-                        <!-- BEGIN add short term objective -->
-                        <center>
-                        <form name="edit_objective" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_short_term_objective.php"; ?>" method="get" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
-                        <tr>
-                          <td colspan="3">
-                          <p class="info_text">Edit and click 'Update'.</p>
-                           <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
-                           <input type="hidden" name="sto" value="<?php echo $goal_row['uid']; ?>">
-                           <input type="hidden" name="edit" value="1">
-                          </td>
-                        </tr>
-                        <tr>
-                            <td valign="center" bgcolor="#E0E2F2" class="row_default">Long Term<BR>Goal:</td>
-                            <td bgcolor="#E0E2F2" class="row_default">
-                            <textarea disabled name="text" cols="40" rows="3" wrap="soft"><?php echo $goal_row['goal']; ?></textarea>
-                            </td>
-                        </tr>
-                        <tr><td bgcolor="#E0E2F2" valign="center" class="row_default"><p class="row_default">Review Date:&nbsp;</td>
-                              <td bgcolor="#E0E2F2">
-                                <input type="text" name="review_date" value="<?php echo $goal_row['review_date']; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.review_date, 'yyyy-m-dd', 0, 0)">
-                              </td>
-                        </tr>
-                        <tr>
-                            <td valign="center" bgcolor="#E0E2F2" class="row_default">Short Term<BR>Objective:</td>
-                            <td bgcolor="#E0E2F2" class="row_default">
-                            <textarea name="description" cols="40" rows="3" wrap="soft"><?php echo $goal_row['description']; ?></textarea>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td valign="center" bgcolor="#E0E2F2" class="row_default">Assessment Procedure:</td>
-                            <td bgcolor="#E0E2F2" class="row_default">
-                            <textarea name="assessment_procedure" cols="40" rows="3" wrap="soft"><?php echo $goal_row['assessment_procedure']; ?></textarea>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td valign="center" bgcolor="#E0E2F2" class="row_default">Strategies:</td>
-                            <td bgcolor="#E0E2F2" class="row_default">
-                            <textarea name="strategies" cols="40" rows="3" wrap="soft"><?php echo $goal_row['strategies']; ?></textarea>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td valign="center" bgcolor="#E0E2F2" class="row_default">Progress Review:</td>
-                            <td bgcolor="#E0E2F2" class="row_default">
-                            <textarea name="results_and_recommendations" cols="40" rows="3" wrap="soft"><?php echo stripslashes($goal_row['results_and_recommendations']); ?></textarea>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="row_default" bgcolor="#E0E2F2">&nbsp;</td>
-                            <td valign="center" align="center" bgcolor="#E0E2F2"><input type="submit" name="update" value="update"></td>
-                        </tr>
-                        </table>
-                        </form>
-                        </center>
-                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-            <?php navbar("long_term_goal_view.php?student_id=$student_id"); ?>
-            </td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
-        <center></center>
-    </BODY>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown">Navigation <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="./manage_student.php">Students</a></li>
+							<li class="divider"></li>
+							<li><a href="change_ipp_password.php">Reset Password</a></li>
+							<li><a href="superuser_add_goals.php">Goals Database</a></li>
+							<li><a href="./student_archive.php">Archive</a></li>
+							<li><a href="./user_audit.php">Audit</a></li>
+							<li><a href="superuser_manage_coding.php">Manage Codes</a></li>
+							<li><a href="school_info.php">Manage Schools</a></li>
+							<li><a href="superuser_view_logs.php">View Logs</a></li>
+						</ul></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+			<!--<div class="navbar-collapse collapse">
+          <form class="navbar-form navbar-right" role="form" nctype="multipart/form-data" action="jumbotron.php" method="post">
+            <div class="form-group">
+              <input type="text" placeholder="User Name" class="form-control" value="<?php echo $LOGIN_NAME;?>">
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Password" class="form-control" name="PASSWORD" value="">
+            </div>
+            <button type="submit" value="submit" class="btn btn-success">Sign in</button>
+          </form>
+        </div><!--/.navbar-collapse -->
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+<div class="page-header">
+
+<p align="center"><em>Edit Short Term Objective</em></p>
+<p align=center><?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?></p>
+		
+</div>		
+<div class=container>
+<form name="edit_objective" enctype="multipart/form-data" action='<?php echo IPP_PATH . "edit_short_term_objective.php"; ?>' method="get" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>	
+<div class="row">
+<div class="col-md-6">
+<div class=container>
+		<input type="hidden" name="student_id" value="<?php echo $student_id; ?>"> 
+		<input type="hidden" name="sto" value="<?php echo $goal_row['uid']; ?>"> 
+		<input type="hidden" name="edit" value="1">
+
+					<p>Long Term Goal</p>
+					<textarea disabled name="text" cols="40" rows="3" wrap="soft"><?php echo $goal_row['goal']; ?></textarea>
+
+					<p>Review Date</p>
+
+					<p><input type="text" name="review_date" value="<?php echo $goal_row['review_date']; ?>">&nbsp;<img	src='<?php echo IPP_PATH . "images/calendaricon.gif"; ?>' height="17" width="17" border="0" onClick="popUpCalendar(this, document.all.review_date, 'yyyy-m-dd', 0, 0)" alt="calendar">
+					</p>
+					
+					<p>Assessment Procedure</p>
+<p><textarea name="assessment_procedure" cols="40" rows="3" wrap="soft"><?php echo $goal_row['assessment_procedure']; ?></textarea>
+					</p>
+					<p>Strategies</p>
+					<p>
+<textarea name="strategies" cols="40" rows="3" wrap="soft">	<?php echo $goal_row['strategies']; ?></textarea>
+					</p>
+</div>
+				</div>
+				<div class="col-md-6">
+					<div class="container">
+					<p>Short Term Objective</p>
+					<p>
+<textarea name="description" cols="40" rows="3" wrap="soft"><?php echo $goal_row['description']; ?></textarea>
+					</p>
+					<p>Progress Review</p>
+					<p>
+<textarea name="results_and_recommendations" cols="40" rows="10" autofocus="true" wrap="soft"><?php echo stripslashes($goal_row['results_and_recommendations']); ?></textarea>
+					</p><p><input id="submit" name="submit" type="submit" value="Submit"></p></div>
+				</div>
+			</form>
+		</div>
+	
+</BODY>
 </HTML>

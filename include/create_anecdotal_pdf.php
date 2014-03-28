@@ -97,7 +97,7 @@ function create_anecdotals($student_id) {
 
   global $system_message,$student_row;
 
-  $student_query = "SELECT * FROM student WHERE student_id = " . addslashes($student_id);
+  $student_query = "SELECT * FROM student WHERE student_id = " . mysql_real_escape_string($student_id);
   $student_result = mysql_query($student_query);
   if(!$student_result) {
     $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$student_query'<BR>";

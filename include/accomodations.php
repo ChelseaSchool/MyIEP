@@ -96,7 +96,7 @@ if($our_permission == "WRITE" || $our_permission == "ASSIGN" || $our_permission 
 
 //************** validated past here SESSION ACTIVE WRITE PERMISSION CONFIRMED****************
 
-$student_query = "SELECT * FROM student WHERE student_id = " . addslashes($student_id);
+$student_query = "SELECT * FROM student WHERE student_id = " . mysql_real_escape_string($student_id);
 $student_result = mysql_query($student_query);
 if(!$student_result) {
     $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$student_query'<BR>";
@@ -107,7 +107,7 @@ if(!$student_result) {
 if(isset($_GET['add_accomodation']) && $have_write_permission) {
 
    //check for duplicate...naw
-   //$check_query = "SELECT * FROM accomodation WHERE accomodation='" . addslashes($_GET['program_area']) . "' AND end_date IS NULL AND student_id=" . addslashes($student_id);
+   //$check_query = "SELECT * FROM accomodation WHERE accomodation='" . mysql_real_escape_string($_GET['program_area']) . "' AND end_date IS NULL AND student_id=" . mysql_real_escape_string($student_id);
    //$check_result = mysql_query($check_query);
    //if(!$check_result) {
    //   $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$check_query'<BR>";
@@ -118,7 +118,7 @@ if(isset($_GET['add_accomodation']) && $have_write_permission) {
    //        $check_row = mysql_fetch_array($check_result);
    //        $system_message = $system_message . "That is already a program area of this student<BR>";
    //    } else {
-           $add_query = "INSERT INTO accomodation (student_id,accomodation,start_date,end_date,subject) VALUES (" . addslashes($student_id) . ",'" . AddSlashes($_GET['accomodation']) . "',NOW(),NULL,'" . addslashes($_GET['subject']) . "')";
+           $add_query = "INSERT INTO accomodation (student_id,accomodation,start_date,end_date,subject) VALUES (" . mysql_real_escape_string($student_id) . ",'" . AddSlashes($_GET['accomodation']) . "',NOW(),NULL,'" . mysql_real_escape_string($_GET['subject']) . "')";
            $add_result = mysql_query($add_query);
            if(!$add_result) {
               $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$add_query'<BR>";
@@ -188,7 +188,7 @@ if($_GET['set_continue'] && $have_write_permission ) {
     }
 }
 
-$accomodation_query = "SELECT * FROM accomodation WHERE student_id=" . addslashes($student_id) . " ORDER BY end_date ASC,start_date DESC";
+$accomodation_query = "SELECT * FROM accomodation WHERE student_id=" . mysql_real_escape_string($student_id) . " ORDER BY end_date ASC,start_date DESC";
 $accomodation_result = mysql_query($accomodation_query);
 if(!$accomodation_result) {
     $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$accomodation_query'<BR>";
@@ -197,6 +197,14 @@ if(!$accomodation_result) {
 }
 
 /******************** popup chooser support function ******************/
+    /** @fn		createJavaScript($dataSource,$arrayName='rows')
+     * @brief If it works, generates JavaScript to output/process array data
+     * @param unknown $dataSource
+     * @param string $arrayName
+     * @return boolean|string
+     * @todo Name so that we know what it does
+     * @remark	Involves a popup bit to choose from
+     */
     function createJavaScript($dataSource,$arrayName='rows'){
       // validate variable name
       if(!is_string($arrayName)){
@@ -243,7 +251,11 @@ if(!$accomodation_result) {
       // return JavaScript code
       return $javascript;
     }
-
+	/** @fn 		echoJSServicesArray()
+	 *  @brief		Uses JavaScript to create an array that has to do with student accomodations
+	 *  @remark		Don't understand this yet
+	 *  @todo		rename show_js_accomodations_array()
+	 */
     function echoJSServicesArray() {
         global $system_message;
         $acclist_query="SELECT accomodation FROM typical_accomodation WHERE 1 ORDER BY accomodation ASC LIMIT 200";
@@ -270,14 +282,7 @@ if(!$accomodation_result) {
             @import "<?php echo IPP_PATH;?>layout/greenborders.css";
         -->
     </style>
-    <!-- All code Copyright &copy; 2005 Grasslands Regional Division #6.
-         -Concept and Design by Grasslands IPP Design Group 2005
-         -Programming and Database Design by M. Nielsen, Grasslands
-          Regional Division #6
-         -User Interface Design and Educational Factors by P Stoddart,
-          Grasslands Regional Division #6
-         -CSS and layout images are courtesy A. Clapton.
-     -->
+    
     <script language="javascript" src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script>
     <script language="javascript" src="<?php echo IPP_PATH . "include/autocomplete.js"; ?>"></script>
     <?php
@@ -306,6 +311,7 @@ if(!$accomodation_result) {
               return false;
       }
 
+	   
       function noPermission() {
           alert("You don't have the permission level necessary"); return false;
       }
@@ -439,6 +445,6 @@ if(!$accomodation_result) {
             <td class="shadow-bottomRight"></td>
         </tr>
         </table> 
-        <center>System Copyright &copy; 2005 Grasslands Regional Division #6.</center>
+       
     </BODY>
 </HTML>

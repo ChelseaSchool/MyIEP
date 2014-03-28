@@ -136,6 +136,13 @@ if(isset($_POST['delete_x'])) {
   else $szSchool = $_GET['szSchool'];
 
 $szTotal=0;
+
+/** @fn 	getStudents()
+ *  @brief	Gets a count of students from the database that go to a member
+ *  @return NULL|resource
+ *  @todo	get_student_count()
+ */
+
 function getStudents() {
     global $error_message,$IPP_MIN_VIEW_LIST_ALL_LOCAL_STUDENTS,$permission_level,$system_message,$IPP_MIN_VIEW_LIST_ALL_STUDENTS,$iLimit,$iCur,$szSchool,$szTotalStudents;
     if(!connectIPPDB()) {

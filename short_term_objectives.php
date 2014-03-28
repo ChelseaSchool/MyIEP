@@ -198,6 +198,14 @@ if(!$completed_objectives_result) {
 }
 
 /*************************** popup chooser support function ******************/
+	/** @createJavaScript($dataSource,$arrayName='rows')
+	 * @brief uses javascript to output assessment procedures as a popup
+	 * @param unknown $dataSource
+	 * @param string $arrayName
+	 * @return boolean|string
+	 * @todo rename this function to show_ something
+	 */    
+
     function createJavaScript($dataSource,$arrayName='rows'){
       // validate variable name
       if(!is_string($arrayName)){

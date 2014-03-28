@@ -106,7 +106,7 @@ function create_pdf($student_id) {
 
   global $system_message,$student_row;
 
-  $student_query = "SELECT * FROM student WHERE student_id = " . addslashes($student_id);
+  $student_query = "SELECT * FROM student WHERE student_id = " . mysql_real_escape_string($student_id);
   $student_result = mysql_query($student_query);
   if(!$student_result) {
     $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$student_query'<BR>";
@@ -1037,7 +1037,7 @@ function create_pdf($student_id) {
          $pdf->SetFont('Arial','',8);
          $pdf->MultiCell(150,5,preg_replace("/\\n/", " ",iconv('UTF-8','Windows-1252', $goal_row['goal'])),0,1);
          //add the objectives...
-         $objective_query = "SELECT * FROM short_term_objective WHERE goal_id='" . addslashes($goal_row['goal_id']) . "' ORDER BY achieved ASC";
+         $objective_query = "SELECT * FROM short_term_objective WHERE goal_id='" . mysql_real_escape_string($goal_row['goal_id']) . "' ORDER BY achieved ASC";
          $objective_result = mysql_query($objective_query);
          if(!$objective_result) {
             $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$objective_query'<BR>";
@@ -1099,7 +1099,7 @@ function create_pdf($student_id) {
          $pdf->SetFont('Arial','',14);
          $pdf->MultiCell(150,5,iconv('UTF-8','Windows-1252', $goal_row['goal']),0,1);
          //add the objectives...
-         $objective_query = "SELECT * FROM short_term_objective WHERE goal_id='" . addslashes($goal_row['goal_id']) . "' ORDER BY achieved ASC";
+         $objective_query = "SELECT * FROM short_term_objective WHERE goal_id='" . mysql_real_escape_string($goal_row['goal_id']) . "' ORDER BY achieved ASC";
          $objective_result = mysql_query($objective_query);
          if(!$objective_result) {
             $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$objective_query'<BR>";

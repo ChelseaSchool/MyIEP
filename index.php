@@ -37,7 +37,7 @@ require_once(IPP_PATH . 'etc/init.php');
 include_once(IPP_PATH . 'include/db.php');
 
 header('Pragma: no-cache'); //don't cache this page!
-logout()
+logout();
 
 if(isset($system_message)) $system_message = $system_message; else $system_message="";
 if(isset($LOGIN_NAME)) $LOGIN_NAME = $LOGIN_NAME; else $LOGIN_NAME="";
