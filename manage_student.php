@@ -1,7 +1,7 @@
 <?php
 
-/**
- * @BRIEF 	manage authorized users
+/** @file
+ * @brief 	manage authorized users
  * 
  */
  

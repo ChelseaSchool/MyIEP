@@ -83,6 +83,7 @@ header('Pragma: no-cache'); //don't cache this page!
           <ul class="nav navbar-nav">
             <li><a href="main.php">Home</a></li>
             <li class="active"><a href="about.php">About</a></li>
+            <li><a href="index.php">Logout</a></li></ul>
              
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
