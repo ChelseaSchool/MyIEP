@@ -89,16 +89,17 @@ header('Pragma: no-cache'); //don't cache this page!
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Navigation <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="#">Students</a></li>
+               
+                <li><a href="./manage_student.php">Students</a></li>
                 <li class="divider"></li>
-                <li><a href="#">Reset Password</a></li>
-                <li><a href="#">Goals Database</a></li>
-                <li><a href="#">Archive</a></li>
-                <li><a href="#">Audit</a></li>
-                <li><a href="#">Manage Codes</a></li>
-                <li><a href="#">Goals Database</a></li>
-                <li><a href="#">Manage Schools</a></li>
-                <li><a href="#">View Logs</a></li>
+                <li><a href="change_ipp_password.php">Reset Password</a></li>
+                <li><a href="superuser_add_goals.php">Goals Database</a></li>
+                <li><a href="./student_archive.php">Archive</a></li>
+                <li><a href="./user_audit.php">Audit</a></li>
+                <li><a href="superuser_manage_coding.php">Manage Codes</a></li>
+                <li><a href="school_info.php">Manage Schools</a></li>
+                <li><a href="superuser_view_logs.php">View Logs</a></li>
+              
               </ul>
             </li>
           </ul>
