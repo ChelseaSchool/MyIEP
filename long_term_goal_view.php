@@ -15,12 +15,7 @@
  * 2. Make sure the duplicate in include/ can be safely removed
  */
 
-/** @var $MINIMUM_AUTHORIZATION_LEVEL = 100
- *  @brief The authorization level for this page (everybody)
- *  @todo  1. change to lowercase throughout the code (standardization and consistency (all caps is reserved for constants, globals)
- *  	   2. Should probably be recase as parameter for a function
- *  @bugs  none
- */
+
 $MINIMUM_AUTHORIZATION_LEVEL = 100;
 
 
@@ -28,12 +23,7 @@ $MINIMUM_AUTHORIZATION_LEVEL = 100;
 
 if(isset($system_message)) $system_message = $system_message; else $system_message = "";
 
-/**@var define('IPP_PATH','./')
- * @brief		Path for IPP required files (constant).
- * @todo
- * 
- * @author		M. Nielson
- */
+
 define('IPP_PATH','./');
 
 //* @remark required files

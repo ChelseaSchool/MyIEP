@@ -1,6 +1,13 @@
 <?php
    if(!function_exists('scandir')) {
-    function scandir($DIRECTORY, $ORDER=0) {
+    
+   	/** @fn 		scandir($DIRECTORY, $ORDER=0)
+   	 * @brief		Create an array from list of files in specified directory (folder)
+   	 * @param string $DIRECTORY
+   	 * @param number $ORDER
+   	 * @return boolean|multitype:string
+   	 */
+   	function scandir($DIRECTORY, $ORDER=0) {
         //  array scandir(string directory [,int sorting_order])
         //inputs: $PATH
         //returns an array of files

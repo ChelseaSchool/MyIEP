@@ -28,11 +28,7 @@ $MINIMUM_AUTHORIZATION_LEVEL = 100; //everybody
 /**
  * Path for IPP required files.
  */
-/** @var $system_message
- *  @brief 		We have no idea what this is for, but it's set to nothing for security
- *  @detail 	This variable is at the top of most pages, always set to empty value. Haven't found a purpose for it yet.
- *  @todo 		Track down what $system_message is intended to do
- */
+
 $system_message = "";
 
 define('IPP_PATH','./');
@@ -73,14 +69,7 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
     }
 }
 //************* SESSION active past here **************************
-/** @var		$student_id
- *  @brief		value is cleared and then fetched from get/post (both)
- *  @detail		Value is plucked from an array passed via get or post
- *  @todo		
- *  * Make this a function
- *  * Consider renaming based on standards/conventions
- * 
- */
+
 $student_id="";
 if(isset($_GET['student_id'])) $student_id= $_GET['student_id'];
 if(isset($_POST['student_id'])) $student_id = $_POST['student_id'];

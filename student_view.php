@@ -24,10 +24,7 @@ $MINIMUM_AUTHORIZATION_LEVEL = 100;    //everybody (do checks within document)
  * Path for IPP required files.
  */
 
-/** @var $system_message
- * @brief speculating that error messages get passed along through this var
- * 
- */
+
 if(isset($system_message)) $system_message = $system_message; else $system_message="";
 
 define('IPP_PATH','./');
@@ -134,10 +131,7 @@ if(!$supervisor_result) {
 }
 
 $school_row="";
-/** @var $school_query
- *  @brief		the value of a complex get request based on current school and school history
- *
- */
+
 
 $school_query = "SELECT * FROM school_history LEFT JOIN school on school_history.school_code=school.school_code WHERE end_date IS NULL AND student_id='" . $_GET['student_id'] . "'";
 $school_result = mysql_query($school_query);
@@ -170,12 +164,7 @@ function get_age_by_date($yyyymmdd)
     }
     return "-unknown-";
 }
-/** @var $age
- *  @brief calculated age of student.
- *  @todo
- *  * Rename variable to something compliant
- *  * attend to date syntax, convention, validity, consistency
- */
+
 
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">

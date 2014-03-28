@@ -1,5 +1,6 @@
 <?php
-/* NOTES
+/* @file
+ * @remarks
  * 1. line 23 needs clarification and perhaps justification
  * 2. Relies on addslashes() builtin function to escape output; standardize on alternative contemporary best practice
  * 3. Copyright header to be updated per license recommendation
@@ -8,17 +9,7 @@
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100;    //everybody (do checks within document)
 
-/**
- * long_term_goal_view.php -- manage student guardians - Todo: ensure this is accurate summary; looks like it does a lot more and doesn't match the filename
- *
- * Copyright (c) 2005 Grasslands Regional Division #6
- * All rights reserved
- *
- * Created: June 21, 2005
- * By: M. Nielsen
- * Modified:  September 08, 2005.
- *
- */
+
 
 /**
  * Path for IPP required files.
@@ -238,7 +229,7 @@ if(!$area_type_result) {
 
 ?> 
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE HTML>
 <HTML>
 <HEAD>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
@@ -248,14 +239,7 @@ if(!$area_type_result) {
             @import "<?php echo IPP_PATH;?>layout/greenborders.css";
         -->
     </style>
-    <!-- All code Copyright &copy; 2005 Grasslands Regional Division #6.
-         -Concept and Design by Grasslands IPP Focus Group 2005
-         -Programming and Database Design by M. Nielsen, Grasslands
-          Regional Division #6
-         -User Interface Design and Educational Factors by P Stoddart,
-          Grasslands Regional Division #6
-         -CSS and layout images are courtesy A. Clapton.
-     -->
+   
      <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
      <script language="javascript" src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script>
      <?php
@@ -350,6 +334,7 @@ if(!$area_type_result) {
                         <center>
                         <table width="80%" border="0" cellpadding="0" cellspacing="0">
                         <?php
+                        //Loops through list of goals in progress
                         while($goal = mysql_fetch_array($long_goal_result)) {
                             echo "<tr><td colspan=\"2\" class=\"wrap_top\"><a href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&setCompleted=" . $goal['goal_id'] . "\"";
                             if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
@@ -388,6 +373,8 @@ if(!$area_type_result) {
                                    //yes so output non-breaking space
                                    echo "<center>-none-</center>";
                                }
+                               
+                               //loops through objectives in progress
                                while ($short_term_objective_row = mysql_fetch_array($short_term_objective_result)) {
                                    echo "<hr>\n";
                                    echo "<table width=\"100%\"><tr>\n";

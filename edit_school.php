@@ -70,13 +70,7 @@ if( $permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NUL
 
 //************** validated past here ****************
 
-/** @var $school_code
- *  @brief	set to value of escaped form data
- *  @detail
-	Starts cleared. Existing setting could be harmful (hackers) and security. Takes the data from a form and escapes it in preparation for MySQL. Variable is used to get school information from MySQL.
- *  @todo	rename variable $clean_school_code
- *  @bug
-*/
+
 $school_code="";
 if(isset($_GET['school_code'])) $school_code= mysql_real_escape_string($_GET['school_code']);
 if(isset($_POST['school_code'])) $school_code = mysql_real_escape_string($_POST['school_code']);

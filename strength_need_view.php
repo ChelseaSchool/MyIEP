@@ -177,10 +177,7 @@ if(isset($_GET['set_current_x'])  && $have_write_permission ) {
 }
 
 
-/** @var $strengh_query
- *  @brief  Gets student's documented strengths and needs from the database.
- *  @todo 	Rename $get_student_strengths
- */
+
 
 //get the strengths/needs for this student...
 $strength_query="SELECT * FROM area_of_strength_or_need WHERE student_id=$student_id ORDER BY is_valid ASC, strength_or_need ASC";

@@ -26,6 +26,17 @@
     require_once(IPP_PATH . 'include/db.php');
     require_once(IPP_PATH . 'etc/init.php');
 
+ /** @fn register($szLogin='',$szPassword='')
+  * @details
+  * Starts session if login is successful. Throws errors and returns false if:
+  * 1. connect to MySQL fails
+  * 2. Get username fails
+  * 3. MySQL returns zero rows
+  * 
+  * @param string $szLogin
+  * @param string $szPassword
+  * @return boolean
+  */
     function register($szLogin='',$szPassword='') {
         global $mysql_user_append_to_login,$error_message, $mysql_user_select_login, $mysql_user_select_password, $mysql_user_table, $mysql_user_append_to_login,$IPP_TIMEOUT;
 
@@ -91,6 +102,12 @@
 
     }
 
+    /** @fn logout()
+     * @brief deletes a logged in user from logged in table in MySQL; or returns error.
+     * @return boolean
+     * @todo
+     * 1. Add logout mechanism to main page navbar
+     */
     function logout() {
         if(!session_id()) session_start();
         unset($_SESSION['egps_username']);
@@ -109,7 +126,13 @@
          }
     }
 
-
+/** @fn validate($szLogin='',$szPassword='')
+ * @brief Begins session, checks username and password against user table in MySQL. Returns false and throws error message if there's a problem.
+ * @param string $szLogin
+ * @param string $szPassword
+ * @return boolean
+ */
+ 
     function validate($szLogin='',$szPassword='') {
          //check username and password against user database
          //returns TRUE if successful or FALSE on fail.
@@ -194,6 +217,11 @@
 
     }
 
+/** @fn		getPermissionLevel($szUsername='')
+ * @brief	determines what resources the logged in user has access to.
+ * @param string $szUsername
+ * @return NULL or row from database
+ */
     function getPermissionLevel($szUsername='') {
          //returns permission level or NULL on fail.
          global $error_message;
@@ -243,7 +271,7 @@
     }
 /** @fn	get_services($PERMISSION_LEVEL=100)
  *  @brief	sets permissions for lowest authentication level
- *  @details	
+ *  @param	$PERMISSION_LEVEL = 100	
  *  @todo 	untangle this mess. Refactor as necessary.
  *  @bug
  *  
@@ -315,6 +343,17 @@
         return $retval;
     }
 
+    /** @fn 		getStudentPermission($student_id='')
+     *  @brief		Determines user's access to specific student's records
+     *  @detail
+     *  1. Returns error or null under some circumstances.
+     *  2. Otherwise, may return NONE,ERROR,READ,WRITE(READ,WRITE),ASSIGN(READ,WRITE,ASSIGN),ALL(READ,WRITE,ASSIGN,DELETE), or support_list['permission'] or NONE for no permissions.		
+     * @param string $student_id
+     * @return string|NULL|Ambigous
+     * @todo	
+     * 1. Rename function because it is a confusing name
+     * 2. It can start with get_. Separate words with underscores. Perhaps get_access_to_student_record().
+     */
     function getStudentPermission($student_id='') {
         //returns NONE,ERROR,READ,WRITE(READ,WRITE),ASSIGN(READ,WRITE,ASSIGN),ALL(READ,WRITE,ASSIGN,DELETE),
         //or support_list['permission'] or NONE for no permissions.
