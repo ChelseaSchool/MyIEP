@@ -314,7 +314,7 @@ if(!$area_type_result) {
     <meta name="author" content="Rik Goldman" >
     <link rel="shortcut icon" href="./assets/ico/favicon.ico">
 
-    <title>$page_title</title>
+    <title><?php echo $page_title; ?></title>
 
     <!-- Bootstrap core CSS -->
     <link href="./css/bootstrap.min.css" rel="stylesheet">
@@ -407,65 +407,57 @@ if(!$area_type_result) {
 
 
 <!-- The system message is contained within another table -->
-<?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+<?php if ($system_message) { echo "<p class=\"message\">" . $system_message . "</p>";} ?>
 <h1>IEP Goals:</h1>
-<h2><?php echo $student_row['first_name'] . " " . $student_row['last_name'] .  ", Permission: " . $our_permission;?></h2>
+<h2><?php echo $student_row['first_name'] . " " . $student_row['last_name'] .  ", (Permission: " . $our_permission . ")";?></h2>
 
 </div>
 </div>
 
  <!-- BEGIN add new entry -->
-<center>
+
+<div class=container>
 <form name="add_long_term_goal" enctype="multipart/form-data" action="<?php echo IPP_PATH . "long_term_goal_view.php"; ?>" method="get" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-<table border="0" cellspacing="0" cellpadding ="0" width="80%">
-<tr>
-<td colspan="3">
-<p class="info_text">New long term goal</p>
+<label>Add a New Goal</label>
 <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
-</td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">Goal Area:</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                           <select name="goal_area">
-                            <option value="">Choose...</option>
-                            <?php
-                            while ($area_row = mysql_fetch_array($area_type_result)) {
-                               echo "<option value=\"" . $area_row['cid'];
-                               if(isset($_GET['goal_area']) && $area_row['name'] == $_GET['goal_area']) echo "\" SELECTED";
-                               echo  "\" onclick=\"popuplist=" . $area_row['name'] . ".slice();\">" . $area_row['name'] . "</option>\n";
-                            }
-                            ?>
+<select name="goal_area">
+	<option value="">Select Area</option>
+    <?php
+    	while ($area_row = mysql_fetch_array($area_type_result)) {
+        	echo "<option value=\"" . $area_row['cid'];
+            if(isset($_GET['goal_area']) && $area_row['name'] == $_GET['goal_area']) echo "\" SELECTED";
+            	echo  "\" onclick=\"popuplist=" . $area_row['name'] . ".slice();\">" . $area_row['name'] . "</option>\n";
+            }
+            ?>
                             <option value="">Other</option>
                             </select>
-                           </td>
-                           <td valign="center" align="center" bgcolor="#E0E2F2" class="row_default"><input type="submit" name="next" value="Add Goal"></td>
-                        </tr>
-                        </table>
+                     
+                     <input type="submit" name="next" value="Create New Goal">
                         </form>
-                        </center>
+                        </div> <!-- end container for new goal form -->
                         <!-- END add new entry -->
 
                         <?php $colour0="#DFDFDF"; $colour1="#CCCCCC"; ?>
 
                         <HR>
                         <!-- BEGIN  Goals -->
-                        <table width="100%"><tr><td><p class="header" align="left">&nbsp;Goal(s):</p></tr></table>
-                        <BR>
-                        <center>
-                        <table width="80%" border="0" cellpadding="0" cellspacing="0">
+                        <div class="container">
+                        <h1>IEP Goals by Area</h1>
+                        
+                        
+                       <!-- <table border=3 align="center" width="80%" border="0" cellpadding="0" cellspacing="0">-->
                         <?php
                         //check if we have no goals...we need to end this table in this case.
-                        if(mysql_num_rows($long_goal_result) == 0 ) {
+                        /*if(mysql_num_rows($long_goal_result) == 0 ) {
                           echo "<tr><td>&nbsp;</td></tr></table></center>";
-                        }
+                        }*/
                         $goal_num=1;
                         while($goal = mysql_fetch_array($long_goal_result)) {
-                          echo "<table width=\"90%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td class=\"goal_text\"><b>Area:</b>&nbsp;<a class=\"large\" href=\"" . IPP_PATH . "add_objectives.php?student_id=$student_id&lto=" . $goal['goal_id']  . "\"";
+                          echo "<h2><a class=\"large\" href=\"" . IPP_PATH . "add_objectives.php?student_id=$student_id&lto=" . $goal['goal_id']  . "\"";
                           if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
                           else echo "onClick=\"return changeStatusCompleted();\"";
-                          echo " class=\"small\">" . $goal['area'] . "</a></td></tr></table>";
-                          echo "<table width=\"80%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">";
+                          echo " class=\"small\">" . $goal['area'] . "</a></h2></td></tr></table>";
+                          echo "<table class=\"table table-striped\" width=\"80%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">";
                           echo "<tr><td align=\"right\" colspan=\"3\"";
                           $today = time(); #today's date in seconds since January 1, 1970
                           $date_split = split("-",$goal['review_date']);
@@ -490,7 +482,7 @@ if(!$area_type_result) {
                           }
                           echo "<td valign=\"top\" width=\"15\" class=\"goal_number\">$goal_num</td>";
                           $goal_num++;
-                          echo "</td><td valign=\"top\" class=\"goal_text\" bgcolor=\"#E0E2F2\">" . checkspelling($goal['goal']);
+                          echo "</td><td valign=\"top\" class=\"goal_text\" bgcolor=\"#E0E2F2\"><b>" . $goal['goal'] . "</b>";
                           //output the complete/uncomplete button...
                           if($goal['is_complete'] == 'Y') {
                             echo "&nbsp;<a href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&setUncompleted=" . $goal['goal_id'] . "\"";
@@ -538,7 +530,7 @@ if(!$area_type_result) {
                             //output this note...
                             //check if we have no notes
                             if(mysql_num_rows($short_term_objective_result) <= 0 ) {
-                              echo "<table width=\"60%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">";
+                              echo "<table class=\"table table-striped\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">";
                               echo "<tr><td colspan=\"2\" class=\"objective_text\">No Objectives Added</td></tr>";
                               echo "</table><BR>\n";
                             }
@@ -546,7 +538,7 @@ if(!$area_type_result) {
                             while ($short_term_objective_row = mysql_fetch_array($short_term_objective_result)) {
 
                               //output the objective title
-                              echo "<table width=\"65%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">";
+                              echo "<table class=\"table table-striped\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">";
                               //begin review date
                               echo "<tr><td align=\"right\" colspan=\"3\"";
                               $now = time(); #today's date in seconds since January 1, 1970
@@ -573,7 +565,7 @@ if(!$area_type_result) {
                               }
                               echo "<td valign=\"top\" width=\"15\" class=\"goal_number\">" . $obj_num . ")&nbsp;</td>";
                               $obj_num++;
-                              echo "</td><td class=\"objective_text\">" . checkspelling($short_term_objective_row['description']);
+                              echo "</td><td class=\"objective_text\">" . $short_term_objective_row['description'];
 
                               //output the complete/uncomplete button...
                               if($short_term_objective_row['achieved'] == 'Y') {
@@ -593,22 +585,42 @@ if(!$area_type_result) {
                               echo "&nbsp;<a href=\"" . IPP_PATH . "edit_short_term_objective.php?sto=" . $short_term_objective_row['uid'] . "&student_id=" . $student_id  . "\"";
                               if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
                               else echo "onClick=\"return changeStatusCompleted();\"";
-                              echo " class=\"small\">Edit</a>";
+                              echo "Edit</a>";
 
                               echo "&nbsp;<a href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&deleteSTO=" . $short_term_objective_row['uid'] . "\"";
                               if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
                               else echo "onClick=\"return changeStatusCompleted();\"";
-                              echo " class=\"small\">Delete</a>";
+                              echo ">Delete</a>";
 
                               echo "</td></tr>";
                               echo "</table>";
 
                               //output the results /assmt / etc...
-                              echo "<table width=\"60%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">";
+                              echo "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">";
                               echo "<tr><td class=\"wrap_top_notext\" colspan=\"2\">&nbsp;</td></tr>";
                               echo "<tr><td class=\"wrap_left\">";
                               //output the actual data
-                              echo "Assessment Procedure:";
+                              echo "<p>Assessment Procedure:</p>";
+
+                              //output the add edit button.
+                              echo "&nbsp;<a href=\"" . IPP_PATH . "edit_short_term_objective.php?sto=" . $short_term_objective_row['uid'] . "&student_id=" . $student_id  . "\"";
+                              if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
+                              else echo "onClick=\"return changeStatusCompleted();\"";
+                              echo " class=\"small\">Edit</a><p>";
+
+                             
+                              echo $short_term_objective_row['assessment_procedure'] . "</p>";
+                              echo "<p>Strategies:</p>";
+
+                             //output the add edit button for strategy.
+                             echo "<a href=" . IPP_PATH . "edit_short_term_objective.php?sto=" . $short_term_objective_row['uid'] . "&student_id=" . $student_id;
+                             if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
+                              	else echo "onClick=\"return changeStatusCompleted();\""; 
+                              echo "Edit:</a>";
+
+                            
+                              echo  "<p>" . $short_term_objective_row['strategies'] . "</p>";
+                              echo "<p>Progress Review:</p>" ;
 
                               //output the add edit button.
                               echo "&nbsp;<a href=\"" . IPP_PATH . "edit_short_term_objective.php?sto=" . $short_term_objective_row['uid'] . "&student_id=" . $student_id  . "\"";
@@ -617,27 +629,7 @@ if(!$area_type_result) {
                               echo " class=\"small\">Edit</a>";
 
                               echo "<BR>";
-                              echo "<blockquote>" . checkspelling($short_term_objective_row['assessment_procedure']) . "</blockquote>";
-                              echo "Strategies:" ;
-
-                              //output the add edit button.
-                              echo "&nbsp;<a href=\"" . IPP_PATH . "edit_short_term_objective.php?sto=" . $short_term_objective_row['uid'] . "&student_id=" . $student_id  . "\"";
-                              if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
-                              else echo "onClick=\"return changeStatusCompleted();\"";
-                              echo " class=\"small\">Edit</a>";
-
-                              echo "<BR>";
-                              echo "<blockquote>" . checkspelling($short_term_objective_row['strategies']) . "</blockquote>";
-                              echo "Progress Review:" ;
-
-                              //output the add edit button.
-                              echo "&nbsp;<a href=\"" . IPP_PATH . "edit_short_term_objective.php?sto=" . $short_term_objective_row['uid'] . "&student_id=" . $student_id  . "\"";
-                              if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
-                              else echo "onClick=\"return changeStatusCompleted();\"";
-                              echo " class=\"small\">Edit</a>";
-
-                              echo "<BR>";
-                              echo "<blockquote>" . checkspelling($short_term_objective_row['results_and_recommendations']) . "</blockquote>";
+                              echo $short_term_objective_row['results_and_recommendations'];
                               //end output the actual data
                               echo "</td><td class=\"wrap_right\">&nbsp;</td></tr>";
                               echo "<tr><td class=\"wrap_bottom_left\">&nbsp;</td><td class=\"wrap_bottom_right\">&nbsp;</td></tr>";
@@ -652,23 +644,16 @@ if(!$area_type_result) {
                         <!-- commented because can't find opening tag </div> -->
                          
                     </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-              <?php navbar("student_view.php?student_id=$student_id"); ?>
-            </td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
+                </table>
+           
+        
         </table> 
-        <center></center>
-    </BODY>
+</div> <!-- end of div class container -->
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="./js/bootstrap.min.js"></script>
+</body>
 </HTML>
