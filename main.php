@@ -1,5 +1,12 @@
 <?php
-
+/** @file edit_short_term_objective.php
+ *  @brief  Used for progress reporting as well as setting objectives for a new IEP.
+ *  @bug	right hand drop down nav isn't working
+ *  @todo
+ *  1. Make input fields wider, perhaps
+ *  2. figure out which datepicker stuff can go
+ *  3. Create nav link back to student
+ */
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100;
 
@@ -79,7 +86,7 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">MyIEP</a>
+          <a class="navbar-brand" href="main.php">MyIEP</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -103,7 +110,8 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
               </ul>
             </li>
           </ul>
-         </div><!--/.nav-collapse -->
+         </div>
+         <!--/.nav-collapse -->
         <!--<div class="navbar-collapse collapse">
           <form class="navbar-form navbar-right" role="form" nctype="multipart/form-data" action="jumbotron.php" method="post">
             <div class="form-group">

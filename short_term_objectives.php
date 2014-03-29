@@ -298,7 +298,7 @@ if(!$completed_objectives_result) {
             @import "<?php echo IPP_PATH;?>layout/greenborders.css";
         -->
     </style>
-    
+    <!-- Nielson's JS -->
     <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
     <script language="javascript" src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script>
      <?php
@@ -331,6 +331,7 @@ if(!$completed_objectives_result) {
           alert("You don't have the permission level necessary"); return false;
       }
     </SCRIPT>
+
 </HEAD>
     <BODY>
         <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  

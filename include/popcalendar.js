@@ -2,8 +2,8 @@
 //  last updated 23 June 2002
 //  email : fuushikaden@yahoo.com
 
-    var fixedX = -1             // x position (-1 if to appear below control)
-    var fixedY = -1         // y position (-1 if to appear below control)
+    var fixedX = 100            // x position (-1 if to appear below control)
+    var fixedY = -100         // y position (-1 if to appear below control)
     var startAt = 1         // 0 - sunday ; 1 - monday
     var showWeekNumber = 0  // 0 - don't show; 1 - show
     var showToday = 1       // 0 - don't show; 1 - show
