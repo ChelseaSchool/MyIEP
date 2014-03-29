@@ -304,17 +304,31 @@ if(!$area_type_result) {
 
 ?> 
 
-<!DOCTYPE HTML>
-<HTML>
-<HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
-    <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
-    
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Rik Goldman" >
+    <link rel="shortcut icon" href="./assets/ico/favicon.ico">
+
+    <title>$page_title</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./jumbotron.css" rel="stylesheet">
+
+   
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
      <!--script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
      <script language="javascript" src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script-->
      <?php
@@ -337,39 +351,78 @@ if(!$area_type_result) {
     </SCRIPT>
 </HEAD>
 <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("student_view.php?student_id=$student_id"); ?></center>
-                    </td></tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+   <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="main.php">MyIEP</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="about.php">About</a></li>
+            <li><a href="index.php">Logout</a></li>
+            <li><a href='student_view.php?student_id=<?php echo $student_id?>'>Student Record</a>
+            <li><a href='ipp_pdf.php?student_id=<?php echo $student_id?>'>View PDF</a> 
+			</ul>     
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Navigation <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="./manage_student.php">Students</a></li>
+                <li class="divider"></li>
+                <li><a href="change_ipp_password.php">Reset Password</a></li>
+                <li><a href="superuser_add_goals.php">Goals Database</a></li>
+                <li><a href="./student_archive.php">Archive</a></li>
+                <li><a href="./user_audit.php">Audit</a></li>
+                <li><a href="superuser_manage_coding.php">Manage Codes</a></li>
+                <li><a href="school_info.php">Manage Schools</a></li>
+                <li><a href="superuser_view_logs.php">View Logs</a></li>
+              </ul>
+            </li>
+          </ul>
+         </div>
+         <!--/.nav-collapse -->
+        <!--<div class="navbar-collapse collapse">
+          <form class="navbar-form navbar-right" role="form" nctype="multipart/form-data" action="jumbotron.php" method="post">
+            <div class="form-group">
+              <input type="text" placeholder="User Name" class="form-control" value="<?php echo $LOGIN_NAME;?>">
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Password" class="form-control" name="PASSWORD" value="">
+            </div>
+            <button type="submit" value="submit" class="btn btn-success">Sign in</button>
+          </form>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </div>
+ <div class=jumbotron>
+ <div class="container">
+<!-- <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>-->
 
-                        <center><table width="80%" cellspacing="0" cellpadding="0"><tr><td><center><p class="header">- Goals -</p></center></td></tr><tr><td><center><p class="bold_text"> <?php echo $student_row['first_name'] . " " . $student_row['last_name'] .  ", Permission: " . $our_permission;?></p></center></td></tr></table></center>
-                        <BR>
 
-                        <!-- BEGIN add new entry -->
-                        <center>
-                        <form name="add_long_term_goal" enctype="multipart/form-data" action="<?php echo IPP_PATH . "long_term_goal_view.php"; ?>" method="get" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
-                        <tr>
-                          <td colspan="3">
-                          <p class="info_text">New long term goal</p>
-                           <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
-                          </td>
+<!-- The system message is contained within another table -->
+<?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+<h1>IEP Goals:</h1>
+<h2><?php echo $student_row['first_name'] . " " . $student_row['last_name'] .  ", Permission: " . $our_permission;?></h2>
+
+</div>
+</div>
+
+ <!-- BEGIN add new entry -->
+<center>
+<form name="add_long_term_goal" enctype="multipart/form-data" action="<?php echo IPP_PATH . "long_term_goal_view.php"; ?>" method="get" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+<table border="0" cellspacing="0" cellpadding ="0" width="80%">
+<tr>
+<td colspan="3">
+<p class="info_text">New long term goal</p>
+<input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
+</td>
                         </tr>
                         <tr>
                            <td bgcolor="#E0E2F2" class="row_default">Goal Area:</td>
