@@ -464,12 +464,13 @@ if(!$area_type_result) {
                           $date_seconds = mktime(0,0,0,$date_split[1],$date_split[2],$date_split[0]); //since j1,1970
                           //start div row
                           echo "<div class=\"col-md-12\">";
-                          if($goal['is_complete']=='Y') {
+                          /*if($goal['is_complete']=='Y') {
                             echo "<h3><img src=\"" . IPP_PATH . "images/checkmark_black.png\" align=\"left\" border=\"0\" width=\"15\" height=\"15\">&nbsp;&nbsp;";
                           } else {
                             echo "<h3><img src=\"" . IPP_PATH . "images/arrow_black.png\" align=\"left\" border=\"0\" width=\"15\" height=\"15\">&nbsp;&nbsp;";
                           }
-                          echo "<small>&nbsp" . $goal_num . "</small>&nbsp";
+                          */
+                          echo "<h3><small>Goal &nbsp;" . $goal_num . ": &nbsp; </small>&nbsp";
                           $goal_num++;
                           echo $goal['goal'];
                           
@@ -478,7 +479,7 @@ if(!$area_type_result) {
                             echo " <small>Review date (expired): <a href=\"" . IPP_PATH . "add_objectives.php?student_id=$student_id&lto=" . $goal['goal_id']  . "\"";
                             if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
                             else echo "onClick=\"return changeStatusCompleted();\">";
-                            echo "&nbsp" . $goal['review_date'] . "</small></h3>";
+                            echo "Goal &nbsp" . $goal['review_date'] . "</small></h3>";
                           }
                           else {
                             echo " class=\"goal_date_future\">Review date: <a href=\"" . IPP_PATH . "add_objectives.php?student_id=$student_id&lto=" . $goal['goal_id']  . "\"";
@@ -535,14 +536,13 @@ if(!$area_type_result) {
                             //output this note...
                             //check if we have no notes
                             if(mysql_num_rows($short_term_objective_result) <= 0 ) {
-                              echo "<table class=\"table table-striped\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">";
-                              echo "<tr><td colspan=\"2\" class=\"objective_text\">No Objectives Added</td></tr>";
-                              echo "</table><BR>\n";
+                              echo "<div class=container id=\"objective-text\"><div class=\"row\"><div class=\"row\"><div class=\"col-md-12\">No Objectives Added";
+                              echo "</div></div></div>";
                             }
                             $obj_num=1;
                             while ($short_term_objective_row = mysql_fetch_array($short_term_objective_result)) {
 								//start div row
-                        	  echo "<div class=\"container\"><div class=\"col-md-12\">";
+                        	  echo "<div class=\"container\" id=\"objective\"><div class=\"row\"><div class=\"col-md-12\">";
                               //output the objective title
                               
                               //begin review date
@@ -552,13 +552,13 @@ if(!$area_type_result) {
                               $date_seconds = mktime(0,0,0,$date_split[1],$date_split[2],$date_split[0]); //since j1,1970
                              
                               //Objective Description
-                            if($short_term_objective_row['achieved']=='Y') {
+                            /*if($short_term_objective_row['achieved']=='Y') {
                                 echo "<h4><img src=\"" . IPP_PATH . "images/checkmark_black.png\" border=\"0\" width=\"15\" height=\"15\">";
                               } else {
                                 echo "<h4><img src=\"" . IPP_PATH . "images/arrow_black.png\" border=\"0\" width=\"15\" height=\"15\">";
-                              }
+                              } */
                               
-                              echo "<small>&nbsp" . $obj_num . "&nbsp;" . "</small>";
+                              echo "<h4><small>Objective &nbsp " . $obj_num . ": &nbsp;" . "</small>";
                               
                               //increment
                               $obj_num++;
@@ -610,10 +610,9 @@ if(!$area_type_result) {
 							  echo "</ul>";
                               
                               //output the  assmt   etc...
-                              echo "<div class=\"row\"><div class=\"col-md-6\">";
-							  echo "<h5><strong>Assessment Procedure</strong></h5>";
+                              echo "<h5><strong>Assessment Procedure</strong></h5>";
                               echo $short_term_objective_row['assessment_procedure'];
-							echo "</div>";                            
+							                            
                              
                               //output the actual data
                               
@@ -621,22 +620,20 @@ if(!$area_type_result) {
                               
 
                              
-                              echo "<div class=\"col-md-6\">";
+                              
                               echo "<h5><strong>Strategies</strong></h5>";
 								echo  $short_term_objective_row['strategies'];
-                             echo "</div>";
-							echo "</div>";
+                             
 
                               
 
                               
-								echo "<div class=\"row\">";
-								echo "<div class=\"col-md-12\">";
+								
                               echo "<h5><strong>Progress Review</strong></h5>";
                               echo $short_term_objective_row['results_and_recommendations'];
-                             echo "</div>";
+                             
                               //end output the actual data
-                              echo "</div></div>";
+                              echo "</div></div></div>";
                             }
                           }
                         }
