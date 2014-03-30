@@ -453,69 +453,74 @@ if(!$area_type_result) {
                         }*/
                         $goal_num=1;
                         while($goal = mysql_fetch_array($long_goal_result)) {
-                          echo "<h2><a class=\"large\" href=\"" . IPP_PATH . "add_objectives.php?student_id=$student_id&lto=" . $goal['goal_id']  . "\"";
+                          echo "<h2><a href=\"" . IPP_PATH . "add_objectives.php?student_id=" . $student_id . "&lto=" . $goal['goal_id']  . "\"";
                           if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
-                          else echo "onClick=\"return changeStatusCompleted();\"";
-                          echo " class=\"small\">" . $goal['area'] . "</a></h2></td></tr></table>";
-                          echo "<table class=\"table table-striped\" width=\"80%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">";
-                          echo "<tr><td align=\"right\" colspan=\"3\"";
+                          	else echo "onClick=\"return changeStatusCompleted();\"";
+                          	echo  ">" . $goal['area'] . "</a></h2>";
+                         	 
+                         	 
                           $today = time(); #today's date in seconds since January 1, 1970
                           $date_split = split("-",$goal['review_date']);
                           $date_seconds = mktime(0,0,0,$date_split[1],$date_split[2],$date_split[0]); //since j1,1970
-                          if($today >= $date_seconds && $goal['is_complete'] != 'Y') {
-                            echo " class=\"goal_date_past\">Review date (expired): <a href=\"" . IPP_PATH . "add_objectives.php?student_id=$student_id&lto=" . $goal['goal_id']  . "\"";
+                          //start div row
+                          echo "<div class=\"col-md-12\">";
+                          if($goal['is_complete']=='Y') {
+                            echo "<h3><img src=\"" . IPP_PATH . "images/checkmark_black.png\" align=\"left\" border=\"0\" width=\"15\" height=\"15\">&nbsp;&nbsp;";
+                          } else {
+                            echo "<h3><img src=\"" . IPP_PATH . "images/arrow_black.png\" align=\"left\" border=\"0\" width=\"15\" height=\"15\">&nbsp;&nbsp;";
+                          }
+                          echo "<small>&nbsp" . $goal_num . "</small>&nbsp";
+                          $goal_num++;
+                          echo $goal['goal'];
+                          
+						  //output status/completion
+                        if($today >= $date_seconds && $goal['is_complete'] != 'Y') {
+                            echo " <small>Review date (expired): <a href=\"" . IPP_PATH . "add_objectives.php?student_id=$student_id&lto=" . $goal['goal_id']  . "\"";
                             if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
                             else echo "onClick=\"return changeStatusCompleted();\">";
-                            echo "<b>" . $goal['review_date'] . "</b></a></td></tr>";
+                            echo "&nbsp" . $goal['review_date'] . "</small></h3>";
                           }
                           else {
                             echo " class=\"goal_date_future\">Review date: <a href=\"" . IPP_PATH . "add_objectives.php?student_id=$student_id&lto=" . $goal['goal_id']  . "\"";
                             if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
                             else echo "onClick=\"return changeStatusCompleted();\">";
-                            echo "<b>" . $goal['review_date'] . "</b></a></td></tr>";
+                            echo "&nbsp" . $goal['review_date'] . "</small></h3>";
                           }
-                          echo "<tr><td valign=\"middle\" width=\"20\">";
-                          if($goal['is_complete']=='Y') {
-                            echo "<img src=\"" . IPP_PATH . "images/checkmark_black.png\" align=\"left\" border=\"0\" width=\"15\" height=\"15\">&nbsp;&nbsp;";
-                          } else {
-                            echo "<img src=\"" . IPP_PATH . "images/arrow_black.png\" align=\"left\" border=\"0\" width=\"15\" height=\"15\">&nbsp;&nbsp;";
-                          }
-                          echo "<td valign=\"top\" width=\"15\" class=\"goal_number\">$goal_num</td>";
-                          $goal_num++;
-                          echo "</td><td valign=\"top\" class=\"goal_text\" bgcolor=\"#E0E2F2\"><b>" . $goal['goal'] . "</b>";
-                          //output the complete/uncomplete button...
+                         //Start horizontal list
+                         echo "<ul class=\"list-inline\">";
+                        //output the complete/uncomplete button...
                           if($goal['is_complete'] == 'Y') {
-                            echo "&nbsp;<a href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&setUncompleted=" . $goal['goal_id'] . "\"";
+                            echo "<li><a href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&setUncompleted=" . $goal['goal_id'] . "\"";
                             if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
                             else echo "onClick=\"return changeStatusCompleted();\"";
-                            echo " class=\"small\">Set Uncompleted</a>";
+                            echo "Set Uncompleted</a></li>";
                           } else {
-                            echo "&nbsp;<a href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&setCompleted=" . $goal['goal_id'] . "\"";
+                            echo "<li><a href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&setCompleted=" . $goal['goal_id'] . "\"";
                             if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
                             else echo "onClick=\"return changeStatusCompleted();\"";
-                            echo " class=\"small\">Set Completed</a>";
+                            echo ">Set Completed</a></li>";
                           }
-
+                          
                           //output the add objectives button.
-                          echo "&nbsp;<a href=\"" . IPP_PATH . "add_objectives.php?&student_id=" . $student_id  . "&lto=" . $goal['goal_id'] . "\"";
+                          echo "<li><a href=\"" . IPP_PATH . "add_objectives.php?&student_id=" . $student_id  . "&lto=" . $goal['goal_id'] . "\"";
                           if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
                           else echo "onClick=\"return changeStatusCompleted();\"";
-                          echo " class=\"small\">Add Objective</a>";
+                          echo ">Add Objective</a></li>";
 
                           //output the edit button.
-                          echo "&nbsp;<a href=\"" . IPP_PATH . "add_objectives.php?student_id=$student_id&lto=" . $goal['goal_id']  . "\"";
+                          echo "<li><a href=\"" . IPP_PATH . "add_objectives.php?student_id=$student_id&lto=" . $goal['goal_id']  . "\"";
                           if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
                           else echo "onClick=\"return changeStatusCompleted();\"";
-                          echo " class=\"small\">Edit</a>";
+                          echo ">Edit</a></li>";
 
-                          echo "&nbsp;<a href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id  . "&deleteLTG=" . $goal['goal_id'] . "\"";
+                          echo "<li><a href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id  . "&deleteLTG=" . $goal['goal_id'] . "\"";
                           if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
                           else echo "onClick=\"return changeStatusCompleted();\"";
-                          echo " class=\"small\">Delete</a>";
-
+                          echo ">Delete</a></li>";
+						//end horizontal list
+                          echo "</ul>";
                           //finish...
-                          echo "</p></td></tr>";
-                          echo "</table><BR>\n";
+                          echo "</div>";
 
                           //short term objectives
                           $short_term_objective_query = "SELECT * FROM short_term_objective WHERE goal_id=" . $goal['goal_id'] . " ORDER BY achieved ASC";
@@ -536,48 +541,59 @@ if(!$area_type_result) {
                             }
                             $obj_num=1;
                             while ($short_term_objective_row = mysql_fetch_array($short_term_objective_result)) {
-
+								//start div row
+                        	  echo "<div class=\"container\"><div class=\"col-md-12\">";
                               //output the objective title
-                              echo "<table class=\"table table-striped\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">";
+                              
                               //begin review date
-                              echo "<tr><td align=\"right\" colspan=\"3\"";
+                              
                               $now = time(); #today's date in seconds since January 1, 1970
                               $date_split = split("-",$short_term_objective_row['review_date']);
                               $date_seconds = mktime(0,0,0,$date_split[1],$date_split[2],$date_split[0]); //since j1,1970
+                             
+                              //Objective Description
+                            if($short_term_objective_row['achieved']=='Y') {
+                                echo "<h4><img src=\"" . IPP_PATH . "images/checkmark_black.png\" border=\"0\" width=\"15\" height=\"15\">";
+                              } else {
+                                echo "<h4><img src=\"" . IPP_PATH . "images/arrow_black.png\" border=\"0\" width=\"15\" height=\"15\">";
+                              }
+                              
+                              echo "<small>&nbsp" . $obj_num . "&nbsp;" . "</small>";
+                              
+                              //increment
+                              $obj_num++;
+                              echo $short_term_objective_row['description'];
+								//End Objective Description
+                               //Figure Review Date
                               if($now > $date_seconds && $short_term_objective_row['achieved']!='Y') { //$today >= $date_seconds) {
-                                        echo " class=\"objective_date_past\">Review Date (expired): <a href=\"" . IPP_PATH . "edit_short_term_objective.php?sto=" . $short_term_objective_row['uid'] . "&student_id=" . $student_id . "\"";
+                                        echo " &nbsp; <small>Review Date (expired): <a href=\"" . IPP_PATH . "edit_short_term_objective.php?sto=" . $short_term_objective_row['uid'] . "&student_id=" . $student_id . "\"";
                                         if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
                                         else echo "onClick=\"return changeStatusCompleted();\">";
-                                        echo "<b>" . $short_term_objective_row['review_date'] . "</b></a></td></tr>";
+                                        echo $short_term_objective_row['review_date'] . "</small></h4>";
                               }
                               else {
-                                   echo " class=\"objective_date_future\">Review date: <a href=\"" . IPP_PATH . "edit_short_term_objective.php?sto=" . $short_term_objective_row['uid'] . "&student_id=" . $student_id  . "\"";
+                                   echo  "&nbsp; <small>Review date: <a href=\"" . IPP_PATH . "edit_short_term_objective.php?sto=" . $short_term_objective_row['uid'] . "&student_id=" . $student_id  . "\"";
                                    if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
                                    else echo "onClick=\"return changeStatusCompleted();\">";
-                                   echo "<b>" . $short_term_objective_row['review_date'] . "</b></a></td></tr>";
+                                   echo $short_term_objective_row['review_date'] . "</small></h4>";
                               }
                               //end review date
-                              echo "<tr><td width=\"20\">";
-                              if($short_term_objective_row['achieved']=='Y') {
-                                echo "<img src=\"" . IPP_PATH . "images/checkmark_black.png\" border=\"0\" width=\"15\" height=\"15\">";
-                              } else {
-                                echo "<img src=\"" . IPP_PATH . "images/arrow_black.png\" border=\"0\" width=\"15\" height=\"15\">";
-                              }
-                              echo "<td valign=\"top\" width=\"15\" class=\"goal_number\">" . $obj_num . ")&nbsp;</td>";
-                              $obj_num++;
-                              echo "</td><td class=\"objective_text\">" . $short_term_objective_row['description'];
-
-                              //output the complete/uncomplete button...
+								//Start horizontal list
+                         echo "<ul class=\"list-inline\">";
+								
+								
+								
+								//output the complete/uncomplete button...
                               if($short_term_objective_row['achieved'] == 'Y') {
                                 echo "&nbsp;<a href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&setSTOUncompleted=" . $short_term_objective_row['uid'] . "\"";
                                 if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
                                 else echo "onClick=\"return changeStatusCompleted();\"";
-                                echo " class=\"small\">Set Uncompleted</a>";
+                                echo " ><li>Set Uncompleted</a></li>";
                               } else {
-                                echo "&nbsp;<a href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&setSTOCompleted=" . $short_term_objective_row['uid'] . "\"";
+                                echo "<a href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&setSTOCompleted=" . $short_term_objective_row['uid'] . "\"";
                                 if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
                                 else echo "onClick=\"return changeStatusCompleted();\"";
-                                echo " class=\"small\">Set Completed</a>";
+                                echo "><li>Set Completed</a></li>";
 
                               }
 
@@ -585,58 +601,46 @@ if(!$area_type_result) {
                               echo "&nbsp;<a href=\"" . IPP_PATH . "edit_short_term_objective.php?sto=" . $short_term_objective_row['uid'] . "&student_id=" . $student_id  . "\"";
                               if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
                               else echo "onClick=\"return changeStatusCompleted();\"";
-                              echo "Edit</a>";
-
-                              echo "&nbsp;<a href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&deleteSTO=" . $short_term_objective_row['uid'] . "\"";
+                              echo "<li>Edit</a></li>";
+								//output delete objective buttion
+                              echo "<li><a href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&deleteSTO=" . $short_term_objective_row['uid'] . "\"";
                               if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
                               else echo "onClick=\"return changeStatusCompleted();\"";
-                              echo ">Delete</a>";
-
-                              echo "</td></tr>";
-                              echo "</table>";
-
-                              //output the results /assmt / etc...
-                              echo "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">";
-                              echo "<tr><td class=\"wrap_top_notext\" colspan=\"2\">&nbsp;</td></tr>";
-                              echo "<tr><td class=\"wrap_left\">";
+                              echo ">Delete</a></li>";
+							  echo "</ul>";
+                              
+                              //output the  assmt   etc...
+                              echo "<div class=\"row\"><div class=\"col-md-6\">";
+							  echo "<h5><strong>Assessment Procedure</strong></h5>";
+                              echo $short_term_objective_row['assessment_procedure'];
+							echo "</div>";                            
+                             
                               //output the actual data
-                              echo "<p>Assessment Procedure:</p>";
+                              
 
-                              //output the add edit button.
-                              echo "&nbsp;<a href=\"" . IPP_PATH . "edit_short_term_objective.php?sto=" . $short_term_objective_row['uid'] . "&student_id=" . $student_id  . "\"";
-                              if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
-                              else echo "onClick=\"return changeStatusCompleted();\"";
-                              echo " class=\"small\">Edit</a><p>";
+                              
 
                              
-                              echo $short_term_objective_row['assessment_procedure'] . "</p>";
-                              echo "<p>Strategies:</p>";
+                              echo "<div class=\"col-md-6\">";
+                              echo "<h5><strong>Strategies</strong></h5>";
+								echo  $short_term_objective_row['strategies'];
+                             echo "</div>";
+							echo "</div>";
 
-                             //output the add edit button for strategy.
-                             echo "<a href=" . IPP_PATH . "edit_short_term_objective.php?sto=" . $short_term_objective_row['uid'] . "&student_id=" . $student_id;
-                             if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
-                              	else echo "onClick=\"return changeStatusCompleted();\""; 
-                              echo "Edit:</a>";
+                              
 
-                            
-                              echo  "<p>" . $short_term_objective_row['strategies'] . "</p>";
-                              echo "<p>Progress Review:</p>" ;
-
-                              //output the add edit button.
-                              echo "&nbsp;<a href=\"" . IPP_PATH . "edit_short_term_objective.php?sto=" . $short_term_objective_row['uid'] . "&student_id=" . $student_id  . "\"";
-                              if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
-                              else echo "onClick=\"return changeStatusCompleted();\"";
-                              echo " class=\"small\">Edit</a>";
-
-                              echo "<BR>";
+                              
+								echo "<div class=\"row\">";
+								echo "<div class=\"col-md-12\">";
+                              echo "<h5><strong>Progress Review</strong></h5>";
                               echo $short_term_objective_row['results_and_recommendations'];
+                             echo "</div>";
                               //end output the actual data
-                              echo "</td><td class=\"wrap_right\">&nbsp;</td></tr>";
-                              echo "<tr><td class=\"wrap_bottom_left\">&nbsp;</td><td class=\"wrap_bottom_right\">&nbsp;</td></tr>";
-                              echo "</table><BR>\n";
+                              echo "</div></div>";
                             }
                           }
                         }
+                        
                         ?>
                         
                         <!-- END  goals -->
