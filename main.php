@@ -196,11 +196,11 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
         </div>
       </div>     
       <hr>
-
+</div> <!-- /container -->
       <footer>
         <p>&copy; Chelsea School 2014</p>
       </footer>
-    </div> <!-- /container -->
+    
 
 
     <!-- Bootstrap core JavaScript

@@ -134,7 +134,7 @@ if(isset($_GET['deleteSTO']) && $have_write_permission) {
    $update_result = mysql_query($update_query);
    if(!$update_result) {
        $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$update_query'<BR>";
-       $system_message=$system_message . $error_message;
+       $system_message=$error_message . $system_message;
        IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
    }
    //else $system_message = $system_message . "Goal Deleted: $delete_query<BR>";
@@ -146,7 +146,7 @@ if(isset($_GET['deleteLTG']) && $have_write_permission) {
    $update_result = mysql_query($update_query);
    if(!$update_result) {
        $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$update_query'<BR>";
-       $system_message=$system_message . $error_message;
+       $system_message=$error_message . $system_message;
        IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
    }  else {
      //delete the ltg's
@@ -154,7 +154,7 @@ if(isset($_GET['deleteLTG']) && $have_write_permission) {
      $update_result = mysql_query($update_query);
      if(!$update_result) {
        $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$update_query'<BR>";
-       $system_message=$system_message . $error_message;
+       $system_message=$error_message . $system_message;
        IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
      } //else { $system_message = $system_message . "OKIE DOKIE<BR>"; }
    }
@@ -165,8 +165,8 @@ if(isset($_GET['setCompleted']) && $have_write_permission) {
    $update_query = "UPDATE long_term_goal SET is_complete='Y' WHERE goal_id=" . mysql_real_escape_string($_GET['setCompleted']);
    $update_result = mysql_query($update_query);
    if(!$update_result) {
-       $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$update_query'<BR>";
-       $system_message=$system_message . $error_message;
+       $error_message = $error_message. "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$update_query'<BR>";
+       $system_message = $error_message . $system_message;
        IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
    }
    //else $system_message = $system_message . "Goal Deleted: $delete_query<BR>";
@@ -176,8 +176,8 @@ if(isset($_GET['setSTOCompleted']) && $have_write_permission) {
    $update_query = "UPDATE short_term_objective SET achieved='Y' WHERE uid=" . mysql_real_escape_string($_GET['setSTOCompleted']);
    $update_result = mysql_query($update_query);
    if(!$update_result) {
-       $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$update_query'<BR>";
-       $system_message=$system_message . $error_message;
+       $error_message = $error_message. "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$update_query'<BR>";
+       $system_message=$system_message . $system_message;
        IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
    }
    //else $system_message = $system_message . "Goal Deleted: $delete_query<BR>";
@@ -650,7 +650,9 @@ if(!$area_type_result) {
         
         </table> 
 </div> <!-- end of div class container -->
-
+<footer>
+<p>&copy; Chelsea School 2014</p>
+</footer>
 <!-- Bootstrap core JavaScript
 ================================================== -->
 
