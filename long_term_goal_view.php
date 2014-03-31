@@ -336,7 +336,8 @@ if(!$area_type_result) {
 
     <!-- Custom styles for this template -->
     <link href="./css/jumbotron.css" rel="stylesheet">
-   
+   <style type="text/css">body { padding-bottom: 70px; }
+   </style>
     
      
      <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
@@ -461,6 +462,7 @@ if ($details="hide")
 
 <h1>Goals: <small><?php echo $student_row['first_name'] . " " . $student_row['last_name'] ?> </small></h1>
 <h2>Logged in as: <small><?php echo $_SESSION['egps_username']; ?> (Permission: <?php echo $our_permission; ?>)</small></h2>
+
 </div>
 
 </div>
@@ -468,9 +470,9 @@ if ($details="hide")
 </div>
  
 <!--  End Jumbotron -->
-
-
-
+<div class=container>
+<p size="small"><strong>Release Note</strong>: Details of objectives are hidden on this page for this release.</p>
+</div>
 
 
 
