@@ -234,11 +234,7 @@ if(!$area_type_result) {
 <HEAD>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
     <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
+    
    
      <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
      <script language="javascript" src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script>

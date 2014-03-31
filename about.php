@@ -54,7 +54,7 @@ header('Pragma: no-cache'); //don't cache this page!
     <link href="./css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="./jumbotron.css" rel="stylesheet">
+    <link href="./css/jumbotron.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -77,7 +77,7 @@ header('Pragma: no-cache'); //don't cache this page!
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">MyIEP</a>
+          <a class="navbar-brand" href="main.php">MyIEP</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">

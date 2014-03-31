@@ -438,7 +438,7 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
                               <tr><td bgcolor="#E0E2F2" valign="middle">
                               <p class="info"><b>Goal Area:&nbsp;</b>
                               </td><td bgcolor="#E0E2F2">
-                              <input type="text" size="30" maxsize="100" name="goal_area" value="<?php echo $goal_row['area']; ?>">
+                              <input type="text" size="30" spellcheck="true" maxsize="100" name="goal_area" value="<?php echo $goal_row['area']; ?>">
                               </td>
                               <td bgcolor="#E0E2F2" rowspan="3">
                               <input type="submit" name="Update" value="Update">
@@ -447,7 +447,7 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
                               <tr><td bgcolor="#E0E2F2" valign="middle">
                               <p class="info"><b>Goal:</b>
                               </td><td bgcolor="#E0E2F2">
-                              <textarea name="goal_text" cols="45" rows="3" wrap="soft"><?php echo $goal_row['goal']; ?></textarea>
+                              <textarea name="goal_text" spellcheck="true" cols="45" rows="3" wrap="soft"><?php echo $goal_row['goal']; ?></textarea>
                               </td></tr>
                               <tr><td bgcolor="#E0E2F2" valign="middle">
                               <p class="info"><b>Review Date:&nbsp;</b>
@@ -488,7 +488,7 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
                         <tr>
                             <td valign="center" bgcolor="#E0E2F2" class="row_default">Short Term<BR>Objective:</td>
                             <td bgcolor="#E0E2F2" class="row_default">
-                            <textarea name="description" tabindex="1" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['description'])) echo $_POST['description']; ?></textarea>
+                            <textarea spellcheck="true" name="description" tabindex="1" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['description'])) echo $_POST['description']; ?></textarea>
                             </td>
                         </tr>
                         <tr>
@@ -500,19 +500,19 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
                         <tr>
                             <td valign="center" bgcolor="#E0E2F2" class="row_default">Assessment Procedure:</td>
                             <td bgcolor="#E0E2F2" class="row_default" valign="top">
-                            <textarea name="assessment_procedure" tabindex="3" cols="35" rows="3" onkeypress="return autocomplete(this,event,popuplist)" wrap="soft"><?php if(isset($_POST['assessment_procedure'])) echo $_POST['assessment_procedure']; ?></textarea> &nbsp;<img src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" width="17" border=0 onClick="popUpChooser(this,document.all.assessment_procedure)" >
+                            <textarea spellcheck="true" name="assessment_procedure" tabindex="3" cols="35" rows="3" onkeypress="return autocomplete(this,event,popuplist)" wrap="soft"><?php if(isset($_POST['assessment_procedure'])) echo $_POST['assessment_procedure']; ?></textarea> &nbsp;<img src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" width="17" border=0 onClick="popUpChooser(this,document.all.assessment_procedure)" >
                             </td>
                         </tr>
                         <tr>
                             <td valign="center" bgcolor="#E0E2F2" class="row_default">Strategies:</td>
                             <td bgcolor="#E0E2F2" class="row_default">
-                            <textarea name="strategies" tabindex="4" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['strategies'])) echo $_POST['strategies']; ?></textarea>
+                            <textarea spellcheck="true" name="strategies" tabindex="4" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['strategies'])) echo $_POST['strategies']; ?></textarea>
                             </td>
                         </tr>
                         <tr>
                             <td valign="center" bgcolor="#E0E2F2" class="row_default">Progress Review:</td>
                             <td bgcolor="#E0E2F2" class="row_default">
-                            <textarea name="results_and_recommendations" tabindex="5" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['results_and_recommendations'])) echo $_POST['results_and_recommendations']; ?></textarea>
+                            <textarea spellcheck="true" name="results_and_recommendations" tabindex="5" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['results_and_recommendations'])) echo $_POST['results_and_recommendations']; ?></textarea>
                             </td>
                         </tr>
                         <tr>

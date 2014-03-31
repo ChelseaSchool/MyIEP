@@ -188,6 +188,7 @@ if(!$student_result) {
 </HEAD>
 
 <BODY>
+
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container">
 			<div class="navbar-header">
@@ -243,9 +244,9 @@ if(!$student_result) {
 <div class="col-md-6">
 <fieldset>				
 <label>Short Term Objective</label>
-<p><textarea name="description" cols="40" rows="3" wrap="soft"><?php echo $goal_row['description']; ?></textarea></p>
+<p><textarea spellcheck="true" name="description" cols="40" rows="3" wrap="soft"><?php echo $goal_row['description']; ?></textarea></p>
 <label>Progress Review</label>
-<p><textarea name="results_and_recommendations" cols="40" rows="10" autofocus wrap="soft"><?php echo stripslashes($goal_row['results_and_recommendations']); ?></textarea></p>
+<p><textarea spellcheck="true" name="results_and_recommendations" cols="40" rows="10" autofocus wrap="soft"><?php echo stripslashes($goal_row['results_and_recommendations']); ?></textarea></p>
 <div class="form-actions">
   <button type="submit" class="btn btn-primary">Save changes</button>
 </div>
@@ -261,15 +262,15 @@ if(!$student_result) {
 <input type="hidden" name="sto" value="<?php echo $goal_row['uid']; ?>"> 
 <input type="hidden" name="edit" value="1">
 <label>Long Term Goal</label>
-<p><textarea disabled name="text" cols="40" rows="3" wrap="soft"><?php echo $goal_row['goal']; ?></textarea></p>
+<p><textarea spellcheck="true" disabled name="text" cols="40" rows="3" wrap="soft"><?php echo $goal_row['goal']; ?></textarea></p>
 <label>Review Date</label>
 <script type="text/javascript" src="./js/bootstrap-datepicker.js">$('.datepicker').datepicker()</script>
 <p><input type=datepicker name="review_date" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="<?php echo $goal_row['review_date']; ?>"></p>
 <!-- Lagacy Datepicker: &nbsp;<img	src='<?php echo IPP_PATH . "images/calendaricon.gif"; ?>' height="17" width="17" border="0" onClick="popUpCalendar(this, document.all.review_date, 'yyyy-m-dd', 0, 0)" alt="calendar">-->
 <label>Assessment Procedure</label>
-<p><textarea name="assessment_procedure" class="wideInput" cols="40" rows="3" wrap="soft"><?php echo $goal_row['assessment_procedure']; ?></textarea></p>
+<p><textarea spellcheck="true" name="assessment_procedure" class="wideInput" cols="40" rows="3" wrap="soft"><?php echo $goal_row['assessment_procedure']; ?></textarea></p>
 <label>Strategies</label>
-<p><textarea name="strategies" class="wideInput" cols="40" rows="3" wrap="soft"><?php echo $goal_row['strategies']; ?></textarea></p>
+<p><textarea spellcheck="true" name="strategies" class="wideInput" cols="40" rows="3" wrap="soft"><?php echo $goal_row['strategies']; ?></textarea></p>
 <p>
 </div>
 </fieldset>				

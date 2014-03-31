@@ -219,7 +219,7 @@ function get_age_by_date($yyyymmdd)
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
+            <li><a href="main.php">Home</a></li>
             <li><a href="about.php">About</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Records: <?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?><b class="caret"></b></a>
@@ -282,11 +282,11 @@ function get_age_by_date($yyyymmdd)
         <h1>Student View: <?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?></h1>
         <p>Current Age: <?php echo get_age_by_date($student_row['birthday']) ?></p>
 		<p>Grade: <?php echo $student_row['current_grade']; ?></p>
-		<p>Access Level: <?php echo $our_permission ?>
+		<p>User: <?php echo $_SESSION['egps_username'] ?> (Access Level: <?php echo $our_permission ?>)
 <?php if($school_row['school_name']=="") echo "<p>Archived Student</p>"  ?>
 <!-- Placeholder in event of system message -->        
 <?php if ($system_message) { echo "<p>" . $system_message . "</p>";} ?>
-        <p><a class="btn btn-primary btn-lg" href=""<?php echo IPP_PATH . "ipp_pdf.php?student_id=" . $student_row['student_id'] . "&file=ipp.pdf";?>" target="_blank" role="button">View IEP &raquo;</a></p>
+        <p><a class="btn btn-primary btn-lg" href="<?php echo IPP_PATH . "ipp_pdf.php?student_id=" . $student_row['student_id'] . "&file=ipp.pdf";?>" target="_blank" role="button">View IEP &raquo;</a></p>
   
       </div>
     </div>

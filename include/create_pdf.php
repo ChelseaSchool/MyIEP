@@ -6,21 +6,11 @@
  * 4. Some dev notes to self. Make productive.
  * 5. Change copyright header
  * 6. include abbreviated gpl in header - see license for guidelines
-/*
+*/
 //the authorization level for this page!
 //$MINIMUM_AUTHORIZATION_LEVEL = 100; //everybody
 error_reporting(0); //no errors/warnings for this page!
-/**
- * create_pdf.php
- *
- * Copyright (c) 2005 Grasslands Regional Division #6
- * All rights reserved
- *
- * Created: Feb 15, 2006
- * By: M. Nielsen
- * Modified:
- *
- */
+
 
 /*   INPUTS: $_GET['student_id'] || $_PUT['student_id']
  *
@@ -34,7 +24,7 @@ $system_message = "";
 
 //define('IPP_PATH','../');
 
-//to define the font path  (manditory trailing slash)
+//to define the font path  (mandatory trailing slash)
 //define('FPDF_FONTPATH','/var/www/ssl/ipp/layout/fonts/');
 //define('FPDF_FONTPATH',IPP_PATH . 'layout/fonts/');
 //$this->SetFont('chanticl.ttf','B',12);
@@ -380,7 +370,7 @@ function create_pdf($student_id) {
   class IPP extends FPDF  //all this and OO too weeeeeeee
 
   {
-     //Page header
+    
      function Header()
      {
         global $PDF_LOGO_PATH,$IPP_ORGANIZATION,$student_row,$IPP_ORGANIZATION_ADDRESS1,$IPP_ORGANIZATION_ADDRESS2,$IPP_ORGANIZATION_ADDRESS3;
@@ -424,7 +414,7 @@ function create_pdf($student_id) {
          $this->SetTextColor(153,153,153);  //greyish
          $this->SetFillColor(255,255,255);
          $this->Ln(1);
-         $this->MultiCell(0,5,"IEP-IPP System �2005-2007 Grasslands Public Schools and licensed under the Gnu Public License (www.iep-ipp.com)",'T','C',1);
+         $this->MultiCell(0,5,"MYIEP System Copyright 2014 Chelsea School | �2005-2007 Grasslands Public Schools | licensed under the Gnu Public License",'T','C',1);
 
          //Set colour back
          $this->SetTextColor(0,0,0);  // Well, I'm back in black, yes I'm back in black!
@@ -438,7 +428,7 @@ function create_pdf($student_id) {
 
   //set the pdf information
   $pdf->SetAuthor(username_to_common($_SESSION['egps_username']));
-  $pdf->SetCreator('Grasslands IPP System- Michael Nielsen Developer');
+  $pdf->SetCreator('MyIEP Special Education Program Management');
   $pdf->SetTitle('Individual Program Plan - ' . $student_row['first_name'] . ' ' . $student_row['last_name']);
 
 
@@ -447,17 +437,18 @@ function create_pdf($student_id) {
   $pdf->SetTextColor(220,50,50); //set the colour a loverly redish
   $pdf->Cell(30);
   $pdf->Cell(130,5,'  Program Plan ',0,0,'C');
-  $pdf->Image(IPP_PATH . 'images/bounding_box.png',$pdf->GetX()-1,$pdf->GetY()-4);
+  //$pdf->Image(IPP_PATH . 'images/bounding_box.png',$pdf->GetX()-1,$pdf->GetY()-4);
   $mark = $pdf->GetY();
-  if(isset($code) && is_numeric($code)) {
+  /* if(isset($code) && is_numeric($code)) {
     $pdf->SetFont('Times','B',50);
     if($code > 99) $pdf->SetFont('Times','B',30);   
     if($code >999) $pdf->SetFont('Times','B',25);
     if($code >9999) $pdf->SetFont('Times','B',20);
-  }else {
+  }else { */
     $pdf->SetFont('Times','B',10);
-    $code=$code; //" Not\nCoded";
-  }
+    //$code=$code; //
+    $code="Not Coded";
+ // } 
   $pdf->SetTextColor(0,51,0);  //grey
   $pdf->SetFillColor(240,240,240);  // white
   $pdf->SetDrawColor(0,0,0); //blueish

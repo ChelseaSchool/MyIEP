@@ -1,6 +1,6 @@
 <?php
-/**
- * @BRIEF 	produces IEP PDF report
+/** @file
+ * @brief 	produces IEP PDF report
  * 
  */
  
