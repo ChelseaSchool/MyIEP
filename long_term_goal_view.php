@@ -576,7 +576,7 @@ if(!$short_term_objective_result) {
 	//check if we have no notes
  		if(mysql_num_rows($short_term_objective_result) <= 0 ) {
 			
-			echo "<p>No Objectives Added<p>";
+			echo"<div class=\"container\"><p>No Objectives Added</p></div>";
 		
 		}
 	$obj_num=1;
