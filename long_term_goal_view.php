@@ -336,8 +336,7 @@ if(!$area_type_result) {
 
     <!-- Custom styles for this template -->
     <link href="./css/jumbotron.css" rel="stylesheet">
-   <style type="text/css">body { padding-bottom: 70px; }
-   </style>
+	<style type="text/css">body { padding-bottom: 70px; }</style>
     
      
      <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
@@ -361,9 +360,11 @@ if(!$area_type_result) {
       }
 
     </SCRIPT>
-<?php $details="hide"; ?> 
-<?php 
-if ($details="hide")
+<link rel=stylesheet type=text/css href=./css/jquery-ui-1.10.4.custom.css>
+
+<?php //$details="hide"; ?> 
+<?php  /*
+if  ($details="hide")
  {
 	echo "<style>";
 	echo "[id^=\"details\"]{";
@@ -378,11 +379,19 @@ if ($details="hide")
 		echo "   display: inline;";
 		echo "}";
 		echo "</style>";	
-	}
+	} */  
 ?>
+
+<script>
+
+function toggle ()
+{
+	$("div#details").toggle ("explode", 100)
+}
+</script>
+
 </HEAD>
 <BODY>
-
 
 
  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -462,16 +471,15 @@ if ($details="hide")
 
 <h1>Goals: <small><?php echo $student_row['first_name'] . " " . $student_row['last_name'] ?> </small></h1>
 <h2>Logged in as: <small><?php echo $_SESSION['egps_username']; ?> (Permission: <?php echo $our_permission; ?>)</small></h2>
-
+<button class="btn btn-lg btn-primary" onclick="toggle ()" role="button">Toggle Details &raquo;</button>
 </div>
 
 </div>
-</div>  
-</div>
+
  
 <!--  End Jumbotron -->
 <div class=container>
-<p size="small"><strong>Release Note</strong>: Details of objectives are hidden on this page for this release.</p>
+<p size="small"><em><strong>Release Note</strong>: Details of objectives are hidden on this page for this release. Click <a onclick="toggle ()">here</a> to toggle.</em></p>
 </div>
 
 
@@ -491,9 +499,9 @@ if(mysql_num_rows($long_goal_result) == 0 ) {
 		
 		
 		echo "<h2>" . $goal['area'] . "</h2>";
-		echo "<h3><small>Goal &nbsp;" . $goal_num . ") </small>";
+		echo "<h3><small>" . $goal_num . ") </small>";
         $goal_num++; //increment goal
-        echo $goal['goal'] . "</a></h3>"; //output goal
+        echo $goal['goal'] . "</a><span class=\"label label-default\">goal</span></h3>"; //output goal
         
 		//Review Date
 		$today = time(); #today's date in seconds since January 1, 1970
@@ -525,31 +533,31 @@ if(mysql_num_rows($long_goal_result) == 0 ) {
 			echo "&nbsp;<a href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&setUncompleted=" . $goal['goal_id'] . "\"";
 			if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
 			else echo "onClick=\"return changeStatusCompleted();\"";
-			echo "<button type=\"button\" class=\"btn btn-default\">Set Uncompleted</button></a>";
+			echo "<button type=\"button\" class=\"btn btn-xs btn-primary\">Set Uncompleted</button></a>";
 			} 
 			else 
 				{
                  echo "&nbsp;<a href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&setCompleted=" . $goal['goal_id'] . "\"";
 					if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
 					else echo "onClick=\"return changeStatusCompleted();\"";
-					echo "\"><button type=\"button\" class=\"btn btn-default\">Set Completed</button></a>";
+					echo "\"><button type=\"button\" class=\"btn btn-xs btn-primary\">Set Completed</button></a>";
 				}
         //output the add objectives button.
 		echo "&nbsp;<a href=\"" . IPP_PATH . "add_objectives.php?&student_id=" . $student_id  . "&lto=" . $goal['goal_id'] . "\"";
  		if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
 		else echo "onClick=\"return changeStatusCompleted();\"";
-		echo "\"><button type=\"button\" class=\"btn btn-default\">Add Objective</button></a>";
+		echo "\"><button type=\"button\" class=\"btn btn-xs btn-primary\">Add Objective</button></a>";
 
 		//output the edit button.
 		echo "&nbsp;<a href=\"" . IPP_PATH . "add_objectives.php?student_id=$student_id&lto=" . $goal['goal_id']  . "\"";
 		if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
   		else echo "onClick=\"return changeStatusCompleted();\"";
-		echo "\"><button type=\"button\" class=\"btn btn-default\">Edit</button></a>";
+		echo "\"><button type=\"button\" class=\"btn btn-xs btn-primary\">Edit</button></a>";
 
     	echo "&nbsp;<a href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id  . "&deleteLTG=" . $goal['goal_id'] . "\"";
   		if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
 		else echo "onClick=\"return changeStatusCompleted();\"";
-		echo "\"><button type=\"button\" class=\"btn btn-default\">Delete</button></a></div>";
+		echo "\"><button type=\"button\" class=\"btn btn-xs btn-primary\">Delete</button></a></div>";
 		echo "<hr>";
 		echo "</div></div></div>";//close row and column
 		
@@ -576,15 +584,15 @@ if(!$short_term_objective_result) {
 	//check if we have no notes
  		if(mysql_num_rows($short_term_objective_result) <= 0 ) {
 			
-			echo"<div class=\"container\"><p>No Objectives Added</p></div>";
+			echo "<div class=\"container\"><div class=\"alert alert-warning\">No Objectives Added</div></div>";
 		
 		}
 	$obj_num=1;
 	while ($short_term_objective_row = mysql_fetch_array($short_term_objective_result)) {
 		echo "<div class=\"row\" id=\"objectives\"><div class=\"col-md-12\"><div class=\"container\">";
-		echo "<h4><small>Objective &nbsp;" .$obj_num . ")&nbsp;</small>";
+		echo "<h4><small>" . $obj_num . ")&nbsp;</small>";
 		$obj_num++; //increment goal
-		echo $short_term_objective_row['description'] ."</h4>";
+		echo $short_term_objective_row['description'] . "$nbsp <span class=\"label label-info\">objective</span></h4>";
 
 	//begin review date
 		
@@ -607,32 +615,32 @@ if(!$short_term_objective_result) {
 	echo "<div class=\"container\">";	
 	//output the complete/uncomplete button...
 	echo "<div class=\"btn-group\">";
-		 
+	echo "<button class=\"btn btn-xs btn-primary\" onclick=\"toggle ()\" role=\"button\">Toggle Details</button>";	 
 	if($short_term_objective_row['achieved'] == 'Y') {
-		echo "&nbsp;<a href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&setSTOUncompleted=" . $short_term_objective_row['uid'] . "\"";
+		echo "&nbsp;<button href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&setSTOUncompleted=" . $short_term_objective_row['uid'] . "\"";
 		if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
 		else echo "onClick=\"return changeStatusCompleted();\"";
-		echo "\"><button type=\"button\" class=\"btn btn-xs\">Set Incomplete</button></a>";
+		echo "\" class=\"btn btn-xs btn-primary\">Set Incomplete</button>";
 		
 		
 	} 
 	else {
-		echo "&nbsp;<a href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&setSTOCompleted=" . $short_term_objective_row['uid'] . "\"";
+		echo "&nbsp;<button href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&setSTOCompleted=" . $short_term_objective_row['uid'] . "\"";
 		if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
 		else echo "onClick=\"return changeStatusCompleted();\"";
-		echo " \"><button type=\"button\" class=\"btn btn-xs\">Set Completed</button></a>";
+		echo " \" class=\"btn btn-xs btn-primary\">Set Completed</button>";
 	}
 
 	//output the add edit button.
-	echo "&nbsp;<a href=\"" . IPP_PATH . "edit_short_term_objective.php?sto=" . $short_term_objective_row['uid'] . "&student_id=" . $student_id  . "\"";
+	echo "&nbsp;<button href=\"" . IPP_PATH . "edit_short_term_objective.php?sto=" . $short_term_objective_row['uid'] . "&student_id=" . $student_id  . "\"";
 	if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
 	else echo "onClick=\"return changeStatusCompleted();\"";
-	echo "\"><button type=\"button\" class=\"btn btn-xs\">Edit Objective</button></a>";
+	echo "\" class=\"btn btn-xs btn-primary\">Edit Objective</button>";
 	//output delete button
-	echo "&nbsp;<a href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&deleteSTO=" . $short_term_objective_row['uid'] . "\"";
+	echo "&nbsp;<button class=\"btn btn-xs btn-primary\" href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&deleteSTO=" . $short_term_objective_row['uid'] . "\"";
 	if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
 	else echo "onClick=\"return changeStatusCompleted();\"";
-	echo "\"><button type=\"button\" class=\"btn btn-xs\">Delete Objective</button></a>";
+	echo "\">Delete Objective</button>";
 	echo "<hr>";
 	echo "</div>";
 
@@ -648,15 +656,15 @@ if(!$short_term_objective_result) {
 	* echo "\">Edit</a>";
 	*/
 	
-	echo "<div class=\"container\" id=\"details\">";
+	echo "<div class=\"container\" id=\"details\" style=\"display:none\">";
 	//output the actual data
 	if ($short_term_objective_row['assessment_procedure'] != "") {
-		echo "<h4>Assessment Procedure</h4>";
+		echo "<strong>Assessment Procedure</strong>";
 		echo "<p>" .  $short_term_objective_row['assessment_procedure'] . "</p>";
 	}
 		//Strategies
 	if ($short_term_objective_row['strategies']!=""){
-		echo "<h4>Strategies</h4>" ;
+		echo "<strong>Strategies</strong>" ;
 		echo "<P>" . $short_term_objective_row['strategies'] . "</P>";
 	}
 	
@@ -664,7 +672,7 @@ if(!$short_term_objective_result) {
 
 	//Progress Review
 	if ($short_term_objective_row['results_and_recommendations']!=""){
-		echo "<h4>Progress Review</h4>";
+		echo "<strong>Progress Review</strong>";
 		echo "<p>" . $short_term_objective_row['results_and_recommendations'] . "</p>";
 	}
 		//output the add edit button.
@@ -672,7 +680,6 @@ if(!$short_term_objective_result) {
 	//if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
 	//else echo "onClick=\"return changeStatusCompleted();\"";
 	//echo " class=\"small\">Edit</a>";
-	echo "</div>"; //end details div
 	echo "</div>"; //end objective details container
 
 	
@@ -769,5 +776,6 @@ if(!$short_term_objective_result) {
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>   
+<script type="text/javascript" src="./js/jquery-ui-1.10.4.custom.min.js"></script>
 </BODY>
 </HTML>
