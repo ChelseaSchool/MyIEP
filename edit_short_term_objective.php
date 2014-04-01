@@ -203,6 +203,11 @@ if(!$student_result) {
 				<ul class="nav navbar-nav">
 					<li><a href="main.php">Home</a></li>
 					<li><a href="about.php">About</a></li>
+					<li><a onclick="history.go(-1);">Back</a></li>
+
+
+
+					
 					<li><a href="index.php">Logout</a></li>
 					<li><a href='<?php echo "long_term_goal_view.php?student_id=$student_id" ?>'>Return to Student</a>
 				</ul>

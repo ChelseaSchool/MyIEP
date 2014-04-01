@@ -47,4 +47,20 @@ function checkSpelling ( $string ) //todo: investigate and justify possibly unco
    return $return;
 }
 
+/** @fn clean_in_and_out($input)
+ *
+ * Filters input and escapes output to prepare for MySQL
+ *
+ * @detail 		Strips tags, then sanitizes html entities, and then strips slashes. Finally, uses mysql_real_escape_string() to prepare for MySQL use.
+ *
+ * @warning 	Not for arrays. Must construct stripslashes_deep() for arrays.
+ * @todo		Test and implement.
+ *
+ */
+function clean_in_and_out($input){
+	$input = strip_tags($input);
+	$input = htmlentities($input);
+	$input = stripslashes($input);
+	return mysql_real_escape_string($input);
+}
 ?>

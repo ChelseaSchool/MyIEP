@@ -39,8 +39,8 @@ header('Pragma: no-cache'); //don't cache this page!
 
 
 ?> 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
+<!DOCTYPE HTML>
+<HTML lang=en>
 <HEAD>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
     <TITLE>IEP-IPP Installation</TITLE>

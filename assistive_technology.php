@@ -216,8 +216,8 @@ if(!$asst_tech_result) {
 /************************ end popup chooser support funtion  ******************/
 
 ?> 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
+<!DOCTYPE HTML>
+<HTML lang=en>
 <HEAD>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
     <TITLE><?php echo $page_title; ?></TITLE>
@@ -309,7 +309,7 @@ if(!$asst_tech_result) {
                         <!-- END add new entry -->
 
                         <!-- BEGIN assistive tech table -->
-                        <form name="testing" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "assistive_technology.php"; ?>" method="get">
+                        <form name="testing" spellcheck="true" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "assistive_technology.php"; ?>" method="get">
                         <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
                         <center><table width="80%" border="0" cellpadding="0" cellspacing="1">
                         <tr><td colspan="6">Testing to Support Code:</td></tr>
@@ -322,7 +322,7 @@ if(!$asst_tech_result) {
                             echo "<tr>\n";
                             echo "<td bgcolor=\"#E0E2F2\"><input type=\"checkbox\" name=\"" . $asst_tech_row['uid'] . "\"></td>";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\">" . $asst_tech_row['uid'] . "</td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_assistive_technology.php?uid=" . $asst_tech_row['uid'] . "\" class=\"editable_text\">" . checkspelling($asst_tech_row['technology'])  ."</a></td>\n";
+                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_assistive_technology.php?uid=" . $asst_tech_row['uid'] . "\" class=\"editable_text\">" . clean_in_and_out($asst_tech_row['technology'])  ."</a></td>\n";
                             echo "</tr>\n";
                             if($bgcolor=="#DFDFDF") $bgcolor="#CCCCCC";
                             else $bgcolor="#DFDFDF";

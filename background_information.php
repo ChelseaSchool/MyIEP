@@ -179,8 +179,8 @@ function mysql_enum_values($tableName,$fieldName)
 $enum_options_type = mysql_enum_values("background_info","type");
 
 ?> 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
+<!DOCTYPE HTML>
+<HTML lang=en>
 <HEAD>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
     <TITLE><?php echo $page_title; ?></TITLE>
@@ -277,7 +277,7 @@ $enum_options_type = mysql_enum_values("background_info","type");
                         <!-- END add info -->
 
                         <!-- BEGIN info table -->
-                        <form name="infolist" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "background_information.php"; ?>" method="get">
+                        <form spellcheck="true" name="infolist" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "background_information.php"; ?>" method="get">
                         <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
                         <center><table width="80%" border="0" cellpadding="0" cellspacing="1">
                         <tr><td colspan="6">Background Information:</td></tr>
@@ -291,7 +291,7 @@ $enum_options_type = mysql_enum_values("background_info","type");
                             echo "<td bgcolor=\"#E0E2F2\"><input type=\"checkbox\" name=\"" . $background_info_row['uid'] . "\"></td>";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\">" . $background_info_row['uid'] . "</td>";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_background_information.php?uid=" . $background_info_row['uid'] . "\" class=\"editable_text\">" . $background_info_row['type']  ."</a></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_background_information.php?uid=" . $background_info_row['uid'] . "\" class=\"editable_text\">" . checkspelling($background_info_row['description']) . "</a></td>\n";
+                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_background_information.php?uid=" . $background_info_row['uid'] . "\" class=\"editable_text\">" . clean_in_and_out($background_info_row['description']) . "</a></td>\n";
                             echo "</tr>\n";
                             if($bgcolor=="#DFDFDF") $bgcolor="#CCCCCC";
                             else $bgcolor="#DFDFDF";

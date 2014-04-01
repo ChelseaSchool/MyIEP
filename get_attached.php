@@ -94,7 +94,7 @@ if (!($our_permission =="READ" || $our_permission == "WRITE" || $our_permission 
 $file_query = "SELECT file,filename FROM " . mysql_real_escape_string($_GET['table']) . " WHERE uid=" . mysql_real_escape_string($_GET['uid']) . " AND student_id=" . mysql_real_escape_string($_GET['student_id']);
 $file_result = mysql_query($file_query);
 if(!$file_result) {
-  echo "<HTML><body>";
+  echo "<HTML lang=en><body>";
   echo "SQL query ('$file_query') failed, fatal- quiting";
   echo "</html></body>";
   exit();

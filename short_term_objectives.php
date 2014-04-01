@@ -289,7 +289,7 @@ if(!$completed_objectives_result) {
 
 ?> 
 <!DOCTYPE html>
-<HTML>
+<HTML lang=en>
 <HEAD>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
     <TITLE><?php echo $page_title; ?></TITLE>

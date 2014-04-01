@@ -329,8 +329,8 @@ if(!$coord_result) {
 /************************ end popup chooser support funtion  ******************/
 
 ?> 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
+<!DOCTYPE HTML>
+<HTML lang=en>
 <HEAD>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
     <TITLE><?php echo $page_title; ?></TITLE>
@@ -444,7 +444,7 @@ if(!$coord_result) {
                         <!-- END add new entry -->
 
                         <!-- BEGIN strength/needs table -->
-                        <form name="strengthneedslist" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "coordination_of_services.php"; ?>" method="get">
+                        <form spellcheck="true" name="strengthneedslist" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "coordination_of_services.php"; ?>" method="get">
                         <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
                         <center><table width="80%" border="0" cellpadding="0" cellspacing="1">
                         <tr><td colspan="7">Coordination of Services (click fields to edit):</td></tr>
@@ -459,7 +459,7 @@ if(!$coord_result) {
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\">" . $coord_row['uid'] . "</td>";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_coordination_of_services.php?uid=" . $coord_row['uid'] . "\" class=\"editable_text\">" . $coord_row['agency']  ."</a></td>\n";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_coordination_of_services.php?uid=" . $coord_row['uid'] . "\" class=\"editable_text\">" . $coord_row['date']  ."</a></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_coordination_of_services.php?uid=" . $coord_row['uid'] . "\" class=\"editable_text\">" . checkSpelling($coord_row['description']) . "</a></td>\n";
+                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_coordination_of_services.php?uid=" . $coord_row['uid'] . "\" class=\"editable_text\">" . clean_in_and_out($coord_row['description']) . "</a></td>\n";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><center><a href=\"" . IPP_PATH . "edit_coordination_of_services.php?uid=" . $coord_row['uid'] . "\" class=\"editable_text\">" . $coord_row['report_in_file'] . "</a></center></td>\n";
                             //echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><center>"; if($coord_row['report_in_file'] =="") echo "-none"; else echo "<a href=\"javascript: openDoc('" . IPP_PATH . "get_attached.php?table=coordination_of_services&uid=" . $coord_row['uid'] ."&student_id=" . $student_id ."','_doc')"  . "\">File</a>"; echo "</center></td>\n";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><center>"; if($coord_row['filename'] =="") echo "-none-"; else echo "<a href=\"" . IPP_PATH . "get_attached.php?table=coordination_of_services&uid=" . $coord_row['uid'] ."&student_id=" . $student_id ."\">Download</a>"; echo "</center></td>\n";

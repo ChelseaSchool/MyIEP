@@ -253,8 +253,8 @@ if(!$accomodation_result) {
 /************************ end popup chooser support funtion  ******************/
 
 ?> 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
+<!DOCTYPE HTML>
+<HTML lang=en>
 <HEAD>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
     <TITLE><?php echo $page_title; ?></TITLE>
@@ -353,7 +353,7 @@ if(!$accomodation_result) {
                         <!-- END add accomodation -->
 
                         <!-- BEGIN accomodation history table -->
-                        <form name="accomodationhistory" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "accomodations.php"; ?>" method="get">
+                        <form spellcheck="true" name="accomodationhistory" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "accomodations.php"; ?>" method="get">
                         <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
                         <center><table width="80%" border="0">
 
@@ -366,7 +366,7 @@ if(!$accomodation_result) {
                             echo "<tr>\n";
                             echo "<td bgcolor=\"#E0E2F2\"><input type=\"checkbox\" name=\"" . $accomodation_row['uid'] . "\"></td>";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\">" . $accomodation_row['uid'] . "</td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_accomodations.php?uid=" . $accomodation_row['uid'] . "\" class=\"editable_text\">" . checkspelling($accomodation_row['accomodation'])  ."</a></td>\n";
+                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_accomodations.php?uid=" . $accomodation_row['uid'] . "\" class=\"editable_text\">" . clean_in_and_out($accomodation_row['accomodation'])  ."</a></td>\n";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_accomodations.php?uid=" . $accomodation_row['uid'] . "\" class=\"editable_text\">" . $accomodation_row['subject'] . "</a></td>\n";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_accomodations.php?uid=" . $accomodation_row['uid'] . "\" class=\"editable_text\">" . $accomodation_row['start_date'] . "</a></td>\n";
                             if($accomodation_row['end_date'] =="")

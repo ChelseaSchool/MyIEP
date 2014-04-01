@@ -229,8 +229,8 @@ if(!$testing_result) {
 }
 
 ?> 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
+<!DOCTYPE HTML>
+<HTML lang=en>
 <HEAD>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
     <TITLE><?php echo $page_title; ?></TITLE>
@@ -335,7 +335,7 @@ if(!$testing_result) {
                         <!-- END add new entry -->
 
                         <!-- BEGIN strength/needs table -->
-                        <form name="testing" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "testing_to_support_code.php"; ?>" method="get">
+                        <form spellcheck="true" name="testing" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "testing_to_support_code.php"; ?>" method="get">
                         <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
                         <center><table width="80%" border="0" cellpadding="0" cellspacing="1">
                         <tr><td colspan="6">Testing to Support Code:</td></tr>
@@ -348,9 +348,9 @@ if(!$testing_result) {
                             echo "<tr>\n";
                             echo "<td bgcolor=\"#E0E2F2\"><input type=\"checkbox\" name=\"" . $testing_row['uid'] . "\"></td>";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\">" . $testing_row['uid'] . "</td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_testing_to_support_code.php?uid=" . $testing_row['uid'] . "\" class=\"editable_text\">" . checkspelling($testing_row['test_description'])  ."</a></td>\n";
+                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_testing_to_support_code.php?uid=" . $testing_row['uid'] . "\" class=\"editable_text\">" . clean_in_and_out($testing_row['test_description'])  ."</a></td>\n";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_testing_to_support_code.php?uid=" . $testing_row['uid'] . "\" class=\"editable_text\">" . $testing_row['administered_by']  ."</a></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_testing_to_support_code.php?uid=" . $testing_row['uid'] . "\" class=\"editable_text\">" . checkspelling($testing_row['recommendations'])  ."</a></td>\n";
+                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_testing_to_support_code.php?uid=" . $testing_row['uid'] . "\" class=\"editable_text\">" . clean_in_and_out($testing_row['recommendations'])  ."</a></td>\n";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_testing_to_support_code.php?uid=" . $testing_row['uid'] . "\" class=\"editable_text\">" . $testing_row['date'] . "</a></td>\n";
                             //echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><center>"; if($coord_row['report_in_file'] =="") echo "-none"; else echo "<a href=\"javascript: openDoc('" . IPP_PATH . "get_attached.php?table=coordination_of_services&uid=" . $coord_row['uid'] ."&student_id=" . $student_id ."','_doc')"  . "\">File</a>"; echo "</center></td>\n";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><center>"; if($testing_row['filename'] =="") echo "-none-"; else echo "<a href=\"" . IPP_PATH . "get_attached.php?table=testing_to_support_code&uid=" . $testing_row['uid'] ."&student_id=" . $student_id ."\">Download</a>"; echo "</center></td>\n";

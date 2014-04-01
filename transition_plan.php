@@ -156,8 +156,8 @@ if(!$transition_result) {
 
 
 ?> 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
+<!DOCTYPE HTML>
+<HTML lang=en>
 <HEAD>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
     <TITLE><?php echo $page_title; ?></TITLE>
@@ -262,7 +262,7 @@ if(!$transition_result) {
                             echo "<tr>\n";
                             echo "<td bgcolor=\"#E0E2F2\"><input type=\"checkbox\" name=\"" . $transition_row['uid'] . "\"></td>";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\">" . $transition_row['uid'] . "</td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_transition_plan.php?uid=" . $transition_row['uid'] . "\" class=\"editable_text\">" . checkspelling($transition_row['plan'])  ."</td>\n";
+                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_transition_plan.php?uid=" . $transition_row['uid'] . "\" class=\"editable_text\" spellcheck=\"true\">" . clean_in_and_out($transition_row['plan'])  ."</td>\n";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_transition_plan.php?uid=" . $transition_row['uid'] . "\" class=\"editable_text\">" . $transition_row['date']  ."</td>\n";
                             echo "</tr>\n";
                             if($bgcolor=="#DFDFDF") $bgcolor="#CCCCCC";

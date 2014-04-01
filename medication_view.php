@@ -176,8 +176,8 @@ if(!$medication_result) {
         IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
 }
 ?> 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
+<!DOCTYPE HTML>
+<HTML lang=en>
 <HEAD>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
     <TITLE><?php echo $page_title; ?></TITLE>
@@ -276,7 +276,7 @@ if(!$medication_result) {
                         <!-- END add supervisor -->
 
                         <!-- BEGIN strength/needs table -->
-                        <form name="medicationlist" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "medication_view.php"; ?>" method="get">
+                        <form spellcheck="true" name="medicationlist" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "medication_view.php"; ?>" method="get">
                         <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
                         <center><table width="80%" border="0" cellpadding="0" cellspacing="1">
                         <tr><td colspan="6">Medication (click to edit):</td></tr>
@@ -289,7 +289,7 @@ if(!$medication_result) {
                             echo "<tr>\n";
                             echo "<td bgcolor=\"#E0E2F2\"><input type=\"checkbox\" name=\"" . $medication_row['uid'] . "\"></td>";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\">" . $medication_row['uid'] . "</td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_medication.php?uid=" . $medication_row['uid'] . "\" class=\"editable_text\">" . checkspelling($medication_row['medication_name'])  ."</a></td>\n";
+                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_medication.php?uid=" . $medication_row['uid'] . "\" class=\"editable_text\">" . clean_in_and_out($medication_row['medication_name'])  ."</a></td>\n";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_medication.php?uid=" . $medication_row['uid'] . "\" class=\"editable_text\">" . $medication_row['doctor']  ."</a></td>\n";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_medication.php?uid=" . $medication_row['uid'] . "\" class=\"editable_text\">" . $medication_row['start_date'] . "</a></td>\n";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><center><a href=\"" . IPP_PATH . "edit_medication.php?uid=" . $medication_row['uid'] . "\" class=\"editable_text\">"; if($medication_row['end_date']) echo $medication_row['end_date']; else echo "-current-"; echo "</a></center></td>\n";
