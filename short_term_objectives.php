@@ -288,11 +288,26 @@ if(!$completed_objectives_result) {
 /************************ end popup chooser support funtion  ******************/
 
 ?> 
-<!DOCTYPE html>
-<HTML lang=en>
-<HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
-    <TITLE><?php echo $page_title; ?></TITLE>
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Edit Short Term Objective">
+<meta name="author" content="Rik Goldman">
+<link rel="shortcut icon" href="./assets/ico/favicon.ico">
+<title><?php echo $page_tite ?></title>
+
+<!-- Bootstrap core CSS -->
+<link href="./css/bootstrap.min.css" rel="stylesheet">
+<!-- Using Jumbotron Style Sheet for NOw -->
+ <!-- Custom styles for this template -->
+    <link href="./jumbotron.css" rel="stylesheet">
+<!-- Bootstrap Datepicker CSS -->
+<link href="./css/datepicker.css" rel="stylesheet">
+
     <style type="text/css" media="screen">
         <!--
             @import "<?php echo IPP_PATH;?>layout/greenborders.css";
@@ -333,7 +348,52 @@ if(!$completed_objectives_result) {
     </SCRIPT>
 
 </HEAD>
-    <BODY>
+<BODY>
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span> 
+					<span class="icon-bar"></span> <span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="main.php">MyIEP</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="main.php">Home</a></li>
+					<li><a href="about.php">About</a></li>
+					<li><a onclick="history.go(-1);">Back</a></li>
+
+
+
+					
+					<li><a href="index.php">Logout</a></li>
+					<li><a href='<?php echo "long_term_goal_view.php?student_id=$student_id" ?>'>Return to Student</a>
+				</ul>
+				
+				
+		<ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Navigation <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="./manage_student.php">Students</a></li>
+                <li class="divider"></li>
+                <li><a href="change_ipp_password.php">Reset Password</a></li>
+                <li><a href="superuser_add_goals.php">Goals Database</a></li>
+                <li><a href="./student_archive.php">Archive</a></li>
+                <li><a href="./user_audit.php">Audit</a></li>
+                <li><a href="superuser_manage_coding.php">Manage Codes</a></li>
+                <li><a href="school_info.php">Manage Schools</a></li>
+                <li><a href="superuser_view_logs.php">View Logs</a></li>
+              </ul>
+            </li>
+          </ul>
+				
+			</div>
+		</div>
+	</div>
+
         <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
         <tr>
           <td class="shadow-topLeft"></td>

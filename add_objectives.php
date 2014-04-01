@@ -348,16 +348,24 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
     }
 /************************ end popup chooser support funtion  ******************/
 ?> 
-<!DOCTYPE HTML>
-<HTML lang=en>
-<HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="About MyIEP">
+    <meta name="author" content="Rik Goldman" >
+    <link rel="shortcut icon" href="./assets/ico/favicon.ico">
     <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
+    <!-- Bootstrap core CSS -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./css/jumbotron.css" rel="stylesheet">
+	<style type="text/css">body { padding-bottom: 70px; }</style>
+    
+    
     
     <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
     <script language="javascript" src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script>
@@ -393,92 +401,122 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
       }
     </SCRIPT>
 </HEAD>
-    <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("long_term_goal_view.php?student_id=$student_id"); ?></center>
-                    </td></tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+<BODY>
+ <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="main.php">MyIEP</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="main.php">Home</a></li>
+            <li><a href="about.php">About</a></li>
+            <li><a onclick="history.go(-1);">Back</a></li>
+            <li><a href=<?php echo "ipp_pdf.php?student_id=" . $student_row['student_id'] . "&file=ipp.pdf"; ?>>Get PDF</li></a>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Records: <?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?><b class="caret"></b></a>
+              <ul class="dropdown-menu">
+              	<li><a href="<?php echo IPP_PATH . "long_term_goal_view.php?student_id=" . $student_row['student_id']; ?>">Goals</a></li>
+              	<li class="divider"></li>
+              	<li><a href="<?php echo IPP_PATH . "guardian_view.php?student_id=" . $student_row['student_id'];?>">Guardians</a></li>
+              	<li><a href="<?php echo IPP_PATH . "strength_need_view.php?student_id=" . $student_row['student_id'];?>">Strengths &amp; Needs</a></li>
+              	<li><a href="<?php echo IPP_PATH . "coordination_of_services.php?student_id=" . $student_row['student_id'];?>">Coordination of Services</a></li>
+              	<li><a href="<?php echo IPP_PATH . "achieve_level.php?student_id=" . $student_row['student_id'];?>">Achievement Level</a></li>
+              	<li><a href="<?php echo IPP_PATH . "medical_info.php?student_id=" . $student_row['student_id'];?>">Medical Information</a></li>
+              	<li><a href="<?php echo IPP_PATH . "medication_view.php?student_id=" . $student_row['student_id'];?>">Medication</a></li>
+              	<li><a href="<?php echo IPP_PATH . "testing_to_support_code.php?student_id=" . $student_row['student_id'];?>">Support Testing</a></li>
+              	<li><a href="<?php echo IPP_PATH . "background_information.php?student_id=" . $student_row['student_id'];?>">Background Information</a></li>
+              	<li><a href="<?php echo IPP_PATH . "year_end_review.php?student_id=" . $student_row['student_id'];?>">Year-End Review</a></li>
+              	<li><a href="<?php echo IPP_PATH . "anecdotals.php?student_id=" . $student_row['student_id'];?>">Anecdotals</a></li>
+              	<li><a href="<?php echo IPP_PATH . "assistive_technology.php?student_id=" . $student_row['student_id'];?>">Assistive Techology</a></li>
+              	<li><a href="<?php echo IPP_PATH . "transition_plan.php?student_id=" . $student_row['student_id'];?>">Transition Plan</a></li>
+              	<li><a href="<?php echo IPP_PATH . "accomodations.php?student_id=" . $student_row['student_id'];?>">Accomodations</a></li>
+              	<li><a href="<?php echo IPP_PATH . "snapshots.php?student_id=" . $student_row['student_id'];?>">Snapshots</a></li></ul>
+            </ul>
+             
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="index.php">Logout</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Menu <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="./manage_student.php">Students</a></li>
+                <li class="divider"></li>
+                <li><a href="change_ipp_password.php">Reset Password</a></li>
+                <li><a href="superuser_add_goals.php">Goals Database</a></li>
+                <li><a href="./student_archive.php">Archive</a></li>
+                <li><a href="./user_audit.php">Audit</a></li>
+                <li><a href="superuser_manage_coding.php">Manage Codes</a></li>
+                <li><a href="school_info.php">Manage Schools</a></li>
+                <li><a href="superuser_view_logs.php">View Logs</a></li>
+              </ul>
+            </li>
+          </ul>
+         </div>
+         <!--/.nav-collapse -->
+        <!--<div class="navbar-collapse collapse">
+          <form class="navbar-form navbar-right" role="form" nctype="multipart/form-data" action="jumbotron.php" method="post">
+            <div class="form-group">
+              <input type="text" placeholder="User Name" class="form-control" value="<?php echo $LOGIN_NAME;?>">
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Password" class="form-control" name="PASSWORD" value="">
+            </div>
+            <button type="submit" value="submit" class="btn btn-success">Sign in</button>
+          </form>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </div>   
+	
+	<div class=container>
+	<div class="row">
+    
+     <?php if ($system_message) { echo $system_message;} ?>
+     </div>
+<div class="row"><h1>Add Short Term Objectives</h1>
+<?php echo "<h2>" . $student_row['first_name'] . " " . $student_row['last_name']. "</h2>"; ?>
+<p>Change the goal text below and click 'Update'</p>
+</div>
+<div class="row">
+<a href="<?php echo IPP_PATH . "long_term_goal_view.php?student_id=" . $student_row['student_id'];?>"><img src="<?php echo IPP_PATH . "images/mainbutton.php?title=Done"?>"
+                            
+ <form spellcheck="true" name="edit_goal" enctype="multipart/form-data" action="<?php echo IPP_PATH . "add_objectives.php"; ?>" method="post" 
+ <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
 
-                        <center>
-                          <table>
-                            <tr><td colspan="2">
-                              <center><p class="header">- Add Short Term Objectives<BR>(<?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?>)-</p></center>
-                            </td></tr>
-                            <tr><td colspan="2">
-                               <center><a href="<?php echo IPP_PATH . "long_term_goal_view.php?student_id=" . $student_row['student_id'];?>"><img src="<?php echo IPP_PATH . "images/mainbutton.php?title=Done"?>" border="0"></a></center>
-                            </td></tr>
-                            <tr><td>&nbsp;&nbsp;</td>
-                            <td>
-                            <form name="edit_goal" enctype="multipart/form-data" action="<?php echo IPP_PATH . "add_objectives.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                              <table border="0" cellspacing="0" cellpadding ="0" width="80%">
-                              <tr>
-                               <td colspan="3">
-                               <p class="info_text">Change the goal text below and click 'Update'</p>
-                               <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
-                               <input type="hidden" name="lto" value="<?php echo $goal_id; ?>">
-                               <input type="hidden" name="update_goal" value="1">
-                               </td>
-                               </tr>
-                              <tr><td bgcolor="#E0E2F2" valign="middle">
-                              <p class="info"><b>Goal Area:&nbsp;</b>
-                              </td><td bgcolor="#E0E2F2">
-                              <input type="text" size="30" spellcheck="true" maxsize="100" name="goal_area" value="<?php echo $goal_row['area']; ?>">
-                              </td>
-                              <td bgcolor="#E0E2F2" rowspan="3">
-                              <input type="submit" name="Update" value="Update">
-                              </td>
-                              </tr>
-                              <tr><td bgcolor="#E0E2F2" valign="middle">
-                              <p class="info"><b>Goal:</b>
-                              </td><td bgcolor="#E0E2F2">
-                              <textarea name="goal_text" spellcheck="true" cols="45" rows="3" wrap="soft"><?php echo $goal_row['goal']; ?></textarea>
-                              </td></tr>
-                              <tr><td bgcolor="#E0E2F2" valign="middle">
-                              <p class="info"><b>Review Date:&nbsp;</b>
-                              </td><td bgcolor="#E0E2F2">
-                              <input type="text" name="goal_review_date" value="<?php echo $goal_review_date; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.goal_review_date, 'yyyy-m-dd', 0, 0)">
-                              </td></tr>
-                              </table>
-                            </form>
-                            <BR><p class="Header">Objectives already added to this goal:
-                              <?php
-                              //echo "<p class=\"info\"><b>Current Objective: </b>" . $goal_row['description'];
-                              //do not while because we've already fetched one.
-                              if($goal_row['description'] != "") {
+   
+<input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
+ <input type="hidden" name="lto" value="<?php echo $goal_id; ?>">
+<input type="hidden" name="update_goal" value="1">
+<label>Goal Area</label>
+<input type="text" size="30" spellcheck="true" maxsize="100" name="goal_area" value="<?php echo $goal_row['area']; ?>">
+<input type="submit" name="Update" value="Update">
+                             
+<div class="row">                        
+<label>Goal</label>
+<textarea name="goal_text" spellcheck="true" cols="45" rows="3" wrap="soft"><?php echo $goal_row['goal']; ?></textarea>
+<label>Review Date</label>
+<input type="text" name="goal_review_date" value="<?php echo $goal_review_date; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.goal_review_date, 'yyyy-m-dd', 0, 0)">
+</form>
+</div>   
+<div class="row">                      
+                              <?php if($goal_row['description'] != "") {
                                 do {
                                   echo "<p class=\"info\"><b>Objective: </b>" . $goal_row['description'];
                                 } while ($goal_row = mysql_fetch_array($goal_result));
                               }
                               ?>
                              
-                            </td>
-                            </tr>
-                          </table>
-                        </center>
-                        <BR>
-
+                          </div>
                         <!-- BEGIN add short term objective -->
-                        <center> <p class="Header">Add Another Objective:</p>
+                     <div class="row"><p class="Header">Add Another Objective:</p>
                         <form name="add_objective" enctype="multipart/form-data" action="<?php echo IPP_PATH . "add_objectives.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
-                        <tr>
-                          <td colspan="3">
+                        
+                      
                           <p class="info_text">Add a new objective edit and click 'Add'.</p>
                            <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
                            <input type="hidden" name="lto" value="<?php echo $goal_id; ?>">
@@ -543,5 +581,6 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
         </tr>
         </table> 
         <center></center>
+   </div> 
     </BODY>
 </HTML>

@@ -1,29 +1,16 @@
 <?php
 
-/**
- * login.php -- simple login screen
- *
- * Copyright (c) 2005 Grasslands Regional Division #6
- * All rights reserved
- *
- * This a simple login screen.
- * Created: June 06, 2005
- * Modified:
- *
- */
 
-/**
- * Path for eGPS required files.
- */
+
 
 if(!defined('IPP_PATH')) define('IPP_PATH','./');
 
 /* eGPS required files. */
 require_once(IPP_PATH . 'etc/init.php');
 include_once(IPP_PATH . 'include/db.php');
-
+include_once(IPP_PATH . 'include/auth.php');
 header('Pragma: no-cache'); //don't cache this page!
-
+logout();
 if(isset($MESSAGE)) $MESSAGE = $MESSAGE; else $MESSAGE="";
 if(isset($LOGIN_NAME)) $LOGIN_NAME = $LOGIN_NAME; else $LOGIN_NAME="";
 
@@ -65,7 +52,7 @@ if(isset($LOGIN_NAME)) $LOGIN_NAME = $LOGIN_NAME; else $LOGIN_NAME="";
                         <div id="main">
                                 <?php if ($MESSAGE) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $MESSAGE . "</p></td></tr></table></center>";} ?>
 <BR><BR>
-                        <center><table><tr><td><center><p class="header">- IEP-IPP Login -</p></center></td></tr></table></center>
+                        <center><table><tr><td><center><p class="header">- MyIEP Login -</p></center></td></tr></table></center>
                         <form enctype="multipart/form-data" action="<?php echo IPP_PATH . 'main.php'; ?>" method="post">
                         <center><table>
                             <tr>

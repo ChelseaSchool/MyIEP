@@ -408,7 +408,9 @@ function toggle ()
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="main.php">Home</a></li>
+            <li><a href="index.php">Logout</a></li>
             <li><a href="about.php">About</a></li>
+            <li><a onclick="history.go(-1);">Back</a></li>
             <li><a href=<?php echo "ipp_pdf.php?student_id=" . $student_row['student_id'] . "&file=ipp.pdf"; ?>>Get PDF</li></a>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Records: <?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?><b class="caret"></b></a>
@@ -479,7 +481,7 @@ function toggle ()
  
 <!--  End Jumbotron -->
 <div class=container>
-<p size="small"><em><strong>Release Note</strong>: Details of objectives are hidden on this page for this release. Click <a onclick="toggle ()">here</a> to toggle.</em></p>
+<p><em><strong>Release Note</strong>: Details of objectives are hidden on this page for this release. Click <a onclick="toggle ()">here</a> to toggle.</em></p>
 </div>
 
 
@@ -592,7 +594,7 @@ if(!$short_term_objective_result) {
 		echo "<div class=\"row\" id=\"objectives\"><div class=\"col-md-12\"><div class=\"container\">";
 		echo "<h4><small>" . $obj_num . ")&nbsp;</small>";
 		$obj_num++; //increment goal
-		echo $short_term_objective_row['description'] . "$nbsp <span class=\"label label-info\">objective</span></h4>";
+		echo $short_term_objective_row['description'] . "<span class=\"label label-info\">objective</span></h4>";
 
 	//begin review date
 		
@@ -617,27 +619,30 @@ if(!$short_term_objective_result) {
 	echo "<div class=\"btn-group\">";
 	echo "<button class=\"btn btn-xs btn-primary\" onclick=\"toggle ()\" role=\"button\">Toggle Details</button>";	 
 	if($short_term_objective_row['achieved'] == 'Y') {
-		echo "&nbsp;<button href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&setSTOUncompleted=" . $short_term_objective_row['uid'] . "\"";
-		if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
-		else echo "onClick=\"return changeStatusCompleted();\"";
-		echo "\" class=\"btn btn-xs btn-primary\">Set Incomplete</button>";
+		echo "<button class=\"btn btn-xs btn-primary\" href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&setSTOUncompleted=" . $short_term_objective_row['uid'] . "\"";
+		if (!$have_write_permission) echo "&nbsp onClick=\"return noPermission();\"";
+		else echo "& nbsp onClick=\"return changeStatusCompleted();\"";
+		echo "\">Set Incomplete</button>";
 		
 		
 	} 
 	else {
-		echo "&nbsp;<button href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&setSTOCompleted=" . $short_term_objective_row['uid'] . "\"";
-		if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
-		else echo "onClick=\"return changeStatusCompleted();\"";
-		echo " \" class=\"btn btn-xs btn-primary\">Set Completed</button>";
+		echo "<button class=\"btn btn-xs btn-primary\" href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&setSTOCompleted=" . $short_term_objective_row['uid'] . "\"";
+		if (!$have_write_permission) echo "&nbsp onClick=\"return noPermission();\"";
+		else echo "&nbsp onClick=\"return changeStatusCompleted();\"";
+		echo " \">Set Completed</button>";
 	}
 
 	//output the add edit button.
-	echo "&nbsp;<button href=\"" . IPP_PATH . "edit_short_term_objective.php?sto=" . $short_term_objective_row['uid'] . "&student_id=" . $student_id  . "\"";
+	//echo "<button href=\" . IPP_PATH . \"edit short_term_objective.php?sto=\" . $short_term_objective_row['uid'] . "&student_id=" . $student_id . /"";
+
+	echo "<button class=\"btn btn-xs btn-primary\" href=\"" . IPP_PATH . "edit_short_term_objective.php?sto=" . $short_term_objective_row['uid'] . "&student_id=" . $student_id . "\"";
 	if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
-	else echo "onClick=\"return changeStatusCompleted();\"";
-	echo "\" class=\"btn btn-xs btn-primary\">Edit Objective</button>";
+	else echo "&nbsp onClick=\"return changeStatusCompleted();\"";
+	echo "\">Edit Objective</button>";
+	
 	//output delete button
-	echo "&nbsp;<button class=\"btn btn-xs btn-primary\" href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&deleteSTO=" . $short_term_objective_row['uid'] . "\"";
+	echo "<button class=\"btn btn-xs btn-primary\" href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&deleteSTO=" . $short_term_objective_row['uid'] . "\"";
 	if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
 	else echo "onClick=\"return changeStatusCompleted();\"";
 	echo "\">Delete Objective</button>";

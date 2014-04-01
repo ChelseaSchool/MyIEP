@@ -1,6 +1,6 @@
 <?php
-/** @file edit_short_term_objective.php
- *  @brief  Used for progress reporting as well as setting objectives for a new IEP.
+/** @file 
+ *  @brief  main menu
  *  @bug	right hand drop down nav isn't working
  *  @todo
  *  1. Make input fields wider, perhaps
@@ -92,7 +92,8 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
             <li><a href="about.php">About</a></li>
-            <li><a href="index.php">Logout</a></li></ul>
+            <li><a href="index.php">Logout</a></li>
+            </ul>
              
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
