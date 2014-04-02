@@ -287,7 +287,7 @@ if(isset($_POST['edit_testing']) && $have_write_permission) {
                           </td>
                         </tr>
                         <tr>
-                            <td valign="center" bgcolor="#E0E2F2" class="row_default">Test Description:</td><td bgcolor="#E0E2F2" class="row_default"><textarea name="description" tabindex="1" cols="30" rows="5" wrap="soft"><?php echo $testing_row['test_description']; ?></textarea></td>
+                            <td valign="center" bgcolor="#E0E2F2" class="row_default">Test Description:</td><td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="description" tabindex="1" cols="30" rows="5" wrap="soft"><?php echo $testing_row['test_description']; ?></textarea></td>
                             <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="5" class="row_default"><input type="submit" tabindex="7" name="Update" value="Update"></td>
                         </tr>
                         <tr>
@@ -307,7 +307,7 @@ if(isset($_POST['edit_testing']) && $have_write_permission) {
                            </td>
                         </tr>
                         <tr>
-                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Results and Recommendations:</td><td bgcolor="#E0E2F2" class="row_default"><textarea name="recommendations" tabindex="6" cols="30" rows="5" wrap="soft"><?php echo $testing_row['recommendations']; ?></textarea></td>
+                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Results and Recommendations:</td><td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="recommendations" tabindex="6" cols="30" rows="5" wrap="soft"><?php echo $testing_row['recommendations']; ?></textarea></td>
                         </tr>
                         </table>
                         </form>

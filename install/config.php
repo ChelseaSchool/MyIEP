@@ -1,4 +1,12 @@
 <?php
+
+/** @file
+ *  @brief		configuration settings for install wizard
+ *  @todo
+ *  1. Bootstrap
+ *  2. Copyright block
+ */
+
 if(is_file("../etc/init.php")) {
    define('IPP_PATH','../');
    require_once("../etc/init.php");
@@ -69,18 +77,13 @@ if(isset($_POST['update'])) {
 <HTML lang=en>
 <HEAD>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
-    <TITLE>IEP-IPP Installation</TITLE>
+    <TITLE>MyIEP Installation</TITLE>
     <style type="text/css" media="screen">
         <!--
             @import "../layout/greenborders.css";
         -->
     </style>
-    <!-- All code Copyright &copy; 2005 Grasslands Regional Division #6.
-         -Concept and Design by Grasslands IPP Focus Group 2005
-         -Programming and Database Design by M. Nielsen, Grasslands
-          Regional Division #6
-         -CSS and layout images are courtesy A. Clapton.
-     -->
+ 
 </HEAD>
     <BODY>
         <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
@@ -113,7 +116,7 @@ if(isset($_POST['update'])) {
                 <center><table width="80%" border="0">
                   <tr>
                     <td>Page Title</td>
-                    <td><input type="text" size="50" name="config_title" value="<?php if(isset($_POST['config_title'])) echo $_POST['config_title']; else echo "IEP-IPP Special Education Program Plans"; ?>"></td>
+                    <td><input type="text" spellcheck="true" size="50" name="config_title" value="<?php if(isset($_POST['config_title'])) echo $_POST['config_title']; else echo "MyIEP Special Education Program Management"; ?>"></td>
                   </tr>
                   <tr>
                     <td>URL</td>

@@ -300,7 +300,7 @@ if(!$asst_tech_result) {
                           </td>
                         </tr>
                         <tr>
-                            <td valign="center" bgcolor="#E0E2F2" class="row_default">Technology:</td><td valign="top" bgcolor="#E0E2F2" class="row_default"><textarea name="technology" tabindex="1" cols="30" rows="5" wrap="soft" onkeypress="return autocomplete(this,event,popuplist)"><?php if(isset($_POST['technology'])) echo $_POST['technology']; ?></textarea>&nbsp;<img src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" align="top" width="17" border=0 onClick="popUpChooser(this,document.all.technology)"></td>
+                            <td valign="center" bgcolor="#E0E2F2" class="row_default">Technology:</td><td valign="top" bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="technology" tabindex="1" cols="30" rows="5" wrap="soft" onkeypress="return autocomplete(this,event,popuplist)"><?php if(isset($_POST['technology'])) echo $_POST['technology']; ?></textarea>&nbsp;<img src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" align="top" width="17" border=0 onClick="popUpChooser(this,document.all.technology)"></td>
                             <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="1" class="row_default"><input type="submit" tabindex="2" name="add" value="add"></td>
                         </tr>
                         </table>

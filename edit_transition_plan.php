@@ -213,7 +213,7 @@ if(isset($_POST['edit_transition_plan']) && $have_write_permission) {
                         </tr>
                         <tr>
                             <td bgcolor="#E0E2F2" class="row_default">Plan:</td><td bgcolor="#E0E2F2" class="row_default">
-                            <textarea name="plan" tabindex="1" cols="40" rows="10" wrap="soft"><?php echo $transition_row['plan']; ?></textarea>
+                            <textarea spellcheck="true" name="plan" tabindex="1" cols="40" rows="10" wrap="soft"><?php echo $transition_row['plan']; ?></textarea>
                             </td>
                             <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="2" class="row_default"><input type="submit" tabindex="3" name="Edit" value="Edit"></td>
                         </tr>

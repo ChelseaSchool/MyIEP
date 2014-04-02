@@ -1,7 +1,11 @@
 <?php
 
-/**
- * @BRIEF 	assign new permissions
+/** @file
+ * @brief 	assign new permissions
+ * @todo
+ * 1. Confirm role of this page
+ * 2. bootstrap UI
+ * 3. Navbar as appropriate
  * 
  */
  

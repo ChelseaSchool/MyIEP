@@ -369,7 +369,7 @@ $enum_options_type = mysql_enum_values("school_history","ipp_present");
                             <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="7" class="row_default"><input type="submit" tabindex="6" name="update" value="update"></td>
                         </tr>
                         <tr>
-                           <td valign="center" bgcolor="#E0E2F2" class="row_default">School Address (optional):</td><td bgcolor="#E0E2F2" class="row_default"><textarea name="school_address" tabindex="2" cols="30" rows="5" wrap="soft"><?php echo $history_row['school_address']; ?></textarea></td>
+                           <td valign="center" bgcolor="#E0E2F2" class="row_default">School Address (optional):</td><td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="school_address" tabindex="2" cols="30" rows="5" wrap="soft"><?php echo $history_row['school_address']; ?></textarea></td>
                         </tr>
                         <tr>
                            <td bgcolor="#E0E2F2" class="row_default">Start Date: (YYYY-MM-DD)</td>
@@ -404,7 +404,7 @@ $enum_options_type = mysql_enum_values("school_history","ipp_present");
                            </td>
                         </tr>
                         <tr>
-                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Accommodations (optional):</td><td bgcolor="#E0E2F2" class="row_default"><textarea name="accommodations" tabindex="<?php echo $tabindex; ?>" cols="30" rows="5" wrap="soft"><?php echo $history_row['accommodations']; ?></textarea></td>
+                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Accommodations (optional):</td><td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="accommodations" tabindex="<?php echo $tabindex; ?>" cols="30" rows="5" wrap="soft"><?php echo $history_row['accommodations']; ?></textarea></td>
                         </tr>
                         </table>
                         </form>

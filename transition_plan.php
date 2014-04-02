@@ -233,7 +233,7 @@ if(!$transition_result) {
                         </tr>
                         <tr>
                             <td bgcolor="#E0E2F2" class="row_default">Plan:</td><td bgcolor="#E0E2F2" class="row_default">
-                            <textarea name="plan" tabindex="1" cols="40" rows="10" wrap="soft"><?php if(isset($_POST['plan'])) echo $_POST['plan']; ?></textarea>
+                            <textarea spellcheck="true" name="plan" tabindex="1" cols="40" rows="10" wrap="soft"><?php if(isset($_POST['plan'])) echo $_POST['plan']; ?></textarea>
                             </td>
                             <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="2" class="row_default"><input type="submit" tabindex="3" name="add" value="add"></td>
                         </tr>

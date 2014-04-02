@@ -1,8 +1,12 @@
 <?php
 
-/**
- * @BRIEF 	view student's medications
- * 
+/** @file
+ * @brief 	view student's medications
+ * @todo
+ * 1. Filter
+ * 2. Escape
+ * 3. bootstrap
+ * 4. Navigation
  */
  
  

@@ -1,6 +1,6 @@
 <?php
 /** @file
- * @brief 	add notes by guardian
+ * @brief 	add notes by or about guardian
  * @copyright 	2014 Chelsea School 
  * @copyright 	2005 Grasslands Regional Division #6
  * @copyright		This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
@@ -10,7 +10,12 @@
     You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * @authors		Rik Goldman, Sabre Goldman, Jason Banks, Alex, James, Paul, Bryan, TJ, Jonathan, Micah, Stephen, Joseph
  * @author		M. Nielson
- * @todo		Filter input
+ * @todo		
+ * 1. Filter input
+ * 2. Confirm filename is accurate
+ * 3. Bootstrap
+ * 4. Filter and escape
+ * 5. navbar for student
  */ 
  
 //the authorization level for this page!
@@ -235,7 +240,7 @@ mysql_data_seek($guardian_result,0);
                         <input type="hidden" name="add_note" value="1">
                         <tr><td colspan="2" class="wrap_top">Add Note</td></tr>
                         <tr><td class="wrap_left" bgcolor="#E0E2F2" width="100%">
-                            <textarea tabindex="1" name="note" cols="40" rows="3" wrap="soft"></textarea><BR>
+                            <textarea spellcheck="true" tabindex="1" name="note" cols="40" rows="3" wrap="soft"></textarea><BR>
                             <center><input type="checkbox" tabindex="2" name="priority_note" value="1">Priority Flag</center>
                         </td><td bgcolor="#FFFFFF" class="wrap_right" rowspan="1" width="100"><center><INPUT TYPE="image" tabindex="3" SRC="<?php echo IPP_PATH . "images/smallbutton.php?title=Add"; ?>" border="0" name="add" value="1"></center></td></tr>
                         <tr><td class="wrap_bottom_left" bgcolor="#E0E2F2" width="100%">&nbsp;</td><td class="wrap_bottom_right" bgcolor="#FFFFFF" width="100">&nbsp;</td></tr>

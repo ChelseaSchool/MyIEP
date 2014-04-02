@@ -324,7 +324,7 @@ if(!$performance_result) {
                            </td>
                         </tr>
                         <tr>
-                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Results:</td><td bgcolor="#E0E2F2" class="row_default"><textarea name="results" tabindex="4" cols="30" rows="3" wrap="soft"><?php if(isset($_POST['results'])) echo $_POST['results']; ?></textarea></td>
+                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Results:</td><td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="results" tabindex="4" cols="30" rows="3" wrap="soft"><?php if(isset($_POST['results'])) echo $_POST['results']; ?></textarea></td>
                         </tr>
                         </table>
                         </form>

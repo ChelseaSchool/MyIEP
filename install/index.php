@@ -1,5 +1,9 @@
 <?php
-
+/** @file
+ *  @brief 		install wizard
+ *  @todo
+ *  1. Rebrand, theme, copyright
+ */
 //check if we have an init.php file already...security problem
 if(is_file("../etc/init.php")) {
    die("To run the install, " . realpath("../etc/init.php") . " must not already exist!");
@@ -8,15 +12,7 @@ if(is_file("../etc/init.php")) {
 
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100;
-/**
- * install wizard
- *
- * Copyright (c) 2005 Grasslands Regional Division #6
- * All rights reserved
- *
- * Created: February 17, 2007.
- * By: M. Nielsen
- */
+
 
 /**
  * Path for required files.
@@ -39,18 +35,12 @@ header('Pragma: no-cache'); //don't cache this page!
 <HTML lang=en>
 <HEAD>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
-    <TITLE>IEP-IPP Installation</TITLE>
+    <TITLE>MyIEP Installation</TITLE>
     <style type="text/css" media="screen">
         <!--
             @import "<?php echo IPP_PATH;?>layout/greenborders.css";
         -->
     </style>
-    <!-- All code Copyright &copy; 2005 Grasslands Regional Division #6.
-         -Concept and Design by Grasslands IPP Focus Group 2005
-         -Programming and Database Design by M. Nielsen, Grasslands
-          Regional Division #6
-         -CSS and layout images are courtesy A. Clapton.
-     -->
 </HEAD>
     <BODY>
         <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  

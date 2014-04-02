@@ -364,8 +364,10 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
     <!-- Custom styles for this template -->
     <link href="./css/jumbotron.css" rel="stylesheet">
 	<style type="text/css">body { padding-bottom: 70px; }</style>
-    
-    
+    <!-- Bootstrap Datepicker CSS -->
+<link href="./css/datepicker.css" rel="stylesheet">
+    <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+	 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     
     <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
     <script language="javascript" src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script>
@@ -500,7 +502,8 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
 <label>Goal</label>
 <textarea name="goal_text" spellcheck="true" cols="45" rows="3" wrap="soft"><?php echo $goal_row['goal']; ?></textarea>
 <label>Review Date</label>
-<input type="text" name="goal_review_date" value="<?php echo $goal_review_date; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.goal_review_date, 'yyyy-m-dd', 0, 0)">
+<script type="text/javascript" src="./js/bootstrap-datepicker.js">$('.datepicker').datepicker()</script>
+<input type="datepicker" name="goal_review_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="<?php echo $goal_review_date; ?>">
 </form>
 </div>   
 <div class="row">                      
@@ -526,7 +529,7 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
                         <tr>
                             <td valign="center" bgcolor="#E0E2F2" class="row_default">Short Term<BR>Objective:</td>
                             <td bgcolor="#E0E2F2" class="row_default">
-                            <textarea spellcheck="true" name="description" tabindex="1" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['description'])) echo $_POST['description']; ?></textarea>
+                            <textarea spellcheck="true" spellcheck="true" name="description" tabindex="1" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['description'])) echo $_POST['description']; ?></textarea>
                             </td>
                         </tr>
                         <tr>
@@ -538,19 +541,19 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
                         <tr>
                             <td valign="center" bgcolor="#E0E2F2" class="row_default">Assessment Procedure:</td>
                             <td bgcolor="#E0E2F2" class="row_default" valign="top">
-                            <textarea spellcheck="true" name="assessment_procedure" tabindex="3" cols="35" rows="3" onkeypress="return autocomplete(this,event,popuplist)" wrap="soft"><?php if(isset($_POST['assessment_procedure'])) echo $_POST['assessment_procedure']; ?></textarea> &nbsp;<img src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" width="17" border=0 onClick="popUpChooser(this,document.all.assessment_procedure)" >
+                            <textarea spellcheck="true" spellcheck="true" name="assessment_procedure" tabindex="3" cols="35" rows="3" onkeypress="return autocomplete(this,event,popuplist)" wrap="soft"><?php if(isset($_POST['assessment_procedure'])) echo $_POST['assessment_procedure']; ?></textarea> &nbsp;<img src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" width="17" border=0 onClick="popUpChooser(this,document.all.assessment_procedure)" >
                             </td>
                         </tr>
                         <tr>
                             <td valign="center" bgcolor="#E0E2F2" class="row_default">Strategies:</td>
                             <td bgcolor="#E0E2F2" class="row_default">
-                            <textarea spellcheck="true" name="strategies" tabindex="4" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['strategies'])) echo $_POST['strategies']; ?></textarea>
+                            <textarea spellcheck="true" spellcheck="true" name="strategies" tabindex="4" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['strategies'])) echo $_POST['strategies']; ?></textarea>
                             </td>
                         </tr>
                         <tr>
                             <td valign="center" bgcolor="#E0E2F2" class="row_default">Progress Review:</td>
                             <td bgcolor="#E0E2F2" class="row_default">
-                            <textarea spellcheck="true" name="results_and_recommendations" tabindex="5" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['results_and_recommendations'])) echo $_POST['results_and_recommendations']; ?></textarea>
+                            <textarea spellcheck="true" spellcheck="true" name="results_and_recommendations" tabindex="5" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['results_and_recommendations'])) echo $_POST['results_and_recommendations']; ?></textarea>
                             </td>
                         </tr>
                         <tr>

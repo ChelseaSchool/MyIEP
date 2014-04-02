@@ -214,7 +214,7 @@ if(isset($_POST['edit_anecdotal_report']) && $have_write_permission) {
                         </tr>
                         <tr>
                             <td bgcolor="#E0E2F2" class="row_default">Report:</td><td bgcolor="#E0E2F2" class="row_default">
-                            <textarea name="report" tabindex="1" cols="40" rows="10" wrap="soft"><?php echo $anecdotal_row['report']; ?></textarea>
+                            <textarea spellcheck="true" name="report" tabindex="1" cols="40" rows="10" wrap="soft"><?php echo $anecdotal_row['report']; ?></textarea>
                             </td>
                             <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="2" class="row_default"><input type="submit" tabindex="3" name="Edit" value="Edit"></td>
                         </tr>

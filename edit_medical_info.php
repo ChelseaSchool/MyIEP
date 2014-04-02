@@ -307,7 +307,7 @@ if(isset($_POST['edit_medical_info']) && $have_write_permission) {
                            </td>
                         </tr>
                         <tr>
-                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Description:</td><td bgcolor="#E0E2F2" class="row_default"><textarea tabindex="5" name="description" cols="30" rows="5" wrap="SOFT"><?php echo $medical_row['description']; ?></textarea></td>
+                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Description:</td><td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" tabindex="5" name="description" cols="30" rows="5" wrap="SOFT"><?php echo $medical_row['description']; ?></textarea></td>
                         </tr>
                         </table>
                         </form>

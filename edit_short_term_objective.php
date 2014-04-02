@@ -10,7 +10,9 @@
     You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * @authors		Rik Goldman, Sabre Goldman, Jason Banks, Alex, James, Paul, Bryan, TJ, Jonathan, Micah, Stephen, Joseph
  * @author		M. Nielson
- * @todo		Filter input
+ * @todo		
+ * 1. Filter input
+ * 2. Use as model for datepicker (jQuery)
 */
  
 //the authorization level for this page!
@@ -147,30 +149,8 @@ if(!$student_result) {
 <!-- Bootstrap Datepicker CSS -->
 <link href="./css/datepicker.css" rel="stylesheet">
 
-<!-- Legacy Datepicker (Nielson) -->
-<script type="text/javascript" src='<?php echo IPP_PATH . "include/popcalendar.js"; ?>'></script>
-<script type="text/javascript">
-      function confirmChecked() {
-          var szGetVars = "strengthneedslist=";
-          var szConfirmMessage = "Are you sure you want to modify/delete the following:\n";
-          var count = 0;
-          form=document.medicationlist;
-          for(var x=0; x<form.elements.length; x++) {
-              if(form.elements[x].type=="checkbox") {
-                  if(form.elements[x].checked) {
-                     szGetVars = szGetVars + form.elements[x].name + "|";
-                     szConfirmMessage = szConfirmMessage + "ID #" + form.elements[x].name + ",";
-                     count++;
-                  }
-              }
-          }
-          if(!count) { alert("Nothing Selected"); return false; }
-          if(confirm(szConfirmMessage))
-              return true;
-          else
-              return false;
-      }
 
+<script>
       function noPermission() {
           alert("You don't have the permission level necessary"); return false;
       }
@@ -273,9 +253,9 @@ if(!$student_result) {
 <p><input type=datepicker name="review_date" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="<?php echo $goal_row['review_date']; ?>"></p>
 <!-- Lagacy Datepicker: &nbsp;<img	src='<?php echo IPP_PATH . "images/calendaricon.gif"; ?>' height="17" width="17" border="0" onClick="popUpCalendar(this, document.all.review_date, 'yyyy-m-dd', 0, 0)" alt="calendar">-->
 <label>Assessment Procedure</label>
-<p><textarea spellcheck="true" name="assessment_procedure" class="wideInput" cols="40" rows="3" wrap="soft"><?php echo $goal_row['assessment_procedure']; ?></textarea></p>
+<p><textarea spellcheck="true" spellcheck="true" name="assessment_procedure" class="wideInput" cols="40" rows="3" wrap="soft"><?php echo $goal_row['assessment_procedure']; ?></textarea></p>
 <label>Strategies</label>
-<p><textarea spellcheck="true" name="strategies" class="wideInput" cols="40" rows="3" wrap="soft"><?php echo $goal_row['strategies']; ?></textarea></p>
+<p><textarea spellcheck="true" spellcheck="true" name="strategies" class="wideInput" cols="40" rows="3" wrap="soft"><?php echo $goal_row['strategies']; ?></textarea></p>
 <p>
 </div>
 </fieldset>				

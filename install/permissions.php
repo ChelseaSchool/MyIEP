@@ -1,4 +1,12 @@
 <?php
+
+/** @file
+ * @brief 		This part of install wizard checks status and makes sure everything is good to proceed
+ * @todo
+ * 1. Rebrand and theme
+ * 2. Copyright Block
+ */
+
 //check if we have an init.php file already...security problem
 if(is_file("../etc/init.php")) {
    define('IPP_PATH','../');
@@ -10,16 +18,7 @@ if(is_file("../etc/init.php")) {
 
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100;
-/**
- * install wizard
- *
- * Copyright (c) 2005 Grasslands Regional Division #6
- * All rights reserved
- *
- * Created: February 17, 2007.
- * By: M. Nielsen
- * Modified: May 19, 2007 M. N. - allow for upgrade.
- */
+
 
 /**
  * Path for required files.
@@ -43,18 +42,13 @@ header('Pragma: no-cache'); //don't cache this page!
 <HTML lang=en>
 <HEAD>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
-    <TITLE>IEP-IPP Installation</TITLE>
+    <TITLE>MyIEP Installation</TITLE>
     <style type="text/css" media="screen">
         <!--
             @import "../layout/greenborders.css";
         -->
     </style>
-    <!-- All code Copyright &copy; 2005 Grasslands Regional Division #6.
-         -Concept and Design by Grasslands IPP Focus Group 2005
-         -Programming and Database Design by M. Nielsen, Grasslands
-          Regional Division #6
-         -CSS and layout images are courtesy A. Clapton.
-     -->
+    
 </HEAD>
     <BODY>
         <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
@@ -134,6 +128,6 @@ header('Pragma: no-cache'); //don't cache this page!
             <td class="shadow-bottomRight"></td>
         </tr>
         </table> 
-        <center>System Copyright &copy; 2005 Grasslands Regional Division #6.</center>
+        
     </BODY>
 </HTML>

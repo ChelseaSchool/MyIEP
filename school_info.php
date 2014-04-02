@@ -11,7 +11,12 @@
     You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * @authors		Rik Goldman, Sabre Goldman, Jason Banks, Alex, James, Paul, Bryan, TJ, Jonathan, Micah, Stephen, Joseph
  * @author		M. Nielson
- * @todo		Filter input
+ * @todo		
+ * 1. filter input, escape output
+ * 2. confirm this page's role
+ * 3. bootstrap and nav
+ * 4. spellcheck?
+ * 5. Can we draw from information here to customize the application?
  */  
  
 //the authorization level for this page!
@@ -227,7 +232,7 @@ if(!$school_result) {
                         </tr>
                         <tr>
                            <td bgcolor="#E0E2F2" class="row_default">School Address:</td>
-                           <td bgcolor="#E0E2F2" class="row_default"><textarea name="school_address" tabindex="3" cols="30" rows="3" wrap="soft"><?php if(isset($_POST['school_address'])) echo $_POST['school_address']; ?></textarea></td>
+                           <td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="school_address" tabindex="3" cols="30" rows="3" wrap="soft"><?php if(isset($_POST['school_address'])) echo $_POST['school_address']; ?></textarea></td>
                         </tr>
                         <tr>
                            <td bgcolor="#E0E2F2" class="row_default">School Colour:</td>

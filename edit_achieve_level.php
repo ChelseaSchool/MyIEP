@@ -305,7 +305,7 @@ if(isset($_POST['edit_performance_testing']) && $have_write_permission) {
                            </td>
                         </tr>
                         <tr>
-                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Results:</td><td bgcolor="#E0E2F2" class="row_default"><textarea name="results" tabindex="4" cols="30" rows="5" wrap="soft"><?php echo $performance_row['results']; ?></textarea></td>
+                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Results:</td><td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="results" tabindex="4" cols="30" rows="5" wrap="soft"><?php echo $performance_row['results']; ?></textarea></td>
                         </tr>
                         </table>
                         </form>

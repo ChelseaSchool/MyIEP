@@ -11,7 +11,11 @@
     You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * @authors		Rik Goldman, Sabre Goldman, Jason Banks, Alex, James, Paul, Bryan, TJ, Jonathan, Micah, Stephen, Joseph
  * @author		M. Nielson
- * @todo		Filter input
+ * @todo		
+ * 1. Filter input, escape output
+ * 2. bootstrap
+ * 3. spellcheck as necessary
+ * 4. navbars (student context)
  */ 
  
  
@@ -553,7 +557,7 @@ if(!$school_result) {
                             <!--td valign="center" align="center" bgcolor="#E0E2F2" rowspan="6" class="row_default"><input type="submit" tabindex="6" name="add" value="add"></td-->
                         </tr>
                         <tr>
-                           <td valign="center" bgcolor="#E0E2F2" class="row_default">School Address (optional):</td><td bgcolor="#E0E2F2" class="row_default"><textarea name="school_address" tabindex="7" cols="30" rows="3" wrap="soft"><?php echo $_POST['school_address']; ?></textarea></td>
+                           <td valign="center" bgcolor="#E0E2F2" class="row_default">School Address (optional):</td><td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="school_address" tabindex="7" cols="30" rows="3" wrap="soft"><?php echo $_POST['school_address']; ?></textarea></td>
                         </tr>
                         <tr>
                            <td bgcolor="#E0E2F2" class="row_default">Start Date: (YYYY-MM-DD)</td>
@@ -588,7 +592,7 @@ if(!$school_result) {
                            </td>
                         </tr>
                         <tr>
-                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Accommodations (optional):</td><td bgcolor="#E0E2F2" class="row_default"><textarea name="accommodations" tabindex="<?php echo $tabindex; ?>" cols="30" rows="3" wrap="soft"><?php echo $_POST['accommodations']; ?></textarea></td>
+                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Accommodations (optional):</td><td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="accommodations" tabindex="<?php echo $tabindex; ?>" cols="30" rows="3" wrap="soft"><?php echo $_POST['accommodations']; ?></textarea></td>
                         </tr>
                         <tr>
                            <td valign="center" align="center" bgcolor="#E0E2F2" colspan="2" class="row_default"><center><input type="submit" tabindex="<?php $tabindex++;echo $tabindex; ?>" name="add" value="add"></center></td>

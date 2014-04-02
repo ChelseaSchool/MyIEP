@@ -6,6 +6,7 @@
  *  1. Make input fields wider, perhaps
  *  2. figure out which datepicker stuff can go
  *  3. Create nav link back to student
+ *  4. Duplicate nav bar for all pages without one (or two)
  */
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100;

@@ -1,6 +1,10 @@
 <?php
 /** @file
  *  @brief	display guardian information
+ *  @todo
+ *  1. Navbar
+ *  2. Bootstrap
+ *  3. Filter, escape, spellcheck
  * 
  */
  

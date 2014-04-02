@@ -1,5 +1,9 @@
 <?php
-
+/**@file
+ * @brief		completes the installation
+ * @todo		Theme with bootstrap
+ * 
+ */
  //set the config file flag to prevent security problems with this install directory.
 $file=file("../etc/init.php");
                if(!$file) $system_message .= "Cannot open init.php configuration file. You will need to manually set IPP_IS_CONFIGURED to true<BR>";
@@ -59,12 +63,7 @@ header('Pragma: no-cache'); //don't cache this page!
             @import "../layout/greenborders.css";
         -->
     </style>
-    <!-- All code Copyright &copy; 2005 Grasslands Regional Division #6.
-         -Concept and Design by Grasslands IPP Focus Group 2005
-         -Programming and Database Design by M. Nielsen, Grasslands
-          Regional Division #6
-         -CSS and layout images are courtesy A. Clapton.
-     -->
+
 </HEAD>
     <BODY>
         <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  

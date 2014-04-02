@@ -2,7 +2,11 @@
 
 /** @file
  * @brief 	add student to database
- * 
+ * @todo
+ * 1. Filter input, escape output
+ * 2. Title case for names
+ * 3. spellcheck?
+ * 4. Bootstrap
  */
  
  

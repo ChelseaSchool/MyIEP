@@ -251,14 +251,14 @@ $enum_options_type = mysql_enum_values("bugs","status");
                           }
                         ?>
                         <tr>
-                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Bug Description or Feature Request:</td><td bgcolor="#E0E2F2" class="row_default"><textarea name="bug" cols="30" rows="5" wrap="soft"><?php echo $bug_row['bug']; ?></textarea></td>
+                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Bug Description or Feature Request:</td><td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="bug" cols="30" rows="5" wrap="soft"><?php echo $bug_row['bug']; ?></textarea></td>
                            <td valign="center" align="center" bgcolor="#E0E2F2" <?php if($permission_level <= $IPP_MIN_EDIT_BUG_PERMISSION) echo "rowspan=\"3\""; ?> class="row_default"><input type="submit" name="Update" value="Update"></td>
                          
                         </tr>
                         <?php
                         if($permission_level <= $IPP_MIN_EDIT_BUG_PERMISSION) {
-                          echo "<tr><td valign=\"center\" bgcolor=\"#E0E2F2\" class=\"row_default\">Status:</td><td bgcolor=\"#E0E2F2\" class=\"row_default\"><textarea name=\"resolution\" cols=\"30\" rows=\"5\" wrap=\"soft\">" . $bug_row['resolution'] . "</textarea></td></tr>";
-                          echo "<tr><td valign=\"center\" bgcolor=\"#E0E2F2\" class=\"row_default\">HTTP_REFER:</td><td bgcolor=\"#E0E2F2\" class=\"row_default\"><textarea name=\"refering_page\" cols=\"30\" rows=\"5\" wrap=\"soft\" disabled>" . $bug_row['referring_page'] . "</textarea></td></tr>";
+                          echo "<tr><td valign=\"center\" bgcolor=\"#E0E2F2\" class=\"row_default\">Status:</td><td bgcolor=\"#E0E2F2\" class=\"row_default\"><textarea spellcheck="true" name=\"resolution\" cols=\"30\" rows=\"5\" wrap=\"soft\">" . $bug_row['resolution'] . "</textarea></td></tr>";
+                          echo "<tr><td valign=\"center\" bgcolor=\"#E0E2F2\" class=\"row_default\">HTTP_REFER:</td><td bgcolor=\"#E0E2F2\" class=\"row_default\"><textarea spellcheck="true" name=\"refering_page\" cols=\"30\" rows=\"5\" wrap=\"soft\" disabled>" . $bug_row['referring_page'] . "</textarea></td></tr>";
                         }
                         ?>
                         </table>

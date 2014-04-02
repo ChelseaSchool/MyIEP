@@ -1,7 +1,8 @@
 <?php
 
-/**
- * @BRIEF 	?
+/** @file
+ * @brief No idea what this page does
+ * @todo find out what this page is for
  * 
  */
  

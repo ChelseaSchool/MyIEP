@@ -11,7 +11,12 @@
     You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * @authors		Rik Goldman, Sabre Goldman, Jason Banks, Alex, James, Paul, Bryan, TJ, Jonathan, Micah, Stephen, Joseph
  * @author		M. Nielson
- * @todo		Filter input
+ * @todo		
+ * 1. Filter input
+ * 2. Escape output
+ * 3. Confirm spellcheck
+ * 4. check navbar
+ * 5. Datepicker is here; use it as a model for other pages
  */ 
  
 
@@ -437,13 +442,14 @@ if(!$completed_objectives_result) {
                         <tr>
                             <td valign="bottom" bgcolor="#E0E2F2" class="row_default">Description:</td>
                             <td bgcolor="#E0E2F2" class="row_default">
-                            <textarea name="description" cols="25" rows="3" wrap="hard"><?php echo $_GET['description']; ?></textarea>&nbsp;<img align="top" src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" width="17" border=0 onClick="popUpChooser(this,document.all.description);" >
+                            <textarea spellcheck="true" name="description" cols="25" rows="3" wrap="hard"><?php echo $_GET['description']; ?></textarea>&nbsp;<img align="top" src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" width="17" border=0 onClick="popUpChooser(this,document.all.description);" >
                             </td>
                             <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="3" class="row_default"><input type="submit" name="add" value="add"></td>
                         </tr>
                         <tr>
                            <td bgcolor="#E0E2F2" class="row_default">Review Date: (YYYY-MM-DD)</td>
                            <td bgcolor="#E0E2F2" class="row_default">
+                           <script type="text/javascript" src="./js/bootstrap-datepicker.js"id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd">$('.datepicker').datepicker()</script>
                                <input type="text" name="review_date" value="<?php echo $_GET['review_date']; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.review_date, 'yyyy-m-dd', 0, 0)">
                            </td>
                         </tr>

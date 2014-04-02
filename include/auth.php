@@ -132,7 +132,7 @@
  * @param string $szPassword
  * @return boolean
  */
- 
+
     function validate($szLogin='',$szPassword='') {
          //check username and password against user database
          //returns TRUE if successful or FALSE on fail.

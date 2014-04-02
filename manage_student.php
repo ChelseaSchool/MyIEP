@@ -1,7 +1,13 @@
 <?php
 
 /** @file
- * @brief 	manage authorized users
+ * @brief 	manage from list of students
+ * 
+ * This page needs confirmation of function. Filename doesn't match devs description.
+ * @todo
+ * 1. Confirm filename reflects what is in the page
+ * 2. Bootstrap theme
+ * 3. Navbar, depending on content
  * 
  */
  
@@ -9,17 +15,7 @@
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100;  //all, decide in the page
 
-/**
- * superuser_manage_users.php -- IPP manage users main menu
- *
- * Copyright (c) 2005 Grasslands Regional Division #6
- * All rights reserved
- *
- * Created: June 06, 2005
- * By: M. Nielsen
- * Modified: June 01, 2006
- *
- */
+
 
 /**
  * Path for IPP required files.
@@ -302,7 +298,7 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
                         <div id="main">
                         <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
 
-                        <center><table><tr><td><center><p class="header">-Students-</p></center></td></tr></table></center>
+                        <center><table><tr><td><center><p class="header">Students</p></center></td></tr></table></center>
 
                         <center><table width="80%" border="0"><tr>
                           <td align="center">
@@ -374,7 +370,7 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
                             $current_student_permission = getStudentPermission($student_row['student_id']);
                             echo "<tr>\n";
                             $school_colour = "#". $student_row['red'] . $student_row['green'] . $student_row['blue'];
-                            echo "<td bgcolor=\"$school_colour\"><input type=\"checkbox\" name=\"" . $student_row['student_id'] . "\" value=\"" . $student_row['first_name'] . " " . $student_row['last_name'] . "\"></td>";
+                            echo "<td><input type=\"checkbox\" name=\"" . $student_row['student_id'] . "\" value=\"" . $student_row['first_name'] . " " . $student_row['last_name'] . "\"></td>";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\">" . $student_row['student_id'] . "<p></td>\n";
                             echo "<td bgcolor=\"$bgcolor\"><a href=\"" . IPP_PATH . "student_view.php?student_id=" . $student_row['student_id'] . "\" class=\"default\" ";
                             if($current_student_permission == "NONE" || $current_student_permission == "ERROR") {

@@ -307,7 +307,7 @@ if(!$testing_result) {
                           </td>
                         </tr>
                         <tr>
-                            <td valign="center" bgcolor="#E0E2F2" class="row_default">Test Description:</td><td bgcolor="#E0E2F2" class="row_default"><textarea name="description" tabindex="1" cols="30" rows="3" wrap="soft"><?php if(isset($_POST['description'])) echo $_POST['description']; ?></textarea></td>
+                            <td valign="center" bgcolor="#E0E2F2" class="row_default">Test Description:</td><td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="description" tabindex="1" cols="30" rows="3" wrap="soft"><?php if(isset($_POST['description'])) echo $_POST['description']; ?></textarea></td>
                             <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="5" class="row_default"><input type="submit" tabindex="6" name="add" value="add"></td>
                         </tr>
                         <tr>
@@ -327,7 +327,7 @@ if(!$testing_result) {
                            </td>
                         </tr>
                         <tr>
-                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Results and Recommendations:</td><td bgcolor="#E0E2F2" class="row_default"><textarea name="recommendations" tabindex="5" cols="30" rows="3" wrap="soft"><?php if(isset($_POST['recommendations'])) echo $_POST['recommendations']; ?></textarea></td>
+                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Results and Recommendations:</td><td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="recommendations" tabindex="5" cols="30" rows="3" wrap="soft"><?php if(isset($_POST['recommendations'])) echo $_POST['recommendations']; ?></textarea></td>
                         </tr>
                         </table>
                         </form>

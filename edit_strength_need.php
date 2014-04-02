@@ -196,7 +196,7 @@ if(isset($_POST['edit_strength_or_need']) && $have_write_permission) {
                            <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="3" class="row_default"><input type="submit" tabindex="4" name="Update" value="Update"></td>
                         </tr>
                         <tr>
-                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Description:</td><td bgcolor="#E0E2F2" class="row_default"><textarea name="description" tabindex="2" cols="30" rows="5" wrap="soft"><?php echo $strength_row['description'];?></textarea></td>
+                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Description:</td><td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="description" tabindex="2" cols="30" rows="5" wrap="soft"><?php echo $strength_row['description'];?></textarea></td>
                         </tr>
                         <tr>
                            <td valign="bottom" bgcolor="#E0E2F2" class="row_default">Ongoing:</td>

@@ -230,7 +230,7 @@ if(isset($_POST['edit_school'])) {
                         </tr>
                         <tr>
                            <td bgcolor="#E0E2F2" class="row_default">School Address:</td>
-                           <td bgcolor="#E0E2F2" class="row_default"><textarea name="school_address" tabindex="3" cols="30" rows="3" wrap="soft"><?php echo $school_row['school_address']; ?></textarea></td>
+                           <td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="school_address" tabindex="3" cols="30" rows="3" wrap="soft"><?php echo $school_row['school_address']; ?></textarea></td>
                         </tr>
                         <tr>
                            <td bgcolor="#E0E2F2" class="row_default">School Colour:</td>

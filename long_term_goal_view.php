@@ -15,6 +15,7 @@
  * 2. Make sure the duplicate in include/ can be safely removed
  * 3. Re-enable buttons when other pages are ready
  * 5. Split is deprecated (line 521)
+ * 6. JQuery to reveal only specified areas
  */
 
 /** @var $MINIMUM_AUTHORIZATION_LEVEL = 100
@@ -384,14 +385,9 @@ if  ($details="hide")
 	} */  
 ?>
 
+
+
 <script>
-function areafilter ()
-{
-	var areas = $( "#selection ).val();
-			 $( "p" ).html( "<b>choices</b> " + areas.join( ", " ) );
-	 		
-			
-}
 function toggle ()
 {
 	$("div#details").toggle ("explode", 100)
@@ -504,7 +500,7 @@ if(mysql_num_rows($long_goal_result) == 0 ) {
 	while($goal = mysql_fetch_array($long_goal_result)) {
 		//div for use by jquery filter action
 		$div_id=$goal['area'];
-		echo "<div class=\"container\" id=$div_id>";
+		echo "<div class=\"container\" id=\"$div_id\">";
 		
 		echo "<div class=\"row\"><div class=\"col-md-12\"><div class=\"container\">";
 		echo "<h2><a href=\"" . IPP_PATH . "add_objectives.php?student_id=$student_id&lto=" . $goal['goal_id']  . "\"";
@@ -552,10 +548,10 @@ if(mysql_num_rows($long_goal_result) == 0 ) {
 					echo "\"><button type=\"button\" class=\"btn btn-xs btn-primary\">Set Completed</button></a>";
 				}
         //output the add objectives button.
-		/*echo "<a href=\"" . IPP_PATH . "add_objectives.php?&student_id=" . $student_id  . "&lto=" . $goal['goal_id'] . "\"";
+		/*echo "<a href=\" . IPP_PATH . "add_objectives.php?&student_id=" . $student_id  . "&lto=" . $goal['goal_id'] . "\"";
  		if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
 		else echo "onClick=\"return changeStatusCompleted();\"";
-		echo "\"><button type=\"button\" class=\"btn btn-xs btn-primary\">Add Objective</button></a>";*/
+		echo "\"><button type=\"button\" class=\"btn btn-xs btn-primary\">Add Objective</a>"; */
 
 		//output the edit button.
 		/* echo "<a href=\"" . IPP_PATH . "add_objectives.php?student_id=$student_id&lto=" . $goal['goal_id']  . "\"";
@@ -657,8 +653,9 @@ if(!$short_term_objective_result) {
 	
 	echo "<hr>";
 	echo "</div>";
-
-
+	echo "</div>";
+	
+	
 	//output the results /assmt / etc...
 
 	

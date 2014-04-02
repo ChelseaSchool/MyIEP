@@ -1,8 +1,11 @@
 <?php
 
-/**
- * @BRIEF 	display medical information
- * 
+/** @file
+ * @brief 	display medical information
+ * @todo
+ * 1. Bootstrap
+ * 2. Student context navbar
+ * 3. filter, spellcheck, escape
  */
  
 //the authorization level for this page!
@@ -356,7 +359,7 @@ if(!$medical_result) {
                            </td>
                         </tr>
                         <tr>
-                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Description:</td><td bgcolor="#E0E2F2" class="row_default"><textarea name="description" tabindex="5" cols="30" rows="3" wrap="SOFT"><?php  if(isset($_POST['description'])) echo $_POST['description']; ?></textarea></td>
+                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Description:</td><td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="description" tabindex="5" cols="30" rows="3" wrap="SOFT"><?php  if(isset($_POST['description'])) echo $_POST['description']; ?></textarea></td>
                         </tr>
                         </table>
                         </form>

@@ -269,7 +269,7 @@ $enum_options_type = mysql_enum_values("background_info","type");
                            <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="2" class="row_default"><input type="submit" tabindex="3" name="add" value="add"></td>
                         </tr>
                         <tr>
-                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Description:</td><td bgcolor="#E0E2F2" class="row_default"><textarea name="description" tabindex="2" cols="30" rows="5" wrap="soft"><?php if(isset($_POST['description'])) echo $_POST['description']; ?></textarea></td>
+                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Description:</td><td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="description" tabindex="2" cols="30" rows="5" wrap="soft"><?php if(isset($_POST['description'])) echo $_POST['description']; ?></textarea></td>
                         </tr>
                         </table>
                         </form>

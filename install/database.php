@@ -1,4 +1,15 @@
 <?php
+/* @file
+ * @brief		Install wizard
+ * @copyright	Copyright (c) 2005 Grasslands Regional Division #6
+ * @copyright	GPLv2
+ * @copyright	Copyright (c) 2014 Chelsea School
+ * @todo
+ * 1. Bootstrap
+ * 2. Strip copyright information
+ */
+
+
 if(is_file("../etc/init.php")) {
    define('IPP_PATH','../');
    require_once("../etc/init.php");
@@ -127,7 +138,7 @@ if(isset($_POST['db_host'])) {
 <HTML lang=en>
 <HEAD>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
-    <TITLE>IEP-IPP Installation</TITLE>
+    <TITLE>MyIEP Installation</TITLE>
     <style type="text/css" media="screen">
         <!--
             @import "../layout/greenborders.css";
@@ -207,6 +218,6 @@ if(isset($_POST['db_host'])) {
             <td class="shadow-bottomRight"></td>
         </tr>
         </table> 
-        <center>System Copyright &copy; 2005 Grasslands Regional Division #6.</center>
+        
     </BODY>
 </HTML>

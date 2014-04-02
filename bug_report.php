@@ -232,7 +232,7 @@ $enum_options_type = mysql_enum_values("bugs","status");
                           </td>
                         </tr>
                         <tr>
-                           <td valign="center" width="100" bgcolor="#E0E2F2" class="row_default">Bug Description</td><td bgcolor="#E0E2F2" class="row_default"><textarea name="description" cols="40" rows="5" wrap="soft"><?php echo $_POST['description']; ?></textarea></td>
+                           <td valign="center" width="100" bgcolor="#E0E2F2" class="row_default">Bug Description</td><td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="description" cols="40" rows="5" wrap="soft"><?php echo $_POST['description']; ?></textarea></td>
                            <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="1" class="row_default"><input type="submit" name="add" value="add"></td>
                         </tr>
                         </table>
