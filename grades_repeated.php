@@ -322,5 +322,6 @@ if(!$grades_repeated_result) {
         </tr>
         </table> 
         <center></center>
+        <?php print_student_navbar(bottom)?>
     </BODY>
 </HTML>
