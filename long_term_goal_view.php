@@ -13,6 +13,8 @@
  * @todo		
  * 1. Filter input
  * 2. Make sure the duplicate in include/ can be safely removed
+ * 3. Re-enable buttons when other pages are ready
+ * 5. Split is deprecated (line 521)
  */
 
 /** @var $MINIMUM_AUTHORIZATION_LEVEL = 100
@@ -517,10 +519,10 @@ if(mysql_num_rows($long_goal_result) == 0 ) {
         echo $goal['goal'] . "</a>&nbsp;<span class=\"label label-default\">goal</span></h3>"; //output goal
         
 		//Review Date
-		$today = time(); #today's date in seconds since January 1, 1970
+		/* $today = time(); #today's date in seconds since January 1, 1970
 		$date_split = split("-",$goal['review_date']);
 		$date_seconds = mktime(0,0,0,$date_split[1],$date_split[2],$date_split[0]); //since j1,1970
-		/* if($today >= $date_seconds && $goal['is_complete'] != 'Y') {
+		 if($today >= $date_seconds && $goal['is_complete'] != 'Y') {
 			echo "<p>Review date (expired):" .  "<a href=\"" . IPP_PATH . "add_objectives.php?student_id=$student_id&lto=" . $goal['goal_id']  . "\""; 
 			if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
 				else echo "onClick=\"return changeStatusCompleted();\">";
