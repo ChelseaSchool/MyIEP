@@ -258,6 +258,8 @@ if(!$area_type_result) {
     </SCRIPT>
 </HEAD>
 <BODY>
+<?php navigate_student_records() ?>
+   
         <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
         <tr>
           <td class="shadow-topLeft"></td>

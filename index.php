@@ -4,7 +4,11 @@
 
 
 if(!defined('IPP_PATH')) define('IPP_PATH','./');
-
+//check if we are running install wizard
+if(!is_file(IPP_PATH . "etc/init.php")){
+require_once(IPP_PATH . 'install/index.php');
+exit();
+}
 /* eGPS required files. */
 require_once(IPP_PATH . 'etc/init.php');
 include_once(IPP_PATH . 'include/db.php');
@@ -25,13 +29,7 @@ if(isset($LOGIN_NAME)) $LOGIN_NAME = $LOGIN_NAME; else $LOGIN_NAME="";
             @import "<?php echo IPP_PATH;?>layout/greenborders.css";
         -->
     </style>
-    <!-- All code Copyright &copy; 2005 Grasslands Regional Division #6.
-         -Concept and Design by Grasslands IPP Focus Group 2005
-         -Programming and Database Design by M. Nielsen, Grasslands
-          Regional Division #6
-         -User Interface Design and Educational Factors by P Stoddart
-         -CSS and layout images are courtesy A. Clapton.
-     -->
+
 </HEAD>
     <BODY>
         <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
@@ -52,7 +50,7 @@ if(isset($LOGIN_NAME)) $LOGIN_NAME = $LOGIN_NAME; else $LOGIN_NAME="";
                         <div id="main">
                                 <?php if ($MESSAGE) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $MESSAGE . "</p></td></tr></table></center>";} ?>
 <BR><BR>
-                        <center><table><tr><td><center><p class="header">- MyIEP Login -</p></center></td></tr></table></center>
+                        <center><table><tr><td><center><p class="header"> MyIEP Login </p></center></td></tr></table></center>
                         <form enctype="multipart/form-data" action="<?php echo IPP_PATH . 'main.php'; ?>" method="post">
                         <center><table>
                             <tr>

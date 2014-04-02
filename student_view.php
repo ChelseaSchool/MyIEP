@@ -220,7 +220,10 @@ function get_age_by_date($yyyymmdd)
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="main.php">Home</a></li>
+            <li><a href="index.php">Logout</a></li>
             <li><a href="about.php">About</a></li>
+            <li><a onclick="history.go(-1);">Back</a></li>
+            <li><a href=<?php echo "ipp_pdf.php?student_id=" . $student_row['student_id'] . "&file=ipp.pdf"; ?>>Get PDF</li></a>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Records: <?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?><b class="caret"></b></a>
               <ul class="dropdown-menu">
@@ -290,22 +293,40 @@ function get_age_by_date($yyyymmdd)
   
       </div>
     </div>
- <div class="container">               
+ 
+ <!-- First Row -->
+  <div class="container">               
 <div class="row">
 <div class="col-md-4">
-<h2>School Information</h2>
-<h4><small>School Name: </small><?php
-if($school_row['school_name']=="")
-echo "Archived Student</h4>";
-else
-echo $school_row['school_name'] . "</h4> <p>(since " . $school_row['start_date'] . ")</p>";
-?>
+<h2>Quick Access</h2>
+<h4>Goals &amp; Objectives</h4>
+<p><a class="btn btn-default btn-lg" href="<?php echo IPP_PATH . "long_term_goal_view.php?student_id=" . $student_row['student_id']; ?>" role="button">View &raquo;</a></p>
+<hr>
+<h3>More Records: <small><?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?></small></h3>
+<form>
 
- <p><a class="btn btn-default btn-lg" href="<?php echo IPP_PATH . "school_history.php?student_id=" . $student_id ?>" role="button">Update School History &raquo;</a></p>
- 
- 
-<!--End Column -->
-</div>
+<select name="records" onchange="window.location.href= this.form.records.options[this.form.records.selectedIndex].value" class="form-control">
+<option>Select Record to View</option>
+<option value="<?php echo IPP_PATH . "long_term_goal_view.php?student_id=" . $student_row['student_id']; ?>">Goals &amp; Objectives</option>
+<option class="divider"></option>
+<option  value="<?php echo IPP_PATH . "guardian_view.php?student_id=" . $student_row['student_id'];?>">Guardians</option>
+<option value="strength_need_view.php?student_id=<?php echo $student_row['student_id'];?>">Strengths &amp; Needs</option>
+<option value="<?php echo IPP_PATH . "coordination_of_services.php?student_id=" . $student_row['student_id'];?>">Coordination of Services</option>
+<option value="<?php echo IPP_PATH . "achieve_level.php?student_id=" . $student_row['student_id'];?>">Achievement Level</option>
+<option value="<?php echo IPP_PATH . "medical_info.php?student_id=" . $student_row['student_id'];?>">Medical Information</option>
+<option value="<?php echo IPP_PATH . "medication_view.php?student_id=" . $student_row['student_id'];?>">Medication</option>
+<option value="<?php echo IPP_PATH . "testing_to_support_code.php?student_id=" . $student_row['student_id'];?>">Support Testing</option>
+<option value="<?php echo IPP_PATH . "background_information.php?student_id=" . $student_row['student_id'];?>">Background Information</option>
+<option value="<?php echo IPP_PATH . "year_end_review.php?student_id=" . $student_row['student_id'];?>">Year-End Review</option>
+<option value="<?php echo IPP_PATH . "anecdotals.php?student_id=" . $student_row['student_id'];?>">Anecdotals</option>
+<option value="<?php echo IPP_PATH . "assistive_technology.php?student_id=" . $student_row['student_id'];?>">Assistive Techology</option>
+<option value="<?php echo IPP_PATH . "transition_plan.php?student_id=" . $student_row['student_id'];?>">Transition Plan</option>
+<option value="<?php echo IPP_PATH . "accomodations.php?student_id=" . $student_row['student_id'];?>">Accomodations</option>
+<option value="<?php echo IPP_PATH . "snapshots.php?student_id=" . $student_row['student_id'];?>">Snapshots</option>
+</select>
+</form>
+              
+</div><!-- End Column -->
 <div class="col-md-4">
 <h2>General Information</h2>
 <h4><small>Name: </small><?php echo $student_row['first_name'] . " " . $student_row['last_name'];?></h4>
@@ -327,7 +348,6 @@ echo $school_row['school_name'] . "</h4> <p>(since " . $school_row['start_date']
 
 <p><a class="btn btn-default btn-lg" href="<?php echo IPP_PATH . "edit_general.php?student_id=" . $student_id ?>" role="button">Edit &raquo;</a></p>
 <!-- End col --></div>
-
 <div class="col-md-4">
 <h2>IEP Team</h2>
 <h4><small>Case Manager: </small><?php echo $supervisor_row['egps_username'];?></h4>
@@ -350,10 +370,102 @@ while($support_member_row=mysql_fetch_array($support_member_result)) {
 </table>
 <p><a class="btn btn-default btn-lg" href="<?php echo IPP_PATH . "modify_ipp_permission.php?student_id=" . $_GET['student_id']; ?>" role="button">Update Team &raquo;</a></p>
 
-<!-- End col --></div>
+<!-- End col --></div> 
+ <!-- Second Row -->
+<div class="container">               
+<div class="row">
+<div class="col-md-4">
+<h2>School Information</h2>
+<h4><small>School Name: </small><?php
+if($school_row['school_name']=="")
+echo "Archived Student</h4>";
+else
+echo $school_row['school_name'] . "</h4> <p>(since " . $school_row['start_date'] . ")</p>";
+?>
+
+ <p><a class="btn btn-default btn-lg" href="<?php echo IPP_PATH . "school_history.php?student_id=" . $student_id ?>" role="button">Update School History &raquo;</a></p>
+ 
+ 
+</div><!--End Column -->
+
+
+<div class="col-md-4">
+
+</div><!-- End Column -->
 <!-- End Row -->
 </div>
-
+<!-- Bottom Navbar -->
+<div class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="main.php">MyIEP</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="main.php">Home</a></li>
+            <li><a href="index.php">Logout</a></li>
+            <li><a href="about.php">About</a></li>
+            <li><a onclick="history.go(-1);">Back</a></li>
+            <li><a href=<?php echo "ipp_pdf.php?student_id=" . $student_row['student_id'] . "&file=ipp.pdf"; ?>>Get PDF</li></a>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Records: <?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?><b class="caret"></b></a>
+              <ul class="dropdown-menu">
+              	<li><a href="<?php echo IPP_PATH . "long_term_goal_view.php?student_id=" . $student_row['student_id']; ?>">Goals</a></li>
+              	<li class="divider"></li>
+              	<li><a href="<?php echo IPP_PATH . "guardian_view.php?student_id=" . $student_row['student_id'];?>">Guardians</a></li>
+              	<li><a href="<?php echo IPP_PATH . "strength_need_view.php?student_id=" . $student_row['student_id'];?>">Strengths &amp; Needs</a></li>
+              	<li><a href="<?php echo IPP_PATH . "coordination_of_services.php?student_id=" . $student_row['student_id'];?>">Coordination of Services</a></li>
+              	<li><a href="<?php echo IPP_PATH . "achieve_level.php?student_id=" . $student_row['student_id'];?>">Achievement Level</a></li>
+              	<li><a href="<?php echo IPP_PATH . "medical_info.php?student_id=" . $student_row['student_id'];?>">Medical Information</a></li>
+              	<li><a href="<?php echo IPP_PATH . "medication_view.php?student_id=" . $student_row['student_id'];?>">Medication</a></li>
+              	<li><a href="<?php echo IPP_PATH . "testing_to_support_code.php?student_id=" . $student_row['student_id'];?>">Support Testing</a></li>
+              	<li><a href="<?php echo IPP_PATH . "background_information.php?student_id=" . $student_row['student_id'];?>">Background Information</a></li>
+              	<li><a href="<?php echo IPP_PATH . "year_end_review.php?student_id=" . $student_row['student_id'];?>">Year-End Review</a></li>
+              	<li><a href="<?php echo IPP_PATH . "anecdotals.php?student_id=" . $student_row['student_id'];?>">Anecdotals</a></li>
+              	<li><a href="<?php echo IPP_PATH . "assistive_technology.php?student_id=" . $student_row['student_id'];?>">Assistive Techology</a></li>
+              	<li><a href="<?php echo IPP_PATH . "transition_plan.php?student_id=" . $student_row['student_id'];?>">Transition Plan</a></li>
+              	<li><a href="<?php echo IPP_PATH . "accomodations.php?student_id=" . $student_row['student_id'];?>">Accomodations</a></li>
+              	<li><a href="<?php echo IPP_PATH . "snapshots.php?student_id=" . $student_row['student_id'];?>">Snapshots</a></li></ul>
+            </ul>
+             
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="index.php">Logout</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Menu <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="./manage_student.php">Students</a></li>
+                <li class="divider"></li>
+                <li><a href="change_ipp_password.php">Reset Password</a></li>
+                <li><a href="superuser_add_goals.php">Goals Database</a></li>
+                <li><a href="./student_archive.php">Archive</a></li>
+                <li><a href="./user_audit.php">Audit</a></li>
+                <li><a href="superuser_manage_coding.php">Manage Codes</a></li>
+                <li><a href="school_info.php">Manage Schools</a></li>
+                <li><a href="superuser_view_logs.php">View Logs</a></li>
+              </ul>
+            </li>
+          </ul>
+         </div>
+         <!--/.nav-collapse -->
+        <!--<div class="navbar-collapse collapse">
+          <form class="navbar-form navbar-right" role="form" nctype="multipart/form-data" action="jumbotron.php" method="post">
+            <div class="form-group">
+              <input type="text" placeholder="User Name" class="form-control" value="<?php echo $LOGIN_NAME;?>">
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Password" class="form-control" name="PASSWORD" value="">
+            </div>
+            <button type="submit" value="submit" class="btn btn-success">Sign in</button>
+          </form>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </div>
                           
 
                        

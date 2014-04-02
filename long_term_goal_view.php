@@ -383,7 +383,13 @@ if  ($details="hide")
 ?>
 
 <script>
-
+function areafilter ()
+{
+	var areas = $( "#selection ).val();
+			 $( "p" ).html( "<b>choices</b> " + areas.join( ", " ) );
+	 		
+			
+}
 function toggle ()
 {
 	$("div#details").toggle ("explode", 100)
@@ -474,15 +480,16 @@ function toggle ()
 <h1>Goals: <small><?php echo $student_row['first_name'] . " " . $student_row['last_name'] ?> </small></h1>
 <h2>Logged in as: <small><?php echo $_SESSION['egps_username']; ?> (Permission: <?php echo $our_permission; ?>)</small></h2>
 <button class="btn btn-lg btn-primary" onclick="toggle ()" role="button">Toggle Details &raquo;</button>
-</div>
 
-</div>
+</div> <!-- close container -->
+
+</div> <!-- Close Jumbotron -->
 
  
 <!--  End Jumbotron -->
 <div class=container>
 <p><em><strong>Release Note</strong>: Details of objectives are hidden on this page for this release. Click <a onclick="toggle ()">here</a> to toggle.</em></p>
-</div>
+
 
 
 
@@ -493,6 +500,10 @@ if(mysql_num_rows($long_goal_result) == 0 ) {
 	}
 	$goal_num=1;
 	while($goal = mysql_fetch_array($long_goal_result)) {
+		//div for use by jquery filter action
+		$div_id=$goal['area'];
+		echo "<div class=\"container\" id=$div_id>";
+		
 		echo "<div class=\"row\"><div class=\"col-md-12\"><div class=\"container\">";
 		echo "<h2><a href=\"" . IPP_PATH . "add_objectives.php?student_id=$student_id&lto=" . $goal['goal_id']  . "\"";
 		if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
@@ -503,14 +514,14 @@ if(mysql_num_rows($long_goal_result) == 0 ) {
 		echo "<h2>" . $goal['area'] . "</h2>";
 		echo "<h3><small>" . $goal_num . ") </small>";
         $goal_num++; //increment goal
-        echo $goal['goal'] . "</a><span class=\"label label-default\">goal</span></h3>"; //output goal
+        echo $goal['goal'] . "</a>&nbsp;<span class=\"label label-default\">goal</span></h3>"; //output goal
         
 		//Review Date
 		$today = time(); #today's date in seconds since January 1, 1970
 		$date_split = split("-",$goal['review_date']);
 		$date_seconds = mktime(0,0,0,$date_split[1],$date_split[2],$date_split[0]); //since j1,1970
-		if($today >= $date_seconds && $goal['is_complete'] != 'Y') {
-			 echo "<p>Review date (expired): <a href=\"" . IPP_PATH . "add_objectives.php?student_id=$student_id&lto=" . $goal['goal_id']  . "\"";
+		/* if($today >= $date_seconds && $goal['is_complete'] != 'Y') {
+			echo "<p>Review date (expired):" .  "<a href=\"" . IPP_PATH . "add_objectives.php?student_id=$student_id&lto=" . $goal['goal_id']  . "\""; 
 			if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
 				else echo "onClick=\"return changeStatusCompleted();\">";
 				echo  $goal['review_date'] . "</a></p>";
@@ -520,14 +531,8 @@ if(mysql_num_rows($long_goal_result) == 0 ) {
 			if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
 			else echo "onClick=\"return changeStatusCompleted();\">";
 			echo $goal['review_date'] . "</a></p>";
-        }
-        /* Bootrap example button group
-         * <div class="btn-group">
-		 *  <button type="button" class="btn btn-default">Left</button>
-  		* <button type="button" class="btn btn-default">Middle</button>
-  		*<button type="button" class="btn btn-default">Right</button>
-		* </div>
-		*/
+        } */
+       
 
          echo "<div class=\"btn-group\">";
 	//output the complete/uncomplete button...
@@ -545,16 +550,16 @@ if(mysql_num_rows($long_goal_result) == 0 ) {
 					echo "\"><button type=\"button\" class=\"btn btn-xs btn-primary\">Set Completed</button></a>";
 				}
         //output the add objectives button.
-		echo "<a href=\"" . IPP_PATH . "add_objectives.php?&student_id=" . $student_id  . "&lto=" . $goal['goal_id'] . "\"";
+		/*echo "<a href=\"" . IPP_PATH . "add_objectives.php?&student_id=" . $student_id  . "&lto=" . $goal['goal_id'] . "\"";
  		if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
 		else echo "onClick=\"return changeStatusCompleted();\"";
-		echo "\"><button type=\"button\" class=\"btn btn-xs btn-primary\">Add Objective</button></a>";
+		echo "\"><button type=\"button\" class=\"btn btn-xs btn-primary\">Add Objective</button></a>";*/
 
 		//output the edit button.
-		echo "<a href=\"" . IPP_PATH . "add_objectives.php?student_id=$student_id&lto=" . $goal['goal_id']  . "\"";
+		/* echo "<a href=\"" . IPP_PATH . "add_objectives.php?student_id=$student_id&lto=" . $goal['goal_id']  . "\"";
 		if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
   		else echo "onClick=\"return changeStatusCompleted();\"";
-		echo "\"><button type=\"button\" class=\"btn btn-xs btn-primary\">Edit</button></a>";
+		echo "\"><button type=\"button\" class=\"btn btn-xs btn-primary\">Edit</button></a>"; */
 
     	echo "<a href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id  . "&deleteLTG=" . $goal['goal_id'] . "\"";
   		if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
@@ -601,8 +606,8 @@ if(!$short_term_objective_result) {
 		$now = time(); #today's date in seconds since January 1, 1970
 		$date_split = split("-",$short_term_objective_row['review_date']);
 		$date_seconds = mktime(0,0,0,$date_split[1],$date_split[2],$date_split[0]); //since j1,1970
-		if($now > $date_seconds && $short_term_objective_row['achieved']!='Y') { //$today >= $date_seconds) {
-			echo "<p>Review Date (expired): <a href=\"" . IPP_PATH . "edit_short_term_objective.php?sto=" . $short_term_objective_row['uid'] . "&student_id=" . $student_id . "\"";
+		/* if($now > $date_seconds && $short_term_objective_row['achieved']!='Y') { //$today >= $date_seconds) {
+			echo "<p>Review Date (expired)</p><a href=\"" . IPP_PATH . "edit_short_term_objective.php?sto=" . $short_term_objective_row['uid'] . "&student_id=" . $student_id . "\"";
 			if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
 			else echo "onClick=\"return changeStatusCompleted();\">";
 			echo $short_term_objective_row['review_date'] . "</a></p>";
@@ -612,7 +617,7 @@ if(!$short_term_objective_result) {
 			if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
 			else echo "onClick=\"return changeStatusCompleted();\">";
 			echo $short_term_objective_row['review_date'] . "</a></p>";
-		}
+		} */
 		//end review date
 	echo "<div class=\"container\">";	
 	//output the complete/uncomplete button...
@@ -644,6 +649,10 @@ if(!$short_term_objective_result) {
 	if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
 	else echo "onClick=\"return changeStatusCompleted();\"";
 	echo "\">Delete Objective</a>";
+	
+	echo "<a class=\"btn btn-xs btn-primary\"" . "&nbsp; href=\"./edit_short_term_objective.php?sto=" . $short_term_objective_row['uid'] . "&student_id=" . $student_id . "\"" . ">";
+	echo "Report on Progress</a>";
+	
 	echo "<hr>";
 	echo "</div>";
 
