@@ -1,6 +1,6 @@
 <?php
 /** @file
- * @brief 	About the application and developers; link to Chelsea School
+ * @brief 	Becoming Quick help page
  * @copyright 	2014 Chelsea School 
  * @copyright 	2005 Grasslands Regional Division #6
  * @copyright		This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
@@ -9,7 +9,7 @@
     GNU General Public License for more details.
     You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * @authors		Rik Goldman, Sabre Goldman, Jason Banks, Alex, James, Paul, Bryan, TJ, Jonathan, Micah, Stephen, Joseph, Sean
- * @author		M. Nielson
+ * 
  */
 
 /** @mainpage
@@ -48,7 +48,7 @@ header('Pragma: no-cache'); //don't cache this page!
     <meta name="author" content="Rik Goldman" >
     <link rel="shortcut icon" href="./assets/ico/favicon.ico">
 
-    <title>MyIEP</title>
+    <title>MyIEP: Some Help</title>
 
     <!-- Bootstrap core CSS -->
     <link href="./css/bootstrap.min.css" rel="stylesheet">
@@ -104,25 +104,12 @@ header('Pragma: no-cache'); //don't cache this page!
             </li>
           </ul>
          </div><!--/.nav-collapse -->
-        <!--<div class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" role="form" nctype="multipart/form-data" action="jumbotron.php" method="post">
-            <div class="form-group">
-              <input type="text" placeholder="User Name" class="form-control" value="<?php echo $LOGIN_NAME;?>">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control" name="PASSWORD" value="">
-            </div>
-            <button type="submit" value="submit" class="btn btn-success">Sign in</button>
-          </form>
-        </div><!--/.navbar-collapse -->
+       
       </div>
     </div>
     <div class="jumbotron">
       <div class="container">
-        <h1>About MyIEP</h1>
-        <p>MyIEP (Version <?php echo $IPP_CURRENT_VERSION; ?>) was originally developed as IEP-IPP through the coordinated efforts of many people at Grasslands Public Schools.</p>
-        <p>MyIEP is under development by students, faculty, and administrators at <a href="http://chelseaschool.edu">Chelsea School</a> in Hyattsville, MD.</p>
-        <p>
+        <h1>Quick Help<small>&nbsp; MyIEP (Version <?php echo $IPP_CURRENT_VERSION; ?>)</small></h1> 
           <a class="btn btn-lg btn-primary" href="main.php" role="button">Return to MyIEP &raquo;</a>
         </p>
       </div>
@@ -133,22 +120,19 @@ header('Pragma: no-cache'); //don't cache this page!
 <div class="row">
 <!-- Left column -->
 <div class="col-md-4">
-<h1>What's New</h1>
-<h3>Bug Fixes</h3>
-<ul>
-<li>Backslashes accumulated in progress reports</li>
-<li>Strengths &amp; Weaknesses narratives truncated</li>
-</ul>
-<h3>Features</h3>
-<ul>
-<li>jQuery Date Picker</li>
-<li>User Interface/User Experience Improvements</li>
-	<ul>
-	<li>Main Menu</li>
-	<li>Goal View</li>
-	<li>Edit Objectives</li>
-	</ul>
-</ul>
+<h1>Legacy Documentation</h1>
+<p>Thorough documentation for IEP-IPP, the software upon which MyIEP is based, is available in PDF format - except the installation guide, which is in MS Word format.</p>
+<P>There are three reference guides available:
+<ol><li>Installation</li>
+<li>(School) Administrator's Guide</li>
+<li>End-User Documentation</li>
+</ol>
+ <select onchange="window.open(this.options[this.selectedIndex].value,'_top')" name="docs" title="Get the Docs" class="selectpicker" data-style="btn-inverse">
+<option value="">Get Docs</option>
+<option value="http://iep-ipp.sourceforge.net/documents/v1User.pdf">End-User Documentation</option>
+<option value="http://iep-ipp.sourceforge.net/documents/v1Admin.pdf">Administrator's Guide</option>
+<option value="http://iep-ipp.sourceforge.net/documents/v1.0%20Installation.doc">Installation Guide</option>
+</select>
 </div>
 <!-- Middle column -->
 <div class="col-md-4">

@@ -11,7 +11,13 @@
     You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * @authors		Rik Goldman, Sabre Goldman, Jason Banks, Alex, James, Paul, Bryan, TJ, Jonathan, Micah, Stephen, Joseph, Sean
  * @author		M. Nielson
- * @todo		Filter input
+ * @todo		
+ * 1. Filter input
+ * 2. Escape output
+ * 3. Finish UI and UX
+ * @remark
+ * 1. Spellcheck is ready
+ * 2. jQuery Datepicker works (I think)
  */
  
  
@@ -485,10 +491,10 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
 <p>Change the goal text below and click 'Update'</p>
 </div>
 <div class="row">
-<a href="<?php echo IPP_PATH . "long_term_goal_view.php?student_id=" . $student_row['student_id'];?>"><img src="<?php echo IPP_PATH . "images/mainbutton.php?title=Done"?>"
+<a href="<?php echo IPP_PATH . "long_term_goal_view.php?student_id=" . $student_row['student_id'];?>">
+	<img src="<?php echo "images/mainbutton.php?title=Done\">";?>"></a>";
                             
- <form spellcheck="true" name="edit_goal" enctype="multipart/form-data" action="<?php echo IPP_PATH . "add_objectives.php"; ?>" method="post" 
- <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+<form spellcheck="true" name="edit_goal" enctype="multipart/form-data" action="<?php echo "add_objectives.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission()\";"?>>
 
    
 <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">

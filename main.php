@@ -1,7 +1,9 @@
 <?php
 /** @file 
  *  @brief  main menu
- *  @bug	right hand drop down nav isn't working
+ *  
+ *  This is the main page; successful login lands here - all home buttons land here. This is unconventional. This should be called index.html; but that is what the login page is called. We'll deal with any confustion this causes later.
+ *  @bug	
  *  @todo
  *  1. Make input fields wider, perhaps
  *  2. figure out which datepicker stuff can go
