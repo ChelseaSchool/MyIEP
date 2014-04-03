@@ -1,7 +1,7 @@
 <?php
 
 /** @file
- * @brief 	display and add to goals database (as superuser)
+ * @brief 	display and add to goals database (as superuser) (goal bank)
  * @copyright 	2014 Chelsea School 
  * @copyright 	2005 Grasslands Regional Division #6
  * @copyright		This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
@@ -16,6 +16,8 @@
  * 2. autocomplete
  * 3. import from upload?
  * 4. overhaul UI
+ * 5. unuseable without overhaul
+ * 6. have press enter to submit; there doesn't seem to be submit buttons.
  * 
  */ 
  
@@ -39,6 +41,7 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
+require_once(IPP_PATH . 'include/supporting_functions.php');
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -197,11 +200,7 @@ if(!$ltg_result) {
 </HEAD>
 <BODY>
         <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
+       
         <tr>
             <td class="shadow-left"></td>
             <td class="shadow-center" valign="top">
@@ -345,6 +344,6 @@ mysql_data_seek($ltg_result,0)
             <td class="shadow-bottomRight"></td>
         </tr>
         </table> 
-        <center></center>
+        <?php print_complete_footer(); ?>
     </BODY>
 </HTML>

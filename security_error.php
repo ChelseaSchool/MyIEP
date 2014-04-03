@@ -13,7 +13,7 @@
  * @author		M. Nielson
  * @todo
  * 1. Update user interface
- * 2. see where this is called		
+ * 2. This page seems to have been abandoned - perhaps for a better method.		
  */  
  
 //the authorization level for this page!
@@ -29,6 +29,8 @@ $system_message = $system_message;
 error_reporting(1);
 
 define('IPP_PATH','./');
+require_once(IPP_PATH . 'include/supporting_functions.php');
+require_once(IPP_PATH . 'include/auth.php');
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -48,11 +50,7 @@ header('Pragma: no-cache'); //don't cache this page!
 </HEAD>
     <BODY>
         <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
+       
         <tr>
             <td class="shadow-left"></td>
             <td class="shadow-center" valign="top">
@@ -89,6 +87,6 @@ header('Pragma: no-cache'); //don't cache this page!
             <td class="shadow-bottomRight"></td>
         </tr>
         </table> 
-        <center></center>
+        <?php print_complete_footer(); ?>
     </BODY>
 </HTML>
