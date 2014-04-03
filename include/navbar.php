@@ -1,5 +1,11 @@
 <?php
-    function navbar($szBack="main.php") {
+   /** @fn navbar($szBack="main.php")
+    *  @brief Creates the navbar in the legacy code; includes user name, student, and access level
+    * 
+    * @param $szBack
+    */ 
+
+	function navbar($szBack="main.php") {
         // outputs the navigation bar
         global $student_id,$our_permission;
 

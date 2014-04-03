@@ -93,6 +93,14 @@ if($our_permission == "NONE") {
 }
 
 //************** validated past here SESSION ACTIVE WRITE PERMISSION CONFIRMED****************
+
+/** @fn	create_anecdotals($student_id)
+ * 
+ * @brief creates anecdotal PDF given $student_id
+ * @param $student_id
+ * @todo
+ * 1. Look at this more closely. There's a class in here.
+ */
 function create_anecdotals($student_id) {
 
   global $system_message,$student_row;

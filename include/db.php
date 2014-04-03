@@ -17,7 +17,12 @@
  * 				2. Contrast two functions in this script. On first glance they look redundant.
  */
 
-    function connectUserDB() {
+/** @fn connectUserDB()
+ * 
+ * @brief Connects to user DB as specified in config.
+ * @return $db_user or false
+ */
+	function connectUserDB() {
         //connects to the USER DB as specified in the config file.
         //inputs: none
         //returns $db_user - handle to user database or FALSE on fail.
@@ -38,6 +43,12 @@
         return $db_user;
     }
 
+    /** @fn 	connectIPPDB()
+     *  @brief	another function that connects to db
+     *  @return $db_user
+     *  @todo
+     *  1. Identify the difference between these two functions.
+     */
     function connectIPPDB() {
         //connects to the eGPS DB
         //inputs: none

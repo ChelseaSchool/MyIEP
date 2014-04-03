@@ -1,5 +1,7 @@
 <?php
-/* Notes:
+/* @file
+ * @brief long PDF creation algorithm
+ * @todo
  * 1. Output is not escaped
  * 2. Copyright should reflect Chelsea School: make a variable value set by admin and stored in db table with logo
  * 3. Some code is commented. It needs why? or taken out.
