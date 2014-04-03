@@ -36,6 +36,7 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
+require_once(IPP_PATH . 'include/supporting_functions.php');
 require_once(IPP_PATH . 'include/navbar.php');
 
 
@@ -324,6 +325,7 @@ function get_age_by_date($yyyymmdd)
 <option value="<?php echo IPP_PATH . "transition_plan.php?student_id=" . $student_row['student_id'];?>">Transition Plan</option>
 <option value="<?php echo IPP_PATH . "accomodations.php?student_id=" . $student_row['student_id'];?>">Accomodations</option>
 <option value="<?php echo IPP_PATH . "snapshots.php?student_id=" . $student_row['student_id'];?>">Snapshots</option>
+<option value="<?php echo IPP_PATH , "school_history.php?student_id=" . $student_row['student_id'];?>">School History</option>
 </select>
 </form>
               
