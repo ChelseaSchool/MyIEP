@@ -414,6 +414,7 @@ function toggle ()
             <li><a href="main.php">Home</a></li>
             <li><a href="index.php">Logout</a></li>
             <li><a href="about.php">About</a></li>
+            <li><a href="help.php">Help</a></li>
             <li><a onclick="history.go(-1);">Back</a></li>
             <li><a href=<?php echo "ipp_pdf.php?student_id=" . $student_row['student_id'] . "&file=ipp.pdf"; ?>>Get PDF</li></a>
             <li class="dropdown">
