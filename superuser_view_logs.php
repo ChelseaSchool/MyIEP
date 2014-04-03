@@ -34,6 +34,7 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
+require_once(IPP_PATH . 'include/supporting_functions.php');
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -89,6 +90,10 @@ if($permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NULL
     else $szLevel=$_POST['szLevel'];
   else $szLevel = $_GET['szLevel'];
 
+/**@fn getLog()
+ * @return $log_result
+ * @brief  Selects from DB table error log by time or by access level
+ */
 function getLog() {
     global $error_message,$iLimit,$iCur,$szLevel;
     if(!connectIPPDB()) {
@@ -161,12 +166,7 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
             @import "<?php echo IPP_PATH;?>layout/greenborders.css";
         -->
     </style>
-    <!-- All code Copyright &copy; 2005 Grasslands Regional Division #6.
-         -Concept and Design by Grasslands IPP Focus Group 2005
-         -Programming and Database Design by M. Nielsen, Grasslands
-          Regional Division #6
-         -CSS and layout images are courtesy A. Clapton.
-     -->
+  
 
     <SCRIPT LANGUAGE="JavaScript">
       function deleteChecked() {
@@ -193,11 +193,7 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
 </HEAD>
     <BODY>
         <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
+       
         <tr>
             <td class="shadow-left"></td>
             <td class="shadow-center" valign="top">
@@ -306,6 +302,6 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
             <td class="shadow-bottomRight"></td>
         </tr>
         </table> 
-        <center></center>
+        <?php print_complete_footer(); ?>
     </BODY>
 </HTML>
