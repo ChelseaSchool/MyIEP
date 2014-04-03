@@ -1,8 +1,11 @@
 <?php
 
 /** @file
- * @brief No idea what this page does
- * @todo find out what this page is for
+ * @brief Stores PDF IEP of current moment for a student in the database.
+ * @todo 
+ * 1. comment on code. Understand db operations.
+ * 2. Recreate UI/UX (theme)
+ * 3. But eliminate tables.
  * 
  */
  
@@ -20,6 +23,9 @@ $MINIMUM_AUTHORIZATION_LEVEL = 100; //everybody
  * Path for IPP required files.
  */
 
+/**
+ * Cleared to protect from external input.
+ */
 $system_message = "";
 
 define('IPP_PATH','./');
@@ -176,11 +182,7 @@ if(!$snapshot_result) {
 </HEAD>
     <BODY>
         <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
+   
         <tr>
             <td class="shadow-left"></td>
             <td class="shadow-center" valign="top">
@@ -195,8 +197,8 @@ if(!$snapshot_result) {
                         <td valign="top">
                         <div id="main">
                         <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
-
-                        <center><table><tr><td><center><p class="header">- Snapshots (<?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?>)-</p></center></td></tr></table></center>
+						
+                        <table align="center"><tr><td align="center"><h1>Snapshots: <?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?></h1></td></tr></table></center>
                         <BR>
 
                         <!-- BEGIN add new entry -->
