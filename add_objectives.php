@@ -586,5 +586,6 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
         </table> 
         <center></center>
    </div> 
+    <?php print_complete_footer(); ?>
     </BODY>
 </HTML>

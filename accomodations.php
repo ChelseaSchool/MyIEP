@@ -425,6 +425,6 @@ if(!$accomodation_result) {
             <td class="shadow-bottomRight"></td>
         </tr>
         </table> 
-        <center></center>
-    </BODY>
+     
+    <?php print_complete_footer(); ?></BODY>
 </HTML>
