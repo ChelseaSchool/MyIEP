@@ -99,7 +99,7 @@ if(isset($LOGIN_NAME)) $LOGIN_NAME = $LOGIN_NAME; else $LOGIN_NAME="";
  
 <div class="jumbotron">
 <div class="container">
-<img align="center" src="<?php echo $page_logo_path; ?>">
+<!-- <img align="center" src="<?php echo $page_logo_path; ?>">-->
 <?php if ($MESSAGE) { echo "<p class=\"message\">" . $MESSAGE . "</p>";} ?>
  <h1>About MyIEP</h1>
         <p>MyIEP (Version <?php echo $IPP_CURRENT_VERSION; ?>) was originally developed as IEP-IPP through the coordinated efforts of many people at Grasslands Public Schools.</p>
@@ -211,7 +211,3 @@ Hyattsville, Maryland 20782</address>
 </BODY>
 </HTML>
 
-
-
-</BODY>
-</HTML>
