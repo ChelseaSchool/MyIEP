@@ -95,6 +95,7 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
             <li><a href="about.php">About</a></li>
+            <li><a href="help.php">Help</a></li>
             <li><a href="index.php">Logout</a></li>
             </ul>
              

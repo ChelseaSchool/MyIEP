@@ -33,6 +33,7 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
+require_once(IPP_PATH . 'include/supporting_functions.php');
 require_once(IPP_PATH . 'include/navbar.php');
 
 header('Pragma: no-cache'); //don't cache this page!
@@ -449,6 +450,6 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
             <td class="shadow-bottomRight"></td>
         </tr>
         </table> 
-        <center></center>
+        <?php print_complete_footer(); ?>
     </BODY>
 </HTML>

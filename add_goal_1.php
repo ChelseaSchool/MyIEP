@@ -310,6 +310,7 @@ if(!$goal_category_name_result) {
             <td class="shadow-bottomRight"></td>
         </tr>
         </table> 
-        <center></center>
+        
+    <?php print_complete_footer(); ?>
     </BODY>
 </HTML>

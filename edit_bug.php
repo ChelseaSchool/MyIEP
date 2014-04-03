@@ -1,11 +1,8 @@
 <?php
-/**
- * @BRIEF 	update a bug report
- * 
- */
- 
- 
-/* Notes and observation
+/** @file
+ * @brief 	update a bug report
+ * @remark	Check into this -
+ * @todo
  * 1. this code seems unused
  * 2. provides bug logging and possible testing
  * 3. Safely ignore for early sprints
@@ -15,17 +12,6 @@
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 60; //teaching assistants and up
 
-/**
- * edit_bug.php.
- *
- * Copyright (c) 2005 Grasslands Regional Division #6
- * All rights reserved
- *
- * Created: March 13, 2006
- * By: M. Nielsen
- * Modified:
- *
- */
 
 /*   INPUTS: none, nada...zip.
  *
@@ -257,8 +243,8 @@ $enum_options_type = mysql_enum_values("bugs","status");
                         </tr>
                         <?php
                         if($permission_level <= $IPP_MIN_EDIT_BUG_PERMISSION) {
-                          echo "<tr><td valign=\"center\" bgcolor=\"#E0E2F2\" class=\"row_default\">Status:</td><td bgcolor=\"#E0E2F2\" class=\"row_default\"><textarea spellcheck="true" name=\"resolution\" cols=\"30\" rows=\"5\" wrap=\"soft\">" . $bug_row['resolution'] . "</textarea></td></tr>";
-                          echo "<tr><td valign=\"center\" bgcolor=\"#E0E2F2\" class=\"row_default\">HTTP_REFER:</td><td bgcolor=\"#E0E2F2\" class=\"row_default\"><textarea spellcheck="true" name=\"refering_page\" cols=\"30\" rows=\"5\" wrap=\"soft\" disabled>" . $bug_row['referring_page'] . "</textarea></td></tr>";
+                          echo "<tr><td valign=\"center\" bgcolor=\"#E0E2F2\" class=\"row_default\">Status:</td><td bgcolor=\"#E0E2F2\" class=\"row_default\"><textarea spellcheck=\"true\" name=\"resolution\" cols=\"30\" rows=\"5\" wrap=\"soft\">" . $bug_row['resolution'] . "</textarea></td></tr>";
+                          echo "<tr><td valign=\"center\" bgcolor=\"#E0E2F2\" class=\"row_default\">HTTP_REFER:</td><td bgcolor=\"#E0E2F2\" class=\"row_default\"><textarea spellcheck=\"true\" name=\"refering_page\" cols=\"30\" rows=\"5\" wrap=\"soft\" disabled>" . $bug_row['referring_page'] . "</textarea></td></tr>";
                         }
                         ?>
                         </table>
