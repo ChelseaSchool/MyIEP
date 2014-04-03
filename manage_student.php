@@ -370,7 +370,7 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
                             $current_student_permission = getStudentPermission($student_row['student_id']);
                             echo "<tr>\n";
                             $school_colour = "#". $student_row['red'] . $student_row['green'] . $student_row['blue'];
-                            echo "<td><input type=\"checkbox\" name=\"" . $student_row['student_id'] . "\" value=\"" . $student_row['first_name'] . " " . $student_row['last_name'] . "\"></td>";
+                            echo "<td bgcolor=\"$bgcolor\"><input type=\"checkbox\" name=\"" . $student_row['student_id'] . "\" value=\"" . $student_row['first_name'] . " " . $student_row['last_name'] . "\"></td>";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\">" . $student_row['student_id'] . "<p></td>\n";
                             echo "<td bgcolor=\"$bgcolor\"><a href=\"" . IPP_PATH . "student_view.php?student_id=" . $student_row['student_id'] . "\" class=\"default\" ";
                             if($current_student_permission == "NONE" || $current_student_permission == "ERROR") {

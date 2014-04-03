@@ -6,5 +6,5 @@
  * 3. Note the comment on 8 is redundant
  */
 
-    $IPP_CURRENT_VERSION="1.0.006"; //This version
+    $IPP_CURRENT_VERSION="14.3"; //This version
 ?>
