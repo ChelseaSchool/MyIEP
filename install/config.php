@@ -17,15 +17,7 @@ if(is_file("../etc/init.php")) {
 
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100;
-/**
- * install wizard
- *
- * Copyright (c) 2005 Grasslands Regional Division #6
- * All rights reserved
- *
- * Created: February 17, 2007.
- * By: M. Nielsen
- */
+
 
 /**
  * Path for required files.
@@ -107,7 +99,7 @@ if(isset($_POST['update'])) {
                         <div id="main">
  <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
 
-                        <center><table><tr><td><center><p class="header">- Installation Configuration -</p></center></td></tr></table></center>
+                        <center><table><tr><td><center><p class="header">Installation Wizard: Configuration</p></center></td></tr></table></center>
         <BR><center><table width="80%" border="0"><tr><td>
 
 
@@ -167,6 +159,5 @@ if(isset($_POST['update'])) {
             <td class="shadow-bottomRight"></td>
         </tr>
         </table> 
-        <center>System Copyright &copy; 2005 Grasslands Regional Division #6.</center>
-    </BODY>
+           </BODY>
 </HTML>

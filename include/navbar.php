@@ -1,4 +1,15 @@
 <?php
+/** @file
+ *  @brief		Legacy navbar function included in other files
+ *  @todo
+ *  1. Refactor: Navbar doesn't need to be isolated from other included functions
+ *  2. Refactor: Create a new navbar function for new UI/UX
+ *  @copyright 2014 Chelsea School
+ *  @copyright Grasslands Public Schools #6
+ *  @copyright License: GPLv2
+ *  @author	M. Nielson  
+ */
+
    /** @fn navbar($szBack="main.php")
     *  @brief Creates the navbar in the legacy code; includes user name, student, and access level
     * 

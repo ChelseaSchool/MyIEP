@@ -3,8 +3,8 @@
 /** @file
  *  @brief		Functions called on in other scripts to provide user functionality
  *  @todo
- *  1. Document functions thoroughly
- *  2. Incorporate functions from "include/productive_functions.php"
+ *  1. Document functions thoroughly (in progress)
+ *  
  *  
  */
 

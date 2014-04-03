@@ -23,6 +23,7 @@ require_once(IPP_PATH . 'include/auth.php');
 if ((int)phpversion() < 5) { require_once(IPP_PATH . 'include/fileutils.php'); } //only for pre v5
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/navbar.php');
+require_once(IPP_PATH . 'include/supporting_functions.php');
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -74,6 +75,7 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+   
   </head>
 
   <body>
@@ -199,10 +201,9 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
       </div>     
       <hr>
 </div> <!-- /container -->
-      <footer>
-        <p>&copy; Chelsea School 2014</p>
-      </footer>
-    
+      
+     
+  <?php echo print_footer(); ?>  
 
 
     <!-- Bootstrap core JavaScript

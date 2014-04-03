@@ -1,21 +1,28 @@
 <?php
 
 /* @file functions occasionally used
- * 
- * Contains from original dev just checkspelling()
+ * @brief was just spellcheck for Pspell, but now new functions for inclusion can go here.
+ * Contains (from original dev) just checkspelling()
  * @todo
  * 1. Make sure checkspelling is no longer needed
  * 2. Add print_html functions here
  * 		1. Add bootstrap
  * 		2. Add javascript
  * 		3. Add navbars
+ * 3. Refactor to exclude this function - it's no longer necessary
+ * 4. USE this file for other functions for inclusion
  */
-
-//summary: Just a spell check function...dev differentiates from user functions
 
 if(!defined('IPP_PATH')) define('IPP_PATH','../');
 
-//spell checking functions
+/** @fn checkSpelling ( $string )
+ *  @brief	function to make use of pspell (PEAR): given a string, returns error check and makes spelling recommendations
+ *  @detail	No longer necessary; Making use of spellcheck attribute in HTML5 and browsers. 
+ *  @todo
+ *  1. Refactor so nothing calls this function (it's already been done once but needs confirmation)
+ *
+ *  @param $string
+ */
 function checkSpelling ( $string ) //todo: investigate and justify possibly unconventional function syntax
 {
    if (!extension_loaded("pspell")) {
@@ -48,11 +55,14 @@ function checkSpelling ( $string ) //todo: investigate and justify possibly unco
 
 /** @fn clean_in_and_out($input)
  * @brief Filters input and escapes output to prepare for MySQL
- *
+ * @param $input
+ * @return mysql_real_escape_string($input)
  * @detail 		Strips tags, then sanitizes html entities, and then strips slashes. Finally, uses mysql_real_escape_string() to prepare for MySQL use.
  *
  * @warning 	Not for arrays. Must construct stripslashes_deep() for arrays.
- * @todo		Test and implement.
+ * @todo		
+ * 1. Test and implement (not done yet)
+ * 	* find systematic way to use on all db input: perhaps when UPDATE query is used.
  *
  */
 function clean_in_and_out($input){
@@ -64,10 +74,16 @@ function clean_in_and_out($input){
 
 /* @fn print_html5_primer()
  * @brief to start html5 doc
- * @todo fix this
+ * @remark has constant base path to take advantage of favicon, CSS, site wide JS
+ * @todo 
+ * 1. Do not deploy in this state. Does not work yet.
+ * 2. Revise so <head> isn't closed; that way JS and CSS can be added on a per file basis.
+  * @remark Doesn't return; instead, echoes $print_head
  */
 function print_html5_primer()
 {
+	if(!defined('IPP_PATH')) define('IPP_PATH','../');
+	
 	$print_head = <<<EOF
 	<!DOCTYPE HTML>
 	<html lang="en">
@@ -77,12 +93,38 @@ function print_html5_primer()
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Edit Short Term Objective">
 	<meta name="author" content="Rik Goldman">
-	<link rel="shortcut icon" href="./assets/ico/favicon.ico">
 	<title>$page_tite</title>
-	</head>
-	<body>
+	
 EOF;
 	echo $print_head;
+}
+
+
+/** @fn print_intellectual_property()
+ *	@return string $ip
+ *  @brief Print HTML Comments with Copyright and license info
+ *  @todo
+ *	1. works; now get across project
+ */
+function print_intellectual_property() {
+	
+		$credit = <<< EOF
+<!-- 
+-MyIEP
+-Copyright &copy; 2014 Chelsea School, Hyattsville, MD.
+-License: GPLv2
+-Legacy Code (IEP-IPP)
+-Licence: GPLv2
+-All legacy code copyright &copy; 2005 Grasslands Regional Division #6.</p>
+-LICENCE
+-This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+-You should have received a copy of the GNU General Public License along with this program; if not, write to:
+-The Free Software Foundation, Inc. / 59 Temple Place, Suite 330, Boston, MA 02111-1307
+ USA
+//-->
+EOF;
+return $credit;
 }
 
 /** @fn no_cash()
@@ -90,16 +132,25 @@ EOF;
  * Inserts header('Pragma: no-cache'). Used by most pages.
  * @remark	Not used yet.
  * @todo
- * 1. add productive_functions.php to require_once pile
- * 2. Substitute header function with no_cash()
+ * 1. Substitute header function with no_cash()
  * 3. Test to confirm
- * 4. Add rest of standard headers for this application to the function and remove header info from html
- * 5. add content type line
+ * 4. HTML5 seems to use meta instead of headers, so cache control seems to be all that is necessary for this to be efficient.
+ * 
  */
 
 function no_cash() {
 	echo header("Cache-Control: no-cache, must-revalidate");
 	echo header('Pragma: no-cache');
 
+}
+
+function print_footer() {
+	$footer = <<< EOF
+<div class="container"><footer> 
+   <?php echo print_intellectual_property(); ?>
+        <p>&copy; Chelsea School 2014</p>
+      </footer></div>
+EOF;
+return $footer;
 }
 ?>

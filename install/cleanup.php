@@ -87,7 +87,7 @@ header('Pragma: no-cache'); //don't cache this page!
                         <div id="main">
  <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
 
-                        <center><table><tr><td><center><p class="header">- Installation Cleanup -</p></center></td></tr></table></center>
+                        <center><table><tr><td><center><p class="header">Installation WIzard: Cleanup</p></center></td></tr></table></center>
         <BR><center><table width="80%" border="0"><tr><td>
         <?php
           //attempt to chmod 755 config.php
@@ -115,6 +115,6 @@ header('Pragma: no-cache'); //don't cache this page!
             <td class="shadow-bottomRight"></td>
         </tr>
         </table> 
-        <center>System Copyright &copy; 2005 Grasslands Regional Division #6.</center>
+        
     </BODY>
 </HTML>

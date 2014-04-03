@@ -6,6 +6,12 @@
 //    header lines are left unchanged.
 // Note: Script consists of two files: picker.js and picker.html
 
+//* @file
+//* @brief	Tigra Color Picker (legacy code)
+//* @detail	Color picker for school identification by color (JavaScript)
+//* @todo  Consider removing functionality or replacing with jQuery solution
+
+
 var TCP = new TColorPicker();
 
 function TCPopup(field, palette) {

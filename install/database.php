@@ -1,6 +1,6 @@
 <?php
 /* @file
- * @brief		Install wizard
+ * @brief		Install wizard - Database configuration check
  * @copyright	Copyright (c) 2005 Grasslands Regional Division #6
  * @copyright	GPLv2
  * @copyright	Copyright (c) 2014 Chelsea School
@@ -20,18 +20,17 @@ if(is_file("../etc/init.php")) {
 
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100;
-/**
- * install wizard
- *
- * Copyright (c) 2005 Grasslands Regional Division #6
- * All rights reserved
- *
- * Created: February 17, 2007.
- * By: M. Nielsen
- */
+
 
 /**
  * Path for required files.
+ */
+
+/** @fn error_reporting(1)
+ *  @param $level level int
+ *  @detail The new error_reporting level. It takes on either a bitmask, or named constants. Using named constants is  strongly encouraged to ensure compatibility for future versions. As error levels are added, the range of 
+ *	integers increases, so older integer-based error levels will not always behave as expected. The available error level constants and the actual meanings of these error levels are described in the predefined constants. 
+ * @Return int the old error_reporting level or the current level if no level parameter is given. 
  */
 error_reporting(1);
 
@@ -43,6 +42,9 @@ error_reporting(1);
 //require_once(IPP_PATH . 'include/log.php');
 //require_once(IPP_PATH . 'include/navbar.php');
 
+/** $var $system_message string
+ *  @brief  $system_message set to NULL for security/sanity
+ */
 $system_message="";
 
 header('Pragma: no-cache'); //don't cache this page!
@@ -144,12 +146,6 @@ if(isset($_POST['db_host'])) {
             @import "../layout/greenborders.css";
         -->
     </style>
-    <!-- All code Copyright &copy; 2005 Grasslands Regional Division #6.
-         -Concept and Design by Grasslands IPP Focus Group 2005
-         -Programming and Database Design by M. Nielsen, Grasslands
-          Regional Division #6
-         -CSS and layout images are courtesy A. Clapton.
-     -->
 </HEAD>
     <BODY>
         <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
