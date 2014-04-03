@@ -33,6 +33,7 @@ $MINIMUM_AUTHORIZATION_LEVEL = 100;    //anybody
 
 define('IPP_PATH','./');
 require_once(IPP_PATH . 'etc/init.php');
+require_once(IPP_PATH . 'include/supporting_functions.php');
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -223,11 +224,13 @@ Hyattsville, Maryland 20782</address>
 <li>Responsive design (in progress) with Bootstrap</li>
 </ul>
 </div>
-</div>  
+</div>
+<?php print_footer(); ?>  
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="./js/bootstrap.min.js"></script>     
+    <script src="./js/bootstrap.min.js"></script> 
+ <?php echo print_intellectual_property(); ?>    
 </BODY>
 </HTML>

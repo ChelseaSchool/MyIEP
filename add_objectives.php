@@ -485,7 +485,8 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
 <p>Change the goal text below and click 'Update'</p>
 </div>
 <div class="row">
-<a href="<?php echo IPP_PATH . "long_term_goal_view.php?student_id=" . $student_row['student_id'];?>"><img src="<?php echo IPP_PATH . "images/mainbutton.php?title=Done"?>"
+<a href="<?php echo IPP_PATH . "long_term_goal_view.php?student_id=" . $student_row['student_id'];?>">
+<img src="<?php echo IPP_PATH . "images/mainbutton.php?title=Done" ?>">
                             
  <form spellcheck="true" name="edit_goal" enctype="multipart/form-data" action="<?php echo IPP_PATH . "add_objectives.php"; ?>" method="post" 
  <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>

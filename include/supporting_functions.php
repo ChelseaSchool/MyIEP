@@ -144,13 +144,26 @@ function no_cash() {
 
 }
 
+/** @fn print_footer()
+ *  @param none
+ *  @brief echos copyright in footer and div
+ *  @remark echos the content already
+ */
 function print_footer() {
 	$footer = <<< EOF
 <div class="container"><footer> 
-   <?php echo print_intellectual_property(); ?>
         <p>&copy; Chelsea School 2014</p>
       </footer></div>
 EOF;
-return $footer;
+echo $footer;
+}
+
+/** @fn print_complete_footer()
+ *  @brief outputs copyright in footer tag and full copyright and license in comment
+ *  @remark Combines print_footer() and print_intellectual_property()
+ */
+function print_complete_footer() {
+	print_footer();
+	echo print_intellectual_property();
 }
 ?>
