@@ -1,4 +1,10 @@
 <?php
+/** @file
+ *  @brief  Contains functions allowing system to send mail
+ *  @todo
+ *  1. Refactor - right now this file contains a single function. Move to other included file containing collections of functions.
+ *  
+ */
 
 // functions allowing system to send mail
 if (! defined ( 'IPP_PATH' ))

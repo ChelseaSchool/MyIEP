@@ -5,6 +5,8 @@
  * 2. Relies on mysql_real_escape_string() builtin function to escape output; standardize on alternative contemporary best practice
  * 3. Copyright header to be updated per license recommendation
  * 4. Check HTML standardization against James' findings
+ * @todo
+ * 1. This is a duplicate. Make sure it's not included anywhere (PHP) and then remove if it's not needed. The copy that's called is in the root folder.
  */
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100;    //everybody (do checks within document)

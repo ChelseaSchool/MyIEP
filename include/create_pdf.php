@@ -94,6 +94,11 @@ if($our_permission == "NONE") {
 }
 
 //************** validated past here SESSION ACTIVE WRITE PERMISSION CONFIRMED****************
+/** @fn create_pdf($student_id)
+ *  @brief		Creates IEP in PDF format
+ *  @param $student_id
+ *  @return $pdf
+ */
 function create_pdf($student_id) {
 
   global $system_message,$student_row;

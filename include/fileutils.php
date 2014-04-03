@@ -1,4 +1,9 @@
 <?php
+/** @file
+ *  @brief	Contains only scandir() function
+ *  @todo
+ *  1. Refactor so this function is with others in include/. 1 function per file isn't efficient.
+ */
    if(!function_exists('scandir')) {
     
    	/** @fn 		scandir($DIRECTORY, $ORDER=0)
