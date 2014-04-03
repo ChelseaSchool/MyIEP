@@ -461,132 +461,90 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
             </li>
           </ul>
          </div>
-         <!--/.nav-collapse -->
-        <!--<div class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" role="form" nctype="multipart/form-data" action="jumbotron.php" method="post">
-            <div class="form-group">
-              <input type="text" placeholder="User Name" class="form-control" value="<?php echo $LOGIN_NAME;?>">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control" name="PASSWORD" value="">
-            </div>
-            <button type="submit" value="submit" class="btn btn-success">Sign in</button>
-          </form>
-        </div><!--/.navbar-collapse -->
+         
       </div>
     </div>   
 	
-	<div class=container>
+	
 	<div class="row">
-    
-     <?php if ($system_message) { echo $system_message;} ?>
-     </div>
-<div class="row"><h1>Add Short Term Objectives</h1>
-<?php echo "<h2>" . $student_row['first_name'] . " " . $student_row['last_name']. "</h2>"; ?>
-<p>Change the goal text below and click 'Update'</p>
-</div>
-<div class="row">
-<a href="<?php echo IPP_PATH . "long_term_goal_view.php?student_id=" . $student_row['student_id'];?>">
-<img src="<?php echo IPP_PATH . "images/mainbutton.php?title=Done" ?>">
-                            
- <form spellcheck="true" name="edit_goal" enctype="multipart/form-data" action="<?php echo IPP_PATH . "add_objectives.php"; ?>" method="post" 
- <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+    <div class=container>
+ 
+<h1>Add Short Term Objectives
+<?php echo "<small>" . $student_row['first_name'] . " " . $student_row['last_name']. "</small>"; ?>
+<p><?php if ($system_message) { echo $system_message;} ?></p>
+</div></div>
 
-   
+<div class="row">
+<div class="container">
+<!--  <a href="<?php echo IPP_PATH . "long_term_goal_view.php?student_id=" . $student_row['student_id'];?>">
+<img src="<?php echo IPP_PATH . "images/mainbutton.php?title=Done" ?>"></a>-->
+</div>
+</div>
+
+<div class="container">
+<div class="row">
+<!-- Left -->
+<div class="col-md-6">
+<!-- Form Begins -->
+<form spellcheck="true" name="edit_goal" enctype="multipart/form-data" action="<?php echo IPP_PATH . "add_objectives.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+
+<!-- Hidden -->
 <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
- <input type="hidden" name="lto" value="<?php echo $goal_id; ?>">
+<input type="hidden" name="lto" value="<?php echo $goal_id; ?>">
 <input type="hidden" name="update_goal" value="1">
-<label>Goal Area</label>
-<input type="text" size="30" spellcheck="true" maxsize="100" name="goal_area" value="<?php echo $goal_row['area']; ?>">
-<input type="submit" name="Update" value="Update">
-                             
-<div class="row">                        
-<label>Goal</label>
-<textarea name="goal_text" spellcheck="true" cols="45" rows="3" wrap="soft"><?php echo $goal_row['goal']; ?></textarea>
-<label>Review Date</label>
-<script type="text/javascript" src="./js/bootstrap-datepicker.js">$('.datepicker').datepicker()</script>
-<input type="datepicker" name="goal_review_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="<?php echo $goal_review_date; ?>">
+<!--  End hidden -->
+<p><label>Goal Area</label></p>
+<input type="text" size="30" spellcheck="true" maxsize="100" name="goal_area" value="<?php echo $goal_row['area']; ?>"></p>                 
+<p><label>Goal</label></p>
+<p><textarea name="goal_text" spellcheck="true" cols="45" rows="3" wrap="soft"><?php echo $goal_row['goal']; ?></textarea></p>
+<p><label>Review Date</label>
+<p><script type="text/javascript" src="./js/bootstrap-datepicker.js">$('.datepicker').datepicker()</script><input type="datepicker" name="goal_review_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="<?php echo $goal_review_date; ?>"></p>
+<p><input type="submit" name="Update" value="Update"></p>
 </form>
-</div>   
-<div class="row">                      
-                              <?php if($goal_row['description'] != "") {
-                                do {
-                                  echo "<p class=\"info\"><b>Objective: </b>" . $goal_row['description'];
-                                } while ($goal_row = mysql_fetch_array($goal_result));
-                              }
-                              ?>
-                             
-                          </div>
-                        <!-- BEGIN add short term objective -->
-                     <div class="row"><p class="Header">Add Another Objective:</p>
-                        <form name="add_objective" enctype="multipart/form-data" action="<?php echo IPP_PATH . "add_objectives.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        
-                      
-                          <p class="info_text">Add a new objective edit and click 'Add'.</p>
-                           <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
-                           <input type="hidden" name="lto" value="<?php echo $goal_id; ?>">
-                           <input type="hidden" name="add_objective" value="1">
-                          </td>
-                        </tr>
-                        <tr>
-                            <td valign="center" bgcolor="#E0E2F2" class="row_default">Short Term<BR>Objective:</td>
-                            <td bgcolor="#E0E2F2" class="row_default">
-                            <textarea spellcheck="true" spellcheck="true" name="description" tabindex="1" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['description'])) echo $_POST['description']; ?></textarea>
-                            </td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">Review Date: (YYYY-MM-DD)</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="text" tabindex="2" name="review_date" value="<?php if(isset($_POST['review_date'])) echo $_POST['review_date']; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.review_date, 'yyyy-m-dd', 0, 0)">
-                           </td>
-                        </tr>
-                        <tr>
-                            <td valign="center" bgcolor="#E0E2F2" class="row_default">Assessment Procedure:</td>
-                            <td bgcolor="#E0E2F2" class="row_default" valign="top">
-                            <textarea spellcheck="true" spellcheck="true" name="assessment_procedure" tabindex="3" cols="35" rows="3" onkeypress="return autocomplete(this,event,popuplist)" wrap="soft"><?php if(isset($_POST['assessment_procedure'])) echo $_POST['assessment_procedure']; ?></textarea> &nbsp;<img src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" width="17" border=0 onClick="popUpChooser(this,document.all.assessment_procedure)" >
-                            </td>
-                        </tr>
-                        <tr>
-                            <td valign="center" bgcolor="#E0E2F2" class="row_default">Strategies:</td>
-                            <td bgcolor="#E0E2F2" class="row_default">
-                            <textarea spellcheck="true" spellcheck="true" name="strategies" tabindex="4" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['strategies'])) echo $_POST['strategies']; ?></textarea>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td valign="center" bgcolor="#E0E2F2" class="row_default">Progress Review:</td>
-                            <td bgcolor="#E0E2F2" class="row_default">
-                            <textarea spellcheck="true" spellcheck="true" name="results_and_recommendations" tabindex="5" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['results_and_recommendations'])) echo $_POST['results_and_recommendations']; ?></textarea>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="row_default" bgcolor="#E0E2F2">&nbsp;</td>
-                            <td valign="center" align="center" bgcolor="#E0E2F2"><input type="submit" tabindex="6" name="Add" value="Add"></td>
-                        </tr>
-                        </table>
-                        </form>
-                        </center>
-                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-            <?php navbar("long_term_goal_view.php?student_id=$student_id"); ?>
-            </td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
-        <center></center>
-   </div> 
+</div>
+
+
+
+<!-- Right -->
+<div class="col-md-6">
+                 
+<?php if($goal_row['description'] != "") {
+	do {
+    echo "<p><label>Objective</label></p>" . "<p>" . $goal_row['description'] . "</p>";
+    } while ($goal_row = mysql_fetch_array($goal_result));
+}
+?>                             
+<!-- BEGIN add short term objective -->
+
+
+<form name="add_objective" enctype="multipart/form-data" action="<?php echo IPP_PATH . "add_objectives.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+
+
+<p>Add a new objective edit and click 'Add'.</p>
+<!-- Hidden -->
+<input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
+<input type="hidden" name="lto" value="<?php echo $goal_id; ?>">
+<input type="hidden" name="add_objective" value="1">
+<!-- End Hidden -->
+
+
+<p><label>Objective</label></p>
+<p><textarea spellcheck="true" spellcheck="true" name="description" tabindex="1" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['description'])) echo $_POST['description']; ?></textarea></p>
+<p><label>Review Date: (YYYY-MM-DD)</label></p>
+<p><input type="text" tabindex="2" name="review_date" value="<?php if(isset($_POST['review_date'])) echo $_POST['review_date']; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.review_date, 'yyyy-m-dd', 0, 0)"></p>
+
+<p><label>Assessment Procedure</label></p>
+<p><textarea spellcheck="true" spellcheck="true" name="assessment_procedure" tabindex="3" cols="35" rows="3" onkeypress="return autocomplete(this,event,popuplist)" wrap="soft"><?php if(isset($_POST['assessment_procedure'])) echo $_POST['assessment_procedure']; ?></textarea> &nbsp;<img src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" width="17" border=0 onClick="popUpChooser(this,document.all.assessment_procedure)" ></p>
+<p><label>Strategies</label></p>
+<p><textarea spellcheck="true" spellcheck="true" name="strategies" tabindex="4" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['strategies'])) echo $_POST['strategies']; ?></textarea>
+<p><label>Progress Review</label></p>
+<p><textarea spellcheck="true" spellcheck="true" name="results_and_recommendations" tabindex="5" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['results_and_recommendations'])) echo $_POST['results_and_recommendations']; ?></textarea></p>
+<p><input type="submit" tabindex="6" name="Add" value="Add"></p>
+ 
+</form>
+</div> <!-- end column -->
+</div> <!-- end row -->
+</div>
     <?php print_complete_footer(); ?>
     </BODY>
 </HTML>
