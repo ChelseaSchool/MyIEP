@@ -175,7 +175,7 @@ if(isset($_POST['add_anecdotal']) && $have_write_permission) {
     $system_message = $system_message . $retval;
   } else {
     //we add the entry.
-    $insert_query = "INSERT INTO anecdotal (student_id,date,report,file,filename) VALUES (" . mysql_real_escape_string($student_id) . ",'" . mysql_real_escape_string($_POST['date']) . "','" . mysql_real_escape_string($_POST['report']) . "','$content','$fileName')";
+    $insert_query = "INSERT INTO anecdotal (student_id,date,report,file,filename) VALUES (" . clean_in_and_out($student_id) . ",'" . clean_in_and_out($_POST['date']) . "','" . clean_in_and_out($_POST['report']) . "','$content','$fileName')";
     $insert_result = mysql_query($insert_query);
      if(!$insert_result) {
         $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$insert_query' <BR>";

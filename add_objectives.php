@@ -129,7 +129,7 @@ if(isset($_POST['add_goal']) && $have_write_permission) {
                 if(!$area_result) $area="Other";
                 else { $area_row=mysql_fetch_array($area_result); $area = $area_row['name'];}
             }
-            $insert_goal_query="INSERT INTO long_term_goal (goal,student_id,review_date,area) VALUES ('$description',$student_id,'" . mysql_real_escape_string($_POST['review_date']) . "','" . mysql_real_escape_string($area) . "')";
+            $insert_goal_query="INSERT INTO long_term_goal (goal,student_id,review_date,area) VALUES ('$description',$student_id,'" . clean_in_and_out($_POST['review_date']) . "','" . clean_in_and_out($area) . "')";
             $insert_goal_result = mysql_query($insert_goal_query);
             if(!$insert_goal_result) {
                 $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$insert_goal_query'<BR>";
@@ -366,10 +366,10 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
     <link href="./css/jumbotron.css" rel="stylesheet">
 	<style type="text/css">body { padding-bottom: 70px; }</style>
     <!-- Bootstrap Datepicker CSS -->
-<link href="./css/datepicker.css" rel="stylesheet">
+	<link href="./css/datepicker.css" rel="stylesheet">
     <script src="//code.jquery.com/jquery-1.9.1.js"></script>
 	 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-    
+     <script src="./js/bootstrap-datepicker.js"></script>
     <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
     <script language="javascript" src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script>
     <?php
@@ -403,6 +403,7 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
           alert("You don't have the permission level necessary"); return false;
       }
     </SCRIPT>
+<script type="text/javascript" src="./js/bootstrap-datepicker.js">$('.datepicker').datepicker()</script>
 </HEAD>
 <BODY>
  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -494,11 +495,11 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
 <input type="hidden" name="update_goal" value="1">
 <!--  End hidden -->
 <p><label>Goal Area</label></p>
-<input type="text" size="30" spellcheck="true" maxsize="100" name="goal_area" value="<?php echo $goal_row['area']; ?>"></p>                 
+<p><input type="text" size="30" spellcheck="true" maxsize="100" name="goal_area" value="<?php echo $goal_row['area']; ?>"></p>                 
 <p><label>Goal</label></p>
 <p><textarea name="goal_text" spellcheck="true" cols="45" rows="3" wrap="soft"><?php echo $goal_row['goal']; ?></textarea></p>
 <p><label>Review Date</label>
-<p><script type="text/javascript" src="./js/bootstrap-datepicker.js">$('.datepicker').datepicker()</script><input type="datepicker" name="goal_review_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="<?php echo $goal_review_date; ?>"></p>
+<p><input type="datepicker" name="goal_review_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="<?php echo $goal_review_date; ?>"></p>
 <p><input type="submit" name="Update" value="Update"></p>
 </form>
 </div>
@@ -531,8 +532,8 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
 <p><label>Objective</label></p>
 <p><textarea spellcheck="true" spellcheck="true" name="description" tabindex="1" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['description'])) echo $_POST['description']; ?></textarea></p>
 <p><label>Review Date: (YYYY-MM-DD)</label></p>
-<p><input type="text" tabindex="2" name="review_date" value="<?php if(isset($_POST['review_date'])) echo $_POST['review_date']; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.review_date, 'yyyy-m-dd', 0, 0)"></p>
-
+<p><input type="datepicker" name="goal_review_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" tabindex="2" name="review_date" value="<?php if(isset($_POST['review_date'])) echo $_POST['review_date']; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.review_date, 'yyyy-m-dd', 0, 0)"></p>
+<!-- <input type="datepicker" name="goal_review_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="<?php echo $goal_review_date; ?>"></p>-->
 <p><label>Assessment Procedure</label></p>
 <p><textarea spellcheck="true" spellcheck="true" name="assessment_procedure" tabindex="3" cols="35" rows="3" onkeypress="return autocomplete(this,event,popuplist)" wrap="soft"><?php if(isset($_POST['assessment_procedure'])) echo $_POST['assessment_procedure']; ?></textarea> &nbsp;<img src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" width="17" border=0 onClick="popUpChooser(this,document.all.assessment_procedure)" ></p>
 <p><label>Strategies</label></p>
