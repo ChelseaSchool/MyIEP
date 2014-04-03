@@ -190,9 +190,9 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
           <p><a class="btn btn-default" href="school_info.php" role="button">View Schools &raquo;</a></p>
         </div>
         <div class="col-md-4">
-          <h2>View Logs</h2>
-          <p>Access system history..</p>
-          <p><a class="btn btn-default" href="superuser_view_logs.php" role="button">View Logs &raquo;</a></p>
+          <h2>System Tools</h2>
+          <p>System administration &amp; Operations.</p>
+          <p><a class="btn btn-default" href="superuser_tools.php" role="button">Admin Tools &raquo;</a></p>
        </div>
         <div class="col-md-4">
           <h2>Manage Accounts</h2>
