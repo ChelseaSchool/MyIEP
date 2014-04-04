@@ -207,11 +207,7 @@ if(!$school_result) {
 </HEAD>
     <BODY>
         <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
+        
         <tr>
             <td class="shadow-left"></td>
             <td class="shadow-center" valign="top">
