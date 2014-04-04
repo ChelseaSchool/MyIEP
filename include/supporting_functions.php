@@ -14,6 +14,7 @@
  */
 
 if(!defined('IPP_PATH')) define('IPP_PATH','../');
+include_once('IPP_PATH' . 'print_html_functions.php');
 
 /** @fn checkSpelling ( $string )
  *  @brief	function to make use of pspell (PEAR): given a string, returns error check and makes spelling recommendations

@@ -40,6 +40,7 @@ require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
 require_once(IPP_PATH . 'include/navbar.php');
 require_once(IPP_PATH . 'include/supporting_functions.php');
+require_once(IPP_PATH . 'include/print_html_functions.php');
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -258,14 +259,9 @@ if(!$accomodation_result) {
 <HEAD>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
     <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
    
-    <script language="javascript" src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script>
-    <script language="javascript" src="<?php echo IPP_PATH . "include/autocomplete.js"; ?>"></script>
+    <script src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script>
+    <script src="<?php echo IPP_PATH . "include/autocomplete.js"; ?>"></script>
     <?php
        //output the javascript array for the chooser popup
        echoJSServicesArray();
@@ -295,9 +291,15 @@ if(!$accomodation_result) {
       function noPermission() {
           alert("You don't have the permission level necessary"); return false;
       }
+     
     </SCRIPT>
+    
+    <?php print_bootrap_head(); ?>
+    
 </HEAD>
     <BODY>
+    <?php echo print_student_navbar($student_id); ?>
+        <p><?php echo $student_id ?></p>
         <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
         <tr>
           <td class="shadow-topLeft"></td>
@@ -425,6 +427,6 @@ if(!$accomodation_result) {
             <td class="shadow-bottomRight"></td>
         </tr>
         </table> 
-     
+    <?php print_bootstrap_js(); ?> 
     <?php print_complete_footer(); ?></BODY>
 </HTML>

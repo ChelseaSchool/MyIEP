@@ -38,6 +38,8 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
+require_once(IPP_PATH . 'include/supporting_functions.php');
+
 require_once(IPP_PATH . 'include/navbar.php');
 
 header('Pragma: no-cache'); //don't cache this page!
@@ -129,8 +131,10 @@ if(!$student_result) {
 } else {$student_row= mysql_fetch_array($student_result);}
 
 ?>
+
 <!DOCTYPE HTML>
 <html lang="en">
+<!-- Start Head -->
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -154,16 +158,23 @@ if(!$student_result) {
       function noPermission() {
           alert("You don't have the permission level necessary"); return false;
       }
-    </SCRIPT>
+</SCRIPT>
+	
+	<!-- Example Invokation of Datepicker -->
+	<!-- input type=datepicker name="review_date" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd"  -->
+	<!-- Bootstrap Datepicker CSS -->
+	<link href="./css/datepicker.css" rel="stylesheet">
+	 <!-- jQuery Libraries -->
 	 <script src="//code.jquery.com/jquery-1.9.1.js"></script>
 	 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	 
+	 <script type="text/javascript" src="./js/bootstrap-datepicker.js">$('.datepicker').datepicker()</script>	
+	 <!-- jQuery Intantiation -->
 	 <script>
 	$(function() {
 	$( "#datepicker" ).datepicker();
 	});
-	</script>
-	<!-- Bootstrap jQuery Picker -->
-    <script type="text/javascript" src="./js/bootstrap-datepicker.js"></script>
+	</script>    
    
 </HEAD>
 
@@ -249,7 +260,7 @@ if(!$student_result) {
 <label>Long Term Goal</label>
 <p><textarea spellcheck="true" disabled name="text" cols="40" rows="3" wrap="soft"><?php echo $goal_row['goal']; ?></textarea></p>
 <label>Review Date</label>
-<script type="text/javascript" src="./js/bootstrap-datepicker.js">$('.datepicker').datepicker()</script>
+<!-- Datepicker was here -->
 <p><input type=datepicker name="review_date" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="<?php echo $goal_row['review_date']; ?>"></p>
 <!-- Lagacy Datepicker: &nbsp;<img	src='<?php echo IPP_PATH . "images/calendaricon.gif"; ?>' height="17" width="17" border="0" onClick="popUpCalendar(this, document.all.review_date, 'yyyy-m-dd', 0, 0)" alt="calendar">-->
 <label>Assessment Procedure</label>

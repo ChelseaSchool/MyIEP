@@ -39,6 +39,7 @@ require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
 require_once(IPP_PATH . 'include/navbar.php');
 require_once(IPP_PATH . 'include/supporting_functions.php');
+require_once(IPP_PATH . 'include/print_html_functions.php');
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -230,8 +231,8 @@ if(!$anecdotal_result) {
         -->
     </style>
     
-    <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
-    <SCRIPT LANGUAGE="JavaScript">
+    <script src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
+    <SCRIPT>
       function confirmChecked() {
           var szGetVars = "anecdotals=";
           var szConfirmMessage = "Are you sure you want to modify/delete the following:\n";
@@ -257,9 +258,18 @@ if(!$anecdotal_result) {
           alert("You don't have the permission level necessary"); return false;
       }
     </SCRIPT>
+       <!-- Bootstrap core CSS -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./css/jumbotron.css" rel="stylesheet">
+	<style type="text/css">body { padding-bottom: 70px; }</style>
 </HEAD>
     <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
+    <?php echo print_student_navbar($student_id); ?>
+    
+    
+     <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
         <tr>
           <td class="shadow-topLeft"></td>
             <td class="shadow-top"></td>
@@ -384,5 +394,11 @@ if(!$anecdotal_result) {
         </tr>
         </table> 
        <?php print_complete_footer(); ?>
+       <!-- Bootstrap core JavaScript
+ ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="./js/bootstrap.min.js"></script>   
+<script type="text/javascript" src="./js/jquery-ui-1.10.4.custom.min.js"></script>
     </BODY>
 </HTML>

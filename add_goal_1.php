@@ -228,7 +228,7 @@ if(!$goal_category_name_result) {
       function noSelection() {
           alert("You must choose a goal category to enable the chooser"); return false;
       }
-
+      <?php print_bootstrap_datepicker_depends(); ?>
     </SCRIPT>
 </HEAD>
 <BODY>
@@ -281,7 +281,7 @@ if(!$goal_category_name_result) {
                         <tr>
                            <td bgcolor="#E0E2F2" class="row_default">Review Date: (YYYY-MM-DD)</td>
                            <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="text" tabindex="2" size="30" name="review_date" value="<?php  if(isset($_GET['review_date'])) echo $_GET['review_date']; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.review_date, 'yyyy-m-dd', 0, 0)">
+                               <input type="datepicker" tabindex="2" size="30" name="review_date" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="<?php  if(isset($_GET['review_date'])) echo $_GET['review_date']; ?>">
                            </td>
                         </tr>
                         </table>

@@ -46,6 +46,7 @@ require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
 require_once(IPP_PATH . 'include/navbar.php');
 require_once(IPP_PATH . 'include/supporting_functions.php');
+require_once(IPP_PATH . 'include/print_html_functions.php');
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -185,11 +186,7 @@ if(!$medication_result) {
 <HEAD>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
     <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
+    
     
     <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
     <SCRIPT LANGUAGE="JavaScript">
@@ -218,8 +215,12 @@ if(!$medication_result) {
           alert("You don't have the permission level necessary"); return false;
       }
     </SCRIPT>
+    <?php print_bootrap_head(); ?>
 </HEAD>
     <BODY>
+    <?php echo print_student_navbar($student_id); ?>
+        
+        
         <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
         <tr>
           <td class="shadow-topLeft"></td>
@@ -234,7 +235,7 @@ if(!$medication_result) {
                     <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
                     </tr>
                     <tr><td>
-                    <center><?php navbar("student_view.php?student_id=$student_id"); ?></center>
+                    <?php navbar("student_view.php?student_id=$student_id"); ?>
                     </td></tr>
                     <tr>
                         <td valign="top">
@@ -347,6 +348,13 @@ if(!$medication_result) {
             <td class="shadow-bottomRight"></td>
         </tr>
         </table> 
-        <center></center>
+         <?php print_complete_footer(); ?>
+       <!-- Bootstrap core JavaScript
+ ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="./js/bootstrap.min.js"></script>   
+<script type="text/javascript" src="./js/jquery-ui-1.10.4.custom.min.js"></script>
+    
     </BODY>
 </HTML>

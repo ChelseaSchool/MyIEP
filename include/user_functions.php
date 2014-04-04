@@ -10,6 +10,7 @@
 
 if(!defined('IPP_PATH')) define('IPP_PATH','../');
 
+
 /** @fn		 	getNumUsers()
  *  @brief		Gets total number of users from the support_member table
  *  @detail		Errors are trapped, logged
