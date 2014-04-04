@@ -35,7 +35,7 @@ require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
 require_once(IPP_PATH . 'include/supporting_functions.php');
 require_once(IPP_PATH . 'include/navbar.php');
-
+require_once(IPP_PATH . 'include/print_html_functions.php');
 header('Pragma: no-cache'); //don't cache this page!
 
 if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
@@ -276,31 +276,23 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
           alert("You don't have the permissions"); return false;
       }
     </SCRIPT>
+    <?php print_bootrap_head(); ?>
 </HEAD>
     <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
+    <?php echo print_general_navbar(); ?>
         
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("main.php"); ?></center>
-                    </td></tr>
+  <table width="80%" class="frame" align=center border="0">
+                    
                     <tr>
                         <td valign="top">
                         <div id="main">
                         <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
 
-                        <center><table><tr><td><center><p class="header">Students</p></center></td></tr></table></center>
+                        <h1 align="center" class="header">Students</h1
 
-                        <center><table width="80%" border="0"><tr>
-                          <td align="center">
-                          <?php echo "<a href=\"" . IPP_PATH . "new_student.php?iLimit=$iLimit&iCur=$iCur&field=" . $FIELD . "&szSearchVal=" . $szSearchVal . "&SEARCH=1\"><img src=\"" . IPP_PATH  . "images/mainbutton.php?title=Add Student\" border=0 ";
-                          if($permission_level > 50) echo "onClick=\"return noPermission();\"";  //Teachers and up only!
+                        <table align="center" width="80%" border="0"><tr>
+                          <td align="center"><?php echo "<a href=\"" . IPP_PATH . "new_student.php?iLimit=$iLimit&iCur=$iCur&field=" . $FIELD . "&szSearchVal=" . $szSearchVal . "&SEARCH=1\"><img src=\"" . IPP_PATH  . "images/mainbutton.php?title=Add Student\" border=0 ";
+                          	if($permission_level > 50) echo "onClick=\"return noPermission();\"";  //Teachers and up only!
                           echo ">\n";
                           ?>
                           </td>
@@ -333,7 +325,7 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
 
 
                         <form name="studentlist" onSubmit="return deleteChecked()" enctype="multipart/form-data" action="<?php echo IPP_PATH . "manage_student.php"; ?>" method="post">
-                        <center><table width="80%" border="0">
+                     <table align="center" width="80%" border="0">
                         <?php
                         $bgcolor = "#DFDFDF";
 
@@ -422,20 +414,15 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
                         echo "</td></tr>\n";
                         
                         ?>
-                        </table></center>
+                        </table>
                         </form>
-                        <BR>
+                        
 
                         </div>
                         </td>
                     </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
+                </table>
+      
             <center><?php navbar("main.php"); ?></center>
             </td>
             <td class="shadow-right">&nbsp;</td>
@@ -447,5 +434,7 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
         </tr>
         </table> 
         <?php print_complete_footer(); ?>
+        
+        <?php print_bootstrap_js() ?>
     </BODY>
 </HTML>
