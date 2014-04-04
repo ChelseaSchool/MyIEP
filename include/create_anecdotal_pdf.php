@@ -1,6 +1,6 @@
 <?php
 
-/* @file
+/** @file
  * @brief Create PDF of anecdotals for this student's IEP
  * @copyright 	2014 Chelsea School 
  * @copyright 	2005 Grasslands Regional Division #6

@@ -1,6 +1,10 @@
 <?php
 
-/* Notes
+/** @file
+ * @brief Not sure of how this works yet
+ * @todo
+ * 1. Get sure of what this does
+ * @remarks
  * 1. there's no html here - this is included in another page somewhere
  * 2. in the lead comments, file name doesn't match description. Update.
  * 3. Check switch code - is it complete?

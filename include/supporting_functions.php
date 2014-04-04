@@ -1,6 +1,6 @@
 <?php
 
-/* @file functions occasionally used
+/** @file functions occasionally used
  * @brief was just spellcheck for Pspell, but now new functions for inclusion can go here.
  * Contains (from original dev) just checkspelling()
  * @todo

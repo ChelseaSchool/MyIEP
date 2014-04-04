@@ -1,6 +1,7 @@
 <?php
 
-/**@BUG Everything is commented? Can't find comment to close
+/** @file
+ *@bug Everything is commented? Can't find comment to close
  * @DETAILS
  * #NOTES
  * 1. Absract: configurable values on install

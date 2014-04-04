@@ -1,6 +1,6 @@
 <?php
-/**
- * @BRIEF 	revise or edit student demographics
+/**@file
+ * @brief 	revise or edit student demographics
  * 
  */
  

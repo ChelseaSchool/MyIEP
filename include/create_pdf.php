@@ -1,5 +1,5 @@
 <?php
-/* @file
+/** @file
  * @brief long PDF creation algorithm
  * @todo
  * 1. Output is not escaped

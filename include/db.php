@@ -2,7 +2,7 @@
 
 //* @todo: track db plain text credential file reference (init.php); if we change the location in the interest of security, do we know where to change the code?
 
-/* @file
+/** @file
  * @brief  Two database handling utilities
  * @copyright 	2014 Chelsea School 
  * @copyright 	2005 Grasslands Regional Division #6

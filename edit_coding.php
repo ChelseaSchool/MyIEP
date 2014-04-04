@@ -1,6 +1,6 @@
 <?php
-/**
- * @BRIEF 	edit student learning code
+/** @file
+ * @breif 	edit student learning code
  * 
  */
  

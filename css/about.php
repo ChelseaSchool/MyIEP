@@ -1,3 +1,11 @@
+<?php 
+/** @file
+ * @brief
+ * This appears to be Carousel Template for Bootstrap
+ * @remark Safe to remove
+ * @todo 	Remove
+ */
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>

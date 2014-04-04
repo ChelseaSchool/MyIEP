@@ -1,5 +1,5 @@
 <?php
-/* @file
+/** @file
  * @remarks
  * 1. handles the logging of data for administration.
  * 2. In future sprint, set up emailed alert for specific events

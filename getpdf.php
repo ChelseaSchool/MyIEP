@@ -1,5 +1,7 @@
 <?php
-/* Notes
+/** @file
+ * @brief	Gets PDF, I assume of the current IEP state 
+ * @remarks
  * 1. not the same style as most of the code by the dev
  * 2. some security measures in place (checking the filename for slashes and backslashes
  * 3. Purpose: It looks like this displays a generated PDF? Yes, it looks like it's supposed to be a tmp file with a limited lifespan. (does not stay on server)

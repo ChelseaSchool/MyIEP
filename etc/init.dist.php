@@ -1,7 +1,11 @@
 <?php
 
-/* Notes
- * Summary: further configuration and customization at install time
+/** @file
+ *  @brief init.php template used for installation process
+ *  
+ *  init.php is checked for everytime at launch to determine whether install wizard has to run
+ * @remarks
+ * #Summary: further configuration and customization at install time
  * 1. long term: install wizard should allow administrator to set these values
  * 2. Make sane values here
  * 3. Make copyright comment that follows license recommendation

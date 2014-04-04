@@ -1,5 +1,5 @@
 <?php
-/* @file
+/** @file
  * @brief		Install wizard - Database configuration check
  * @copyright	Copyright (c) 2005 Grasslands Regional Division #6
  * @copyright	GPLv2

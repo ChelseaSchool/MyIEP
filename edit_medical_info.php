@@ -1,6 +1,6 @@
 <?php
-/**
- * @BRIEF 	edit student medical information
+/** @file
+ * @brief 	edit student medical information
  * 
  */
  

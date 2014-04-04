@@ -1,7 +1,7 @@
 <?php
-/**
- * @BRIEF 	history of student's previous schools
- * 
+/** @file
+ * @breif 	history of student's previous schools
+ * @todo revamp UI/UX
  */
  
  
