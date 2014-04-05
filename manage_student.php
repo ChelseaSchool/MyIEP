@@ -239,11 +239,7 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
 <HEAD>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
     <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
+    
    
 
     <SCRIPT LANGUAGE="JavaScript">
@@ -255,7 +251,7 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
           for(var x=0; x<form.elements.length; x++) {
               if(form.elements[x].type=="checkbox") {
                   if(form.elements[x].checked) {
-                     szGetVars = szGetVars + form.elements[x].name + "|";
+                     szGetVars = szGetVars + form.elements[x].id + "|";
                      szConfirmMessage = szConfirmMessage + form.elements[x].value + " (ID #" + form.elements[x].name + ")\n";
                      count++;
                   }
@@ -277,164 +273,85 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
       }
     </SCRIPT>
     <?php print_bootrap_head(); ?>
+
 </HEAD>
     <BODY>
-    <?php echo print_general_navbar(); ?>
-        
-  <table width="80%" class="frame" align=center border="0">
-                    
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+    <script src="js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script src="js/jquery-1.10.2.js"></script>  
+     	
+<?php echo print_general_navbar(); ?>
+<div class="jumbotron"><div class="container">     
 
-                        <h1 align="center" class="header">Students</h1
+<?php if ($system_message) echo $system_message; ?>
 
-                        <table align="center" width="80%" border="0"><tr>
-                          <td align="center"><?php echo "<a href=\"" . IPP_PATH . "new_student.php?iLimit=$iLimit&iCur=$iCur&field=" . $FIELD . "&szSearchVal=" . $szSearchVal . "&SEARCH=1\"><img src=\"" . IPP_PATH  . "images/mainbutton.php?title=Add Student\" border=0 ";
-                          	if($permission_level > 50) echo "onClick=\"return noPermission();\"";  //Teachers and up only!
-                          echo ">\n";
-                          ?>
-                          </td>
-                        </tr>
-                        </table></center>
-                        <HR>
+<h1>Manage Students</h1>
+<h2>Logged in as: <small><?php echo $_SESSION['egps_username']; ?></small></h2>
 
-                        <!-- search fx >
-                        <form enctype="multipart/form-data" action="<?php echo IPP_PATH . "manage_student.php"; ?>" method="get">
-                        <center><table width="80%" cellspacing="0">
-                        <tr>
-                        <td align=center bgcolor="#E0E2F2">&nbsp;
-                        </td>
-                        </tr>
-                        <tr>
-                        <td align=center bgcolor="#E0E2F2">
-                            Search:&nbsp;
-                            <SELECT name="field">
-                            <option value="last_name" <?php if($FIELD == "last_name") echo "selected"; ?>>Last Name
-                            <option value="first_name" <?php if($FIELD == "first_name") echo "selected"; ?>>First Name
-                            <option value="school_name" <?php if($FIELD == "school_name") echo "selected"; ?>>School Name
-                            <option value="school_code" <?php if($FIELD == "school_code") echo "selected"; ?>>School Code
-                            </SELECT>
-                            &nbsp;is&nbsp;&nbsp;<input type="text" name="szSearchVal" size="15" value="<?php echo $szSearchVal;?>">&nbsp;Limit:&nbsp;<input type="text" name="iLimit" size="5" value="<?php echo $iLimit; ?>">&nbsp;<input type="submit" value="Query" name="SEARCH">
-                            <p class="small_text">(Wildcards: '%'=match any '_'=match single)</p>
-                        </td>
-                        </tr></table></center>
-                        </form>
-                        <-- end search fx -->
+<?php if ($system_message) { echo "<h3>System Message <small>" . $system_message . "</small></h3>";} ?>
+<!--<button id="toggle" class="btn btn-lg btn-primary" role="button">Toggle Details &raquo;</button>-->
+</div> <!-- close container -->
 
-
-                        <form name="studentlist" onSubmit="return deleteChecked()" enctype="multipart/form-data" action="<?php echo IPP_PATH . "manage_student.php"; ?>" method="post">
-                     <table align="center" width="80%" border="0">
-                        <?php
-                        $bgcolor = "#DFDFDF";
-
-                        //print the next and prev links...
-                        echo "<tr><td colspan=\"2\">";
-                        if($iCur != 0) {
-                            //we have previous values...
-                            echo "<a href=\"./manage_student.php?iCur=" . ($iCur-$iLimit) . "&iLimit=$iLimit&szSearch=&szSearchVal=" . $_GET['szSearchVal'] . "&field=" . $_GET['field'] . "&SEARCH=" . $_GET['SEARCH'] . "\" class=\"default\">prev $iLimit</a>";
-                        } else {
-                            echo "&nbsp;";
-                        }
-                        echo "</td><td colspan=\"2\" align=\"center\">";
-                        echo "Click Username to view";
-                        echo "</td>";
-                        if(($iLimit+$iCur < $szTotalStudents)) {
-                            echo "<td align=\"right\"><a href=\"./manage_student.php?iCur=" . ($iCur+$iLimit) . "&iLimit=$iLimit&szSearchVal=" . $_GET['szSearchVal'] . "&field=" . $_GET['field'] . "&SEARCH=" . $_GET['SEARCH'] . "\" class=\"default\">next ";
-                            if( $szTotalStudents-($iCur+$iLimit) > $iLimit) {
-                                echo $iLimit . "</td>";
-                            } else {
-                                echo ($szTotalStudents-($iCur+$iLimit)) . "</td>";
-                            }
-                        } else {
-                            echo "<td>&nbsp;</td>";
-                        }
-                        echo "</tr>\n";
-                        //end print next and prev links
-
-                        //print the header row...
-                        echo "<tr><td bgcolor=\"#E0E2F2\">&nbsp;</td><td align=\"center\" bgcolor=\"#E0E2F2\">UID</td><td align=\"center\" bgcolor=\"#E0E2F2\">Last Name, First Name</td><td align=\"center\" bgcolor=\"#E0E2F2\">School</td><td align=\"center\" bgcolor=\"#E0E2F2\">Permission</td></tr>\n";
-                        while ($student_row=mysql_fetch_array($sqlStudents)) {
+</div> <!-- Close Jumbotron -->
+    
+    
+<div class="container">     
+ 
+  	<form name="studentlist" onSubmit="return deleteChecked()" enctype="multipart/form-data" action="<?php echo IPP_PATH . "manage_student.php"; ?>" method="post">				
+    <table class="table table-hover" class="table table-striped">
+  	
+  	<tr><th>Select <small>(Disabled)</small></th><th>UID</th><th>Student Name</th><th align="center" width="20%"><abbr title="Individual Education Plan">IEP</abbr> (<abbr title="Portable Document Format">PDF</abbr>)</th><th>School</th><th>Permission</th></tr>
+	
+	<!-- loop -->
+	<?php 
+	while ($student_row=mysql_fetch_array($sqlStudents)) {
                             $current_student_permission = getStudentPermission($student_row['student_id']);
-                            echo "<tr>\n";
-                            $school_colour = "#". $student_row['red'] . $student_row['green'] . $student_row['blue'];
-                            echo "<td bgcolor=\"$bgcolor\"><input type=\"checkbox\" name=\"" . $student_row['student_id'] . "\" value=\"" . $student_row['first_name'] . " " . $student_row['last_name'] . "\"></td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\">" . $student_row['student_id'] . "<p></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\"><a href=\"" . IPP_PATH . "student_view.php?student_id=" . $student_row['student_id'] . "\" class=\"default\" ";
+                            $tablerow = <<<EOF
+                            <div id="$current_student_permission"><tr>
+                            	<td><input id="{$student_row['student_id']}" type="checkbox"></td>
+                                <td>{$student_row['student_id']}</td>
+                            	<td><a href="student_view.php?student_id={$student_row['student_id']}">{$student_row['first_name']} &nbsp;{$student_row['last_name']}</a></td>
+                            	<td align="center"><a href="ipp_pdf.php?student_id={$student_row['student_id']}" target="_blank"><img alt="IEP (PDF)" src="images/pdf-icon.png" height="20%" width="20%"></a></td>
+                            	<td>{$student_row['school_name']}</td>
+                            	<td>$current_student_permission</td>
+                            </tr></div>
+EOF;
+
+                            echo $tablerow;
+}
+ ?>
+                           <?php /* if($current_student_permission == "READ" || $current_student_permission != "WRITE" || $current_student_permission != "ALL")
+                                echo "<a href=\"". IPP_PATH . "ipp_pdf.php?student_id=" . $student_row['student_id'] . "\" class=\"default\" target=\"_blank\"";
                             if($current_student_permission == "NONE" || $current_student_permission == "ERROR") {
                                 echo "onClick=\"return noPermission();\" ";
+                            	echo "<img src=\"". IPP_PATH . "images/pdf.png\" align=\"top\" border=\"0\"></a>";
                             }
-                            echo ">" .  $student_row['last_name'] . "," . $student_row['first_name'] . "</a>";
-                            if($current_student_permission == "READ" || $current_student_permission != "WRITE" || $current_student_permission != "ALL") {
-                                echo "<a href=\"". IPP_PATH . "ipp_pdf.php?student_id=" . $student_row['student_id'] . "\" class=\"default\" target=\"_blank\"";
-                                if($current_student_permission == "NONE" || $current_student_permission == "ERROR") {
-                                echo "onClick=\"return noPermission();\" ";
-                                }
-                                echo "><img src=\"". IPP_PATH . "images/pdf.png\" align=\"top\" border=\"0\"></a>";
-                            }
-                            echo "</td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><p class=\"small_text\">" . $student_row['school_name'] . "<p></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" align=\"center\" class=\"row_default\"><p class=\"small_text\">$current_student_permission<p></td>\n";
-                            echo "</tr>\n";
-                            if($bgcolor=="#DFDFDF") $bgcolor="#CCCCCC";
-                            else $bgcolor="#DFDFDF";
-                        }
+                            echo "</td>"; //end pdf column
+                            //school name column
+                            echo "<td>" . $student_row['school_name'] . "</td>";
+                            //permission
+                            echo "<td>" . $current_student_permission . "</td>";
+                            echo "</tr>";//close row */
+							?>
+	
+<!-- <button type="submit" name="delete" title="delete" class="btn btn-default">Submit</button>-->
+<!--  <?php if($permission_level <= $IPP_MIN_DELETE_STUDENT_PERMISSION)
+                            echo "<button type=\"submit\" name=\"delete\" value=\"1\">Delete Selected</button>";?>-->
+</form>
+</table>
 
-                        //print the next and prev links...
-                        echo "<tr><td colspan=\"2\">";
-                        if($iCur != 0) {
-                            //we have previous values...
-                            echo "<a href=\"./manage_student.php?iCur=" . ($iCur-$iLimit) . "&iLimit=$iLimit&szSearch=&szSearchVal=" . $_GET['szSearchVal'] . "&field=" . $_GET['field'] . "&SEARCH=" . $_GET['SEARCH'] . "\" class=\"default\">prev $iLimit</a>";
-                        } else {
-                            echo "&nbsp;";
-                        }
-                        echo "</td><td colspan=\"2\" align=\"center\">";
-                        echo "&nbsp;";
-                        echo "</td>";
-                        if(($iLimit+$iCur < $szTotalStudents)) {
-                            echo "<td align=\"right\"><a href=\"./manage_student.php?iCur=" . ($iCur+$iLimit) . "&iLimit=$iLimit&szSearchVal=" . $_GET['szSearchVal'] . "&field=" . $_GET['field'] . "&SEARCH=" . $_GET['SEARCH'] . "\" class=\"default\">next ";
-                            if( $szTotalStudents-($iCur+$iLimit) > $iLimit) {
-                                echo $iLimit . "</td>";
-                            } else {
-                                echo ($szTotalStudents-($iCur+$iLimit)) . "</td>";
-                            }
-                        } else {
-                            echo "<td>&nbsp;</td>";
-                        }
-                        echo "</tr>\n";
-                        //end print next and prev links
+	
+ 
+   			
+  	</div><!-- End Container -->			
+  					
+  					
 
-                        //print out the action buttons
-                        echo "<tr><td colspan=\"5\" align=\"left\"><img src=\"" . IPP_PATH . "images/table_arrow.png\">&nbsp;With Selected: ";
-                        if($permission_level <= $IPP_MIN_DELETE_STUDENT_PERMISSION)
-                            echo "<INPUT TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=Delete\" border=\"0\" name=\"delete\" value=\"1\">";
-                        if($permission_level <= $IPP_MIN_DUPLICATE_IPP)
-                            echo "<INPUT TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=Duplicate\" border=\"0\" name=\"duplicate\" value=\"1\">";
-                        echo "</td></tr>\n";
-                        
-                        ?>
-                        </table>
-                        </form>
-                        
 
-                        </div>
-                        </td>
-                    </tr>
-                </table>
-      
-            <center><?php navbar("main.php"); ?></center>
-            </td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
+                       
+                       
         <?php print_complete_footer(); ?>
         
         <?php print_bootstrap_js() ?>
+        
     </BODY>
 </HTML>
