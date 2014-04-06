@@ -38,7 +38,7 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/navbar.php');
+require_once(IPP_PATH . 'include/supporting_functions.php');
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -200,13 +200,21 @@ if(isset($_POST['edit_accomodation']) && $have_write_permission) {
 <!DOCTYPE HTML>
 <HTML lang=en>
 <HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
+   <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="About MyIEP">
+    <meta name="author" content="Rik Goldman" >
+    <link rel="shortcut icon" href="./assets/ico/favicon.ico">
     <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
+   <!-- Bootstrap core CSS -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./css/jumbotron.css" rel="stylesheet">
+	<style type="text/css">body { padding-bottom: 70px; }</style>
+    
+
     
     <script language="javascript" src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script>
     <script language="javascript" src="<?php echo IPP_PATH . "include/autocomplete.js"; ?>"></script>
@@ -241,95 +249,149 @@ if(isset($_POST['edit_accomodation']) && $have_write_permission) {
           alert("You don't have the permission level necessary"); return false;
       }
     </SCRIPT>
-</HEAD>
+    </HEAD>
     <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("accomodations.php?student_id=$student_id"); ?></center>
-                    </td></tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+ <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="main.php">MyIEP</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="main.php">Home</a></li>
+            <li><a href="index.php">Logout</a></li>
+            <li><a href="about.php">About</a></li>
+            <li><a href="help.php">Help</a></li>
+            <li><a onclick="history.go(-1);">Back</a></li>
+            <li><a href=<?php echo "ipp_pdf.php?student_id=" . $student_row['student_id'] . "&file=ipp.pdf"; ?>>Get PDF</li></a>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Records: <?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?><b class="caret"></b></a>
+              <ul class="dropdown-menu">
+              	<li><a href="<?php echo IPP_PATH . "long_term_goal_view.php?student_id=" . $student_row['student_id']; ?>">Goals</a></li>
+              	<li class="divider"></li>
+              	<li><a href="<?php echo IPP_PATH . "guardian_view.php?student_id=" . $student_row['student_id'];?>">Guardians</a></li>
+              	<li><a href="<?php echo IPP_PATH . "strength_need_view.php?student_id=" . $student_row['student_id'];?>">Strengths &amp; Needs</a></li>
+              	<li><a href="<?php echo IPP_PATH . "coordination_of_services.php?student_id=" . $student_row['student_id'];?>">Coordination of Services</a></li>
+              	<li><a href="<?php echo IPP_PATH . "achieve_level.php?student_id=" . $student_row['student_id'];?>">Achievement Level</a></li>
+              	<li><a href="<?php echo IPP_PATH . "medical_info.php?student_id=" . $student_row['student_id'];?>">Medical Information</a></li>
+              	<li><a href="<?php echo IPP_PATH . "medication_view.php?student_id=" . $student_row['student_id'];?>">Medication</a></li>
+              	<li><a href="<?php echo IPP_PATH . "testing_to_support_code.php?student_id=" . $student_row['student_id'];?>">Support Testing</a></li>
+              	<li><a href="<?php echo IPP_PATH . "background_information.php?student_id=" . $student_row['student_id'];?>">Background Information</a></li>
+              	<li><a href="<?php echo IPP_PATH . "year_end_review.php?student_id=" . $student_row['student_id'];?>">Year-End Review</a></li>
+              	<li><a href="<?php echo IPP_PATH . "anecdotals.php?student_id=" . $student_row['student_id'];?>">Anecdotals</a></li>
+              	<li><a href="<?php echo IPP_PATH . "assistive_technology.php?student_id=" . $student_row['student_id'];?>">Assistive Techology</a></li>
+              	<li><a href="<?php echo IPP_PATH . "transition_plan.php?student_id=" . $student_row['student_id'];?>">Transition Plan</a></li>
+              	<li><a href="<?php echo IPP_PATH . "accomodations.php?student_id=" . $student_row['student_id'];?>">Accomodations</a></li>
+              	<li><a href="<?php echo IPP_PATH . "snapshots.php?student_id=" . $student_row['student_id'];?>">Snapshots</a></li></ul>
+            </ul>
+             
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="index.php">Logout</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Menu <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="./manage_student.php">Students</a></li>
+                <li class="divider"></li>
+                <li><a href="change_ipp_password.php">Reset Password</a></li>
+                <li><a href="superuser_add_goals.php">Goals Database</a></li>
+                <li><a href="./student_archive.php">Archive</a></li>
+                <li><a href="./user_audit.php">Audit</a></li>
+                <li><a href="superuser_manage_coding.php">Manage Codes</a></li>
+                <li><a href="school_info.php">Manage Schools</a></li>
+                <li><a href="superuser_view_logs.php">View Logs</a></li>
+              </ul>
+            </li>
+          </ul>
+         </div>
+         <!--/.nav-collapse -->
+        <!--<div class="navbar-collapse collapse">
+          <form class="navbar-form navbar-right" role="form" nctype="multipart/form-data" action="jumbotron.php" method="post">
+            <div class="form-group">
+              <input type="text" placeholder="User Name" class="form-control" value="<?php echo $LOGIN_NAME;?>">
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Password" class="form-control" name="PASSWORD" value="">
+            </div>
+            <button type="submit" value="submit" class="btn btn-success">Sign in</button>
+          </form>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </div>     
+<div class="jumbotron"><div class="container">     
 
-                        <center><table><tr><td><center><p class="header">- IPP Edit Accommodation<BR>(<?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?>)-</p></center></td></tr></table></center>
-                        <BR>
+<?php if ($system_message) echo "<p>" . $system_message . "</p>"; ?>
 
+<h1>Edit Accomodations: <small><?php echo $student_row['first_name'] . " " . $student_row['last_name'] ?> </small></h1>
+<h2>Logged in as: <small><?php echo $_SESSION['egps_username']; ?> (Permission: <?php echo $our_permission; ?>)</small></h2>
+<!-- <button class="btn btn-lg btn-primary" onclick="toggle ()" role="button">Toggle Details &raquo;</button>  -->
+
+
+
+</div> <!-- Close Jumbotron -->               
+</div><!-- End Container -->                 
+<div class="container">
                         <!-- BEGIN edit accomodation -->
-                        <center>
-                        <form name="edit_accomodation" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_accomodations.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+                        
+                        <form role="form" name="edit_accomodation" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_accomodations.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+                        
                         <table border="0" cellspacing="0" cellpadding ="0" width="80%">
                         <tr>
-                          <td colspan="3">
-                          <p class="info_text">Edit and click 'Update'.</p>
-                           <input type="hidden" name="edit_accomodation" value="1">
+                          <td>
+                          <div class="form-group"> 
+                          <input type="hidden" name="edit_accomodation" value="1">
                            <input type="hidden" name="uid" value="<?php echo $uid; ?>">
+                          </div>
                           </td>
                         </tr>
-                        <tr>
-                            <td valign="bottom" bgcolor="#E0E2F2">Accommodation: </td><td bgcolor="#E0E2F2">
-                            <input type="text" tabindex="1" name="accomodation" size="35" maxsize="255" value="<?php echo $accomodation_row['accomodation']; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" width="17" border=0 onClick="popUpChooser(this,document.all.accomodation)" >
+                        <tr><div class="form-group">
+                            <td valign="bottom">
+                            
+                            <label>Accommodation</label>
                             </td>
-                            <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="4"><input type="submit" tabindex="5" name="Update" value="Update"></td>
-                        </tr>
-                        <tr>
-                            <td valign="bottom" bgcolor="#E0E2F2">Subject or Area:</td><td bgcolor="#E0E2F2">
-                            <input type="text" tabindex="2" name="subject" size="35" maxsize="255" value="<?php echo $accomodation_row['subject']; ?>">
+                            <td>
+                            <input type="text" tabindex="1" name="accomodation" value="<?php echo $accomodation_row['accomodation']; ?>">
+                            
                             </td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">Start Date: (YYYY-MM-DD)</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="text" tabindex="3" name="start_date" value="<?php echo $accomodation_row['start_date']; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.start_date, 'yyyy-m-dd', 0, 0)">
+                        </div></tr>
+                        <tr><div class="form-group">
+                            <td><label>Subject or Area</label></td>
+                            <td><input type="text" tabindex="2" name="subject" size="35" maxsize="255" value="<?php echo $accomodation_row['subject']; ?>">
+                            </td>
+                        </div></tr>
+                        <tr><div class="form-group">
+                           <td class="row_default"><label>Start Date: (YYYY-MM-DD)</label></td>
+                           <td class="row_default">
+                               <input type="text" tabindex="3" name="start_date" value="<?php echo $accomodation_row['start_date']; ?>"><img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.start_date, 'yyyy-m-dd', 0, 0)">
                            </td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">End Date: (YYYY-MM-DD)</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="text" tabindex="4" name="end_date" value="<?php echo $accomodation_row['end_date']; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.end_date, 'yyyy-m-dd', 0, 0)">
+                        </div></tr>
+                        <tr><div class="form-group">
+                           <td class="row_default"><label>End Date: (YYYY-MM-DD)</label></label></td>
+                           <td class="row_default">
+                               <input type="text" tabindex="4" name="end_date" value="<?php echo $accomodation_row['end_date']; ?>"><img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.end_date, 'yyyy-m-dd', 0, 0)">
                            </td>
-                        </tr>
-                        <tr>
-                            <td valign="bottom" align="center" bgcolor="#E0E2F2" colspan="3">&nbsp;</td>
-                        </tr>
+                        </div></tr>
+                      	<tr>
+                      	<td valign="center" align="center" rowspan="4">
+                      	<div class="form-group">
+                      	<input type="submit" tabindex="5" name="Update" value="Update">
+                        </div>
+                        </td></tr>
                         </table>
                         </form>
-                        </center>
                         <!-- END edit accomodation -->
 
 
-                        </div>
+                        
                         </td>
                     </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-            <?php navbar("accomodations.php?student_id=$student_id"); ?>
-            </td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
-        <center></center>
+                </table>
+        </div> <!-- close container --> 
+        
     </BODY>
 </HTML>

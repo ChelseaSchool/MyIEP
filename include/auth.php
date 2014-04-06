@@ -113,7 +113,8 @@
         unset($_SESSION['egps_username']);
         unset($_SESSION['password']);
         unset($_SESSION['IPP_double_login']);
-		session_destroy();
+		$_SESSION = array(); // Destroy the variables.
+        session_destroy();
         if(!connectIPPDB()) {
              $error_message = $error_message;  //just to remember we need this
              return FALSE;

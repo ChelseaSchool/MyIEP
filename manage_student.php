@@ -239,7 +239,7 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
 <HEAD>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
     <TITLE><?php echo $page_title; ?></TITLE>
-    
+    <?php print_bootrap_head(); ?>
    
 
     <SCRIPT LANGUAGE="JavaScript">
@@ -272,12 +272,22 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
           alert("You don't have the permissions"); return false;
       }
     </SCRIPT>
-    <?php print_bootrap_head(); ?>
-
+    
+	<!-- jQuery -->
+	<script src="js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script src="js/jquery-1.10.2.js"></script>
+    
+    <script>
+    $(document).ready(function() {
+        $('#toggle').on('click',
+    	function() {
+      	  $("tr.NONE").toggle ();
+    	});
+    });
+    </script> 
 </HEAD>
     <BODY>
-    <script src="js/jquery-ui-1.10.4.custom.min.js"></script>
-    <script src="js/jquery-1.10.2.js"></script>  
+     
      	
 <?php echo print_general_navbar(); ?>
 <div class="jumbotron"><div class="container">     
@@ -288,7 +298,7 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
 <h2>Logged in as: <small><?php echo $_SESSION['egps_username']; ?></small></h2>
 
 <?php if ($system_message) { echo "<h3>System Message <small>" . $system_message . "</small></h3>";} ?>
-<!--<button id="toggle" class="btn btn-lg btn-primary" role="button">Toggle Details &raquo;</button>-->
+<button id="toggle" class="btn btn-lg btn-primary" role="button">Toggle <small>(Based on Permissions)</small> &raquo;</button>
 </div> <!-- close container -->
 
 </div> <!-- Close Jumbotron -->
@@ -297,20 +307,20 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
 <div class="container">     
  
   	<form name="studentlist" onSubmit="return deleteChecked()" enctype="multipart/form-data" action="<?php echo IPP_PATH . "manage_student.php"; ?>" method="post">				
-    <table class="table table-hover" class="table table-striped">
+    <table border=0 class="table table-hover" class="table table-striped">
   	
-  	<tr><th>Select <small>(Disabled)</small></th><th>UID</th><th>Student Name</th><th align="center" width="20%"><abbr title="Individual Education Plan">IEP</abbr> (<abbr title="Portable Document Format">PDF</abbr>)</th><th>School</th><th>Permission</th></tr>
+  	<tr><th width=10>Select <small>(Disabled)</small></th><th>UID</th><th>Student Name</th><th width="20%"><center><abbr title="Individual Education Plan">IEP</abbr> (<abbr title="Portable Document Format">PDF</abbr>)</center></th><th>School</th><th>Permission</th></tr>
 	
 	<!-- loop -->
 	<?php 
 	while ($student_row=mysql_fetch_array($sqlStudents)) {
                             $current_student_permission = getStudentPermission($student_row['student_id']);
                             $tablerow = <<<EOF
-                            <div id="$current_student_permission"><tr>
+                            <div><tr class="$current_student_permission">
                             	<td><input id="{$student_row['student_id']}" type="checkbox"></td>
                                 <td>{$student_row['student_id']}</td>
                             	<td><a href="student_view.php?student_id={$student_row['student_id']}">{$student_row['first_name']} &nbsp;{$student_row['last_name']}</a></td>
-                            	<td align="center"><a href="ipp_pdf.php?student_id={$student_row['student_id']}" target="_blank"><img alt="IEP (PDF)" src="images/pdf-icon.png" height="20%" width="20%"></a></td>
+                            	<td width="20%"><center><a href="ipp_pdf.php?student_id={$student_row['student_id']}" target="_blank">IEP (PDF)<img alt="IEP (PDF)" src="images/pdf-icon.png" height="20%" width="20%"></a></center></td>
                             	<td>{$student_row['school_name']}</td>
                             	<td>$current_student_permission</td>
                             </tr></div>
@@ -332,12 +342,12 @@ EOF;
                             echo "<td>" . $current_student_permission . "</td>";
                             echo "</tr>";//close row */
 							?>
-	
+</form>
+</table>	
 <!-- <button type="submit" name="delete" title="delete" class="btn btn-default">Submit</button>-->
 <!--  <?php if($permission_level <= $IPP_MIN_DELETE_STUDENT_PERMISSION)
                             echo "<button type=\"submit\" name=\"delete\" value=\"1\">Delete Selected</button>";?>-->
-</form>
-</table>
+
 
 	
  
