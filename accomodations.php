@@ -19,6 +19,7 @@
  * 5. Look into "End" script and "Continue" script
  * @remark
  * 1. Almost finished with UI
+ * 
  */
  
  
@@ -395,43 +396,22 @@ if(!$accomodation_result) {
 
 <h1>Accomodations: <small><?php echo $student_row['first_name'] . " " . $student_row['last_name'] ?> </small></h1>
 <h2>Logged in as: <small><?php echo $_SESSION['egps_username']; ?> (Permission: <?php echo $our_permission; ?>)</small></h2>
-<!-- <button class="btn btn-lg btn-primary" onclick="toggle ()" role="button">Toggle Details &raquo;</button>  -->
+<p>Click <a href="#quickadd">here</a> or scroll down to quickly add accomodations.</p>
 
 </div> <!-- close container -->
 
 </div> <!-- Close Jumbotron -->    
     
     
-<div class="row">
-<div class="container" align="center">
-<!-- Begin add Accomodation -->        
-
-<form name="addaccomodation" enctype="multipart/form-data" class="form-inline" action="<?php echo IPP_PATH . "accomodations.php"; ?>" method="get" role="form" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-  	<div class="form-group">
-  		<input type="hidden" name="add_accomodation" value="1">
-  		<input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
-	</div>
-  <label>Add Accomodation</label>
-  <div class="form-group">
-    <label class="sr-only" for="Accommodation">Accomodation</label>
- 
-    <input type="text" tabindex="1" name="accomodation" class="form-control" id="Accomodation" placeholder="Accomodation" value="<?php if(isset($_GET['accomodation'])) echo $_GET['accomodation']; ?>">
-    <img src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" width="17" border=0 onClick="popUpChooser(this,document.all.accomodation)">
-  </div>
-  <div class="form-group">
-    <label class="sr-only" for="Subject">Subject</label>
-    <input type="text" tabindex="2" name="subject" class="form-control" id="Subject" placeholder="Subject or Area">
-  </div>
-  <button type="submit" tabindex="3" name="add" value="add" class="btn btn-default">Submit</button>
-</form>
-<!-- END add accomodation -->         
-</div></div>       
+    
 
 <div class="row">
 &nbsp;
 </div>
 
-<div class="row"><div class="container">
+<div class="row">
+<div class="container">
+<h2>Student Accomodations <small>unsorted/unfiltered</small></h2>
 <!-- BEGIN accomodation history table -->
 <form name="accomodationhistory" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "accomodations.php"; ?>" method="get">
 <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
@@ -443,7 +423,7 @@ if(!$accomodation_result) {
                         
 
                         //print the header row...
-                        echo "<th><td>UID</td><td align=\"center\">Accommodation</td><td align=\"center\">Subject or Area</td><td align=\"center\">Start Date</td><td align=\"center\">End Date</td></th>";
+                        echo "<th><td>UID</td><td>Accommodation</td><td>Subject or Area</td><td>Start Date</td><td>End Date</td></th>";
                         while ($accomodation_row=mysql_fetch_array($accomodation_result)) { //current...
                             echo "<tr>";
                             echo "<td><input type=\"checkbox\" name=\"" . $accomodation_row['uid'] . "\"></td>";
@@ -462,23 +442,55 @@ if(!$accomodation_result) {
                        
 </table>
                             
-<p><img src="<?php echo IPP_PATH . "images/table_arrow.png"; ?>">&nbsp;With Selected:
+<p><img hidden src="<?php echo IPP_PATH . "images/table_arrow.png"; ?>">
                              
 <?php
+/* todo
+ * 1. Diagnose these form functions
+ * 
+ */
+/*
 if($have_write_permission) {
-	echo "<INPUT NAME=\"set_not_active\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=End\" border=\"0\" value=\"set_not_active\">";
-	echo "<INPUT NAME=\"set_continue\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=Continue\" border=\"0\" value=\"set_continue\">";
+	echo "<INPUT hidden NAME=\"set_not_active\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=End\" border=\"0\" value=\"set_not_active\">";
+	echo "<INPUT hidden NAME=\"set_continue\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=Continue\" border=\"0\" value=\"set_continue\">";
 }
  //if we have permissions also allow delete and set all.
 if($permission_level <= $IPP_MIN_DELETE_ACCOMODATION && $have_write_permission) {
-echo "<INPUT NAME=\"delete\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=Delete\" border=\"0\" value=\"delete\">";
-}
+//echo "<INPUT NAME=\"delete\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=Delete\" border=\"0\" value=\"delete\">";
+//echo "<button type=\"submit\" value=\"delete\">Delete Selected</button>";
+} */
 ?>
 </p></form>
 <!-- end accomodation history table -->
 </div>
-<div class="row">                        
-                       
+
+<div class="row">
+<div class="container">
+<!-- Begin add Accomodation -->        
+<h2>Accomodation <small>Quick Add</small></h2>
+<form name="addaccomodation" enctype="multipart/form-data" class="form-inline" action="<?php echo IPP_PATH . "accomodations.php"; ?>" method="get" role="form" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+  	<div class="form-group">
+  		<input type="hidden" name="add_accomodation" value="1">
+  		<input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
+	</div>
+   <a name="quickadd"></a><label>Add Accomodation</label>
+  <div class="form-group">
+    <label class="sr-only" for="Accommodation">Accomodation</label>
+ 
+    <input type="text" tabindex="1" class="form-control" name="accomodation" class="form-control" id="Accomodation" placeholder="Accomodation" value="<?php if(isset($_GET['accomodation'])) echo $_GET['accomodation']; ?>">
+    <img src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" width="17" border=0 onClick="popUpChooser(this,document.all.accomodation)">
+  </div>
+  <div class="form-group">
+    <label class="sr-only" for="Subject">Subject</label>
+   <input class="form-control" type="text" tabindex="2" name="subject" class="form-control" id="Subject" placeholder="Subject or Area">
+  </div>
+  <button type="submit" tabindex="3" name="add" value="add" class="btn btn-default">Submit</button>
+</form>
+<!-- END add accomodation -->         
+</div></div>   
+
+<div class="row" align="center">                        
+<p>&nbsp;</p>                      
                   
         
 
@@ -486,7 +498,8 @@ echo "<INPUT NAME=\"delete\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbu
     
          
      
-    <?php print_complete_footer(); ?>    </div>
+    <?php print_complete_footer(); ?>    
     <?php print_bootstrap_js(); ?>
+    </div>
     </BODY>
 </HTML>

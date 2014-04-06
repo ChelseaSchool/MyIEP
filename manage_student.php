@@ -8,7 +8,11 @@
  * 1. Confirm filename reflects what is in the page
  * 2. Bootstrap theme
  * 3. Navbar, depending on content
- * 
+ * @Remarks
+ * # New Features
+ * 1. New UI
+ * 2. Filter out students user doesn't have permissions for
+ * 3. Requires Javascript
  */
  
  
