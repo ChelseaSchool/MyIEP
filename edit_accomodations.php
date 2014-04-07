@@ -249,6 +249,23 @@ if(isset($_POST['edit_accomodation']) && $have_write_permission) {
           alert("You don't have the permission level necessary"); return false;
       }
     </SCRIPT>
+    <!-- Example Invokation of Datepicker -->
+	<!-- input type=datepicker name="review_date" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd"  -->
+	<!-- Bootstrap Datepicker CSS -->
+	<link href="./css/datepicker.css" rel="stylesheet">
+	 <!-- jQuery Libraries -->
+	 <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+	 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	 
+	 <script type="text/javascript" src="./js/bootstrap-datepicker.js">$('.datepicker').datepicker()</script>	
+	 <!-- jQuery Intantiation -->
+	 <script>
+	$(function() {
+	$( ".datepicker" ).datepicker();
+	});
+	</script>  
+	 <!-- Bootstrap Datepicker CSS -->
+	<link href="./css/datepicker.css" rel="stylesheet">
     </HEAD>
     <BODY>
  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -350,13 +367,15 @@ if(isset($_POST['edit_accomodation']) && $have_write_permission) {
 <label>Subject or Area</label> &nbsp; <input class="form-control" type="text" tabindex="2" name="subject" size="35" maxsize="255" value="<?php echo $accomodation_row['subject']; ?>">                           
 </div>
 <div class="form-group">
-<label>Start Date: (YYYY-MM-DD)</label> &nbsp; <input class="form-control" type="text" tabindex="3" name="start_date" value="<?php echo $accomodation_row['start_date']; ?>"><img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.start_date, 'yyyy-m-dd', 0, 0)">                        
+<label>Start Date: (YYYY-MM-DD)</label>
+<input class="form-control datepicker" type="datepicker" tabindex="3" name="start_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="<?php echo $accomodation_row['start_date']; ?>">
 </div>
 <div class="form-group">
-<label>End Date: (YYYY-MM-DD)</label> &nbsp; <input class="form-control" type="text" tabindex="4" name="end_date" value="<?php echo $accomodation_row['end_date']; ?>"><img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.end_date, 'yyyy-m-dd', 0, 0)">                           
+<label>End Date: (YYYY-MM-DD)</label>            
+<input type="datepicker" class="form-control datepicker" name="end_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="<?php echo $accomodation_row['end_date']; ?>">
 </div>                        
 <div class="form-group">
-<input type="submit" tabindex="5" name="Update" value="Update">
+<input class="btn btn-default" type="submit" tabindex="5" name="Update" value="Update">
  </div>
 </form>
  <!-- END edit accomodation -->
