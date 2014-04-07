@@ -402,7 +402,7 @@ if(!$accomodation_result) {
 
 </div> <!-- Close Jumbotron -->    
     
-    
+<?php my_error_handler($e_number,$e_message, $e_file,$e_line, $e_vars) ?>    
     
 
 <div class="row">
@@ -417,18 +417,18 @@ if(!$accomodation_result) {
 <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
 
 
-<table class="table table-striped">
+<table class="table table-striped table-hover">
 
                         <?php
                         
 
                         //print the header row...
-                        echo "<th><td>UID</td><td>Accommodation</td><td>Subject or Area</td><td>Start Date</td><td>End Date</td></th>";
+                        echo "<tr><th hidden align=\"center\"><small>Ignore</small></th><th>UID</th><th>Accommodation</th><th>Subject or Area</th><th>Start Date</th><th>End Date</th></tr>";
                         while ($accomodation_row=mysql_fetch_array($accomodation_result)) { //current...
                             echo "<tr>";
-                            echo "<td><input type=\"checkbox\" name=\"" . $accomodation_row['uid'] . "\"></td>";
+                            echo "<td hidden align=\"center\"><input type=\"checkbox\" name=\"{$accomodation_row['uid']}\"></td>";
                             echo "<td>" . $accomodation_row['uid'] . "</td>";
-                            echo "<td><a href=\"" . IPP_PATH . "edit_accomodations.php?uid=" . $accomodation_row['uid'] . "\" class=\"editable_text\">" . clean_in_and_out($accomodation_row['accomodation'])  ."</a></td>\n";
+                            echo "<td><a title=\"click to edit accomodation\" href=\"" . IPP_PATH . "edit_accomodations.php?uid=" . $accomodation_row['uid'] . "\" class=\"editable_text\">" . clean_in_and_out($accomodation_row['accomodation'])  ."</a></td>\n";
                             echo "<td><a href=\"" . IPP_PATH . "edit_accomodations.php?uid=" . $accomodation_row['uid'] . "\" class=\"editable_text\">" . $accomodation_row['subject'] . "</a></td>\n";
                             echo "<td><a href=\"" . IPP_PATH . "edit_accomodations.php?uid=" . $accomodation_row['uid'] . "\" class=\"editable_text\">" . $accomodation_row['start_date'] . "</a></td>\n";
                             if($accomodation_row['end_date'] =="")
@@ -449,16 +449,18 @@ if(!$accomodation_result) {
  * 1. Diagnose these form functions
  * 
  */
+
+//if($have_write_permission) {
+//	echo "<INPUT hidden NAME=\"set_not_active\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=End\" border=\"0\" value=\"set_not_active\">";
+//	echo "<INPUT hidden NAME=\"set_continue\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=Continue\" border=\"0\" value=\"set_continue\">";
+//}
+//if we have permissions also allow delete and set all.
 /*
-if($have_write_permission) {
-	echo "<INPUT hidden NAME=\"set_not_active\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=End\" border=\"0\" value=\"set_not_active\">";
-	echo "<INPUT hidden NAME=\"set_continue\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=Continue\" border=\"0\" value=\"set_continue\">";
-}
- //if we have permissions also allow delete and set all.
+ * first one works, second one does not
 if($permission_level <= $IPP_MIN_DELETE_ACCOMODATION && $have_write_permission) {
-//echo "<INPUT NAME=\"delete\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=Delete\" border=\"0\" value=\"delete\">";
-//echo "<button type=\"submit\" value=\"delete\">Delete Selected</button>";
-} */
+echo "<INPUT NAME=\"delete\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=Delete\" border=\"0\" value=\"delete\">";
+echo "<button NAME=\"delete\" type=\"submit\" value=\"delete\">Delete Selected</button>";
+}*/ 
 ?>
 </p></form>
 <!-- end accomodation history table -->
@@ -477,12 +479,13 @@ if($permission_level <= $IPP_MIN_DELETE_ACCOMODATION && $have_write_permission) 
   <div class="form-group">
     <label class="sr-only" for="Accommodation">Accomodation</label>
  
-    <input type="text" tabindex="1" class="form-control" name="accomodation" class="form-control" id="Accomodation" placeholder="Accomodation" value="<?php if(isset($_GET['accomodation'])) echo $_GET['accomodation']; ?>">
-    <img src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" width="17" border=0 onClick="popUpChooser(this,document.all.accomodation)">
+   
+<input type="text" required tabindex="1" class="form-control" name="accomodation" class="form-control" id="Accomodation" placeholder="Accomodation" value="<?php if(isset($_GET['accomodation'])) echo $_GET['accomodation']; ?>">
+    <img title="click to choose from among common accomodations" src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" width="17" border=0 alt="Choose from among common accomodations" onClick="popUpChooser(this,document.all.accomodation)">
   </div>
   <div class="form-group">
     <label class="sr-only" for="Subject">Subject</label>
-   <input class="form-control" type="text" tabindex="2" name="subject" class="form-control" id="Subject" placeholder="Subject or Area">
+   <input class="form-control" required type="text" tabindex="2" name="subject" class="form-control" id="Subject" placeholder="Subject or Area">
   </div>
   <button type="submit" tabindex="3" name="add" value="add" class="btn btn-default">Submit</button>
 </form>

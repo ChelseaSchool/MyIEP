@@ -64,8 +64,10 @@ function my_error_handler($e_number,$e_message, $e_file,$e_line, $e_vars) {
 	
 	if ($debug)
 	{
-		echo '<div class="error">'.$my_message . '</div>';
-		debug_print_backtrace();
+		if (isset($evars)) {
+		echo '<div class="container"><div class="error alert alert-warning">' . $my_message . '</div></div>';
+		}
+		else NULL;
 	}
 	else {
 		error_log($message,1,$contact_error_email);

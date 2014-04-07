@@ -338,59 +338,32 @@ if(isset($_POST['edit_accomodation']) && $have_write_permission) {
 <div class="container">
                         <!-- BEGIN edit accomodation -->
                         
-                        <form role="form" name="edit_accomodation" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_accomodations.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
-                        <tr>
-                          <td>
-                          <div class="form-group"> 
-                          <input type="hidden" name="edit_accomodation" value="1">
-                           <input type="hidden" name="uid" value="<?php echo $uid; ?>">
-                          </div>
-                          </td>
-                        </tr>
-                        <tr><div class="form-group">
-                            <td valign="bottom">
-                            
-                            <label>Accommodation</label>
-                            </td>
-                            <td>
-                            <input type="text" tabindex="1" name="accomodation" value="<?php echo $accomodation_row['accomodation']; ?>">
-                            
-                            </td>
-                        </div></tr>
-                        <tr><div class="form-group">
-                            <td><label>Subject or Area</label></td>
-                            <td><input type="text" tabindex="2" name="subject" size="35" maxsize="255" value="<?php echo $accomodation_row['subject']; ?>">
-                            </td>
-                        </div></tr>
-                        <tr><div class="form-group">
-                           <td class="row_default"><label>Start Date: (YYYY-MM-DD)</label></td>
-                           <td class="row_default">
-                               <input type="text" tabindex="3" name="start_date" value="<?php echo $accomodation_row['start_date']; ?>"><img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.start_date, 'yyyy-m-dd', 0, 0)">
-                           </td>
-                        </div></tr>
-                        <tr><div class="form-group">
-                           <td class="row_default"><label>End Date: (YYYY-MM-DD)</label></label></td>
-                           <td class="row_default">
-                               <input type="text" tabindex="4" name="end_date" value="<?php echo $accomodation_row['end_date']; ?>"><img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.end_date, 'yyyy-m-dd', 0, 0)">
-                           </td>
-                        </div></tr>
-                      	<tr>
-                      	<td valign="center" align="center" rowspan="4">
-                      	<div class="form-group">
-                      	<input type="submit" tabindex="5" name="Update" value="Update">
-                        </div>
-                        </td></tr>
-                        </table>
-                        </form>
-                        <!-- END edit accomodation -->
+<form role="form" name="edit_accomodation" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_accomodations.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+<div class="form-group"> 
+	<input type="hidden" name="edit_accomodation" value="1">
+	<input type="hidden" name="uid" value="<?php echo $uid; ?>">
+</div>
+<div class="form-group">
+	<label>Accommodation</label> &nbsp; <input autofocus class="form-control" type="text" tabindex="1" name="accomodation" value="<?php echo $accomodation_row['accomodation']; ?>">
+</div>
+<div class="form-group">
+<label>Subject or Area</label> &nbsp; <input class="form-control" type="text" tabindex="2" name="subject" size="35" maxsize="255" value="<?php echo $accomodation_row['subject']; ?>">                           
+</div>
+<div class="form-group">
+<label>Start Date: (YYYY-MM-DD)</label> &nbsp; <input class="form-control" type="text" tabindex="3" name="start_date" value="<?php echo $accomodation_row['start_date']; ?>"><img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.start_date, 'yyyy-m-dd', 0, 0)">                        
+</div>
+<div class="form-group">
+<label>End Date: (YYYY-MM-DD)</label> &nbsp; <input class="form-control" type="text" tabindex="4" name="end_date" value="<?php echo $accomodation_row['end_date']; ?>"><img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.end_date, 'yyyy-m-dd', 0, 0)">                           
+</div>                        
+<div class="form-group">
+<input type="submit" tabindex="5" name="Update" value="Update">
+ </div>
+</form>
+ <!-- END edit accomodation -->
 
 
                         
-                        </td>
-                    </tr>
-                </table>
+                       
         </div> <!-- close container --> 
         
     </BODY>
