@@ -116,13 +116,19 @@ Remove/replace legacy datepicker
 
 1. Investigate password encryption
 
-	* salt+md5
+	e.g. salt+md5::
+
+		<?php
+
+		$salt = 'some_random_string';
+		
+		$password_hash = md5($salt . md5($_POST['password'] . $salt));
+
+		?>
+
 
 2. Force change password
-
-	* redirect if flag is set
-
-	* unset flag on password reset
+  
 
 3. Refactor (use Eclipse)
 

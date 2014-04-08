@@ -11,6 +11,7 @@
    	 * @param string $DIRECTORY
    	 * @param number $ORDER
    	 * @return boolean|multitype:string
+   	 * @remark scandir() doesn't seem to be used by any code in the code base.
    	 */
    	function scandir($DIRECTORY, $ORDER=0) {
         //  array scandir(string directory [,int sorting_order])

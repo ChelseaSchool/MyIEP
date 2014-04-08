@@ -12,6 +12,7 @@
  * @authors		Rik Goldman, Sabre Goldman, Jason Banks, Alex, James, Paul, Bryan, TJ, Jonathan, Micah, Stephen, Joseph, Sean
  * @author		M. Nielson
  * @todo		Filter input
+ * @remark		Password encryption is mentioned on 120 or so, but encryption method is unclear. See also superuser_new_member_2.php
  */
  
 //the authorization level for this page!

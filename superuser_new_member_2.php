@@ -12,6 +12,7 @@
  * @authors		Rik Goldman, Sabre Goldman, Jason Banks, Alex, James, Paul, Bryan, TJ, Jonathan, Micah, Stephen, Joseph
  * @author		M. Nielson
  * @todo		identify page purpose
+ * @remark		password encryption is mentioned as a field in a table, but no method for deriving an encrypted password is alluded to.
  */  
  
 

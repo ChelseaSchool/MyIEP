@@ -6,6 +6,7 @@
  * 1. Bootstrap
  * 2. Student context navbar
  * 3. filter, spellcheck, escape
+ * @remark Replaced checkSpelling() with HTML spellcheck="TRUE"
  */
  
 //the authorization level for this page!
@@ -381,9 +382,9 @@ if(!$medical_result) {
                             echo "<td bgcolor=\"#E0E2F2\"><input type=\"checkbox\" name=\"" . $medical_row['uid'] . "\"></td>";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\">" . $medical_row['uid'] . "</td>";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_medical_info.php?uid=" . $medical_row['uid'] . "\" class=\"editable_text\">" . $medical_row['date']  ."</a></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_medical_info.php?uid=" . $medical_row['uid'] . "\" class=\"editable_text\">" . checkSpelling($medical_row['description'])  ."</a></td>\n";
+                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_medical_info.php?uid=" . $medical_row['uid'] . "\" class=\"editable_text\">" . $medical_row['description']  ."</a></td>\n";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><center><a href=\"" . IPP_PATH . "edit_medical_info.php?uid=" . $medical_row['uid'] . "\" class=\"editable_text\">" . $medical_row['copy_in_file'] . "</a></center></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><center><a href=\"" . IPP_PATH . "edit_medical_info.php?uid=" . $medical_row['uid'] . "\" class=\"editable_text\">"; if($medical_row['is_priority'] == "Y") echo "<img src=\"" . IPP_PATH . "images/caution.gif" . "\" border=\"0\">"; else echo "N"; echo "</a></center></td>\n";
+                            echo "<td spellcheck=\"TRUE\" bgcolor=\"$bgcolor\" class=\"row_default\"><center><a href=\"" . IPP_PATH . "edit_medical_info.php?uid=" . $medical_row['uid'] . "\" class=\"editable_text\">"; if($medical_row['is_priority'] == "Y") echo "<img src=\"" . IPP_PATH . "images/caution.gif" . "\" border=\"0\">"; else echo "N"; echo "</a></center></td>\n";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><center>"; if($medical_row['filename'] =="") echo "-none-"; else echo "<a href=\"" . IPP_PATH . "get_attached.php?table=medical_info&uid=" . $medical_row['uid'] ."&student_id=" . $student_id ."\">Download</a>"; echo "</center></td>\n";
                             echo "</tr>\n";
                             if($bgcolor=="#DFDFDF") $bgcolor="#CCCCCC";

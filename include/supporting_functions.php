@@ -11,6 +11,8 @@
  * 		3. Add navbars
  * 3. Refactor to exclude this function - it's no longer necessary
  * 4. USE this file for other functions for inclusion
+ * @remark
+ * 1. Replaced checkSpelling() with HTML spellcheck="TRUE"
  */
 
 if(!defined('IPP_PATH')) define('IPP_PATH','../');
@@ -24,7 +26,7 @@ include_once('IPP_PATH' . 'print_html_functions.php');
  *
  *  @param $string
  */
-function checkSpelling ( $string ) //todo: investigate and justify possibly unconventional function syntax
+function checkSpelling( $string ) //todo: investigate and justify possibly unconventional function syntax
 {
    if (!extension_loaded("pspell")) {
       //spell libraries not loaded so just return the same string...
@@ -103,7 +105,7 @@ EOF;
 
 /** @fn print_intellectual_property()
  *	@return string $ip
- *  @brief Print HTML Comments with Copyright and license info
+ *  @brief Print HTML *Comments* with Copyright and license info
  *  @todo
  *	1. works; now get across project
  */
@@ -149,6 +151,8 @@ function no_cash() {
  *  @param none
  *  @brief echos copyright in footer and div
  *  @remark echos the content already
+ *  @todo
+ *  1. consider centering this
  */
 function print_footer() {
 	$footer = <<< EOF
@@ -169,6 +173,12 @@ function print_complete_footer() {
 }
 
 
+/**@fn print_datepicker_depends()
+ * @brief 		prints to html the dependencies for Bootstrap datepicker
+ * @detail 		assumes the date form input has an id of "datepicker"; this can be changed to a class instead of an ID.
+ * @todo
+ * 1. Deploy to anywhere that takes date input
+ */
 function print_datepicker_depends() {
 	$print_depends= <<<EOF
 	<!-- Example Invokation of Datepicker -->

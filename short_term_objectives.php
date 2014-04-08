@@ -17,6 +17,7 @@
  * 3. Confirm spellcheck
  * 4. check navbar
  * 5. Datepicker is here; use it as a model for other pages
+ * 6, Priority UI overhaul
  */ 
  
 

@@ -16,6 +16,7 @@
  * 2. Why not set whole header with PHP, rather than just pragma?
  * 3. Set form character set (UTF-8)
  * 4. Make all pages UTF-8 in html header or php
+ * 5. Priority Bootstrap UI overhaul
  * 
  */  
  
@@ -336,7 +337,7 @@ $enum_options_area = mysql_enum_values("area_of_strength_or_need","area");
                             echo "<td bgcolor=\"#E0E2F2\"><input type=\"checkbox\" name=\"" . $strength_row['uid'] . "\"></td>";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\">" . $strength_row['uid'] . "</td>";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_strength_need.php?uid=" . $strength_row['uid'] . "\" class=\"editable_text\">" . $strength_row['strength_or_need']  ."</a></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_strength_need.php?uid=" . $strength_row['uid'] . "\" class=\"editable_text\">" . checkSpelling($strength_row['description']) . "</a></td>\n";
+                            echo "<td spellcheck=\"TRUE\" bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_strength_need.php?uid=" . $strength_row['uid'] . "\" class=\"editable_text\">" . $strength_row['description'] . "</a></td>\n";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><center><a href=\"" . IPP_PATH . "edit_strength_need.php?uid=" . $strength_row['uid'] . "\" class=\"editable_text\">" . $strength_row['is_valid'] . "</a></center></td>\n";
                             echo "</tr>\n";
                             if($bgcolor=="#DFDFDF") $bgcolor="#CCCCCC";
