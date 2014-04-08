@@ -226,11 +226,7 @@ if(!$anecdotal_result) {
 <HEAD>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
     <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
+   
     
     <script src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
     <SCRIPT>
@@ -265,31 +261,25 @@ if(!$anecdotal_result) {
     <!-- Custom styles for this template -->
     <link href="./css/jumbotron.css" rel="stylesheet">
 	<style type="text/css">body { padding-bottom: 70px; }</style>
+	
+	<?php print_datepicker_depends(); ?>
 </HEAD>
     <BODY>
     <?php echo print_student_navbar($student_id); ?>
     
-    
+     <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
      <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
+        
         <tr>
             <td class="shadow-left"></td>
             <td class="shadow-center" valign="top">
                 <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("student_view.php?student_id=$student_id"); ?></center>
-                    </td></tr>
+                    
+                    
                     <tr>
                         <td valign="top">
                         <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+                       
 
                         <center><table><tr><td><center><p class="header">-Anecdotals (<?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?>)-</p></center></td></tr></table></center>
                         <BR>
@@ -314,7 +304,7 @@ if(!$anecdotal_result) {
                         <tr>
                            <td bgcolor="#E0E2F2" class="row_default">Report Date: (YYYY-MM-DD)</td>
                            <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="text" tabindex="2" name="date" value="<?php if(isset($_POST['date'])) echo $_POST['date']; else echo date("Y-m-d")?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.date, 'yyyy-m-dd', 0, 0)">
+                               <input id=datepicker type=datepicker name="date" data-provide="datepicker" data-date-format="yyyy-mm-dd" tabindex="2" value="<?php if(isset($_POST['date'])) echo $_POST['date']; else echo date("Y-m-d")?>">
                            </td>
                         </tr>
                         <tr>
@@ -400,6 +390,6 @@ if(!$anecdotal_result) {
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>   
-<script type="text/javascript" src="./js/jquery-ui-1.10.4.custom.min.js"></script>
+<script src="./js/jquery-ui-1.10.4.custom.min.js"></script>
     </BODY>
 </HTML>

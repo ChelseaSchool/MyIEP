@@ -175,6 +175,7 @@ if(isset($_POST['edit_anecdotal_report']) && $have_write_permission) {
           alert("You don't have the permission level necessary"); return false;
       }
     </SCRIPT>
+    <?php print_datepicker_depends(); ?>
 </HEAD>
     <BODY>
         <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
@@ -221,7 +222,7 @@ if(isset($_POST['edit_anecdotal_report']) && $have_write_permission) {
                         <tr>
                            <td bgcolor="#E0E2F2" class="row_default">Date: (YYYY-MM-DD)</td>
                            <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="text" tabindex="2" name="date" value="<?php echo $anecdotal_row['date']; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.date, 'yyyy-m-dd', 0, 0)">
+                               <input id="datepicker" type="text" tabindex="2" name="date" value="<?php echo $anecdotal_row['date']; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.date, 'yyyy-m-dd', 0, 0)">
                            </td>
                         </tr>
                         </table>

@@ -149,7 +149,7 @@ if(!$student_result) {
 <link href="./css/bootstrap.min.css" rel="stylesheet">
 <!-- Using Jumbotron Style Sheet for NOw -->
  <!-- Custom styles for this template -->
-    <link href="./jumbotron.css" rel="stylesheet">
+<link href="./jumbotron.css" rel="stylesheet">
 <!-- Bootstrap Datepicker CSS -->
 <link href="./css/datepicker.css" rel="stylesheet">
 
@@ -160,21 +160,7 @@ if(!$student_result) {
       }
 </SCRIPT>
 	
-	<!-- Example Invokation of Datepicker -->
-	<!-- input type=datepicker name="review_date" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd"  -->
-	<!-- Bootstrap Datepicker CSS -->
-	<link href="./css/datepicker.css" rel="stylesheet">
-	 <!-- jQuery Libraries -->
-	 <script src="//code.jquery.com/jquery-1.9.1.js"></script>
-	 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-	 
-	 <script type="text/javascript" src="./js/bootstrap-datepicker.js">$('.datepicker').datepicker()</script>	
-	 <!-- jQuery Intantiation -->
-	 <script>
-	$(function() {
-	$( "#datepicker" ).datepicker();
-	});
-	</script>    
+	<?php print_datepicker_depends(); ?>  
    
 </HEAD>
 
@@ -261,7 +247,7 @@ if(!$student_result) {
 <p><textarea spellcheck="true" disabled name="text" cols="40" rows="3" wrap="soft"><?php echo $goal_row['goal']; ?></textarea></p>
 <label>Review Date</label>
 <!-- Datepicker was here -->
-<p><input type=datepicker name="review_date" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="<?php echo $goal_row['review_date']; ?>"></p>
+<p><input class="datepicker" id="datepicker" type=datepicker name="review_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="<?php echo $goal_row['review_date']; ?>"></p>
 <!-- Lagacy Datepicker: &nbsp;<img	src='<?php echo IPP_PATH . "images/calendaricon.gif"; ?>' height="17" width="17" border="0" onClick="popUpCalendar(this, document.all.review_date, 'yyyy-m-dd', 0, 0)" alt="calendar">-->
 <label>Assessment Procedure</label>
 <p><textarea spellcheck="true" spellcheck="true" name="assessment_procedure" class="wideInput" cols="40" rows="3" wrap="soft"><?php echo $goal_row['assessment_procedure']; ?></textarea></p>
@@ -279,6 +265,6 @@ if(!$student_result) {
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>   
-<script type="text/javascript" src="./js/jquery-ui-1.10.4.custom.min.js"></script>	
+<script src="./js/jquery-ui-1.10.4.custom.min.js"></script>	
 </body>
 </html>

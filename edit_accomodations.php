@@ -249,23 +249,18 @@ if(isset($_POST['edit_accomodation']) && $have_write_permission) {
           alert("You don't have the permission level necessary"); return false;
       }
     </SCRIPT>
-    <!-- Example Invokation of Datepicker -->
-	<!-- input type=datepicker name="review_date" class="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd"  -->
-	<!-- Bootstrap Datepicker CSS -->
-	<link href="./css/datepicker.css" rel="stylesheet">
-	 <!-- jQuery Libraries -->
-	 <script src="//code.jquery.com/jquery-1.9.1.js"></script>
-	 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-	 
-	 <script type="text/javascript" src="./js/bootstrap-datepicker.js">$('.datepicker').datepicker()</script>	
-	 <!-- jQuery datepicker -->
-	 <script>
+<!-- Example Invokation of Datepicker -->
+	<!-- input type=datepicker name="review_date" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd"  -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.9.1.js"></script>
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	
+</script>
+	 <script> 
 	$(function() {
-	$( ".datepicker" ).datepicker();
+	$( ".datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
 	});
-	</script>  
-	 <!-- Bootstrap Datepicker CSS -->
-	<link href="./css/datepicker.css" rel="stylesheet">
+	</script> 
     </HEAD>
     <BODY>
  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -372,7 +367,7 @@ if(isset($_POST['edit_accomodation']) && $have_write_permission) {
 </div>
 <div class="form-group">
 <label>End Date (YYYY-MM-DD)</label>            
-<input type="datepicker" class="form-control datepicker" name="end_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="<?php echo $accomodation_row['end_date']; ?>">
+<input type="datepicker" class="form-control datepicker"  name="end_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="<?php echo $accomodation_row['end_date']; ?>">
 </div>                        
 <div class="form-group">
 <input class="btn btn-default" type="submit" tabindex="5" name="Update" value="Update">
@@ -383,12 +378,19 @@ if(isset($_POST['edit_accomodation']) && $have_write_permission) {
 
                         
                        
-        </div> <!-- close container --> 
+        </div>
+        
+        
+         <!-- close container --> 
         <!-- Bootstrap core JavaScript
+ ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<!-- Bootstrap core JavaScript
  ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>   
-<script type="text/javascript" src="./js/jquery-ui-1.10.4.custom.min.js"></script>
+<script type="text/javascript" src="./js/jquery-ui-1.10.4.custom.min.js"></script>	
+    <?php print_complete_footer(); ?>
     </BODY>
 </HTML>
