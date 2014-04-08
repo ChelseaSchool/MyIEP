@@ -232,11 +232,7 @@ if(!$performance_result) {
 <HEAD>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
     <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
+   
     
     <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
     <SCRIPT LANGUAGE="JavaScript">
@@ -267,15 +263,29 @@ if(!$performance_result) {
 
 
     </SCRIPT>
+  <!-- Example Invokation of Datepicker -->
+	<!-- input type=datepicker name="review_date" class="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd"  -->
+	<!-- Bootstrap Datepicker CSS -->
+	<link href="./css/datepicker.css" rel="stylesheet">
+	 <!-- jQuery Libraries -->
+	 <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+	 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	 
+	 <script type="text/javascript" src="./js/bootstrap-datepicker.js">$('.datepicker').datepicker()</script>	
+	 <!-- jQuery datepicker -->
+	 <script>
+	$(function() {
+	$( ".datepicker" ).datepicker();
+	});
+	</script>  
+	 <!-- Bootstrap Datepicker CSS -->
+	<link href="./css/datepicker.css" rel="stylesheet">
+	
+	
 </HEAD>
     <BODY>
         
         <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
         <tr>
             <td class="shadow-left"></td>
             <td class="shadow-center" valign="top">
@@ -314,7 +324,7 @@ if(!$performance_result) {
                         <tr>
                            <td bgcolor="#E0E2F2" class="row_default">Date: (YYYY-MM-DD)</td>
                            <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="text" tabindex="2" name="date" value="<?php if(isset($_POST['date'])) echo $_POST['date']; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.date, 'yyyy-m-dd', 0, 0)">
+                               <input type="datepicker" class="datepicker" tabindex="2" data-date-format="yyyy-mm-dd" name="date" value="<?php if(isset($_POST['date'])) echo $_POST['date']; ?>">
                            </td>
                         </tr>
                         <tr>

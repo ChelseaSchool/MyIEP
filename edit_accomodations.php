@@ -250,7 +250,7 @@ if(isset($_POST['edit_accomodation']) && $have_write_permission) {
       }
     </SCRIPT>
     <!-- Example Invokation of Datepicker -->
-	<!-- input type=datepicker name="review_date" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd"  -->
+	<!-- input type=datepicker name="review_date" class="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd"  -->
 	<!-- Bootstrap Datepicker CSS -->
 	<link href="./css/datepicker.css" rel="stylesheet">
 	 <!-- jQuery Libraries -->
@@ -258,7 +258,7 @@ if(isset($_POST['edit_accomodation']) && $have_write_permission) {
 	 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 	 
 	 <script type="text/javascript" src="./js/bootstrap-datepicker.js">$('.datepicker').datepicker()</script>	
-	 <!-- jQuery Intantiation -->
+	 <!-- jQuery datepicker -->
 	 <script>
 	$(function() {
 	$( ".datepicker" ).datepicker();
@@ -367,11 +367,11 @@ if(isset($_POST['edit_accomodation']) && $have_write_permission) {
 <label>Subject or Area</label> &nbsp; <input class="form-control" type="text" tabindex="2" name="subject" size="35" maxsize="255" value="<?php echo $accomodation_row['subject']; ?>">                           
 </div>
 <div class="form-group">
-<label>Start Date: (YYYY-MM-DD)</label>
+<label>Start Date (YYYY-MM-DD)</label>
 <input class="form-control datepicker" type="datepicker" tabindex="3" name="start_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="<?php echo $accomodation_row['start_date']; ?>">
 </div>
 <div class="form-group">
-<label>End Date: (YYYY-MM-DD)</label>            
+<label>End Date (YYYY-MM-DD)</label>            
 <input type="datepicker" class="form-control datepicker" name="end_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="<?php echo $accomodation_row['end_date']; ?>">
 </div>                        
 <div class="form-group">
@@ -384,6 +384,11 @@ if(isset($_POST['edit_accomodation']) && $have_write_permission) {
                         
                        
         </div> <!-- close container --> 
-        
+        <!-- Bootstrap core JavaScript
+ ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="./js/bootstrap.min.js"></script>   
+<script type="text/javascript" src="./js/jquery-ui-1.10.4.custom.min.js"></script>
     </BODY>
 </HTML>
