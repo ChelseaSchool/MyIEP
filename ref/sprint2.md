@@ -6,7 +6,7 @@
 
 For all date input fields, use datepicker function from include/ to make entering dates easier.
 
-1. Add_goal_1.php
+1. Add_goal_1.php 
 
 2. add guardian
 
@@ -82,21 +82,21 @@ Remove legacy navbar.
 
 Remove/replace legacy datepicker
 
-1. edit_achieve_level.php
+1. **edit_achieve_level.php**  (priority)
 
-2. edit_assistive_technology.php
+2. **edit_assistive_technology.php**  (priority)
 
-3. edit_coordination_of_services.php
+3. **edit_coordination_of_services.php**  (priority)
 
 4. edit_medical_info.php
 
 5. edit_medication.php
 
-6. edit_strength_need.php
+6. **edit_strength_need.php**  (priority)
 
 7. edit_support_member.php
 
-8. edit_transistion_plan.php
+8. **edit_transistion_plan.php**  (priority)
 
 9. guardian_notes.php
 
@@ -106,11 +106,11 @@ Remove/replace legacy datepicker
 
 12. New_student.php
 
-13. short_term_objectives.php
+13. **short_term_objectives.php**  (priority)
 
-14. strength_need_view.php
+14. **strength_need_view.php**  (priority)
 
-15. transition_plan.php
+15. **transition_plan.php**  (priority)
 
 ## System Integrity, Security, Quality Control
 
