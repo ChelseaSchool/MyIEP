@@ -13,6 +13,7 @@
  * @todo		
  * 1. Filter input/escape output
  * 2. Priority UI overhaul
+ * 3. fix permission in jumbotron: should display $our_permission
  */ 
  
  
@@ -39,9 +40,11 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/navbar.php');
+require_once(IPP_PATH . 'include/supporting_functions.php'); //added second sprint
+require_once(IPP_PATH . 'include/config.inc.php'); //added second sprint
 
-header('Pragma: no-cache'); //don't cache this page!
+
+no_cash(); //experiment for second sprint
 
 if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
     if(!validate( $_POST['LOGIN_NAME'] ,  $_POST['PASSWORD'] )) {
@@ -215,11 +218,7 @@ if(isset($_POST['edit_performance_testing']) && $have_write_permission) {
 <HEAD>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
     <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
+    
     
     <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
     <SCRIPT LANGUAGE="JavaScript">
@@ -250,90 +249,59 @@ if(isset($_POST['edit_performance_testing']) && $have_write_permission) {
 
 
     </SCRIPT>
+    <?php print_bootstrap_head(); ?>
 </HEAD>
     <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("achieve_level.php?student_id=$student_id"); ?></center>
-                    </td></tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+    <?php print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']) ; ?>
+    <?php print_jumbotron_with_page_name('Edit Achievement Level', $student_row['first_name'] . " " . $student_row['last_name'] , $our_permission); ?>
+    <?php if ($system_message) { echo $system_message;} ?> 
+    <div class=row>
+    <div class=container>
+    <h2><?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?>: <small>Edit Achievement Level</small></h2>
+     <!-- BEGIN add new entry -->
+                        
+<form role="form" name="edit_performance_testing" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_achieve_level.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+<div class=col-md-6>                      
+<div class="form-group">
+<input type="hidden" name="edit_performance_testing" value="1">
+<input type="hidden" name="uid" value="<?php echo $uid; ?>">
+</div>  
 
-                        <center><table><tr><td><center><p class="header">-Edit Achievement Level<BR>(<?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?>)-</p></center></td></tr></table></center>
-                        <BR>
 
-                        <!-- BEGIN add new entry -->
-                        <center>
-                        <form name="edit_performance_testing" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_achieve_level.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
-                        <tr>
-                          <td colspan="3">
-                          <p class="info_text">Edit achievement level entry</p>
-                           <input type="hidden" name="edit_performance_testing" value="1">
-                           <input type="hidden" name="uid" value="<?php echo $uid; ?>">
-                          </td>
-                        </tr>
-                        <tr>
-                            <td bgcolor="#E0E2F2" class="row_default">Test Name:</td><td bgcolor="#E0E2F2" class="row_default">
-                            <input type="text" tabindex="1" name="test_name" size="30" maxsize="255" value="<?php echo $performance_row['test_name']; ?>">
-                            </td>
-                            <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="4" class="row_default"><input type="submit" tabindex="5" name="Update" value="Update"></td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">Date: (YYYY-MM-DD)</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="text" tabindex="2" name="date" value="<?php echo $performance_row['date']; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.date, 'yyyy-m-dd', 0, 0)">
-                           </td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">Optional File Upload:<BR>(.doc,.pdf,.txt,.rtf)</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
-                               <input type="file" tabindex="3" name="supporting_file" value="<?php echo $_FILES['supporting_file']['name'] ?>">
-                           </td>
-                        </tr>
-                        <tr>
-                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Results:</td><td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="results" tabindex="4" cols="30" rows="5" wrap="soft"><?php echo $performance_row['results']; ?></textarea></td>
-                        </tr>
-                        </table>
-                        </form>
-                        </center>
-                        <!-- END edit entry -->
+<div class="form-group">
+	<label>Test Name</label>
+	<input type="text" spellcheck="TRUE" tabindex="1" name="test_name" size="30" maxsize="255" value="<?php echo $performance_row['test_name']; ?>">
+</div>
+<div class="form-group">
+	<label>Date: (YYYY-MM-DD)</label>
+	<input id="datepicker" type="text" tabindex="2" name="date" value="<?php echo $performance_row['date']; ?>">
+</div>
+<div class="form-group">
+<label>Optional File Upload <small>(.doc,.pdf,.txt,.rtf)</small></label>
+<input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+<input type="file" tabindex="3" name="supporting_file" value="<?php echo $_FILES['supporting_file']['name'] ?>">
+</div>
+</div><!-- End Left Column -->
+<div class=col-md-6>
+<div class="form-group">  
+<label>Results</label>
+<p>
+<textarea autofocus spellcheck="true" name="results" tabindex="4" rows="8" cols="30" wrap="soft"><?php echo $performance_row['results']; ?></textarea>
+</p>
+</div>
 
-                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-                <?php navbar("achieve_level.php?student_id=$student_id"); ?>
-            </td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
-        <center></center>
+<div class="form-group">
+<button type="submit" name=update class="btn btn-default">Submit</button>
+<!--  <input type="submit" tabindex="5" name="Update" value="Update">-->
+</div>
+</div><!-- Close column -->
+</form>
+ <!-- END edit entry -->
+</div><!-- Container -->
+ </div>
+                     
+            
+    <?php print_complete_footer(); ?>
+	<?php print_bootstrap_js(); ?></div>
     </BODY>
 </HTML>

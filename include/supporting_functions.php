@@ -167,6 +167,8 @@ echo $footer;
 /** @fn print_complete_footer()
  *  @brief outputs copyright in footer tag and full copyright and license in comment
  *  @remark Combines print_footer() and print_intellectual_property()
+ *  @todo
+ *  1. List all developers in commented IP statement
  */
 function print_complete_footer() {
 	print_footer();
@@ -224,12 +226,20 @@ EOF;
 	echo $bootstrap_depends;
 }
 
-function print_jumbotron_with_page_name($page_name) {
+/**@fn print_jumbotron_with_page_name($page_name)
+ * @brief	Outputs to HTML bootstrap banner with names and permissions
+ * @param string $page_name
+ * @param string $student
+ * @param string $perms
+ * @remark echoes HTML jumbotron populated with data
+ */
+
+function print_jumbotron_with_page_name($page_name, $student, $perms) {
 	$jumbotron = <<<EOF
 	<div class="jumbotron"><div class="container">
-<h1>$page_name: &nbsp; <small>{$student_row['first_name']} &nbsp; {$student_row['last_name']}</small></h1>
-<h2>Logged in as: <small>{$_SESSION['egps_username']} (Permission: $our_permission)</small></h2>
-$system_message
+<h1>$page_name: &nbsp; <small>$student</small></h1>
+<h2>Logged in as: <small>{$_SESSION['egps_username']} (Permission: $perms)</small></h2>
+<h3>$system_message</h3>
 
 </div> <!-- close container -->
 
@@ -239,15 +249,15 @@ EOF;
 	echo $jumbotron;
 }
 
-/** @fn print_student_navbar($student_id)
+/** @fn print_student_navbar($student)
  * @brief Outputs HTML student context navbar (bootstrap)
  * @remark
  * * outputs echo directly
  *
- * @param int $student_id
+ * @param $student
  * @return NULL|string
  */
-function print_student_navbar($student_id) {
+function print_student_navbar($student_id, $student) {
 	$student_nav = <<<EOF
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 <div class="container">
@@ -268,7 +278,7 @@ function print_student_navbar($student_id) {
 <li><a href="help.php">Help</a></li>
 <li><a onclick="history.go(-1);">Back</a></li>
 	<li class="dropdown">
-		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Student Records<b class="caret"></b></a>
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Student Records: $student<b class="caret"></b></a>
               <ul class="dropdown-menu">
               	<li><a href="long_term_goal_view.php?student_id=$student_id">Goals</a></li>
               	<li class="divider"></li>
@@ -276,7 +286,7 @@ function print_student_navbar($student_id) {
               	<li><a href="strength_need_view.php?student_id=$student_id">Strengths &amp; Needs</a></li>
               	<li><a href="coordination_of_services.php?student_id=$student_id">Coordination of Services</a></li>
               	<li><a href="achieve_level.php?student_id=$student_id">Achievement Level</a></li>
-              	<li><a href="edical_info.php?student_id=$student_id">Medical Information</a></li>
+              	<li><a href="medical_info.php?student_id=$student_id">Medical Information</a></li>
               	<li><a href="medication_view.php?student_id=$student_id">Medication</a></li>
               	<li><a href="testing_to_support_code.php?student_id=$student_id">Support Testing</a></li>
               	<li><a href="background_information.php?student_id=$student_id">Background Information</a></li>
@@ -367,8 +377,8 @@ EOF;
 function print_bootstrap_js(){
 	$bootsrapjs=<<<EOF
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../js/jquery-ui-1.10.4.custom.min.js"></script>
+<script src="./js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./js/jquery-ui-1.10.4.custom.min.js"></script>
 EOF;
 	echo $bootsrapjs;
 }
