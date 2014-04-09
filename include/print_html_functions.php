@@ -13,7 +13,7 @@
  * @brief stuff for jumbotron and bootstrap.min.css to go in html head.
  * @remark doesn't require echo
  */
-function print_bootrap_head(){
+function print_bootstrap_head(){
 	$bootstrap_depends=<<<EOF
 	   <!-- Bootstrap core CSS -->
     <link href="./css/bootstrap.min.css" rel="stylesheet">

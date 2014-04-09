@@ -38,8 +38,8 @@ require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
 require_once(IPP_PATH . 'include/supporting_functions.php');
-require_once(IPP_PATH . 'include/navbar.php');
-require_once(IPP_PATH . 'include/print_html_functions.php');
+//require_once(IPP_PATH . 'include/navbar.php');
+//require_once(IPP_PATH . 'include/print_html_functions.php');
 header('Pragma: no-cache'); //don't cache this page!
 
 if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
@@ -243,7 +243,7 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
 <HEAD>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
     <TITLE><?php echo $page_title; ?></TITLE>
-    <?php print_bootrap_head(); ?>
+    <?php print_bootstrap_head(); ?>
    
 
     <SCRIPT LANGUAGE="JavaScript">

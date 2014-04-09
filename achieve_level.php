@@ -263,23 +263,8 @@ if(!$performance_result) {
 
 
     </SCRIPT>
-  <!-- Example Invokation of Datepicker -->
-	<!-- input type=datepicker name="review_date" class="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd"  -->
-	<!-- Bootstrap Datepicker CSS -->
-	<link href="./css/datepicker.css" rel="stylesheet">
-	 <!-- jQuery Libraries -->
-	 <script src="//code.jquery.com/jquery-1.9.1.js"></script>
-	 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-	 
-	 <script type="text/javascript" src="./js/bootstrap-datepicker.js">$('.datepicker').datepicker()</script>	
-	 <!-- jQuery datepicker -->
-	 <script>
-	$(function() {
-	$( ".datepicker" ).datepicker();
-	});
-	</script>  
-	 <!-- Bootstrap Datepicker CSS -->
-	<link href="./css/datepicker.css" rel="stylesheet">
+  <?php print_datepicker_depends(); ?>
+	  
 	
 	
 </HEAD>
@@ -324,7 +309,7 @@ if(!$performance_result) {
                         <tr>
                            <td bgcolor="#E0E2F2" class="row_default">Date: (YYYY-MM-DD)</td>
                            <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="datepicker" class="datepicker" tabindex="2" data-date-format="yyyy-mm-dd" name="date" value="<?php if(isset($_POST['date'])) echo $_POST['date']; ?>">
+                               <input id="datepicker" class="datepicker" tabindex="2" data-date-format="yyyy-mm-dd" name="date" value="<?php if(isset($_POST['date'])) echo $_POST['date']; ?>">
                            </td>
                         </tr>
                         <tr>
