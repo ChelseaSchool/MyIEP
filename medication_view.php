@@ -48,8 +48,7 @@ require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
 require_once(IPP_PATH . 'include/navbar.php');
 require_once(IPP_PATH . 'include/supporting_functions.php');
-require_once(IPP_PATH . 'include/print_html_functions.php');
-
+//require_once(IPP_PATH . 'include/print_html_functions.php');
 header('Pragma: no-cache'); //don't cache this page!
 
 if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
@@ -190,8 +189,8 @@ if(!$medication_result) {
     <TITLE><?php echo $page_title; ?></TITLE>
     
     
-    <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
-    <SCRIPT LANGUAGE="JavaScript">
+    <script src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
+    <SCRIPT>
       function confirmChecked() {
           var szGetVars = "strengthneedslist=";
           var szConfirmMessage = "Are you sure you want to modify/delete the following:\n";
@@ -217,10 +216,10 @@ if(!$medication_result) {
           alert("You don't have the permission level necessary"); return false;
       }
     </SCRIPT>
-    <?php print_bootrap_head(); ?>
+    <?php print_bootstrap_head(); ?>
 </HEAD>
     <BODY>
-    <?php echo print_student_navbar($student_id); ?>
+   <?php print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']) ; ?>
         
         
         <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
@@ -350,7 +349,8 @@ if(!$medication_result) {
             <td class="shadow-bottomRight"></td>
         </tr>
         </table> 
-         <?php print_complete_footer(); ?>
+         
+<?php print_complete_footer(); ?>
        <!-- Bootstrap core JavaScript
  ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -358,5 +358,5 @@ if(!$medication_result) {
 <script src="./js/bootstrap.min.js"></script>   
 <script type="text/javascript" src="./js/jquery-ui-1.10.4.custom.min.js"></script>
     
-    </BODY>
+</BODY>
 </HTML>

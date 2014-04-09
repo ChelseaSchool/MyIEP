@@ -220,8 +220,8 @@ if(isset($_POST['edit_performance_testing']) && $have_write_permission) {
     <TITLE><?php echo $page_title; ?></TITLE>
     
     
-    <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
-    <SCRIPT LANGUAGE="JavaScript">
+    <script src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
+    <SCRIPT>
       function confirmChecked() {
           var szGetVars = "strengthneedslist=";
           var szConfirmMessage = "Are you sure you want to modify/delete the following:\n";
