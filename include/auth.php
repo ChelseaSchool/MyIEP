@@ -16,6 +16,7 @@
  * 3. check session use; ensure security and best contemporary practice
  * 4. check that variable names for user and pw don't match table fields in db (a cursory look suggests we're ok there)
  * 5. line 12 says "files" instead of functions
+ * 6. Clean session effectively on logout function
  */
 
 

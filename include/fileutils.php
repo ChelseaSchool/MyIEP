@@ -3,6 +3,7 @@
  *  @brief	Contains only scandir() function
  *  @todo
  *  1. Refactor so this function is with others in include/. 1 function per file isn't efficient.
+ *  2. Confirmed - I think this can be erased.
  */
    if(!function_exists('scandir')) {
     

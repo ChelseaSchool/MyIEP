@@ -131,6 +131,26 @@ function getNumUsersOnline() {
     return $username;
   }
   
-
+  function getUsersOnline() {
+  	
+  	//or NULL on fail.
+  	global $error_message;
+  
+  	if(!connectIPPDB()) {
+  		$error_message = $error_message;  //just to remember we need this - todo: make this a why? comment
+  		return NULL;
+  	}
+  
+  	$query = "SELECT * FROM 'logged_in'";
+  	$logged_row = mysql_query($query);
+  	if(!$result) {
+  		$error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$query'<BR>";
+  		return NULL;
+  	}
+  
+  	 return $logged_row;
+  }
+  
+  
 
 ?>

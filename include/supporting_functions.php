@@ -444,5 +444,49 @@ function print_general_navbar() {
     </div>
 EOF;
 	echo $general_nav;
-	}
+}
+	
+/**@fn get_logged_users($count_logged)
+ * @param $count_logged bool
+ */
+function get_logged_users($count_logged)
+{
+	$query = "SELECT * FROM 'logged_in'";
+	$result = mysql_query($query);
+	$rows = mysql_num_rows($result);
+	
+	if (!isset($count_logged)) 
+	{
+		$start_logged_table = "<form action=\"superuser_view_logged_in.php\" method=\"post\"><table class=\"table table-hover table-striped\"><tr><th>uid</th><th>username</th><th>session_id</th><th>Last IP</th><th>Time</th><th>Action</th></tr>";
+
+	
+		for ($j = 0; $j < $rows ; ++$j):
+			$row = mysql_fetch_row($result);
+			$logged_user_table = "
+				<tr>
+				<td>{$row[0]}</td>
+				<td>{$row[1]}</td>
+				<td><input type=\"hidden\" name=\"delete\" value={$row[2]}</td>
+				<td>{$row[3]}</td>
+				<td>{$row[4]}</td>
+				<td><button type=\"button\" value=\"delete\" class=\"btn btn-danger\">Delete Record</button></td>
+				</tr>";	
+		
+endfor;//end of loop
+		
+		$print_logged_users = "$start_logged_table" . $logged_user_table . "</table></form>";
+		
+		echo $print_logged_users; //return if param is not null
+		
+	} //end of if
+	else 
+	{
+		$count_logged_users = $rows;
+		echo $count_logged_users; //return if param not null
+	} //end else
+
+} //end function
+
+    
+ 
 ?>
