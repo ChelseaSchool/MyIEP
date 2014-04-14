@@ -39,7 +39,9 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/navbar.php');
+require_once(IPP_PATH . 'include/config.inc.php');
+require_once(IPP_PATH . 'include/supporting_functions.php');
+
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -176,80 +178,38 @@ if(isset($_POST['edit_transition_plan']) && $have_write_permission) {
           alert("You don't have the permission level necessary"); return false;
       }
     </SCRIPT>
+    <?php print_bootstrap_head(); ?>
+    <?php print_datepicker_depends(); ?>
 </HEAD>
     <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("transition_plan.php?student_id=$student_id"); ?></center>
-                    </td></tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+    	<?php print_student_navbar($student_id, $student_row["first_name"] . " " . $student_row["last_name"]); ?>
+    	<?php print_jumbotron_with_page_name("Edit Transition Plan", $student_row["first_name"] . " " . $student_row["last_name"], $permission_level); ?>
+        <?php if ($system_message) { echo $system_message;} ?>
+        <div class=container><div class=row><div class=col-md-6>
+         <form name="add_transition_plan" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_transition_plan.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+                        
+           
+        <input type="hidden" name="edit_transition_plan" value="1">
+        <input type="hidden" name="uid" value="<?php echo $uid; ?>">
+                          
+                      <p><label>Edit Plan</label></p>
+                     <p><textarea spellcheck="true" name="plan" tabindex="1" cols="40" rows="8" wrap="soft"><?php echo $transition_row['plan']; ?></textarea></p>
+                       </div>
 
-                        <center><table><tr><td><center><p class="header">-Edit Transition Plan<BR>(<?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?>)-</p></center></td></tr></table></center>
-                        <BR>
-
-                        <!-- BEGIN edit entry -->
-                        <center>
-                        <form name="add_transition_plan" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_transition_plan.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
-                        <tr>
-                          <td colspan="3">
-                          <p class="info_text">Edit Plan</p>
-                           <input type="hidden" name="edit_transition_plan" value="1">
-                           <input type="hidden" name="uid" value="<?php echo $uid; ?>">
-                          </td>
-                        </tr>
-                        <tr>
-                            <td bgcolor="#E0E2F2" class="row_default">Plan:</td><td bgcolor="#E0E2F2" class="row_default">
-                            <textarea spellcheck="true" name="plan" tabindex="1" cols="40" rows="10" wrap="soft"><?php echo $transition_row['plan']; ?></textarea>
-                            </td>
-                            <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="2" class="row_default"><input type="submit" tabindex="3" name="Edit" value="Edit"></td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">Date: (YYYY-MM-DD)</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="text" tabindex="2" name="date" value="<?php echo $transition_row['date']; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.date, 'yyyy-m-dd', 0, 0)">&nbsp;&nbsp;(determines school year)
-                           </td>
-                        </tr>
-                        </table>
+                       <div class=col-md-6>
+                           <p><label>Date (YYYY-MM-DD)<br>
+                           [determines school year]</label></p>
+                          
+                         <p><input class="datepicker" id="datepicker" type="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" tabindex="2" name="date" value="<?php echo $transition_row['date']; ?>"></p>
+                         <p> <input type="submit" tabindex="3" name="edit" value="Submit"></p>
                         </form>
-                        </center>
-                        <!-- END edit entry -->
-
                         </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-            <?php navbar("student_view.php?student_id=$student_id"); ?>
-            </td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
-        <center></center>
+                        </div>
+                        </div>
+        
+        
+        
+        <?php print_complete_footer(); ?>
+        <?php print_bootstrap_js(); ?>
     </BODY>
 </HTML>
