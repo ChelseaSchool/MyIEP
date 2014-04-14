@@ -42,7 +42,6 @@ require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
 require_once(IPP_PATH . 'include/navbar.php');
 require_once(IPP_PATH . 'include/supporting_functions.php');
-require_once(IPP_PATH . 'include/print_html_functions.php');
 require_once(IPP_PATH . 'include/config.inc.php');
 
 header('Pragma: no-cache'); //don't cache this page!
@@ -268,27 +267,11 @@ if(!$anecdotal_result) {
 	<?php print_datepicker_depends(); ?>
 </HEAD>
     <BODY>
-    <?php echo print_student_navbar($student_id); ?>
-    
+    <?php  print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']); ?>
+    <?php print_jumbotron_with_page_name(Anecdotals, $student_row['first_name'] . " " . $student_row['last_name'], $permission_level) ?> 
      <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
-     <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    
-                    
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                       
-
-                        <center><table><tr><td><center><p class="header">-Anecdotals (<?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?>)-</p></center></td></tr></table></center>
-                        <BR>
-
-                        <!-- BEGIN add new entry -->
-                        <center>
+     
+                
                         <form name="add_anecdotal" enctype="multipart/form-data" action="<?php echo IPP_PATH . "anecdotals.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
                         <table border="0" cellspacing="0" cellpadding ="0" width="80%">
                         <tr>
@@ -321,7 +304,7 @@ if(!$anecdotal_result) {
                         </form>
                         </center>
                         <!-- END add new entry -->
-                        <center><a href="<?php echo IPP_PATH . "anecdotal_pdf.php?student_id=$student_id" ?>" target="_blank">Generate PDF copy</a><BR></center>
+                        <a href="<?php echo IPP_PATH . "anecdotal_pdf.php?student_id=$student_id" ?>" target="_blank">Generate PDF copy</a><BR></center>
                         <!-- BEGIN annecdotals table -->
                         <form spellcheck="true" name="anecdotal" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "anecdotals.php"; ?>" method="get">
                         <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
@@ -365,28 +348,7 @@ if(!$anecdotal_result) {
                         </tr>
                         </table></center>
                         </form>
-                        <!-- end transitions table -->
-
-                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-            <?php navbar("student_view.php?student_id=$student_id"); ?>
-            </td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
+                        
        <?php print_complete_footer(); ?>
        <!-- Bootstrap core JavaScript
  ================================================== -->
