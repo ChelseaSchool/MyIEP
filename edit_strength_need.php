@@ -15,6 +15,7 @@
  * 2. Charset should be UTF-8; check HTML and database and form
  * 3. Use correct escape string
  * 4. Priority UI Overhaul
+ * @remark last edit 
  */ 
  
 //the authorization level for this page!
@@ -40,7 +41,9 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/navbar.php');
+require_once(IPP_PATH . 'include/supporting_functions.php');
+require_once(IPP_PATH . 'include/config.inc.php');
+
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -148,24 +151,16 @@ if(isset($_POST['edit_strength_or_need']) && $have_write_permission) {
           alert("You don't have the permission level necessary"); return false;
       }
     </SCRIPT>
+    <?php print_bootstrap_head(); ?>
 </HEAD>
     <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
+   <?php print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']); ?>
+    <?php print_jumbotron_with_page_name("Edit Strengths &amp; Needs", $student_row['first_name'] . $student_row['last_name'], $permission_level); ?>
+        
+         
                 <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("strength_need_view.php?student_id=$student_id"); ?></center>
-                    </td></tr>
+                    
+                    
                     <tr>
                         <td valign="top">
                         <div id="main">
@@ -217,23 +212,9 @@ if(isset($_POST['edit_strength_or_need']) && $have_write_permission) {
                         </div>
                         </td>
                     </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-            <?php navbar("strength_need_view.php?student_id=$student_id"); ?>
-            </td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
-        <center></center>
+                </table>
+            
+        <?php print_complete_footer(); ?>
+   <?php print_bootstrap_js(); ?>
     </BODY>
 </HTML>
