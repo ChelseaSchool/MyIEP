@@ -1,18 +1,12 @@
 <?php
 
 /** @file
- * @brief 	manage from list of students
+ * @brief 	find and manage a specific IEP
  * 
- * This page needs confirmation of function. Filename doesn't match devs description.
+ * Work in progress and not ready for incorporation into code base.
  * @todo
- * 1. Confirm filename reflects what is in the page
- * 2. Bootstrap theme
- * 3. Navbar, depending on content
- * @Remarks
- * # New Features
- * 1. New UI
- * 2. Filter out students user doesn't have permissions for
- * 3. Requires Javascript
+ * 1. Try typeahead.js library from Twitter as alternative to jQuery autocomplete.
+ * 
  */
  
  
