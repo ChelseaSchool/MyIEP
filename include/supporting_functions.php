@@ -66,7 +66,7 @@ if(!defined('IPP_PATH')) define('IPP_PATH','../');
  * @warning 	Not for arrays. Must construct stripslashes_deep() for arrays.
  * @todo		
  * 1. Test and implement (not done yet)
- * 	* find systematic way to use on all db input: perhaps when UPDATE query is used.
+ * 2. find system to use on all db input: perhaps when UPDATE query is used.
  *
  */
 function clean_in_and_out($input){
@@ -487,6 +487,17 @@ endfor;//end of loop
 
 } //end function
 
-    
+function print_meta_for_html5($page_title)
+{
+	$metadata = <<<EOF
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="$page_title">
+	<meta name="author" content="Rik Goldman" >
+	<link rel="shortcut icon" href="./assets/ico/favicon.ico">
+EOF;
+	echo $metadata;
+}    
  
 ?>

@@ -15,7 +15,9 @@
  * 2. Make sure the duplicate in include/ can be safely removed
  * 3. Re-enable buttons when other pages are ready
  * 5. Split is deprecated (line 521)
- * 6. JQuery to reveal only specified areas
+ * 6. JQuery to reveal only specified areas (Done)
+ * 7. Use PHP to generate checklist in Modal
+ * 8. Use PHP to generate JavaScript/jQuery for Filter
  */
 
 /** @var $MINIMUM_AUTHORIZATION_LEVEL = 100
@@ -45,7 +47,7 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/navbar.php');
+//require_once(IPP_PATH . 'include/navbar.php');
 require_once(IPP_PATH . 'include/supporting_functions.php');
 require_once(IPP_PATH . 'include/config.inc.php');
 
@@ -113,6 +115,9 @@ if($our_permission == "WRITE" || $our_permission == "ASSIGN" || $our_permission 
 }
 
 //************** validated past here SESSION ACTIVE WRITE PERMISSION CONFIRMED****************
+
+
+
 
 $student_query = "SELECT * FROM student WHERE student_id = " . mysql_real_escape_string($student_id);
 $student_result = mysql_query($student_query);
@@ -233,13 +238,42 @@ if(!$long_goal_result) {
     IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
 }
 
-$area_type_query = "SELECT  * from  typical_long_term_goal_category WHERE is_deleted='N'";
-$area_type_result = mysql_query($area_type_query);
-if(!$area_type_result) {
-    $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$area_type_query'<BR>";
-    $system_message=$system_message . $error_message;
-    IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/** @fn print_goal_area_checklist()
+ *  @brief While there are goal areas to list, list them as checkbox input
+ *  @remark
+ *  * Currently show deleted and current goal categories
+ *  @todo
+ *  @param $area_result
+ *  1. Make it work
+ *  2. Adjust query so it only show non-deleted areas
+ */
+function print_goal_area_checklist() {
+	$area_query = "SELECT * FROM `typical_long_term_goal_category` WHERE `is_deleted` = 'N'";
+	$area_result = mysql_query($area_query);
+	if(!$area_result) {
+		$error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$area_query'<BR>";
+		$system_message=$system_message . $error_message;
+		IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
+	}
+	while ($area_row=mysql_fetch_array($area_result)) {
+		echo "<label><input type=\"checkbox\" value=\"" . $area_row['name'] . "\">" . $area_row['name'] . "</label><br>\n";
+	} //closes loop
+} //closes function
+
 
 /*************************** popup chooser support function ******************/
 
@@ -321,7 +355,6 @@ if(!$area_type_result) {
 
 */
 /************************ end popup chooser support funtion  ******************/
-
 ?> 
 
 <!DOCTYPE html>
@@ -330,9 +363,10 @@ if(!$area_type_result) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="About MyIEP">
+    <meta name="description" content="Goals and Objectives">
     <meta name="author" content="Rik Goldman" >
     <link rel="shortcut icon" href="./assets/ico/favicon.ico">
+    
     <TITLE><?php echo $page_title; ?></TITLE>
    <!-- Bootstrap core CSS -->
     <link href="./css/bootstrap.min.css" rel="stylesheet">
@@ -340,10 +374,10 @@ if(!$area_type_result) {
     <!-- Custom styles for this template -->
     <link href="./css/jumbotron.css" rel="stylesheet">
 	<style type="text/css">body { padding-bottom: 70px; }</style>
-    
+    <script type="text/javascript" src=./js/jquery-2.1.0.min.js></script>
      
-     <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
-     <script language="javascript" src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script>
+     <!-- <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script> -->
+     <!-- <script language="javascript" src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script> -->
      
      <?php
        //output the javascript array for the chooser popup
@@ -365,34 +399,62 @@ if(!$area_type_result) {
     </SCRIPT>
 <link rel=stylesheet type=text/css href=./css/jquery-ui-1.10.4.custom.css>
 
-<?php //$details="hide"; ?> 
-<?php  /*
-if  ($details="hide")
- {
-	echo "<style>";
-	echo "[id^=\"details\"]{";
-	echo "   display: none;";
-	echo "</style>";
-	echo "}";
+<?php 
+/** @fn print_goal_area_jQuery()
+ *  @brief Print jQuery to toggle goals by area based on check list choices
+ * 	@param unknown $area_result
+ */
+function print_goal_area_jQuery() {
+	$area_query = "SELECT * FROM `typical_long_term_goal_category` WHERE `is_deleted` = 'N'";
+	$area_result = mysql_query($area_query);
+	if(!$area_result) {
+		$error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$area_query'<BR>";
+		$system_message=$system_message . $error_message;
+		IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
 	}
-	else 
-	{
-		echo "<style>";
-		echo "[id^=\"details\"]{";
-		echo "   display: inline;";
-		echo "}";
-		echo "</style>";	
-	} */  
+	echo "<script type=\"text/javascript\"> \n";
+	echo "$(document).ready(function() { \n";
+	echo "$('input[type=\"checkbox\"]').click(function(){ \n";
+	while ($area_row=mysql_fetch_array($area_result)) {
+		echo "if($(this).attr(\"value\")==\"" . $area_row['name'] . "\"){ \n";
+		echo "$(\"div." . $area_row['name'] . "\").toggle(); \n";
+		echo "} \n";
+
+	}  //closes loop
+
+	echo "});\n";
+
+	echo "}); \n";
+
+	echo "</script> \n";
+
+
+} //closes function
 ?>
 
 
 
-<script>
-function toggle ()
+
+<script type="text/javascript">
+function toggle () //toggles objective details
 {
-	$("div#details").toggle ("explode", 100)
+	$("div#details").toggle ("explode", 100);
 }
 </script>
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$( '.goal' ).hide();
+	$( '.objectives' ).hide();
+});
+
+</script>
+
+
+  
+
+<?php print_goal_area_jQuery(); ?>
 
 </HEAD>
 <BODY>
@@ -478,7 +540,39 @@ function toggle ()
 
 <h1>Goals: <small><?php echo $student_row['first_name'] . " " . $student_row['last_name'] ?> </small></h1>
 <h2>Logged in as: <small><?php echo $_SESSION['egps_username']; ?> (Permission: <?php echo $our_permission; ?>)</small></h2>
-<button class="btn btn-lg btn-primary" onclick="toggle ()" role="button">Toggle Details &raquo;</button>
+
+<!-- Button trigger modal -->
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#filter_options">
+  Show Filters &raquo;
+</button>
+
+<!-- Modal--> 
+<div class="modal fade" id="filter_options" tabindex="-1" role="dialog" aria-labelledby="options" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="Filters" id="Filters">Filters</h4>
+      </div><!-- Modal Header end -->
+      <div class="modal-body">
+        
+        	<?php print_goal_area_checklist(); ?>
+        	
+        	
+			
+			<hr>
+			<!-- Toggle displayed objectives' details -->
+			<button class="btn btn-lg btn-regular" onclick="toggle ()" role="button">Toggle Objective Details &raquo;</button>
+      </div><!-- end modal body -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        
+      </div><!-- end modal footer -->
+    </div><!-- end modal content -->
+  </div>
+  <!-- end modal dialog -->
+</div>
+<!-- end modal fade -->
 
 </div> <!-- close container -->
 
@@ -487,33 +581,31 @@ function toggle ()
  
 <!--  End Jumbotron -->
 <div class=container>
-<p><em><strong>Release Note</strong>: Details of objectives are hidden on this page for this release. Click <a onclick="toggle ()">here</a> to toggle.</em></p>
-
-
+<p><em><strong>Release Note</strong>: Goals, objectives, and details (such as progress) are hidden until filters are specified. Click "Show Filter" button above to activate filters.</em></p>
 
 
 <?php
 //check if we have no goals...we need to end this table in this case.
 if(mysql_num_rows($long_goal_result) == 0 ) {
-	echo "<p>There are no goals to view</p>";
+	echo "<p>There are no goals to view</p>\n";
 	}
 	$goal_num=1;
 	while($goal = mysql_fetch_array($long_goal_result)) {
 		//div for use by jquery filter action
 		$div_id=$goal['area'];
-		echo "<div class=\"container\" id=\"$div_id\">";
+		echo "<div class=\"container\">\n";
 		
-		echo "<div class=\"row\"><div class=\"col-md-12\"><div class=\"container\">";
-		echo "<h2><a href=\"" . IPP_PATH . "add_objectives.php?student_id=$student_id&lto=" . $goal['goal_id']  . "\"";
-		if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
-		else echo "onClick=\"return changeStatusCompleted();\"";
+		echo "<div class=\"goal $div_id\">\n<div class=\"col-md-12\">\n";
+		echo "<h2><a href=\"" . IPP_PATH . "add_objectives.php?student_id=" . $student_id . "&lto=" . $goal['goal_id']  . "\"";
+		if (!$have_write_permission) echo " onClick=\"return noPermission();\">\n";
+		else echo " onClick=\"return changeStatusCompleted();\">\n";
 		
 		
 		
-		echo "<h2>" . $goal['area'] . "</h2>";
-		echo "<h3><small>" . $goal_num . ") </small>";
+		echo "<h2>" . $goal['area'] . "</h2>\n";
+		echo "<h3><small>" . $goal_num . ") </small>\n";
         $goal_num++; //increment goal
-        echo $goal['goal'] . "</a>&nbsp;<span class=\"label label-default\">goal</span></h3>"; //output goal
+        echo $goal['goal'] . "</a>&nbsp;<span class=\"label label-default\">goal</span></h3>\n"; //output goal
         
 		//Review Date
 		/* $today = time(); #today's date in seconds since January 1, 1970
@@ -533,20 +625,20 @@ if(mysql_num_rows($long_goal_result) == 0 ) {
         } */
        
 
-         echo "<div class=\"btn-group\">";
+         echo "<div class=\"btn-group\">\n";
 	//output the complete/uncomplete button...
 		if($goal['is_complete'] == 'Y') {
 			echo "<a href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&setUncompleted=" . $goal['goal_id'] . "\"";
-			if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
-			else echo "onClick=\"return changeStatusCompleted();\"";
-			echo "<button type=\"button\" class=\"btn btn-xs btn-primary\">Set Uncompleted</button></a>";
+			if (!$have_write_permission) echo " onClick=\"return noPermission();";
+			else echo " onClick=\"return changeStatusCompleted();";
+			echo "\">\n<button type=\"button\" class=\"btn btn-xs btn-primary\">Set Uncompleted</button></a>\n";
 			} 
 			else 
 				{
                  echo "<a href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&setCompleted=" . $goal['goal_id'] . "\"";
-					if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
-					else echo "onClick=\"return changeStatusCompleted();\"";
-					echo "\"><button type=\"button\" class=\"btn btn-xs btn-primary\">Set Completed</button></a>";
+					if (!$have_write_permission) echo "onClick=\"return noPermission();\">\n";
+					else echo " onClick=\"return changeStatusCompleted();\n";
+					echo "\">\n<button type=\"button\" class=\"btn btn-xs btn-primary\">Set Completed</button></a>\n";
 				}
         //output the add objectives button.
 		/*echo "<a href=\" . IPP_PATH . "add_objectives.php?&student_id=" . $student_id  . "&lto=" . $goal['goal_id'] . "\"";
@@ -561,11 +653,11 @@ if(mysql_num_rows($long_goal_result) == 0 ) {
 		echo "\"><button type=\"button\" class=\"btn btn-xs btn-primary\">Edit</button></a>"; */
 
     	echo "<a href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id  . "&deleteLTG=" . $goal['goal_id'] . "\"";
-  		if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
-		else echo "onClick=\"return changeStatusCompleted();\"";
-		echo "\"><button type=\"button\" class=\"btn btn-xs btn-primary\">Delete</button></a></div>";
-		echo "<hr>";
-		echo "</div></div></div>";//close row and column
+  		if (!$have_write_permission) echo " onClick=\"return noPermission();\"";
+		else echo " onClick=\"return changeStatusCompleted();\" \n";
+		echo "\">\n<button type=\"button\" class=\"btn btn-xs btn-primary\">Delete</button></a></div>\n";
+		echo "<hr>\n";
+		echo "</div>\n</div>\n";//close row and column
 		
 		
 	
@@ -588,17 +680,18 @@ if(!$short_term_objective_result) {
 	else {
 	//output this note...
 	//check if we have no notes
- 		if(mysql_num_rows($short_term_objective_result) <= 0 ) {
+ 		/*if(mysql_num_rows($short_term_objective_result) <= 0 ) {
 			
 			echo "<div class=\"container\"><div class=\"alert alert-warning\">No Objectives Added</div></div>";
 		
-		}
+		}*/
 	$obj_num=1;
 	while ($short_term_objective_row = mysql_fetch_array($short_term_objective_result)) {
-		echo "<div class=\"row\" id=\"objectives\"><div class=\"col-md-12\"><div class=\"container\">";
-		echo "<h4><small>" . $obj_num . ")&nbsp;</small>";
+		echo "<div class=\"goal " . $div_id . "\">\n<div class=\"col-md-12\">\n<div class=\"container\">\n";
+
+		echo "<h4><small>" . $obj_num . ")&nbsp;</small>\n";
 		$obj_num++; //increment goal
-		echo $short_term_objective_row['description'] . "&nbsp <span class=\"label label-info\">objective</span></h4>";
+		echo $short_term_objective_row['description'] . "&nbsp <span class=\"label label-info\">objective</span></h4>\n";
 
 	//begin review date
 		
@@ -618,15 +711,15 @@ if(!$short_term_objective_result) {
 			echo $short_term_objective_row['review_date'] . "</a></p>";
 		} */
 		//end review date
-	echo "<div class=\"container\">";	
+	echo "<div class=\"container\">\n";	
 	//output the complete/uncomplete button...
-	echo "<div class=\"btn-group\">";
-	echo "<button class=\"btn btn-xs btn-primary\" onclick=\"toggle ()\" role=\"button\">Toggle Details</button>";	 
+	echo "<div class=\"btn-group\">\n";
+	echo "<button class=\"btn btn-xs btn-primary\" onclick=\"toggle ()\" role=\"button\">Toggle Details</button>\n";	 
 	if($short_term_objective_row['achieved'] == 'Y') {
 		echo "<a class=\"btn btn-xs btn-primary\" href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&setSTOUncompleted=" . $short_term_objective_row['uid'] . "\"";
 		if (!$have_write_permission) echo "&nbsp onClick=\"return noPermission();\"";
 		else echo "& nbsp onClick=\"return changeStatusCompleted();\"";
-		echo "\">Set Incomplete</a>";
+		echo "\">\nSet Incomplete\n</a>\n";
 		
 		
 	} 
@@ -634,29 +727,29 @@ if(!$short_term_objective_result) {
 		echo "<a class=\"btn btn-xs btn-primary\" href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&setSTOCompleted=" . $short_term_objective_row['uid'] . "\"";
 		if (!$have_write_permission) echo "&nbsp onClick=\"return noPermission();\"";
 		else echo "&nbsp onClick=\"return changeStatusCompleted();\"";
-		echo " \">Set Completed</a>";
+		echo " \">\nSet Completed\n</a>\n";
 	}
 
 	//output the add edit button.
 	//echo "<button href=\" . IPP_PATH . \"edit short_term_objective.php?sto=\" . $short_term_objective_row['uid'] . "&student_id=" . $student_id . /"";
 
-	echo "<a class=\"btn btn-xs btn-primary\"" . "&nbsp; href=\"./edit_short_term_objective.php?sto=" . $short_term_objective_row['uid'] . "&student_id=" . $student_id . "\"" . ">";
-	echo "Edit Objective</a>";
+	echo "<a class=\"btn btn-xs btn-primary\"" . "&nbsp; href=\"./edit_short_term_objective.php?sto=" . $short_term_objective_row['uid'] . "&student_id=" . $student_id . "\"" . ">\n";
+	echo "Edit Objective</a>\n";
 	
 	//output delete button
 	echo "<a class=\"btn btn-xs btn-primary\" href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id . "&deleteSTO=" . $short_term_objective_row['uid'] . "\"";
 	if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
 	else echo "onClick=\"return changeStatusCompleted();\"";
-	echo "\">Delete Objective</a>";
+	echo "\">Delete Objective</a>\n";
 	
-	echo "<a class=\"btn btn-xs btn-primary\"" . "&nbsp; href=\"./edit_short_term_objective.php?sto=" . $short_term_objective_row['uid'] . "&student_id=" . $student_id . "\"" . ">";
-	echo "Report on Progress</a>";
+	echo "<a class=\"btn btn-xs btn-primary\" &nbsp; href=\"./edit_short_term_objective.php?sto=" . $short_term_objective_row['uid'] . "&student_id=" . $student_id . "\"" . ">";
+	echo "Report on Progress</a>\n";
 	
-	echo "<hr>";
-	echo "</div>";
-	echo "</div>";
-	
-	
+	echo "<hr>\n";
+	echo "</div>\n";
+	echo "</div>\n";
+
+
 	//output the results /assmt / etc...
 
 	
@@ -668,37 +761,37 @@ if(!$short_term_objective_result) {
 	* echo "\">Edit</a>";
 	*/
 	
-	echo "<div class=\"container\" id=\"details\" style=\"display:none\">";
+	echo "<div class=\"container\" id=\"details\" style=\"display:none\">\n";
 	//output the actual data
 	if ($short_term_objective_row['assessment_procedure'] != "") {
-		echo "<strong>Assessment Procedure</strong>";
-		echo "<p>" .  $short_term_objective_row['assessment_procedure'] . "</p>";
+		echo "<strong>Assessment Procedure</strong>\n";
+		echo "<p>" .  $short_term_objective_row['assessment_procedure'] . "</p>\n";
 	}
 		//Strategies
 	if ($short_term_objective_row['strategies']!=""){
-		echo "<strong>Strategies</strong>" ;
-		echo "<P>" . $short_term_objective_row['strategies'] . "</P>";
+		echo "<strong>Strategies</strong>\n" ;
+		echo "<P>" . $short_term_objective_row['strategies'] . "</P>\n";
 	}
 	
 	
 
 	//Progress Review
 	if ($short_term_objective_row['results_and_recommendations']!=""){
-		echo "<strong>Progress Review</strong>";
-		echo "<p>" . $short_term_objective_row['results_and_recommendations'] . "</p>";
+		echo "<strong>Progress Review</strong>\n";
+		echo "<p>" . $short_term_objective_row['results_and_recommendations'] . "</p>\n";
 	}
 		//output the add edit button.
 	//echo "&nbsp;<a href=\"" . IPP_PATH . "edit_short_term_objective.php?sto=" . $short_term_objective_row['uid'] . "&student_id=" . $student_id  . "\"";
 	//if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
 	//else echo "onClick=\"return changeStatusCompleted();\"";
 	//echo " class=\"small\">Edit</a>";
-	echo "</div>"; //end objective details container
+	echo "</div>\n"; //end objective details container
 
 	
 	//end output the actual data
 	//end toggle
 	//echo "</div>";//show/hide objectives
-	echo "</div></div></div>";
+	echo "</div>\n</div>\n</div>\n";
 	}
 	
 	}
@@ -711,7 +804,8 @@ if(!$short_term_objective_result) {
 <!-- commented because can't find opening tag </div> -->
                          
 
-</div> 
+</div>
+<!-- end container --> 
 
 
  
@@ -721,5 +815,6 @@ if(!$short_term_objective_result) {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>   
 <script type="text/javascript" src="./js/jquery-ui-1.10.4.custom.min.js"></script>
+
 </BODY>
 </HTML>

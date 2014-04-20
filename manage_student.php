@@ -236,15 +236,19 @@ foreach($_GET as $key => $value) {
 //strip trailing '&'
 $szBackGetVars = substr($szBackGetVars, 0, -1);
 
+?>
 
-?> 
+
+
+
+
 <!DOCTYPE HTML>
 <HTML lang=en>
 <HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
-    <TITLE><?php echo $page_title; ?></TITLE>
-    <?php print_bootstrap_head(); ?>
-   
+<?php print_meta_for_html5($page_title); ?>
+<TITLE><?php echo $page_title; ?></TITLE>
+<?php print_bootstrap_head(); ?>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">   
 
     <SCRIPT LANGUAGE="JavaScript">
       function deleteChecked() {
@@ -289,6 +293,9 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
     	});
     });
     </script> 
+<?php //list_names_for_autocomplete($student_row, $sqlStudents); //names for autocomplete ?>    
+<?php //$sqlStudents=getStudents();  //get students again ?>
+
 </HEAD>
     <BODY>
      
@@ -309,7 +316,8 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
     
     
 <div class="container">     
- 
+
+<p>&nbsp;</p>
   	<form name="studentlist" onSubmit="return deleteChecked()" enctype="multipart/form-data" action="<?php echo IPP_PATH . "manage_student.php"; ?>" method="post">				
     <table border=0 class="table table-hover" class="table table-striped">
   	
@@ -320,7 +328,7 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
 	while ($student_row=mysql_fetch_array($sqlStudents)) {
                             $current_student_permission = getStudentPermission($student_row['student_id']);
                             $tablerow = <<<EOF
-                            <div><tr class="$current_student_permission">
+                            <div id={$student_row['first_name']} &nbsp;{$student_row['last_name']}><tr class="$current_student_permission">
                             	<td><input id="{$student_row['student_id']}" type="checkbox"></td>
                                 <td>{$student_row['student_id']}</td>
                             	<td><a href="student_view.php?student_id={$student_row['student_id']}">{$student_row['first_name']} &nbsp;{$student_row['last_name']}</a></td>
@@ -366,6 +374,7 @@ EOF;
         <?php print_complete_footer(); ?>
         
         <?php print_bootstrap_js() ?>
-        
+         
+		 
     </BODY>
 </HTML>

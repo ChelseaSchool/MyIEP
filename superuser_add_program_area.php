@@ -33,6 +33,7 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
+require_once(IPP_PATH . 'include/supporting_functions.php');
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -101,7 +102,8 @@ if($_GET['delete_x'] && $permission_level <= $IPP_MIN_DELETE_AREA_PERMISSION) {
     $system_message = $system_message . $delete_query . "<BR>";
 }
 
-$area_query = "SELECT * FROM area_type WHERE 1=1 ORDER BY type";
+$area_query = "SELECT *
+FROM `typical_long_term_goal_category` ORDER BY `typical_long_term_goal_category`.`name` ASC";
 $area_result = mysql_query($area_query);
 if(!$area_result) {
     $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$area_query'<BR>";
@@ -114,7 +116,12 @@ if(!$area_result) {
 <!DOCTYPE HTML>
 <HTML lang=en>
 <HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Add Program Area">
+    <meta name="author" content="Rik Goldman" >
+    <link rel="shortcut icon" href="./assets/ico/favicon.ico">
     <TITLE><?php echo $page_title; ?></TITLE>
     <style type="text/css" media="screen">
         <!--
@@ -151,13 +158,9 @@ if(!$area_result) {
 </HEAD>
     <BODY>
         <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
+       
         <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
-        <tr>
-            <td class="shadow-left"></td>
+            
             <td class="shadow-center" valign="top">
                 <table class="frame" width=620px align=center border="0">
                     <tr align="Center">
@@ -181,10 +184,7 @@ if(!$area_result) {
                            <input type="hidden" name="addarea" value="1">
                           </td>
                         </tr>
-                        <tr>
-                           <td valign="bottom" bgcolor="#E0E2F2">Area:</td><td bgcolor="#E0E2F2"><input type="text" name="type" value="" size="30" maxsize="255"></td>
-                           <td valign="center" align="center" bgcolor="#E0E2F2"><input type="submit" name="add" value="add"></td>
-                        </tr>
+                        
                         </table>
                         </form>
                         </center>
@@ -198,12 +198,12 @@ if(!$area_result) {
                         $bgcolor = "#DFDFDF";
 
                         //print the header row...
-                        echo "<tr><td bgcolor=\"#E0E2F2\">&nbsp;</td><td bgcolor=\"#E0E2F2\">UID</td><td align=\"center\" bgcolor=\"#E0E2F2\">Username</td></tr>\n";
+                        echo "<tr><th bgcolor=\"#E0E2F2\">Select</th><th align=\"center\" bgcolor=\"#E0E2F2\">Goal Area</th><th bgcolor=\"#E0E2F2\">Deleted</th></tr>\n";
                         while ($area_row=mysql_fetch_array($area_result)) { //current...
                             echo "<tr>\n";
-                            echo "<td bgcolor=\"#E0E2F2\"><input type=\"checkbox\" name=\"" . $area_row['area_type_id'] . "\"></td>";
-                            echo "<td bgcolor=\"$bgcolor\">" . $area_row['area_type_id'] . "</td>";
-                            echo "<td bgcolor=\"$bgcolor\">" . $area_row['type']  ."</td>\n";
+                            echo "<td bgcolor=\"#E0E2F2\"><input type=\"checkbox\" name=\"\"></td>";
+                            echo "<td bgcolor=\"$bgcolor\">" . $area_row['name'] . "</td>";
+                            echo "<td bgcolor=\"$bgcolor\">" . $area_row['is_deleted']  ."</td>\n";
                             echo "</tr>\n";
                             if($bgcolor=="#DFDFDF") $bgcolor="#CCCCCC";
                             else $bgcolor="#DFDFDF";

@@ -265,23 +265,18 @@ if(!$accomodation_result) {
 <!DOCTYPE HTML>
 <HTML lang=en>
 <HEAD>
-   <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="About MyIEP">
-    <meta name="author" content="Rik Goldman" >
-    <link rel="shortcut icon" href="./assets/ico/favicon.ico">
-    <TITLE><?php echo $page_title; ?></TITLE>
-   <!-- Bootstrap core CSS -->
-    <link href="./css/bootstrap.min.css" rel="stylesheet">
+<?php print_meta_for_html5($page_title); ?>
+<TITLE><?php echo $page_title; ?></TITLE>
+<!-- Bootstrap core CSS -->
+<link href="./css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="./css/jumbotron.css" rel="stylesheet">
-	<style type="text/css">body { padding-bottom: 70px; }</style>
+<!-- Custom styles for this template -->
+<link href="./css/jumbotron.css" rel="stylesheet">
+<style type="text/css">body { padding-bottom: 70px; }</style>
     
    
-    <script src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script>
-    <script src="<?php echo IPP_PATH . "include/autocomplete.js"; ?>"></script>
+<script src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script>
+<script src="<?php echo IPP_PATH . "include/autocomplete.js"; ?>"></script>
     <?php
        //output the javascript array for the chooser popup
        echoJSServicesArray();
@@ -317,79 +312,9 @@ if(!$accomodation_result) {
     <?php print_bootrap_head(); ?>
     
 </HEAD>
-    <BODY>
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="main.php">MyIEP</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="main.php">Home</a></li>
-            <li><a href="index.php">Logout</a></li>
-            <li><a href="about.php">About</a></li>
-            <li><a href="help.php">Help</a></li>
-            <li><a onclick="history.go(-1);">Back</a></li>
-            <li><a href=<?php echo "ipp_pdf.php?student_id=" . $student_row['student_id'] . "&file=ipp.pdf"; ?>>Get PDF</li></a>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Records: <?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?><b class="caret"></b></a>
-              <ul class="dropdown-menu">
-              	<li><a href="<?php echo IPP_PATH . "long_term_goal_view.php?student_id=" . $student_row['student_id']; ?>">Goals</a></li>
-              	<li class="divider"></li>
-              	<li><a href="<?php echo IPP_PATH . "guardian_view.php?student_id=" . $student_row['student_id'];?>">Guardians</a></li>
-              	<li><a href="<?php echo IPP_PATH . "strength_need_view.php?student_id=" . $student_row['student_id'];?>">Strengths &amp; Needs</a></li>
-              	<li><a href="<?php echo IPP_PATH . "coordination_of_services.php?student_id=" . $student_row['student_id'];?>">Coordination of Services</a></li>
-              	<li><a href="<?php echo IPP_PATH . "achieve_level.php?student_id=" . $student_row['student_id'];?>">Achievement Level</a></li>
-              	<li><a href="<?php echo IPP_PATH . "medical_info.php?student_id=" . $student_row['student_id'];?>">Medical Information</a></li>
-              	<li><a href="<?php echo IPP_PATH . "medication_view.php?student_id=" . $student_row['student_id'];?>">Medication</a></li>
-              	<li><a href="<?php echo IPP_PATH . "testing_to_support_code.php?student_id=" . $student_row['student_id'];?>">Support Testing</a></li>
-              	<li><a href="<?php echo IPP_PATH . "background_information.php?student_id=" . $student_row['student_id'];?>">Background Information</a></li>
-              	<li><a href="<?php echo IPP_PATH . "year_end_review.php?student_id=" . $student_row['student_id'];?>">Year-End Review</a></li>
-              	<li><a href="<?php echo IPP_PATH . "anecdotals.php?student_id=" . $student_row['student_id'];?>">Anecdotals</a></li>
-              	<li><a href="<?php echo IPP_PATH . "assistive_technology.php?student_id=" . $student_row['student_id'];?>">Assistive Techology</a></li>
-              	<li><a href="<?php echo IPP_PATH . "transition_plan.php?student_id=" . $student_row['student_id'];?>">Transition Plan</a></li>
-              	<li><a href="<?php echo IPP_PATH . "accomodations.php?student_id=" . $student_row['student_id'];?>">Accomodations</a></li>
-              	<li><a href="<?php echo IPP_PATH . "snapshots.php?student_id=" . $student_row['student_id'];?>">Snapshots</a></li></ul>
-            </ul>
-             
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="index.php">Logout</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Menu <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="./manage_student.php">Students</a></li>
-                <li class="divider"></li>
-                <li><a href="change_ipp_password.php">Reset Password</a></li>
-                <li><a href="superuser_add_goals.php">Goals Database</a></li>
-                <li><a href="./student_archive.php">Archive</a></li>
-                <li><a href="./user_audit.php">Audit</a></li>
-                <li><a href="superuser_manage_coding.php">Manage Codes</a></li>
-                <li><a href="school_info.php">Manage Schools</a></li>
-                <li><a href="superuser_view_logs.php">View Logs</a></li>
-              </ul>
-            </li>
-          </ul>
-         </div>
-         <!--/.nav-collapse -->
-        <!--<div class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" role="form" nctype="multipart/form-data" action="jumbotron.php" method="post">
-            <div class="form-group">
-              <input type="text" placeholder="User Name" class="form-control" value="<?php echo $LOGIN_NAME;?>">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control" name="PASSWORD" value="">
-            </div>
-            <button type="submit" value="submit" class="btn btn-success">Sign in</button>
-          </form>
-        </div><!--/.navbar-collapse -->
-      </div>
-    </div>    
+<BODY>
+<?php print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name'])?>
+
 <div class="jumbotron"><div class="container">     
 
 <?php if ($system_message) echo "<p>" . $system_message . "</p>"; ?>
