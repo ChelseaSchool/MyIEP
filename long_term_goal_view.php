@@ -270,7 +270,7 @@ function print_goal_area_checklist() {
 		IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
 	}
 	while ($area_row=mysql_fetch_array($area_result)) {
-		echo "<label><input type=\"checkbox\" value=\"" . $area_row['name'] . "\">" . $area_row['name'] . "</label><br>\n";
+		echo "<label><input type=\"checkbox\" checked value=\"" . $area_row['name'] . "\">" . $area_row['name'] . "</label><br>\n";
 	} //closes loop
 } //closes function
 
@@ -445,8 +445,8 @@ function toggle () //toggles objective details
 
 <script type="text/javascript">
 $(document).ready(function() {
-	$( '.goal' ).hide();
-	$( '.objectives' ).hide();
+	$( '.goal' ).show();
+	$( '.objectives' ).show();
 });
 
 </script>
@@ -657,7 +657,7 @@ if(mysql_num_rows($long_goal_result) == 0 ) {
 		else echo " onClick=\"return changeStatusCompleted();\" \n";
 		echo "\">\n<button type=\"button\" class=\"btn btn-xs btn-primary\">Delete</button></a></div>\n";
 		echo "<hr>\n";
-		echo "</div>\n</div>\n";//close row and column
+		echo "</div>\n</div>\n</div>";//close row and column
 		
 		
 	
