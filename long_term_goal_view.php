@@ -270,7 +270,7 @@ function print_goal_area_checklist() {
 		IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
 	}
 	while ($area_row=mysql_fetch_array($area_result)) {
-		echo "<label><input type=\"checkbox\" checked value=\"" . $area_row['name'] . "\">" . $area_row['name'] . "</label><br>\n";
+		echo "<label><input id=\"area\" type=\"checkbox\" checked value=\"" . $area_row['name'] . "\">" . $area_row['name'] . "</label><br>\n";
 	} //closes loop
 } //closes function
 
@@ -552,7 +552,7 @@ $(document).ready(function() {
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="Filters" id="Filters">Filters</h4>
+        <h4 class="Filters" id="Filters">Show only these Areas:</h4>
       </div><!-- Modal Header end -->
       <div class="modal-body">
         

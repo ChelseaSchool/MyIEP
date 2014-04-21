@@ -141,7 +141,7 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
       </div>
     </div>
 
-<?php my_error_handler($e_number,$e_message, $e_file,$e_line, $e_vars) ?>
+<?php //my_error_handler($e_number,$e_message, $e_file,$e_line, $e_vars) ?>
 
 
 

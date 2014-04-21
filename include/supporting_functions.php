@@ -317,17 +317,9 @@ function print_student_navbar($student_id, $student) {
           </ul>
          </div>
          <!--/.nav-collapse -->
-        <!--<div class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" role="form" nctype="multipart/form-data" action="jumbotron.php" method="post">
-            <div class="form-group">
-              <input type="text" placeholder="User Name" class="form-control" value="<?php echo $LOGIN_NAME;?>">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control" name="PASSWORD" value="">
-            </div>
-            <button type="submit" value="submit" class="btn btn-success">Sign in</button>
-          </form>
-        </div><!--/.navbar-collapse -->
+        
+
+       
       </div>
     </div>
 EOF;
@@ -410,7 +402,7 @@ function print_general_navbar() {
 <li><a href="help.php">Help</a></li>
 <li><a onclick="history.go(-1);">Back</a></li>
     
-          <ul class="nav navbar-nav navbar-right">
+          <!--<ul class="nav navbar-nav navbar-right">
             <li><a href="index.php">Logout</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Menu <b class="caret"></b></a>
@@ -426,20 +418,10 @@ function print_general_navbar() {
                 <li><a href="superuser_view_logs.php">View Logs</a></li>
               </ul>
             </li>
-          </ul>
+          </ul>-->
          </div>
          <!--/.nav-collapse -->
-        <!--<div class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" role="form" nctype="multipart/form-data" action="jumbotron.php" method="post">
-            <div class="form-group">
-              <input type="text" placeholder="User Name" class="form-control" value="<?php echo $LOGIN_NAME;?>">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control" name="PASSWORD" value="">
-            </div>
-            <button type="submit" value="submit" class="btn btn-success">Sign in</button>
-          </form>
-        </div><!--/.navbar-collapse -->
+        
       </div>
     </div>
 EOF;

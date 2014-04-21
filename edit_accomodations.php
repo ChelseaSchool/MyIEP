@@ -11,7 +11,9 @@
     You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * @authors		Rik Goldman, Sabre Goldman, Jason Banks, Alex, James, Paul, Bryan, TJ, Jonathan, Micah, Stephen, Joseph, Sean
  * @author		M. Nielson
- * @todo		Filter input
+ * @todo		
+ * 1. Filter input
+ * 2. find bug in php
  */ 
  
  
@@ -106,9 +108,14 @@ if(!$student_result) {
     $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$student_query'<BR>";
     $system_message=$system_message . $error_message;
     IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
-} else {$student_row= mysql_fetch_array($student_result);}
+} 
 
-if(isset($_POST['edit_accomodation']) && $have_write_permission) {
+else {
+	$student_row= mysql_fetch_array($student_result);
+}
+
+if(isset($_POST['edit_accomodation']) && $have_write_permission)
+ {
 
      $regexp = '/^\d\d\d\d-\d\d?-\d\d?$/';
      if(!preg_match($regexp,$_POST['start_date'])) { $system_message = $system_message . "Start Date must be in YYYY-MM-DD format<BR>"; }
@@ -255,12 +262,12 @@ if(isset($_POST['edit_accomodation']) && $have_write_permission) {
 <script src="//code.jquery.com/jquery-1.9.1.js"></script>
 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 	
-</script>
-	 <script> 
+
+<script> 
 	$(function() {
 	$( ".datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
 	});
-	</script> 
+</script> 
     </HEAD>
     <BODY>
  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -281,7 +288,7 @@ if(isset($_POST['edit_accomodation']) && $have_write_permission) {
             <li><a href="about.php">About</a></li>
             <li><a href="help.php">Help</a></li>
             <li><a onclick="history.go(-1);">Back</a></li>
-            <li><a href=<?php echo "ipp_pdf.php?student_id=" . $student_row['student_id'] . "&file=ipp.pdf"; ?>>Get PDF</li></a>
+            <li><a href=<?php echo "ipp_pdf.php?student_id=" . $student_row['student_id'] . "&file=ipp.pdf"; ?>>Get PDF</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Records: <?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?><b class="caret"></b></a>
               <ul class="dropdown-menu">
@@ -341,7 +348,6 @@ if(isset($_POST['edit_accomodation']) && $have_write_permission) {
 
 <h1>Edit Accomodations: <small><?php echo $student_row['first_name'] . " " . $student_row['last_name'] ?> </small></h1>
 <h2>Logged in as: <small><?php echo $_SESSION['egps_username']; ?> (Permission: <?php echo $our_permission; ?>)</small></h2>
-<!-- <button class="btn btn-lg btn-primary" onclick="toggle ()" role="button">Toggle Details &raquo;</button>  -->
 
 
 
@@ -350,7 +356,7 @@ if(isset($_POST['edit_accomodation']) && $have_write_permission) {
 <div class="container">
                         <!-- BEGIN edit accomodation -->
                         
-<form role="form" name="edit_accomodation" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_accomodations.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+<form role="form" name="edit_accomodation" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_accomodations.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\""; ?>>
 <div class="form-group"> 
 	<input type="hidden" name="edit_accomodation" value="1">
 	<input type="hidden" name="uid" value="<?php echo $uid; ?>">

@@ -49,7 +49,7 @@ require_once(IPP_PATH . 'include/user_functions.php');
 require_once(IPP_PATH . 'include/navbar.php');
 require_once(IPP_PATH . 'include/supporting_functions.php');
 //require_once(IPP_PATH . 'include/print_html_functions.php');
-require_once(IPP_PATH . 'include/config.inc.php');
+//require_once(IPP_PATH . 'include/config.inc.php');
 header('Pragma: no-cache'); //don't cache this page!
 
 if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
@@ -199,7 +199,7 @@ if(!$accomodation_result) {
 }
 
 /******************** popup chooser support function ******************/
-    function createJavaScript($dataSource,$arrayName='rows'){
+/*    function createJavaScript($dataSource,$arrayName='rows'){
       // validate variable name
       if(!is_string($arrayName)){
         $system_message = $system_message . "Error in popup chooser support function name supplied not a valid string  (" . __FILE__ . ":" . __LINE__ . ")";
@@ -245,8 +245,8 @@ if(!$accomodation_result) {
       // return JavaScript code
       return $javascript;
     }
-
-    function echoJSServicesArray() {
+*/
+  /*  function echoJSServicesArray() {
         global $system_message;
         $acclist_query="SELECT accomodation FROM typical_accomodation WHERE 1 ORDER BY `order` DESC, accomodation ASC LIMIT 400";
         $acclist_result = mysql_query($acclist_query);
@@ -259,6 +259,7 @@ if(!$accomodation_result) {
             if(mysql_num_rows($acclist_result)) echo createJavaScript($acclist_result,"popuplist");
         }
     }
+    */
 /************************ end popup chooser support funtion  ******************/
 
 ?> 
@@ -279,7 +280,7 @@ if(!$accomodation_result) {
 <script src="<?php echo IPP_PATH . "include/autocomplete.js"; ?>"></script>
     <?php
        //output the javascript array for the chooser popup
-       echoJSServicesArray();
+       //echoJSServicesArray();
     ?>
     <SCRIPT LANGUAGE="JavaScript">
       function confirmChecked() {
@@ -309,7 +310,7 @@ if(!$accomodation_result) {
      
     </SCRIPT>
     
-    <?php print_bootrap_head(); ?>
+    <?php print_bootstrap_head(); ?>
     
 </HEAD>
 <BODY>
@@ -327,8 +328,7 @@ if(!$accomodation_result) {
 
 </div> <!-- Close Jumbotron -->    
     
-<?php my_error_handler($e_number,$e_message, $e_file,$e_line, $e_vars) ?>    
-    
+
 
 <div class="row">
 &nbsp;
