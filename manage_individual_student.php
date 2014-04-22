@@ -222,35 +222,14 @@ if(!$sqlStudents) {
 }
 
 function list_names_for_autocomplete($student_row, $sqlStudents){
-	echo "<script>";
-	echo "$(function () {";
+	echo "<script>\n";
 	echo "var available_names = [";
 	while ($student_row=mysql_fetch_array($sqlStudents)) {
 		echo "\"" . $student_row['first_name'] . " " . $student_row['last_name'] . "\",";
-	} //end loop
-	echo "];";
-	echo "function split( val ) {";
-	echo "return val.split( /, \s*/ );";
-	echo "}";
-	echo "function extractLast( term ) {";
-	echo "return split( term ).pop();";
-	echo "}";
-	echo <<<EOF
-	 $( "#names" ).autocomplete({
-		minLength: 0,
-		source: available_names,
-		focus: function( event, ui ) {
-			$( "#names" ).val( ui.item.label );
-			return false;
-			},
-		select: function( event, ui ) {
-				$( "#names" ).val( ui.item.label );
- 				return false;
-			}
-		});
-	});
-	</script>
-EOF;
+	}; //end loop
+	echo "];\n";
+	echo "</script>\n";
+	
 }
 
 
@@ -262,6 +241,47 @@ foreach($_GET as $key => $value) {
 //strip trailing '&'
 $szBackGetVars = substr($szBackGetVars, 0, -1);
 
+function typeahead() {
+	echo <<< EOF
+<script>
+var substringMatcher = function(strs) {
+return function findMatches(q, cb) {
+var matches, substringRegex;
+ 
+// an array that will be populated with substring matches
+matches = [];
+ 
+// regex used to determine if a string contains the substring `q`
+substrRegex = new RegExp(q, 'i');
+ 
+// iterate through the pool of strings and for any string that
+// contains the substring `q`, add it to the `matches` array
+$.each(strs, function(i, str) {
+if (substrRegex.test(str)) {
+// the typeahead jQuery plugin expects suggestions to a
+// JavaScript object, refer to typeahead docs for more info
+matches.push({ value: str });
+}
+});
+ 
+cb(matches);
+};
+};
+
+
+$('#scrollable-dropdown-menu .typeahead').typeahead(null, {
+hint: true,
+highlight: true,
+minLength: 1
+},
+{
+name: 'students',
+displayKey: 'value',
+source: substringMatcher(available_names)
+});
+</script>
+EOF;
+}
 ?>
 <!DOCTYPE HTML>
 <HTML lang="en">
@@ -270,7 +290,7 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
 <TITLE><?php echo $page_title; ?></TITLE>
 <?php print_bootstrap_head(); ?>
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">   
-
+<link href="css/typeaheadjs.css" rel="stylesheet">
     <SCRIPT LANGUAGE="JavaScript">
       function deleteChecked() {
           var szGetVars = "delete_users=";
@@ -301,11 +321,17 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
           alert("You don't have the permissions"); return false;
       }
     </SCRIPT>
-
+<style>
+#scrollable-dropdown-menu .tt-dropdown-menu {
+max-height: 150px;
+overflow-y: auto;
+}
+</style>
 	<!-- jQuery -->
 	<script src="js/jquery-ui-1.10.4.custom.min.js"></script>
     <script src="js/jquery-2.1.0.min.js"></script>
-    <?php list_names_for_autocomplete($student_row, $sqlStudents); //names for autocomplete ?> 
+    <!--  Typeahead.js -->
+	<script src="js/typeahead.bundle.min.js"></script>
     <script>
     $(document).ready(function() {
         $('#toggle').on('click',
@@ -320,22 +346,18 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
     	
     });
     </script>
-	<script>
-	function name_input()
-	{
-		
-		$(".student#Jane Smith").show();
-					
-			}
+	<?php list_names_for_autocomplete($student_row, $sqlStudents); ?>
+	<?php typeahead(); ?>
+
+
 	
-		
-	</script>
+	
 
  
 </HEAD>
 <BODY>
    
-<?php $sqlStudents=getStudents();  //get students again ?>    	
+<?php $sqlStudents=clean_in_and_out(getStudents());  //get students again ?>    	
 <?php echo print_general_navbar(); ?>
 <div class="jumbotron"><div class="container">     
 
@@ -352,14 +374,13 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
     
     
 <div class="container">     
-<?php
-//form for autocomplete first and last names
-echo "<div class=\"input-group input-group-sm\">"; 
-echo "<input type=\"text\" autofocus id=\"names\" name=\"names\" class=\"form-control\" placeholder=\"Enter student name...\">";
-echo "<button id=\"search\" class=\"btn btn-sm btn-primary\" role=\"button\" onclick=\"name_input()\">Search &raquo;</button>";
-//echo "<span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-search\"></span></span></button>";
-echo "</div>"
-?>
+
+<!--  form for autocomplete first and last names-->
+<div id="scrollable-dropdown-menu" class="input-group input-group-lg">
+<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span><input name="typahead" autofocus class="typeahead form-control" placeholder="Enter student name">
+
+</div>
+
 
 <p>&nbsp;</p>
   					
@@ -385,6 +406,10 @@ EOF;
                             echo $tablerow;
 }
  ?>
+
+  
+  
+  
                            <?php /* if($current_student_permission == "READ" || $current_student_permission != "WRITE" || $current_student_permission != "ALL")
                                 echo "<a href=\"". IPP_PATH . "ipp_pdf.php?student_id=" . $student_row['student_id'] . "\" class=\"default\" target=\"_blank\"";
                             if($current_student_permission == "NONE" || $current_student_permission == "ERROR") {
@@ -397,7 +422,7 @@ EOF;
                             //permission
                             echo "<td>" . $current_student_permission . "</td>";
                             echo "</tr>";//close row */
- ?>
+						 ?>
  </table>							
 <!-- </form> -->
 	
@@ -419,7 +444,7 @@ EOF;
         <?php print_complete_footer(); ?>
         
         <?php print_bootstrap_js() ?>
-         
+        
 		 
     </BODY>
 </HTML>

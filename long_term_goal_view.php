@@ -433,8 +433,6 @@ function print_goal_area_jQuery() {
 ?>
 
 
-
-
 <script type="text/javascript">
 function toggle () //toggles objective details
 {
@@ -555,14 +553,15 @@ $(document).ready(function() {
         <h4 class="Filters" id="Filters">Show only these Areas:</h4>
       </div><!-- Modal Header end -->
       <div class="modal-body">
-        
+        	<label><input id="check_all" type="checkbox" checked value="=">Check all Areas <small>(Feature yet enabled)</small></label>
+        	<hr>
         	<?php print_goal_area_checklist(); ?>
         	
-        	
-			
-			<hr>
+        	<hr>
 			<!-- Toggle displayed objectives' details -->
-			<button class="btn btn-lg btn-regular" onclick="toggle ()" role="button">Toggle Objective Details &raquo;</button>
+			<label><input type="checkbox" id="toggle_detail" onclick="toggle ()" checked value="">Hide Objective Details</label>
+			
+		
       </div><!-- end modal body -->
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
