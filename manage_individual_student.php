@@ -246,6 +246,24 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
 <!DOCTYPE HTML>
 <HTML lang="en">
 <HEAD>
+<style>
+.ui-autocomplete {
+    opacity: 0;
+    display: none;
+    transition: opacity 1s;
+    -moz-transition: opacity 1s;
+    -webkit-transition: opacity 1s;
+    -o-transition: opacity 1s;
+}
+
+.ui-autocomplete.opened {
+    opacity: 100;
+    transition: opacity 1s;
+    -moz-transition: opacity 1s;
+    -webkit-transition: opacity 1s;
+    -o-transition: opacity 1s;
+}
+</style>	
 <?php print_meta_for_html5($page_title); ?>
 <TITLE><?php echo $page_title; ?></TITLE>
 <?php print_bootstrap_head(); ?>
@@ -332,8 +350,17 @@ $(function() {
                        ];
     $("#tags").autocomplete({
         source: availableTags,
+        open: function () { $('ul.ui-autocomplete').addClass('opened') },
+        close: function () { 
+          $('ul.ui-autocomplete')
+            .removeClass('opened')
+            .css('display','block')},
         autofocus: true,
-        minlength: 1
+        minlength: 1,
+        messages: {
+            noResults: '',
+            results: ''
+        }
         //change: function( event, ui ) 
         //{
 		//($"#name").toggle();
@@ -346,7 +373,7 @@ $(function() {
 
 
 	
-	
+
 
  
 </HEAD>
@@ -375,7 +402,7 @@ $(function() {
   
 
 
-<div class="input-group ui-widget">
+<div class="input-group">
   <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span>
   </span>
   <input id="tags" autofocus class="form-control" placeholder="Search for student">
