@@ -44,7 +44,6 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/navbar.php');
 require_once(IPP_PATH . 'include/supporting_functions.php');
 
 
@@ -234,11 +233,7 @@ $enum_options_area = mysql_enum_values("area_of_strength_or_need","area");
 <HEAD>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
     <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
+    
     
     <SCRIPT LANGUAGE="JavaScript">
       function confirmChecked() {
@@ -266,89 +261,50 @@ $enum_options_area = mysql_enum_values("area_of_strength_or_need","area");
           alert("You don't have the permission level necessary"); return false;
       }
     </SCRIPT>
+
+<?php print_bootstrap_head(); ?>
 </HEAD>
     <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("student_view.php?student_id=$student_id"); ?></center>
-                    </td></tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+<?php print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']); ?>    
+<?php print_jumbotron_with_page_name("Strengths &amp; Needs", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission); ?>
+       
 
-                        <center><table><tr><td><center><p class="header"> Strengths and Needs (<?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?>)-</p></center></td></tr></table></center>
-                        <BR>
-
-                        <!-- BEGIN add supervisor -->
-                        <center>
-                        <form name="add_strength_or_need" enctype="multipart/form-data" action="<?php echo IPP_PATH . "strength_need_view.php"; ?>" method="get" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
-                        <tr>
-                          <td colspan="3">
-                          <p class="info_text">Edit and click 'Add'.</p>
-                           <input type="hidden" name="add_strength_or_need" value="1">
-                           <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
-                          </td>
-                        </tr>
-                        <tr>
-                           <td valign="bottom" bgcolor="#E0E2F2" class="row_default">Strength or Need:</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <select name="strength_or_need" tabindex="1">
-                                   <option value="">-Choose-</option>
-                                   <option value="Strength" <?php if(isset($_GET['strength_or_need']) && $_GET['strength_or_need'] == 'Strength') echo "SELECTED"; ?>>Strength</option>
-                                   <option value="Need" <?php if(isset($_GET['strength_or_need']) && $_GET['strength_or_need'] == 'Need') echo "SELECTED"; ?>>Need</option>
-                               </select>
-                           </td>
-                           <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="2" class="row_default"><input type="submit" tabindex="3" name="add" value="add"></td>
-                        </tr>
-                        <tr>
-                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Description:</td><td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="description" tabindex="2" cols="30" rows="3" wrap="soft"><?php if(isset($_GET['description'])) echo $_GET['description']; ?></textarea></td>
-                        </tr>
-                        </table>
-                        </form>
-                        </center>
-                        <!-- END add supervisor -->
-
+<?php if ($system_message) { echo "<p align=\"center\">" . $system_message . "</p>";} ?>
+<div class="container">
+<h2>Strengths and Needs <small>View and Edit</small></h2>
                         <!-- BEGIN strength/needs table -->
                         <form name="strengthneedslist" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "strength_need_view.php"; ?>" method="get">
+                        <div class="form-group">
                         <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
-                        <center><table width="80%" border="0" cellpadding="0" cellspacing="1">
-                        <tr><td colspan="6">Strengths and Needs:</td></tr>
+                        </div>
+                        
+                        <table width=80%" class="table-striped table-hover" align="center">
+                        
                         <?php
-                        $bgcolor = "#DFDFDF";
+                        
 
                         //print the header row...
-                        echo "<tr><td bgcolor=\"#E0E2F2\">&nbsp;</td><td bgcolor=\"#E0E2F2\">UID</td><td align=\"center\" bgcolor=\"#E0E2F2\">Type</td><td align=\"center\" bgcolor=\"#E0E2F2\">Description (click to edit)</td><td align=\"center\" bgcolor=\"#E0E2F2\">Ongoing*</td></tr>\n";
+                        echo "<tr>\n
+ 								<td>Select</td>\n
+ 								<td>UID</td>\n
+ 								<td align=\"center\">Type</td>\n
+ 								<td align=\"center\">Description (click to edit)</td>\n
+ 								<td align=\"center\">Ongoing*</td>\n
+ 								</tr>\n";
                         while ($strength_row=mysql_fetch_array($strength_result)) { //current...
                             echo "<tr>\n";
-                            echo "<td bgcolor=\"#E0E2F2\"><input type=\"checkbox\" name=\"" . $strength_row['uid'] . "\"></td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\">" . $strength_row['uid'] . "</td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_strength_need.php?uid=" . $strength_row['uid'] . "\" class=\"editable_text\">" . $strength_row['strength_or_need']  ."</a></td>\n";
-                            echo "<td spellcheck=\"TRUE\" bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_strength_need.php?uid=" . $strength_row['uid'] . "\" class=\"editable_text\">" . $strength_row['description'] . "</a></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><center><a href=\"" . IPP_PATH . "edit_strength_need.php?uid=" . $strength_row['uid'] . "\" class=\"editable_text\">" . $strength_row['is_valid'] . "</a></center></td>\n";
+                            echo "<td><div class=\"form-group\"><input class=\"form-control\" type=\"checkbox\" name=\"" . $strength_row['uid'] . "></div></td>";
+                            echo "<td>" . $strength_row['uid'] . "</td>";
+                            echo "<td><a href=\"" . IPP_PATH . "edit_strength_need.php?uid=" . $strength_row['uid'] . $strength_row['strength_or_need']  . "</a></td>\n";
+                            echo "<td><a href=\"" . IPP_PATH . "edit_strength_need.php?uid=" . $strength_row['uid'] . $strength_row['description'] . "</a></td>\n";
+                            echo "<td><a href=\"" . IPP_PATH . "edit_strength_need.php?uid=" . $strength_row['uid'] . $strength_row['is_valid'] . "</a></center></td>\n";
                             echo "</tr>\n";
-                            if($bgcolor=="#DFDFDF") $bgcolor="#CCCCCC";
-                            else $bgcolor="#DFDFDF";
+                          
                         }
                         ?>
-                        <tr>
-                          <td colspan="6" align="left">
-                             <table>
+                         <table>
                              <tr>
-                             <td nowrap>
+                             <td>
                                 <img src="<?php echo IPP_PATH . "images/table_arrow.png"; ?>">&nbsp;With Selected:
                              </td>
                              <td>
@@ -364,33 +320,46 @@ $enum_options_area = mysql_enum_values("area_of_strength_or_need","area");
                              ?>
                              </td>
                              </tr>
-                             </table>
-                          </td>
-                        </tr>
-                        </table></center>
+                            
+                        </table>
                         </form>
-                        <!-- end strength/needs table -->
+                        <!-- end strength/needs table -->                       
+                 
 
+                        <!-- BEGIN add supervisor -->
+                        <h2>Strengths and Needs <small>Edit and Click to Add</small></h2>
+                        <form name="add_strength_or_need" enctype="multipart/form-data" action="<?php echo IPP_PATH . "strength_need_view.php"; ?>" method="get" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+                        
+                          
+                           <input class="form-control" type="hidden" name="add_strength_or_need" value="1">
+                           <input class="form-control" type="hidden" name="student_id" value="<?php echo $student_id; ?>">
+                          
+                         
+                     
+                      <div class="form-group">
+                           <label>Add Strength or Need</label>
+                           <select class="form-control" name="strength_or_need" tabindex="1">
+                                   <option value="">Select Strength or Neeed</option>
+                                   <option value="Strength" <?php if(isset($_GET['strength_or_need']) && $_GET['strength_or_need'] == 'Strength') echo "SELECTED"; ?>>Strength</option>
+                                   <option value="Need" <?php if(isset($_GET['strength_or_need']) && $_GET['strength_or_need'] == 'Need') echo "SELECTED"; ?>>Need</option>
+                           </select>
+                    </div>
+                        <div class="form-group">
+                           <label>Description</label>
+                           <textarea class="form-control" spellcheck="true" name="description" tabindex="2" cols="30" rows="3" wrap="soft"><?php if(isset($_GET['description'])) echo $_GET['description']; ?></textarea></div></td>
+                     	   <button class="btn btn-default" type="submit" tabindex="3" name="add" value="add">Add Strength or Need</button>
+                     		
+                     		</div>
+                      </form>
+                     
+                        <!-- END add supervisor -->
+
+                        
+
+                        
+
+        <?php print_complete_footer(); ?>
+        <?php print_bootstrap_js(); ?>
                         </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-            <?php navbar("student_view.php?student_id=$student_id"); ?>
-            </td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
-        <center></center>
     </BODY>
 </HTML>

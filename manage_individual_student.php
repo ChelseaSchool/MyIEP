@@ -228,8 +228,7 @@ function list_names_for_autocomplete($student_row, $sqlStudents){
 		echo "\"" . $student_row['first_name'] . " " . $student_row['last_name'] . "\",";
 	}; //end loop
 	echo "];\n";
-	echo "</script>\n";
-	
+	echo "</script>\n";	
 }
 
 
@@ -240,49 +239,10 @@ foreach($_GET as $key => $value) {
 }
 //strip trailing '&'
 $szBackGetVars = substr($szBackGetVars, 0, -1);
-
-function typeahead() {
-	echo <<< EOF
-<script>
-var substringMatcher = function(strs) {
-return function findMatches(q, cb) {
-var matches, substringRegex;
- 
-// an array that will be populated with substring matches
-matches = [];
- 
-// regex used to determine if a string contains the substring `q`
-substrRegex = new RegExp(q, 'i');
- 
-// iterate through the pool of strings and for any string that
-// contains the substring `q`, add it to the `matches` array
-$.each(strs, function(i, str) {
-if (substrRegex.test(str)) {
-// the typeahead jQuery plugin expects suggestions to a
-// JavaScript object, refer to typeahead docs for more info
-matches.push({ value: str });
-}
-});
- 
-cb(matches);
-};
-};
-
-
-$('#scrollable-dropdown-menu .typeahead').typeahead(null, {
-hint: true,
-highlight: true,
-minLength: 1
-},
-{
-name: 'students',
-displayKey: 'value',
-source: substringMatcher(available_names)
-});
-</script>
-EOF;
-}
 ?>
+
+
+
 <!DOCTYPE HTML>
 <HTML lang="en">
 <HEAD>
@@ -290,7 +250,9 @@ EOF;
 <TITLE><?php echo $page_title; ?></TITLE>
 <?php print_bootstrap_head(); ?>
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">   
-<link href="css/typeaheadjs.css" rel="stylesheet">
+<script src="js/autocomplete-html.js" type="text/javascript"></script>
+<script src="js/jquery.autocomplete.min.js" type="text/javascript"></script>
+<link src="css/jquery.autocomplete.css" rel="stylesheet">
     <SCRIPT LANGUAGE="JavaScript">
       function deleteChecked() {
           var szGetVars = "delete_users=";
@@ -321,17 +283,11 @@ EOF;
           alert("You don't have the permissions"); return false;
       }
     </SCRIPT>
-<style>
-#scrollable-dropdown-menu .tt-dropdown-menu {
-max-height: 150px;
-overflow-y: auto;
-}
-</style>
+
 	<!-- jQuery -->
 	<script src="js/jquery-ui-1.10.4.custom.min.js"></script>
     <script src="js/jquery-2.1.0.min.js"></script>
-    <!--  Typeahead.js -->
-	<script src="js/typeahead.bundle.min.js"></script>
+   
     <script>
     $(document).ready(function() {
         $('#toggle').on('click',
@@ -347,7 +303,46 @@ overflow-y: auto;
     });
     </script>
 	<?php list_names_for_autocomplete($student_row, $sqlStudents); ?>
-	<?php typeahead(); ?>
+
+<script>
+$(function() {
+    var availableTags = [
+                         "ActionScript",
+                         "AppleScript",
+                         "Asp",
+                         "BASIC",
+                         "C",
+                         "C++",
+                         "Clojure",
+                         "COBOL",
+                         "ColdFusion",
+                         "Erlang",
+                         "Fortran",
+                         "Groovy",
+                         "Haskell",
+                         "Java",
+                         "JavaScript",
+                         "Lisp",
+                         "Perl",
+                         "PHP",
+                         "Python",
+                         "Ruby",
+                         "Scala",
+                         "Scheme"
+                       ];
+    $("#tags").autocomplete({
+        source: availableTags,
+        autofocus: true,
+        minlength: 1
+        //change: function( event, ui ) 
+        //{
+		//($"#name").toggle();
+         //}
+        
+    });
+ 
+});
+</script>
 
 
 	
@@ -376,10 +371,21 @@ overflow-y: auto;
 <div class="container">     
 
 <!--  form for autocomplete first and last names-->
-<div id="scrollable-dropdown-menu" class="input-group input-group-lg">
-<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span><input name="typahead" autofocus class="typeahead form-control" placeholder="Enter student name">
 
+  
+
+
+<div class="input-group ui-widget">
+  <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span>
+  </span>
+  <input id="tags" autofocus class="form-control" placeholder="Search for student">
 </div>
+</div>
+
+
+
+
+       
 
 
 <p>&nbsp;</p>

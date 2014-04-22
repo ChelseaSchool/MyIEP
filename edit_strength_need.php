@@ -42,7 +42,7 @@ require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
 require_once(IPP_PATH . 'include/supporting_functions.php');
-require_once(IPP_PATH . 'include/config.inc.php');
+//require_once(IPP_PATH . 'include/config.inc.php');
 
 
 header('Pragma: no-cache'); //don't cache this page!
@@ -155,7 +155,7 @@ if(isset($_POST['edit_strength_or_need']) && $have_write_permission) {
 </HEAD>
     <BODY>
    <?php print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']); ?>
-    <?php print_jumbotron_with_page_name("Edit Strengths &amp; Needs", $student_row['first_name'] . $student_row['last_name'], $permission_level); ?>
+   <?php print_jumbotron_with_page_name("Edit Strengths &amp; Needs", $student_row['first_name'] . " " . $student_row['last_name'], $permission_level); ?>
         
          
                 <table class="frame" width=620px align=center border="0">
