@@ -278,31 +278,33 @@ $enum_options_area = mysql_enum_values("area_of_strength_or_need","area");
                         <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
                         </div>
                         
-                        <table width=80%" class="table-striped table-hover" align="center">
+                        
                         
                         <?php
                         
 
                         //print the header row...
-                        echo "<tr>\n
- 								<td>Select</td>\n
- 								<td>UID</td>\n
- 								<td align=\"center\">Type</td>\n
- 								<td align=\"center\">Description (click to edit)</td>\n
- 								<td align=\"center\">Ongoing*</td>\n
+                        echo "<table width=80% class=\"table table-striped table-hover\" align=\"center\">\n
+ 								<tr>\n
+ 								<th>Select <small>(disabled)</small></th>\n
+ 								<th>UID</th>\n
+ 								<th>Type</th>\n
+ 								<th>Description (click to edit)</th>\n
+ 								<th>Ongoing*</th>\n
  								</tr>\n";
                         while ($strength_row=mysql_fetch_array($strength_result)) { //current...
                             echo "<tr>\n";
-                            echo "<td><div class=\"form-group\"><input class=\"form-control\" type=\"checkbox\" name=\"" . $strength_row['uid'] . "></div></td>";
-                            echo "<td>" . $strength_row['uid'] . "</td>";
-                            echo "<td><a href=\"" . IPP_PATH . "edit_strength_need.php?uid=" . $strength_row['uid'] . $strength_row['strength_or_need']  . "</a></td>\n";
-                            echo "<td><a href=\"" . IPP_PATH . "edit_strength_need.php?uid=" . $strength_row['uid'] . $strength_row['description'] . "</a></td>\n";
-                            echo "<td><a href=\"" . IPP_PATH . "edit_strength_need.php?uid=" . $strength_row['uid'] . $strength_row['is_valid'] . "</a></center></td>\n";
+                            echo "<td align=\"center\"><input class=\"form-control\" type=\"checkbox\" name=\"" . $strength_row['uid'] . "\"></td>\n";
+                            echo "<td>" . $strength_row['uid'] . "</td>\n";
+                            echo "<td><a href=\"" . IPP_PATH . "edit_strength_need.php?uid=" . $strength_row['uid'] . "\">" . $strength_row['strength_or_need']  . "</a></td>\n";
+                            echo "<td><a href=\"" . IPP_PATH . "edit_strength_need.php?uid=" . $strength_row['uid'] . "\">" . $strength_row['description'] .  "</a></td>\n";
+                            echo "<td><a href=\"" . IPP_PATH . "edit_strength_need.php?uid=" . $strength_row['uid'] . "\">" . $strength_row['is_valid']. "</a></td>\n";
                             echo "</tr>\n";
                           
                         }
+                        echo "</table>"
                         ?>
-                         <table>
+                         <table width="80%" align="center">
                              <tr>
                              <td>
                                 <img src="<?php echo IPP_PATH . "images/table_arrow.png"; ?>">&nbsp;With Selected:
