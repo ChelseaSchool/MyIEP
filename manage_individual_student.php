@@ -239,14 +239,80 @@ foreach($_GET as $key => $value) {
 }
 //strip trailing '&'
 $szBackGetVars = substr($szBackGetVars, 0, -1);
+
+list_names_for_autocomplete($student_row, $sqlStudents);
+
+function print_jquery_autocomplete() {
+echo <<< EOF
+<script>
+$(function() {
+    var availableTags = [
+                         "ActionScript",
+                         "AppleScript",
+                         "Asp",
+                         "BASIC",
+                         "C",
+                         "C++",
+                         "Clojure",
+                         "COBOL",
+                         "ColdFusion",
+                         "Erlang",
+                         "Fortran",
+                         "Groovy",
+                         "Haskell",
+                         "Java",
+                         "JavaScript",
+                         "Lisp",
+                         "Perl",
+                         "PHP",
+                         "Python",
+                         "Ruby",
+                         "Scala",
+                         "Scheme"
+                       ];
+    $("#tags").autocomplete({
+        source: available_names,
+        open: function () {
+             $('ul.ui-autocomplete')
+             .addClass('opened') 
+             $('#students').hide()},
+        close: function () 
+        { 
+		  
+          $('ul.ui-autocomplete')
+           .removeClass('opened'),
+		  $('#students').show(),
+			(if ($(#tags).val() != null) 
+				{
+				$("#name").show();
+				}),
+			},
+        autofocus: true,
+        minlength: 1,
+        messages: {
+            noResults: '',
+            results: ''
+        }
+        //change: function( event, ui ) 
+        //{
+		//($"#name").toggle();
+         //}
+        
+    });
+ 
+});
+</script>
+
+EOF;
+}
+
+
 ?>
-
-
 
 <!DOCTYPE HTML>
 <HTML lang="en">
 <HEAD>
-<style>
+<!-- <style>
 .ui-autocomplete {
     opacity: 0;
     display: none;
@@ -255,22 +321,28 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
     -webkit-transition: opacity 1s;
     -o-transition: opacity 1s;
 }
+.ui-autocomplete.ui-menu { 
+	opacity: 0.9; 
+	}
 
+.ui-autocomplete.ui-menu .ui-menu-item { 
+	
+	}
+	
 .ui-autocomplete.opened {
-    opacity: 100;
     transition: opacity 1s;
     -moz-transition: opacity 1s;
     -webkit-transition: opacity 1s;
     -o-transition: opacity 1s;
 }
-</style>	
+</style>-->
 <?php print_meta_for_html5($page_title); ?>
 <TITLE><?php echo $page_title; ?></TITLE>
 <?php print_bootstrap_head(); ?>
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">   
 <script src="js/autocomplete-html.js" type="text/javascript"></script>
 <script src="js/jquery.autocomplete.min.js" type="text/javascript"></script>
-<link src="css/jquery.autocomplete.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/jquery.autocomplete.css">
     <SCRIPT LANGUAGE="JavaScript">
       function deleteChecked() {
           var szGetVars = "delete_users=";
@@ -314,72 +386,27 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
     	});
     });
     </script>
-    <script>
-    $(document).ready(function() {
-        $('.student').hide ();
+    
+  <?php print_jquery_autocomplete(); ?>
+    
+    <!-- <script>
+    //$(document).ready(function() {
+        //$('.student').hide ();
     	
-    });
-    </script>
-	<?php list_names_for_autocomplete($student_row, $sqlStudents); ?>
-
-<script>
-$(function() {
-    var availableTags = [
-                         "ActionScript",
-                         "AppleScript",
-                         "Asp",
-                         "BASIC",
-                         "C",
-                         "C++",
-                         "Clojure",
-                         "COBOL",
-                         "ColdFusion",
-                         "Erlang",
-                         "Fortran",
-                         "Groovy",
-                         "Haskell",
-                         "Java",
-                         "JavaScript",
-                         "Lisp",
-                         "Perl",
-                         "PHP",
-                         "Python",
-                         "Ruby",
-                         "Scala",
-                         "Scheme"
-                       ];
-    $("#tags").autocomplete({
-        source: availableTags,
-        open: function () { $('ul.ui-autocomplete').addClass('opened') },
-        close: function () { 
-          $('ul.ui-autocomplete')
-            .removeClass('opened')
-            .css('display','block')},
-        autofocus: true,
-        minlength: 1,
-        messages: {
-            noResults: '',
-            results: ''
-        }
-        //change: function( event, ui ) 
-        //{
-		//($"#name").toggle();
-         //}
-        
-    });
- 
-});
-</script>
+   // });
+    </script>-->
 
 
-	
 
 
- 
+
+
+<?php //$sqlStudents=clean_in_and_out(getStudents());  //get students again ?>
+<?php $sqlStudents=getStudents();  //get students again ?>
 </HEAD>
 <BODY>
    
-<?php $sqlStudents=clean_in_and_out(getStudents());  //get students again ?>    	
+    	
 <?php echo print_general_navbar(); ?>
 <div class="jumbotron"><div class="container">     
 
@@ -399,20 +426,20 @@ $(function() {
 
 <!--  form for autocomplete first and last names-->
 
-  
+
 
 
 <div class="input-group">
   <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span>
   </span>
-  <input id="tags" autofocus class="form-control" placeholder="Search for student">
+  <input id="tags" class="form-control" placeholder="Search for student">
 </div>
-</div>
 
 
 
 
-       
+
+      
 
 
 <p>&nbsp;</p>
