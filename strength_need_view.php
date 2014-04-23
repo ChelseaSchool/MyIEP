@@ -286,11 +286,11 @@ $enum_options_area = mysql_enum_values("area_of_strength_or_need","area");
                         //print the header row...
                         echo "<table width=80% class=\"table table-striped table-hover\" align=\"center\">\n
  								<tr>\n
- 								<th>Select <small>(disabled)</small></th>\n
+ 								<th>Select</th>\n
  								<th>UID</th>\n
  								<th>Type</th>\n
  								<th>Description (click to edit)</th>\n
- 								<th>Ongoing*</th>\n
+ 								<th>Ongoing</th>\n
  								</tr>\n";
                         while ($strength_row=mysql_fetch_array($strength_result)) { //current...
                             echo "<tr>\n";
@@ -304,7 +304,7 @@ $enum_options_area = mysql_enum_values("area_of_strength_or_need","area");
                         }
                         echo "</table>"
                         ?>
-                         <table width="80%" align="center">
+                         <table class="table" width="80%" align="center">
                              <tr>
                              <td>
                                 <img src="<?php echo IPP_PATH . "images/table_arrow.png"; ?>">&nbsp;With Selected:

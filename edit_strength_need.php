@@ -140,11 +140,7 @@ if(isset($_POST['edit_strength_or_need']) && $have_write_permission) {
 <HEAD>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
     <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
+    
     
     <SCRIPT LANGUAGE="JavaScript">
       function noPermission() {
@@ -156,65 +152,46 @@ if(isset($_POST['edit_strength_or_need']) && $have_write_permission) {
     <BODY>
    <?php print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']); ?>
    <?php print_jumbotron_with_page_name("Edit Strengths &amp; Needs", $student_row['first_name'] . " " . $student_row['last_name'], $permission_level); ?>
-        
+   <div class="container">
+   <?php if ($system_message) { echo $system_message;} ?>     
          
-                <table class="frame" width=620px align=center border="0">
-                    
-                    
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+<!-- BEGIN edit strength/need -->
+<form name="edit_strength_or_need" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_strength_need.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
 
-                        <center><table><tr><td><center><p class="header">Edit Strengths and Needs(<?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?>)-</p></center></td></tr></table></center>
-                        <BR>
+<h2>Edit and Click <em>Update</em></h2>
+<input class="form-control" type="hidden" name="edit_strength_or_need" value="1">
+<input class="form-control" type="hidden" name="uid" value="<?php echo $strength_row['uid'];?>">
+<label>Strength or Need</label>
+<div class="form-group">
+<select class="form-control" name="strength_or_need" tabindex="1">
+<option value="">-Choose-</option>
+<option value="Strength" <?php if($strength_row['strength_or_need'] == 'Strength') echo "SELECTED"; ?>>Strength</option>
+<option value="Need" <?php if($strength_row['strength_or_need'] == 'Need') echo "SELECTED"; ?>>Need</option>
+</select>
+</div>
 
-                        <!-- BEGIN edit strength/need -->
-                        <center>
-                        <form name="edit_strength_or_need" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_strength_need.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
-                        <tr>
-                          <td colspan="3">
-                          <p class="info_text">Edit and click 'Update'.</p>
-                           <input type="hidden" name="edit_strength_or_need" value="1">
-                           <input type="hidden" name="uid" value="<?php echo $strength_row['uid'];?>">
-                          </td>
-                        </tr>
-                        <tr>
-                           <td valign="bottom" bgcolor="#E0E2F2" class="row_default">Strength or Need:</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <select name="strength_or_need" tabindex="1">
-                                   <option value="">-Choose-</option>
-                                   <option value="Strength" <?php if($strength_row['strength_or_need'] == 'Strength') echo "SELECTED"; ?>>Strength</option>
-                                   <option value="Need" <?php if($strength_row['strength_or_need'] == 'Need') echo "SELECTED"; ?>>Need</option>
-                               </select>
-                           </td>
-                           <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="3" class="row_default"><input type="submit" tabindex="4" name="Update" value="Update"></td>
-                        </tr>
-                        <tr>
-                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Description:</td><td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="description" tabindex="2" cols="30" rows="5" wrap="soft"><?php echo $strength_row['description'];?></textarea></td>
-                        </tr>
-                        <tr>
-                           <td valign="bottom" bgcolor="#E0E2F2" class="row_default">Ongoing:</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <select name="is_valid" tabindex="3">
-                                   <option value="">-Choose-</option>
-                                   <option value="Y" <?php if($strength_row['is_valid'] == 'Y') echo "SELECTED"; ?>>Yes</option>
-                                   <option value="N" <?php if($strength_row['is_valid'] == 'N') echo "SELECTED"; ?>>No</option>
-                               </select>
-                           </td>
-                        </tr>
-                        </table>
-                        </form>
-                        </center>
-                        <!-- END add supervisor -->
+<div class="form-group">                      
+<label>Description</label>
+<textarea class="form-control" spellcheck="true" name="description" tabindex="2" cols="30" rows="5" wrap="soft"><?php echo $strength_row['description'];?></textarea>
+</div>
+<div class="form-group">
+<label>Ongoing</label>
+<select class="form-control" name="is_valid" tabindex="3">
+<option value="">-Choose-</option>
+<option value="Y" <?php if($strength_row['is_valid'] == 'Y') echo "SELECTED"; ?>>Yes</option>
+<option value="N" <?php if($strength_row['is_valid'] == 'N') echo "SELECTED"; ?>>No</option>
+</select>
+</div>
+<div class="form-group">                      
+<input class="form-control" type="submit" tabindex="4" name="Update" value="Update">
+</div>
+</form>
+<!-- END add supervisor -->
 
-                        </div>
-                        </td>
-                    </tr>
-                </table>
+                   
             
-        <?php print_complete_footer(); ?>
-   <?php print_bootstrap_js(); ?>
+<?php print_complete_footer(); ?>
+</div>
+<?php print_bootstrap_js(); ?>
     </BODY>
 </HTML>
