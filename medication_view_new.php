@@ -180,7 +180,7 @@ if(!$medication_result) {
     <TITLE><?php echo $page_title; ?></TITLE>
     
     
-    <script src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
+    
     <SCRIPT>
       function confirmChecked() {
           var szGetVars = "strengthneedslist=";
@@ -224,7 +224,7 @@ if(!$medication_result) {
                         <form spellcheck="true" name="medicationlist" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "medication_view.php"; ?>" method="get">
                         <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
                        
-                        <table class="table table-striped table-hover" border="0" cellpadding="0" cellspacing="1">
+                        <table class="table table-striped table-hover">
                        
                         <?php
                         

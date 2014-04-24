@@ -246,104 +246,55 @@ function print_jquery_autocomplete() {
 echo <<< EOF
 <script>
 $(function() {
-    var availableTags = [
-                         "ActionScript",
-                         "AppleScript",
-                         "Asp",
-                         "BASIC",
-                         "C",
-                         "C++",
-                         "Clojure",
-                         "COBOL",
-                         "ColdFusion",
-                         "Erlang",
-                         "Fortran",
-                         "Groovy",
-                         "Haskell",
-                         "Java",
-                         "JavaScript",
-                         "Lisp",
-                         "Perl",
-                         "PHP",
-                         "Python",
-                         "Ruby",
-                         "Scala",
-                         "Scheme"
-                       ];
-    $("#tags").autocomplete({
+    var person;
+    $('#tags').autocomplete({
         source: available_names,
         open: function () {
              $('ul.ui-autocomplete')
              .addClass('opened') 
-             $('#students').hide()},
+             $('#students').hide()
+		},
         close: function () 
         { 
 		  
           $('ul.ui-autocomplete')
            .removeClass('opened'),
-		  $('#students').show(),
-			(if ($(#tags).val() != null) 
-				{
-				$("#name").show();
-				}),
+		  $('#students').show()
+		  
+		  
+		   person = $('#tags').val(),
+		   show_name(person)
 			},
         autofocus: true,
         minlength: 1,
-        messages: {
-            noResults: '',
-            results: ''
-        }
+        
         //change: function( event, ui ) 
         //{
-		//($"#name").toggle();
-         //}
-        
+		
+         
+     
+		
+		})
+	 
     });
- 
-});
-</script>
-
+   </script>
 EOF;
 }
-
 
 ?>
 
 <!DOCTYPE HTML>
 <HTML lang="en">
 <HEAD>
-<!-- <style>
-.ui-autocomplete {
-    opacity: 0;
-    display: none;
-    transition: opacity 1s;
-    -moz-transition: opacity 1s;
-    -webkit-transition: opacity 1s;
-    -o-transition: opacity 1s;
-}
-.ui-autocomplete.ui-menu { 
-	opacity: 0.9; 
-	}
 
-.ui-autocomplete.ui-menu .ui-menu-item { 
-	
-	}
-	
-.ui-autocomplete.opened {
-    transition: opacity 1s;
-    -moz-transition: opacity 1s;
-    -webkit-transition: opacity 1s;
-    -o-transition: opacity 1s;
-}
-</style>-->
 <?php print_meta_for_html5($page_title); ?>
 <TITLE><?php echo $page_title; ?></TITLE>
 <?php print_bootstrap_head(); ?>
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">   
-<script src="js/autocomplete-html.js" type="text/javascript"></script>
-<script src="js/jquery.autocomplete.min.js" type="text/javascript"></script>
-<link rel="stylesheet" type="text/css" href="css/jquery.autocomplete.css">
-    <SCRIPT LANGUAGE="JavaScript">
+<!--  <script src="js/autocomplete-html.js" type="text/javascript"></script>-->
+
+
+    <SCRIPT>
       function deleteChecked() {
           var szGetVars = "delete_users=";
           var szConfirmMessage = "Are you sure you want to delete or duplicate:\n";
@@ -377,36 +328,36 @@ EOF;
 	<!-- jQuery -->
 	<script src="js/jquery-ui-1.10.4.custom.min.js"></script>
     <script src="js/jquery-2.1.0.min.js"></script>
-   
-    <script>
-    $(document).ready(function() {
-        $('#toggle').on('click',
-    	function() {
-      	  $("tr.NONE").toggle ();
-    	});
-    });
-    </script>
-    
+	<script src="js/jquery.autocomplete.min.js" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="css/jquery.autocomplete.min.css">   
+
+<script>   
+function show_name(person) {
+	if (person != null)
+	{
+		$("tr.student").hide()
+		$(document.getElementById(person)).show()
+	
+	console.log("#" + person)
+	}
+	else $("#students").show();
+}
+</script>  
   <?php print_jquery_autocomplete(); ?>
     
-    <!-- <script>
-    //$(document).ready(function() {
-        //$('.student').hide ();
-    	
-   // });
-    </script>-->
+    
 
 
 
 
 
 
-<?php //$sqlStudents=clean_in_and_out(getStudents());  //get students again ?>
-<?php $sqlStudents=getStudents();  //get students again ?>
-</HEAD>
-<BODY>
+
+<?php $sqlStudents=getStudents(); ?>  
+
    
-    	
+</HEAD>
+<BODY>   	
 <?php echo print_general_navbar(); ?>
 <div class="jumbotron"><div class="container">     
 
@@ -483,7 +434,7 @@ EOF;
                             echo "<td>" . $current_student_permission . "</td>";
                             echo "</tr>";//close row */
 						 ?>
- </table>							
+</table>							
 <!-- </form> -->
 	
 <!-- <button type="submit" name="delete" title="delete" class="btn btn-default">Submit</button>-->
