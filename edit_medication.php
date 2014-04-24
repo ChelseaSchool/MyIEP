@@ -8,17 +8,7 @@
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100; //everybody check within
 
-/**
- * medication.php -- strength and needs management.
- *
- * Copyright (c) 2005 Grasslands Regional Division #6
- * All rights reserved
- *
- * Created: July 27, 2005
- * By: M. Nielsen
- * Modified: February 17, 2007.
- *
- */
+
 
 /*   INPUTS: $_GET['uid'],$_POST['uid'];
  *
@@ -38,8 +28,7 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/navbar.php');
-
+require_once(IPP_PATH . 'include/supporting_functions.php');
 header('Pragma: no-cache'); //don't cache this page!
 
 if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
@@ -142,16 +131,10 @@ if(isset($_POST['edit_medication']) && $have_write_permission) {
 
 
 ?> 
-<!DOCTYPE HTML>
-<HTML lang=en>
-<HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
-    <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
+<?php print_html5_primer(); ?>
+<?php print_meta_for_html5($page_title)?>
+
+    
     
     <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
     <SCRIPT LANGUAGE="JavaScript">
@@ -180,92 +163,51 @@ if(isset($_POST['edit_medication']) && $have_write_permission) {
           alert("You don't have the permission level necessary"); return false;
       }
     </SCRIPT>
+<?php print_bootstrap_head(); ?>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.9.1.js"></script>
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+<script> 
+$(function() {
+	$( ".datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
+});
+</script>
 </HEAD>
     <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("medication_view.php?student_id=$student_id"); ?></center>
-                    </td></tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+ <?php print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']) ; ?>       
+ <?php print_jumbotron_with_page_name("Edit Medication", $student_row['first_name'] . " " . $student_row['last_name'], $permission_level) ; ?>
+ <div class="container">
+ <?php if ($system_message) { echo $system_message ;} ?>
+ <h2>Edit and click 'Add'</h2>
+<form role="form" name="edit_medication" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_medication.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+<div class="form-group">
+<input type="hidden" name="edit_medication" value="1">
+<input type="hidden" name="uid" value="<?php echo $uid; ?>">
+<div class="form-group">                          
+<label>Medication Name</label>
+<input class="form-control" type="text" tabindex="1" name="medication_name" value="<?php echo $medication_row['medication_name']; ?>" size="30" maxsize="254">
+</div>
+<div class="form-group">                            
+<Label>Doctor</label>
+<input class="form-control" type="text" tabindex="2" name="doctor" value="<?php echo $medication_row['doctor']; ?>" size="30" maxsize="254">
+</div>
+<div class="form-group">                        
+<label>Medication Start Date (YYYY-MM-DD)</label>
+<input class="form-control datepicker" pattern="\d{4}-\d{1,2}-\d{1,2}" type="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" tabindex="3" name="start_date" value="<?php echo $medication_row['start_date']; ?>">
+</div>
+<div class="form-group">                        
+<label>Medication End Date (YYYY-MM-DD)</label>
+<input class="form-control datepicker" pattern="\d{4}-\d{1,2}-\d{1,2}" type="datepicker" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" tabindex="4" name="end_date" value="<?php echo $medication_row['end_date']; ?>">
+</div>                         
+<button type="submit" class="btn btn-default" type="submit" tabindex="4" value="Edit">Edit Medication</button> 
+</div></form>
+                        
+<!-- END add medication -->
 
-                        <center><table><tr><td><center><p class="header">-Edit Medication<BR>(<?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?>)-</p></center></td></tr></table></center>
-                        <BR>
-
-                        <!-- BEGIN add medication -->
-                        <center>
-                        <form name="edit_medication" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_medication.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
-                        <tr>
-                          <td colspan="3">
-                          <p class="info_text">Edit and click 'Add'.</p>
-                           <input type="hidden" name="edit_medication" value="1">
-                           <input type="hidden" name="uid" value="<?php echo $uid; ?>">
-                          </td>
-                        </tr>
-                        <tr>
-                            <td valign="bottom" bgcolor="#E0E2F2" class="row_default">Medication Name:</td>
-                            <td bgcolor="#E0E2F2" class="row_default">
-                            <input type="text" tabindex="1" name="medication_name" value="<?php echo $medication_row['medication_name']; ?>" size="30" maxsize="254">
-                            </td>
-                            <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="4" class="row_default"><input type="submit" tabindex="5" name="Edit" value="Edit"></td>
-                        </tr>
-                        <tr>
-                            <td valign="bottom" bgcolor="#E0E2F2" class="row_default">Doctor:</td>
-                            <td bgcolor="#E0E2F2" class="row_default">
-                            <input type="text" tabindex="2" name="doctor" value="<?php echo $medication_row['doctor']; ?>" size="30" maxsize="254">
-                            </td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">Medication Start Date: (YYYY-MM-DD)</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="text" tabindex="3" name="start_date" value="<?php echo $medication_row['start_date']; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.start_date, 'yyyy-m-dd', 0, 0)">
-                           </td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">Medication End Date: (YYYY-MM-DD)</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="text" tabindex="4" name="end_date" value="<?php echo $medication_row['end_date']; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.end_date, 'yyyy-m-dd', 0, 0)">
-                           </td>
-                        </tr>
-                        </table>
-                        </form>
-                        </center>
-                        <!-- END add medication -->
-
-                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-              <?php navbar("medication_view.php?student_id=$student_id"); ?></td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
-        <center></center>
-    </BODY>
+                        
+                
+<?php print_complete_footer(); ?>    
+</div> 
+</BODY>
 </HTML>
