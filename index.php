@@ -18,7 +18,8 @@
  * 3. test sql injections
  */
 
-
+//ini_set('display_errors',1);
+//error_reporting(E_ALL);
 
 if(!defined('IPP_PATH')) define('IPP_PATH','./');
 //check if we are running install wizard
@@ -87,7 +88,7 @@ if(isset($LOGIN_NAME)) $LOGIN_NAME = $LOGIN_NAME; else $LOGIN_NAME="";
               <input name="LOGIN_NAME" type="text" placeholder="User Name" name="LOGIN_NAME" value="<?php echo $LOGIN_NAME;?>" class="form-control" value="<?php echo $LOGIN_NAME;?>">
             </div>
             <div class="form-group">
-              <input name=PASSWORD type="password" placeholder="Password" class="form-control" name="PASSWORD" value="">
+              <input name=PASSWORD type="password" placeholder="Password" class="form-control" name="PASSWORD" value="" placeholder="Password">
             </div>
             <button type="submit" class="btn btn-success">Sign in</button>
           </form>

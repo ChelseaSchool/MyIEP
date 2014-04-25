@@ -1,23 +1,23 @@
 <?php
 /** @file
- * @brief Authorization routine
- * @copyright 	2014 Chelsea School 
- * @copyright 	2005 Grasslands Regional Division #6
- * @copyright		This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
-    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-    You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * @authors		Rik Goldman, Sabre Goldman, Jason Banks, Alex, James, Paul, Bryan, TJ, Jonathan, Micah, Stephen, Joseph
- * @author		M. Nielson
- * @todo	
- * 1. a lot of things to check here.
- * 2. line 31 needs a why? for our purposes
- * 3. check session use; ensure security and best contemporary practice
- * 4. check that variable names for user and pw don't match table fields in db (a cursory look suggests we're ok there)
- * 5. line 12 says "files" instead of functions
- * 6. Clean session effectively on logout function
- */
+* @brief Authorization routine
+* @copyright 2014 Chelsea School
+* @copyright 2005 Grasslands Regional Division #6
+* @copyright This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+* @authors Rik Goldman, Sabre Goldman, Jason Banks, Alex, James, Paul, Bryan, TJ, Jonathan, Micah, Stephen, Joseph
+* @author M. Nielson
+* @todo
+* 1. a lot of things to check here.
+* 2. line 31 needs a why? for our purposes
+* 3. check session use; ensure security and best contemporary practice
+* 4. check that variable names for user and pw don't match table fields in db (a cursory look suggests we're ok there)
+* 5. line 12 says "files" instead of functions
+* 6. Clean session effectively on logout function
+*/
 
 
 
@@ -28,23 +28,23 @@
     require_once(IPP_PATH . 'etc/init.php');
 
  /** @fn register($szLogin='',$szPassword='')
-  * @details
-  * Starts session if login is successful. Throws errors and returns false if:
-  * 1. connect to MySQL fails
-  * 2. Get username fails
-  * 3. MySQL returns zero rows
-  * 
-  * @param string $szLogin
-  * @param string $szPassword
-  * @return boolean
-  */
+* @details
+* Starts session if login is successful. Throws errors and returns false if:
+* 1. connect to MySQL fails
+* 2. Get username fails
+* 3. MySQL returns zero rows
+*
+* @param string $szLogin
+* @param string $szPassword
+* @return boolean
+*/
     function register($szLogin='',$szPassword='') {
         global $mysql_user_append_to_login,$error_message, $mysql_user_select_login, $mysql_user_select_password, $mysql_user_table, $mysql_user_append_to_login,$IPP_TIMEOUT;
 
         $error_message = "";
 
          if(!connectUserDB()) {
-             $error_message = $error_message;  //just to remember we need this
+             $error_message = $error_message; //just to remember we need this
              return FALSE;
          }
 
@@ -70,7 +70,7 @@
          $_SESSION['IPP_double_login'] = TRUE;
 
          if(!connectIPPDB()) {
-             $error_message = $error_message;  //just to remember we need this
+             $error_message = $error_message; //just to remember we need this
              return FALSE;
          }
          //setup logged_in table...
@@ -104,20 +104,20 @@
     }
 
     /** @fn logout()
-     * @brief deletes a logged in user from logged in table in MySQL; or returns error.
-     * @return boolean
-     * @todo
-     * 1. Add logout mechanism to main page navbar
-     */
+* @brief deletes a logged in user from logged in table in MySQL; or returns error.
+* @return boolean
+* @todo
+* 1. Add logout mechanism to main page navbar
+*/
     function logout() {
         if(!session_id()) session_start();
         unset($_SESSION['egps_username']);
         unset($_SESSION['password']);
         unset($_SESSION['IPP_double_login']);
-		$_SESSION = array(); // Destroy the variables.
+$_SESSION = array(); // Destroy the variables.
         session_destroy();
         if(!connectIPPDB()) {
-             $error_message = $error_message;  //just to remember we need this
+             $error_message = $error_message; //just to remember we need this
              return FALSE;
          }
          $query = "DELETE FROM logged_in WHERE session_id='" . session_id() . "'";
@@ -129,11 +129,11 @@
     }
 
 /** @fn validate($szLogin='',$szPassword='')
- * @brief Begins session, checks username and password against user table in MySQL. Returns false and throws error message if there's a problem.
- * @param string $szLogin
- * @param string $szPassword
- * @return boolean
- */
+* @brief Begins session, checks username and password against user table in MySQL. Returns false and throws error message if there's a problem.
+* @param string $szLogin
+* @param string $szPassword
+* @return boolean
+*/
 
     function validate($szLogin='',$szPassword='') {
          //check username and password against user database
@@ -144,7 +144,7 @@
 
          $error_message = "";
          //start session...
-         //session_cache_limiter('private');  //IE6 sucks
+         //session_cache_limiter('private'); //IE6 sucks
          session_cache_limiter('nocache');
          if(session_id() == "") session_start();
 
@@ -163,7 +163,7 @@
          //connect DB:
 
          if(!connectIPPDB()) {
-             $error_message = $error_message;  //just to remember we need this
+             $error_message = $error_message; //just to remember we need this
              return FALSE;
          }
 
@@ -184,7 +184,7 @@
          //check if we have a valid login/password combination.
 
          if(!connectUserDB()) {
-             $error_message = $error_message;  //just to remember we need this
+             $error_message = $error_message; //just to remember we need this
              return FALSE;
          }
 
@@ -202,7 +202,7 @@
          }
 
          if(!connectIPPDB()) {
-             $error_message = $error_message;  //just to remember we need this
+             $error_message = $error_message; //just to remember we need this
              return FALSE;
          }
 
@@ -214,23 +214,23 @@
              return FALSE;
          }
 
-       //*******  authorized from now on! *******
+       //******* authorized from now on! *******
        return TRUE;
 
     }
 
-/** @fn		getPermissionLevel($szUsername='')
- * @brief	determines what resources the logged in user has access to.
- * @param string $szUsername
- * @return NULL or row from database
- */
+/** @fn getPermissionLevel($szUsername='')
+* @brief determines what resources the logged in user has access to.
+* @param string $szUsername
+* @return NULL or row from database
+*/
     function getPermissionLevel($szUsername='') {
          //returns permission level or NULL on fail.
          global $error_message;
 
          $error_message = "";
          if(!connectIPPDB()) {
-             $error_message = $error_message;  //just to remember we need this
+             $error_message = $error_message; //just to remember we need this
              return NULL;
          }
          //select the lowest username (just in case)...
@@ -271,12 +271,12 @@
 
 
     }
-/** @fn	get_services($PERMISSION_LEVEL=100)
- *  @brief	sets permissions for lowest authentication level
- *  @param	$PERMISSION_LEVEL = 100	
- *  @todo 	untangle this mess. Refactor as necessary.
- *  @bug
- *  
+/** @fn get_services($PERMISSION_LEVEL=100)
+* @brief sets permissions for lowest authentication level
+* @param $PERMISSION_LEVEL = 100
+* @todo untangle this mess. Refactor as necessary.
+* @bug
+*
 */
     function get_services($PERMISSION_LEVEL=100) {
 
@@ -288,7 +288,7 @@
         //get our school code
          $error_message = "";
          if(!connectIPPDB()) {
-             $error_message = $error_message;  //just to remember we need this
+             $error_message = $error_message; //just to remember we need this
              return NULL;
          }
 
@@ -309,7 +309,7 @@
         if($PERMISSION_LEVEL==NULL) return NULL;
 
         //special case for 'manage ipp users'...
-        if($PERMISSION_LEVEL == 0 || $is_local_ipp_administrator)  {
+        if($PERMISSION_LEVEL == 0 || $is_local_ipp_administrator) {
            array_push($retval,new service("Manage Users",IPP_PATH . "superuser_manage_users.php"));
         }
 
@@ -345,17 +345,17 @@
         return $retval;
     }
 
-    /** @fn 		getStudentPermission($student_id='')
-     *  @brief		Determines user's access to specific student's records
-     *  @detail
-     *  1. Returns error or null under some circumstances.
-     *  2. Otherwise, may return NONE,ERROR,READ,WRITE(READ,WRITE),ASSIGN(READ,WRITE,ASSIGN),ALL(READ,WRITE,ASSIGN,DELETE), or support_list['permission'] or NONE for no permissions.		
-     * @param string $student_id
-     * @return string|NULL|Ambigous
-     * @todo	
-     * 1. Rename function because it is a confusing name
-     * 2. It can start with get_. Separate words with underscores. Perhaps get_access_to_student_record().
-     */
+    /** @fn getStudentPermission($student_id='')
+* @brief Determines user's access to specific student's records
+* @detail
+* 1. Returns error or null under some circumstances.
+* 2. Otherwise, may return NONE,ERROR,READ,WRITE(READ,WRITE),ASSIGN(READ,WRITE,ASSIGN),ALL(READ,WRITE,ASSIGN,DELETE), or support_list['permission'] or NONE for no permissions.
+* @param string $student_id
+* @return string|NULL|Ambigous
+* @todo
+* 1. Rename function because it is a confusing name
+* 2. It can start with get_. Separate words with underscores. Perhaps get_access_to_student_record().
+*/
     function getStudentPermission($student_id='') {
         //returns NONE,ERROR,READ,WRITE(READ,WRITE),ASSIGN(READ,WRITE,ASSIGN),ALL(READ,WRITE,ASSIGN,DELETE),
         //or support_list['permission'] or NONE for no permissions.
@@ -368,7 +368,7 @@
 
          //find the currently logged in persons school code...
          if(!connectUserDB()) {
-             $error_message = $error_message;  //just to remember we need this
+             $error_message = $error_message; //just to remember we need this
              return "ERROR";
          }
 
@@ -382,7 +382,7 @@
          $school_code=$user_row['school_code'];
 
          if(!connectIPPDB()) {
-             $error_message = $error_message;  //just to remember we need this
+             $error_message = $error_message; //just to remember we need this
              return "ERROR";
          }
 
@@ -396,7 +396,7 @@
          //get our school code
          $error_message = "";
          if(!connectIPPDB()) {
-             $error_message = $error_message;  //just to remember we need this
+             $error_message = $error_message; //just to remember we need this
              return NULL;
          }
          $system_query = "SELECT * from support_member WHERE egps_username='" . $_SESSION['egps_username'] . "'";
@@ -410,15 +410,15 @@
          }
          //base our permission on the level we're assigned.
          switch($permission_level) {
-             case 0:     //Super Admin
-             case 10:    //Administrator
+             case 0: //Super Admin
+             case 10: //Administrator
                 return "ALL";
 
-             case 30:    //Principal (assign local) special case
+             case 30: //Principal (assign local) special case
                          //fall through and return ALL for local students.
-             case 20:    //Assistant Admin. (view all) special case
+             case 20: //Assistant Admin. (view all) special case
                          //fall through and return at least read...
-             case 40:    //Vice Principal (view local)
+             case 40: //Vice Principal (view local)
              default:
                 //we need to find the permissions from the support list
                 //as this user has no inherent permissions...
@@ -427,14 +427,14 @@
                 //if(mysql_num_rows($support_result) <= 0) {
                     switch($permission_level) {
                         case 30:
-                        case 40:   //changed as per s. chomistek (2006-03-23)
+                        case 40: //changed as per s. chomistek (2006-03-23)
                            if($is_local_student) return "ASSIGN";
                            else return "NONE";
                         case 20: //Asst admin special case of read for all
                            if($is_local_student) return "ASSIGN";
                            else return "READ";
                         //case 40: //vp special case read local
-                        //   if($is_local_student) return "READ";
+                        // if($is_local_student) return "READ";
                            //else return "NONE";
                         default:
                            //return "NONE";

@@ -34,7 +34,7 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/navbar.php');
+require_once(IPP_PATH . 'include/supporting_functions.php');
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -197,18 +197,13 @@ if(!$goal_category_name_result) {
     }
 /************************ end popup chooser support funtion  ******************/
 
+    
 ?> 
 
-<!DOCTYPE HTML>
-<HTML>
-<HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
+<?php print_html5_primer(); ?>
     <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
+    <?php print_bootstrap_head(); ?>
+    
     
      <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
      <script language="javascript" src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script>
@@ -232,6 +227,11 @@ if(!$goal_category_name_result) {
     </SCRIPT>
 </HEAD>
 <BODY>
+<?php print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']); ?>
+<?php print_jumbotron_with_page_name($page_name, $student_row['first_name'] . " " . $student_row['last_name'], $our_permissions); ?>
+<div class="container">
+<?php if ($system_message) { echo $system_message ;} ?>
+    
         <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
         <tr>
           <td class="shadow-topLeft"></td>
@@ -243,17 +243,15 @@ if(!$goal_category_name_result) {
             <td class="shadow-center" valign="top">
                 <table class="frame" width=620px align=center border="0">
                     <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
+          
                     </tr>
-                    <tr><td>
-                    <center><?php navbar("student_view.php?student_id=$student_id"); ?></center>
-                    </td></tr>
+                    
                     <tr>
                         <td valign="top">
                         <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+                        
 
-                        <center><table width="80%" cellspacing="0" cellpadding="0"><tr><td><center><p class="header">-New Goal-</p></center></td></tr><tr><td><center><p class="bold_text"> <?php echo $student_row['first_name'] . " " . $student_row['last_name'] .  ", Permission: " . $our_permission;?></p></center></td></tr></table></center>
+                        <h2>New Goal</h2> <?php echo $student_row['first_name'] . " " . $student_row['last_name'] .  ", Permission: " . $our_permission;?></p></center></td></tr></table></center>
                         <BR>
 
                         <!-- BEGIN add new entry -->
@@ -312,5 +310,6 @@ if(!$goal_category_name_result) {
         </table> 
         
     <?php print_complete_footer(); ?>
+    </div>   
     </BODY>
 </HTML>

@@ -129,11 +129,11 @@ if(!$student_result) {
 
 //check if we are adding...
 if(isset($_GET['next']) && $have_write_permission) {
-  //if(!isset($_GET['goal_area']) || $_GET['goal_area'] == "") {
-  //  $system_message = $system_message . "You must supply a goal area<BR>";
-  //} else {
+  if(!isset($_GET['goal_area']) || $_GET['goal_area'] == "") {
+    $system_message = $system_message . "You must supply a goal area<BR>";
+  } else {
      header("Location: ./add_goal_1.php?goal_area=" . $_GET['goal_area'] . "&student_id=" . $student_id);
-  //}
+  }
 }
 /*For later
  * $host  = $_SERVER['HTTP_HOST'];
