@@ -22,13 +22,21 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 if ((int)phpversion() < 5) { require_once(IPP_PATH . 'include/fileutils.php'); } //only for pre v5
 require_once(IPP_PATH . 'include/log.php');
-require_once(IPP_PATH . 'include/navbar.php');
+//require_once(IPP_PATH . 'include/navbar.php');
 require_once(IPP_PATH . 'include/supporting_functions.php');
-require_once(IPP_PATH . 'include/config.inc.php');
+//require_once(IPP_PATH . 'include/config.inc.php');
 header('Pragma: no-cache'); //don't cache this page!
 
-if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
-    if(!validate( $_POST['LOGIN_NAME'] ,  $_POST['PASSWORD'] )) {
+/** brief sanitize authenticate form
+ *  @remark but first secure against uncontrolled input
+ */
+$szLogin = "";
+$szPassword = "";
+$szLogin = mysql_real_escape_string($_POST['LOGIN_NAME']);
+$szPassword = mysql_real_escape_string($_POST['PASSWORD']);
+
+if(isset($szLogin) && isset( $szPassword )) {
+    if(!validate( $sz_Login ,  $szPassword )) {
         $system_message = $system_message . $error_message;
         if(isset($_SESSION['egps_username'])) IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
         else IPP_LOG($system_message,'no session','ERROR');
