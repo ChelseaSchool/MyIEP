@@ -30,13 +30,13 @@ header('Pragma: no-cache'); //don't cache this page!
 /** brief sanitize authenticate form
  *  @remark but first secure against uncontrolled input
  */
-$szLogin = "";
-$szPassword = "";
-$szLogin = mysql_real_escape_string($_POST['LOGIN_NAME']);
-$szPassword = mysql_real_escape_string($_POST['PASSWORD']);
+//$szLogin = "";
+//$szPassword = "";
+//$szLogin = mysql_real_escape_string($_POST['LOGIN_NAME']);
+//$szPassword = mysql_real_escape_string($_POST['PASSWORD']);
 
-if(isset($szLogin) && isset( $szPassword )) {
-    if(!validate( $sz_Login ,  $szPassword )) {
+if(isset($_POST['LOGIN_NAME']) && isset( $_POST['LOGIN_NAME'] )) {
+    if(!validate( $_POST['LOGIN_NAME'] ,  $_POST['LOGIN_NAME'] )) {
         $system_message = $system_message . $error_message;
         if(isset($_SESSION['egps_username'])) IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
         else IPP_LOG($system_message,'no session','ERROR');

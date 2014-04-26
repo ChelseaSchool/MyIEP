@@ -13,7 +13,7 @@
 
 /** @brief Define root path of MyIEP if not defined
 */
-if (!defined('IPP_PATH')) define('IPP_PATH', '../'));
+if (!defined('IPP_PATH')) define('IPP_PATH', '../');
 
 /** @breif not sure of this legacy conditional
  *  @todo 
