@@ -18,8 +18,12 @@
  * 3. test sql injections
  */
 
-//ini_set('display_errors',1);
-//error_reporting(E_ALL);
+ini_set('display_errors',1);
+error_reporting(E_ALL);
+
+//$session_id=session_id();
+//echo $session_id;
+
 
 if(!defined('IPP_PATH')) define('IPP_PATH','./');
 //check if we are running install wizard
@@ -33,11 +37,11 @@ include_once(IPP_PATH . 'include/db.php');
 //include_once(IPP_PATH . 'include/auth_new.php');
 include_once(IPP_PATH . 'include/supporting_functions.php');
 require_once(IPP_PATH . 'include/config.inc.php');
-//header('Pragma: no-cache'); //don't cache this page!
 //logout();
+//header('Pragma: no-cache'); //don't cache this page!
+
 if(isset($MESSAGE)) $MESSAGE = $MESSAGE; else $MESSAGE="";
 if(isset($LOGIN_NAME)) $LOGIN_NAME = $LOGIN_NAME; else $LOGIN_NAME="";
-
 ?> 
 <!DOCTYPE html>
 <html lang="en">

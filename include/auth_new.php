@@ -11,13 +11,14 @@
  *  * test setting session without sensitive password information
  */
 
-
+ini_set('display_errors',1);
+error_reporting(E_ALL);
 
 /** @brief Define root path of MyIEP if not defined
 */
 if (!defined('IPP_PATH')) define('IPP_PATH', '../');
 
-/** @brie not sure of this legacy conditional
+/** @brief not sure of this legacy conditional
  *  @todo 
  *  1. cross check against include/init.php
  */
@@ -36,8 +37,7 @@ if (!isset($_POST['PASSWORD'])){
 if (!isset($_POST['LOGIN_NAME'])){
 	exit();
 }
-$szPassword = $_POST['PASSWORD'];
-$szLogin = $_POST['LOGIN_NAME'];
+
 
 
 /** @fn register($szlogin, $szPassword)
@@ -45,7 +45,7 @@ $szLogin = $_POST['LOGIN_NAME'];
  * @param $szPassword
  * @return TRUE if no errors
  */
-function register($szLogin, $szPassword) {
+function register($szLogin='', $szPassword='') {
 	global $error_message, $mysql_user_table, $IPP_TIMEOUT;
 	//cleared variable to secure from outside data
     $error_message = "";
@@ -58,7 +58,7 @@ function register($szLogin, $szPassword) {
     	return FALSE;
     }
     
-
+    $szLogin = mysql_real_escape_string($szLogin);
     
     //query db for matching user info combination
   
@@ -78,14 +78,13 @@ function register($szLogin, $szPassword) {
     $_SESSION['uid'] = $szLogin;
     $_SESSION['hash'] = $hash;
     $_SESSION['IPP_double_login'] = TRUE;
-    
     if (!connectIPPDB()) {
     	$error_message = $error_message; //We're reminded this is needed by the legacy developer
     	return FALSE;
     }
     
     //setup logged_in table...
-    $query = "INSERT INTO logged_in (ipp_username,session_id,last_ip,time) VALUES ('$szLogin','" . session_id(). "','" . $_SERVER['REMOTE_ADDR'] . "', (NOW()+ INTERVAL " . $IPP_TIMEOUT . " MINUTE))";
+    $query = "INSERT INTO `logged_in` (ipp_username,session_id,last_ip,time) VALUES (\"$szLogin\", \"session_id()\" , \"{$_SERVER['REMOTE_ADDR']}\", (NOW()+ INTERVAL \"{$IPP_TIMEOUT}\" MINUTE))";
     $result = mysql_query($query);
     
     if(!$result) {
@@ -215,8 +214,9 @@ function validate($szLogin,$szPassword) {
 	}
 
 	//update the timeout.
-	$session_id = session_id();
-	$query = "UPDATE `logged_in` SET TIME = (NOW()+ INTERVAL \"{$IPP_TIMEOUT}\" MINUTE) where `session_id` = \"{$_SESSION['session_id']}\" ";
+	$query = "SELECT `session_id` from `logged_in` where `login_name` = \"{$szLogin}\"";
+	$result = mysql_query($query);
+	$query = "UPDATE `logged_in` SET TIME = (NOW()+ INTERVAL \"{$IPP_TIMEOUT}\" MINUTE) where `session_id` = \"$result\" ";
 	$result = mysql_query($query);
 	if(!$result) {
 		$error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$query'<BR>";
@@ -396,7 +396,7 @@ function getStudentPermission($student_id='') {
 	}
 
 	//check if this staff member is local to this student...
-	$local_query="SELECT * FROM school_history WHERE student_id=$student_id AND school_code='$school_code' AND end_date IS NULL";
+	$local_query="SELECT * FROM school_history WHERE student_id={$student_id} AND school_code='$school_code' AND end_date IS NULL";
 	$local_result=mysql_query($local_query); //ignore errors...
 	$is_local_student=FALSE;
 	if($local_result && mysql_num_rows($local_result) > 0) $is_local_student=TRUE;

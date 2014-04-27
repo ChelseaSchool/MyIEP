@@ -36,23 +36,39 @@ require_once(IPP_PATH . 'include/supporting_functions.php');
 header('Pragma: no-cache'); //don't cache this page!
 
 
-//check permission levels
 if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
     if(!validate( $_POST['LOGIN_NAME'] ,  $_POST['PASSWORD'] )) {
         $system_message = $system_message . $error_message;
-        if(isset($_SESSION['egps_username'])) IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
-        else IPP_LOG($system_message,'no session','ERROR');
+        IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
         require(IPP_PATH . 'index.php');
         exit();
     }
 } else {
     if(!validate()) {
         $system_message = $system_message . $error_message;
-        if(isset($_SESSION['egps_username'])) IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
-        else IPP_LOG($system_message,"no session",'ERROR');
+        IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
         require(IPP_PATH . 'index.php');
         exit();
     }
+}
+//************* SESSION active past here **************************
+
+//check permission levels
+if(getPermissionLevel($_SESSION['egps_username']) > $MINIMUM_AUTHORIZATION_LEVEL) {
+    $system_message = $system_message . "You do not have permission to view this page (IP: " . $_SERVER['REMOTE_ADDR'] . ")";
+    IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
+    require(IPP_PATH . 'security_error.php');
+    exit();
+}
+
+//************** validated past here SESSION ACTIVE****************
+$permission_level=getPermissionLevel($_SESSION['egps_username']);
+//check permission levels
+if($permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NULL) {
+    $system_message = $system_message . "You do not have permission to view this page (IP: " . $_SERVER['REMOTE_ADDR'] . ")";
+    IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
+    require(IPP_PATH . 'security_error.php');
+    exit();
 }
 
 ?> 
@@ -131,7 +147,7 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
       <div class="container">
         <h1>Admin Tools<small>&nbsp; MyIEP (Version <?php echo $IPP_CURRENT_VERSION; ?>)</small></h1> 
           <a class="btn btn-lg btn-primary" href="main.php" role="button">Return to Main &raquo;</a>
-         <h2>Logged in as: <small><?php echo $_SESSION['egps_username']; ?> (Permission: <?php echo $our_permission; ?>)</small></h2>
+         <h2>Logged in as: <small><?php echo $_SESSION['egps_username']; ?> (Permission: <?php echo $permission_level; ?>)</small></h2>
         </p>
       </div>
     </div> <!-- /container -->

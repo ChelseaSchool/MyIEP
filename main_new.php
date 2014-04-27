@@ -12,9 +12,11 @@
 $MINIMUM_AUTHORIZATION_LEVEL = 100;
 
 //Error Display - remove before deploy
-//ini_set('display_errors',1);
-//error_reporting(E_ALL);
+ini_set('display_errors',1);
+error_reporting(E_ALL);
 
+//$szLogin = mysql_real_escape_string($_POST['LOGIN_NAME']);
+//$szPassword = mysql_real_escape_string($_POST['PASSWORD']);
 
 if(isset($system_message)) $system_message = $system_message;
 else $system_message = "";
@@ -35,15 +37,13 @@ header('Pragma: no-cache'); //don't cache this page!
 /** brief sanitize authenticate form
  *  @remark but first secure against uncontrolled input
  */
-//$szLogin = "";
-//$szPassword = "";
-//$szLogin = mysql_real_escape_string($_POST['LOGIN_NAME']);
-//$szPassword = mysql_real_escape_string($_POST['PASSWORD']);
+
+
 
 if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
-    if(!validate( $_POST['LOGIN_NAME'] ,  $_POST['PASSWORD'] )) {
+		if(!validate( $_POST['LOGIN_NAME'] ,  $_POST['PASSWORD'] )) {
         $system_message = $system_message . $error_message;
-        if(isset($_SESSION['egps_username'])) IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
+        if(isset($_SESSION['uid'])) IPP_LOG($system_message,$_SESSION['uid'],'ERROR');
         else IPP_LOG($system_message,'no session','ERROR');
         require(IPP_PATH . 'index_new.php');
         exit();
@@ -51,16 +51,13 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
 } else {
     if(!validate()) {
         $system_message = $system_message . $error_message;
-        if(isset($_SESSION['egps_username'])) IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
+        if(isset($_SESSION['uid'])) IPP_LOG($system_message,$_SESSION['uid'],'ERROR');
         else IPP_LOG($system_message,"no session",'ERROR');
-        require(IPP_PATH . 'index.php');
+        require(IPP_PATH . 'index_new.php');
         exit();
     }
 }
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -133,14 +130,15 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
         <!--<div class="navbar-collapse collapse">
           <form class="navbar-form navbar-right" role="form" nctype="multipart/form-data" action="jumbotron.php" method="post">
             <div class="form-group">
-              <input type="text" placeholder="User Name" class="form-control" value="<?php echo $LOGIN_NAME;?>">
+              <input type="text" placeholder="User Name" class="form-control" name="User Name">
             </div>
             <div class="form-group">
               <input type="password" placeholder="Password" class="form-control" name="PASSWORD" value="">
             </div>
             <button type="submit" value="submit" class="btn btn-success">Sign in</button>
           </form>
-        </div><!--/.navbar-collapse -->
+        </div>-->
+        <!--/.navbar-collapse -->
       </div>
     </div>
 
