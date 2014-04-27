@@ -103,7 +103,7 @@ You should have received a copy of the GNU General Public License along with thi
 
     }
 
-    /** @fn logout()
+/** @fn logout()
 * @brief deletes a logged in user from logged in table in MySQL; or returns error.
 * @return boolean
 * @todo

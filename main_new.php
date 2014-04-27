@@ -11,6 +11,11 @@
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100;
 
+//Error Display - remove before deploy
+//ini_set('display_errors',1);
+//error_reporting(E_ALL);
+
+
 if(isset($system_message)) $system_message = $system_message;
 else $system_message = "";
 
@@ -19,7 +24,7 @@ define('IPP_PATH','./');
 /* eGPS required files. */
 require_once(IPP_PATH . 'etc/init.php');
 require_once(IPP_PATH . 'include/db.php');
-require_once(IPP_PATH . 'include/auth.php');
+require_once(IPP_PATH . 'include/auth_new.php');
 if ((int)phpversion() < 5) { require_once(IPP_PATH . 'include/fileutils.php'); } //only for pre v5
 require_once(IPP_PATH . 'include/log.php');
 //require_once(IPP_PATH . 'include/navbar.php');
