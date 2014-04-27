@@ -18,8 +18,8 @@
  * 3. test sql injections
  */
 
-ini_set('display_errors',1);
-error_reporting(E_ALL);
+//ini_set('display_errors',1);
+//error_reporting(E_ALL);
 
 if(!defined('IPP_PATH')) define('IPP_PATH','./');
 //check if we are running install wizard
