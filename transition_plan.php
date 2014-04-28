@@ -39,7 +39,6 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/navbar.php');
 require_once(IPP_PATH . 'include/supporting_functions.php');
 
 header('Pragma: no-cache'); //don't cache this page!
@@ -98,11 +97,7 @@ if(!$student_result) {
     IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
 } else {$student_row= mysql_fetch_array($student_result);}
 
-//function asc2hex ($temp) {
-//   $len = strlen($temp);
- //  for ($i=0; $i<$len; $i++) $data.=sprintf("%02x",ord(substr($temp,$i,1)));
-//   return $data;
-//}
+
 
 //check if we are modifying a student...
 if(isset($_POST['add_transition_plan']) && $have_write_permission) {
@@ -158,17 +153,12 @@ if(!$transition_result) {
 }
 
 
-?> 
-<!DOCTYPE HTML>
-<HTML lang=en>
-<HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
+?>
+<?php print_html5_primer(); ?>
+
+
     <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
+
     
     <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
     <SCRIPT LANGUAGE="JavaScript">
@@ -197,124 +187,80 @@ if(!$transition_result) {
           alert("You don't have the permission level necessary"); return false;
       }
     </SCRIPT>
+<?php print_bootstrap_head(); ?>
 </HEAD>
     <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("student_view.php?student_id=$student_id"); ?></center>
-                    </td></tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+<?php print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']); ?>
 
-                        <center><table><tr><td><center><p class="header">-Transition Plan (<?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?>)-</p></center></td></tr></table></center>
-                        <BR>
+<?php print_jumbotron_with_page_name("Transition Plan", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission); ?>
+        
+<div class="container">
+<?php if ($system_message) { echo $system_message;} ?>
 
-                        <!-- BEGIN add new entry -->
-                        <center>
-                        <form name="add_transition_plan" enctype="multipart/form-data" action="<?php echo IPP_PATH . "transition_plan.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
-                        <tr>
-                          <td colspan="3">
-                          <p class="info_text">Add Plan</p>
-                           <input type="hidden" name="add_transition_plan" value="1">
-                           <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
-                          </td>
-                        </tr>
-                        <tr>
-                            <td bgcolor="#E0E2F2" class="row_default">Plan:</td><td bgcolor="#E0E2F2" class="row_default">
-                            <textarea spellcheck="true" name="plan" tabindex="1" cols="40" rows="10" wrap="soft"><?php if(isset($_POST['plan'])) echo $_POST['plan']; ?></textarea>
-                            </td>
-                            <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="2" class="row_default"><input type="submit" tabindex="3" name="add" value="add"></td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">Date: (YYYY-MM-DD)</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="text" tabindex="2" name="date" value="<?php if(isset($_POST['date'])) echo $_POST['date']; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.date, 'yyyy-m-dd', 0, 0)">&nbsp;&nbsp;(determines school year)
-                           </td>
-                        </tr>
-                        </table>
-                        </form>
-                        </center>
-                        <!-- END add new entry -->
 
-                        <!-- BEGIN transitions table -->
-                        <form name="transtionplans" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "transition_plan.php"; ?>" method="get">
-                        <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
-                        <center><table width="80%" border="0" cellpadding="0" cellspacing="1">
-                        <tr><td colspan="7">Transition Plans (click to edit):</td></tr>
-                        <?php
-                        $bgcolor = "#DFDFDF";
-
-                        //print the header row...
-                        echo "<tr><td bgcolor=\"#E0E2F2\">&nbsp;</td><td bgcolor=\"#E0E2F2\">uid</td><td align=\"center\" bgcolor=\"#E0E2F2\">Plan</td><td align=\"center\" bgcolor=\"#E0E2F2\">Date</td></tr>\n";
+<h2>Current Transition Plans</h2>
+<!-- BEGIN transitions table -->
+<form name="transtionplans" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "transition_plan.php"; ?>" method="get">
+<input type="hidden" name="student_id" value="<?php echo $student_id ?>">
+<table class="table table-striped table-hover">
+                  
+<?php
+//print the header row...
+                        echo "<tr><th>Select</th><th>uid</th><th>Plan</th><th>Date</th></tr>\n";
                         while ($transition_row=mysql_fetch_array($transition_result)) { //current...
                             echo "<tr>\n";
-                            echo "<td bgcolor=\"#E0E2F2\"><input type=\"checkbox\" name=\"" . $transition_row['uid'] . "\"></td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\">" . $transition_row['uid'] . "</td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_transition_plan.php?uid=" . $transition_row['uid'] . "\" class=\"editable_text\" spellcheck=\"true\">" . clean_in_and_out($transition_row['plan'])  ."</td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_transition_plan.php?uid=" . $transition_row['uid'] . "\" class=\"editable_text\">" . $transition_row['date']  ."</td>\n";
+                            echo "<td><input type=\"checkbox\" name=\"" . $transition_row['uid'] . "\"></td>";
+                            echo "<td>" . $transition_row['uid'] . "</td>";
+                            echo "<td><a href=\"" . IPP_PATH . "edit_transition_plan.php?uid=" . $transition_row['uid'] . "\" class=\"editable_text\" spellcheck=\"true\">" . clean_in_and_out($transition_row['plan'])  ."</td>\n";
+                            echo "<td><a href=\"" . IPP_PATH . "edit_transition_plan.php?uid=" . $transition_row['uid'] . "\" class=\"editable_text\">" . $transition_row['date']  ."</td>\n";
                             echo "</tr>\n";
-                            if($bgcolor=="#DFDFDF") $bgcolor="#CCCCCC";
-                            else $bgcolor="#DFDFDF";
+                           
                         }
                         ?>
-                        <tr>
-                          <td colspan="7" align="left">
-                             <table>
-                             <tr>
-                             <td nowrap>
-                                <img src="<?php echo IPP_PATH . "images/table_arrow.png"; ?>">&nbsp;With Selected:
-                             </td>
-                             <td>
-                             <?php
-                                //if we have permissions also allow delete.
+                       </table>
+<!-- Act on selected transition entries -->                 
+ <table>
+	 <tr>
+	<td nowrap>
+	<img src="<?php echo IPP_PATH . "images/table_arrow.png"; ?>">&nbsp;With Selected:
+	</td>
+	<td>
+<?php
+ //if we have permissions also allow delete.
                                 if($permission_level <= $IPP_MIN_DELETE_COORDINATION_OF_SERVICES && $have_write_permission) {
                                     echo "<INPUT NAME=\"delete\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=Delete\" border=\"0\" value=\"1\">";
                                 }
                              ?>
-                             </td>
-                             </tr>
-                             </table>
-                          </td>
-                        </tr>
-                        </table></center>
-                        </form>
-                        <!-- end transitions table -->
+</td>
+</tr>
+</form>
+</table>
+                       
+<!-- end transitions table -->
 
-                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-            <?php navbar("student_view.php?student_id=$student_id"); ?>
-            </td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
-        <center></center>
+                       
+<!-- BEGIN add new entry -->
+
+                        <h2>Add Transition Plan</h2>
+                        <form name="add_transition_plan" enctype="multipart/form-data" action="<?php echo IPP_PATH . "transition_plan.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+						<div class="form-group">
+                           <input type="hidden" name="add_transition_plan" value="1">
+                           <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
+                            <label>Plan</label>
+                            <textarea class="form-control" spellcheck="true" name="plan" tabindex="1" cols="40" rows="5" wrap="soft"><?php if(isset($_POST['plan'])) echo $_POST['plan']; ?></textarea>
+                            
+                           
+                       
+                           <label>Date: (YYYY-MM-DD)</label>
+						  <input class="form-control" type="text" tabindex="2" name="date" value="<?php if(isset($_POST['date'])) echo $_POST['date']; ?>">
+                           <input type="submit" tabindex="3" name="add" value="add"></td>
+                         </div>
+                        </form>
+                    
+<!-- END add new entry --> 
+       
+ <?php print_complete_footer(); ?>              
+              </div> 
+<?php print_bootstrap_js(); ?>
     </BODY>
 </HTML>

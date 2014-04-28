@@ -299,7 +299,6 @@ function print_student_navbar($student_id, $student) {
             </ul>
        
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="index.php">Logout</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Menu <b class="caret"></b></a>
               <ul class="dropdown-menu">
