@@ -38,7 +38,6 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/navbar.php');
 require_once(IPP_PATH . 'include/supporting_functions.php');
 
 header('Pragma: no-cache'); //don't cache this page!
@@ -215,17 +214,11 @@ if(!$asst_tech_result) {
     }
 /************************ end popup chooser support funtion  ******************/
 
-?> 
-<!DOCTYPE HTML>
-<HTML lang=en>
-<HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
-    <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
+?>
+<?php print_html5_primer(); ?>
+   
+<TITLE><?php echo $page_title; ?></TITLE>
+<?php print_bootstrap_head(); ?>
     
     <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
     <script language="javascript" src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script>
@@ -262,115 +255,82 @@ if(!$asst_tech_result) {
 
 
     </SCRIPT>
+
 </HEAD>
-    <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("student_view.php?student_id=$student_id"); ?></center>
-                    </td></tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+<BODY>
+<?php print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']); ?>
+<?php print_jumbotron_with_page_name("Assistive Technology", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission); ?>
 
-                        <center><table><tr><td><center><p class="header">-Assistive Technology (<?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?>)-</p></center></td></tr></table></center>
-                        <BR>
+<div class="container">
+<?php if ($system_message) { echo  $system_message ;}; ?>
+    
+<h2>Assistive Technologies <small>Scroll Down to Add Technologies</small></h2>
+<!-- BEGIN assistive tech table-->
 
-                        <!-- BEGIN add new entry -->
-                        <center>
-                        <form name="add_asst_tech" enctype="multipart/form-data" action="<?php echo IPP_PATH . "assistive_technology.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
-                        <tr>
-                          <td colspan="3">
-                          <p class="info_text">Add a new entry</p>
-                           <input type="hidden" name="add_asst_tech" value="1">
-                           <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
-                          </td>
-                        </tr>
-                        <tr>
-                            <td valign="center" bgcolor="#E0E2F2" class="row_default">Technology:</td><td valign="top" bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="technology" tabindex="1" cols="30" rows="5" wrap="soft" onkeypress="return autocomplete(this,event,popuplist)"><?php if(isset($_POST['technology'])) echo $_POST['technology']; ?></textarea>&nbsp;<img src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" align="top" width="17" border=0 onClick="popUpChooser(this,document.all.technology)"></td>
-                            <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="1" class="row_default"><input type="submit" tabindex="2" name="add" value="add"></td>
-                        </tr>
-                        </table>
-                        </form>
-                        </center>
-                        <!-- END add new entry -->
+<form name="at" spellcheck="true" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "assistive_technology.php"; ?>" method="get">
+<input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
+<table class="table table-striped table-hover">
 
-                        <!-- BEGIN assistive tech table -->
-                        <form name="testing" spellcheck="true" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "assistive_technology.php"; ?>" method="get">
-                        <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
-                        <center><table width="80%" border="0" cellpadding="0" cellspacing="1">
-                        <tr><td colspan="6">Testing to Support Code:</td></tr>
-                        <?php
-                        $bgcolor = "#DFDFDF";
+<?php
 
-                        //print the header row...
-                        echo "<tr><td bgcolor=\"#E0E2F2\">&nbsp;</td><td bgcolor=\"#E0E2F2\">uid</td><td align=\"center\" bgcolor=\"#E0E2F2\">Technology</td></tr>\n";
-                        while ($asst_tech_row=mysql_fetch_array($asst_tech_result)) { //current...
-                            echo "<tr>\n";
-                            echo "<td bgcolor=\"#E0E2F2\"><input type=\"checkbox\" name=\"" . $asst_tech_row['uid'] . "\"></td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\">" . $asst_tech_row['uid'] . "</td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_assistive_technology.php?uid=" . $asst_tech_row['uid'] . "\" class=\"editable_text\">" . clean_in_and_out($asst_tech_row['technology'])  ."</a></td>\n";
-                            echo "</tr>\n";
-                            if($bgcolor=="#DFDFDF") $bgcolor="#CCCCCC";
-                            else $bgcolor="#DFDFDF";
-                        }
-                        ?>
-                        <tr>
-                          <td colspan="6" align="left">
-                             <table>
-                             <tr>
-                             <td nowrap>
-                                <img src="<?php echo IPP_PATH . "images/table_arrow.png"; ?>">&nbsp;With Selected:
-                             </td>
-                             <td>
-                             <?php
-                                //if we have permissions also allow delete and set all.
-                                if($permission_level <= $IPP_MIN_DELETE_ASSISTIVE_TECHNOLOGY && $have_write_permission) {
-                                    echo "<INPUT NAME=\"delete\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=Delete\" border=\"0\" value=\"1\">";
-                                }
-                             ?>
-                             </td>
-                             </tr>
-                             </table>
-                          </td>
-                        </tr>
-                        </table></center>
-                        </form>
-                        <!-- end assistive tec table -->
 
-                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-              <?php navbar("student_view.php?student_id=$student_id"); ?>
-            </td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
-        <center></center>
-    </BODY>
+//print the header row...
+
+echo "<tr><th>&nbsp;</th><th>uid</th><th>Technology</th></tr>\n";
+//loop through current assistive technologies
+while ($asst_tech_row=mysql_fetch_array($asst_tech_result)) { 
+        echo "<tr>\n";
+		echo "<td><input type=\"checkbox\" name=\"" . $asst_tech_row['uid'] . "\"></td>";
+		echo "<td>" . $asst_tech_row['uid'] . "</td>";
+	    echo "<td><a href=\"" . IPP_PATH . "edit_assistive_technology.php?uid=" . $asst_tech_row['uid'] . "\" class=\"editable_text\">" . clean_in_and_out($asst_tech_row['technology'])  ."</a></td>\n";
+		echo "</tr>\n";
+}
+?>
+</table>                       
+<table>
+<tr>
+<td nowrap>
+<img src="<?php echo IPP_PATH . "images/table_arrow.png"; ?>">&nbsp;With Selected:
+</td>
+
+<td>
+<?php
+//if we have permissions also allow delete and set all.
+if($permission_level <= $IPP_MIN_DELETE_ASSISTIVE_TECHNOLOGY && $have_write_permission) {
+	echo "<INPUT NAME=\"delete\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=Delete\" border=\"0\" value=\"1\">";
+}
+?>
+</td>
+</tr>
+</table>
+</form>
+<!-- end assistive tec table -->              
+                   
+                    
+ <!-- BEGIN add new entry -->
+<h2>Add New Assistive Technology</h2>                 
+<form name="add_asst_tech" enctype="multipart/form-data" action="<?php echo IPP_PATH . "assistive_technology.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\""; ?>>                    
+<input type="hidden" name="add_asst_tech" value="1">
+<input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
+<div class="form-group">                          
+<label>Technology</label>
+<textarea class="form-control" spellcheck="true" name="technology" tabindex="1" cols="30" rows="5" wrap="soft" onkeypress="return autocomplete(this,event,popuplist)"><?php if(isset($_POST['technology'])) echo $_POST['technology']; ?></textarea><img src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" align="top" width="17" border=0 onClick="popUpChooser(this,document.all.technology)"></td>
+
+<button type="submit" name="add" value="add" class="btn btn-default">Add Assistive Technology</button>
+</div>
+</form>
+                       
+<!-- END add new entry -->
+
+
+
+                       
+                   
+     
+       
+         
+<?php print_complete_footer();?>
+</div>
+<?php print_bootstrap_js();?>
+</BODY>
 </HTML>
