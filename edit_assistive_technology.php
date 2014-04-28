@@ -19,17 +19,7 @@
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100; //everybody
 
-/**
- * edit_assistive_technology.php
- *
- * Copyright (c) 2005 Grasslands Regional Division #6
- * All rights reserved
- *
- * Created: March 12, 2006
- * By: M. Nielsen
- * Modified: February 17, 2007
- *
- */
+
 
 /*   INPUT: $_GET['student_id']
  *
@@ -49,7 +39,7 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/navbar.php');
+require_once(IPP_PATH . 'include/supporting_functions.php');
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -208,20 +198,15 @@ if(isset($_POST['edit_asst_tech']) && $have_write_permission) {
 /************************ end popup chooser support funtion  ******************/
 
 ?> 
-<!DOCTYPE HTML>
-<HTML lang=en>
-<HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
+<?php print_html5_primer(); ?>
+    
     <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
+    
     
     <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
     <script language="javascript" src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script>
     <script language="javascript" src="<?php echo IPP_PATH . "include/autocomplete.js"; ?>"></script>
+    
     <?php
        //output the javascript array for the chooser popup
        echoJSServicesArray();
@@ -254,72 +239,32 @@ if(isset($_POST['edit_asst_tech']) && $have_write_permission) {
 
 
     </SCRIPT>
+<?php print_bootstrap_head(); ?>    
 </HEAD>
-    <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("assistive_technology.php?student_id=$student_id"); ?></center>
-                    </td></tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+<BODY>
+<?php print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']); ?>
+<?php print_jumbotron_with_page_name("Edit Assistive Technology", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission); ?>
 
-                        <center><table><tr><td><center><p class="header">- IPP Edit Assistive Technology (<?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?>)-</p></center></td></tr></table></center>
-                        <BR>
+<div class="container">
+<?php if ($system_message) { echo  $system_message ;}; ?>   
+        
+                   
+<h2>Edit Entry</h2>                      
+<!-- BEGIN edit entry -->
+<form name="edit_asst_tech" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_assistive_technology.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+<div class="form-group"><input type="hidden" name="edit_asst_tech" value="1">
+<input type="hidden" name="uid" value="<?php echo $uid; ?>">
+                          
+<label>Technology</label>
+<textarea class="form-control" spellcheck="true" name="technology" tabindex="1" cols="30" rows="5" wrap="soft" onkeypress="return autocomplete(this,event,popuplist)"><?php echo $asst_tech_row['technology']; ?></textarea>&nbsp;<img src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" align="top" width="17" border=0 onClick="popUpChooser(this,document.all.technology)">
+</div>
+<button type="submit" tabindex="2" name="Edit" value="Edit" class="btn btn-default">Submit Edited Assistive Technology</button>
 
-                        <!-- BEGIN edit entry -->
-                        <center>
-                        <form name="edit_asst_tech" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_assistive_technology.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
-                        <tr>
-                          <td colspan="3">
-                          <p class="info_text">Edit entry</p>
-                           <input type="hidden" name="edit_asst_tech" value="1">
-                           <input type="hidden" name="uid" value="<?php echo $uid; ?>">
-                          </td>
-                        </tr>
-                        <tr>
-                            <td valign="center" bgcolor="#E0E2F2" class="row_default">Technology:</td><td valign="top" bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="technology" tabindex="1" cols="30" rows="5" wrap="soft" onkeypress="return autocomplete(this,event,popuplist)"><?php echo $asst_tech_row['technology']; ?></textarea>&nbsp;<img src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" align="top" width="17" border=0 onClick="popUpChooser(this,document.all.technology)"></td>
-                            <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="1" class="row_default"><input type="submit" tabindex="2" name="Edit" value="Edit"></td>
-                        </tr>
-                        </table>
-                        </form>
-                        </center>
-                        <!-- END edit entry -->
-
-                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-              <?php navbar("assistive_technology.php?student_id=$student_id"); ?>
-            </td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
-        <center></center>
+</form>
+                        
+<!-- END edit entry -->
+<?php print_complete_footer();?>
+</div>
+<?php print_bootstrap_js();?>
     </BODY>
 </HTML>
