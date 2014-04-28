@@ -188,6 +188,7 @@ if(!$transition_result) {
       }
     </SCRIPT>
 <?php print_bootstrap_head(); ?>
+<?php print_datepicker_depends(); ?>
 </HEAD>
     <BODY>
 <?php print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']); ?>
@@ -252,7 +253,8 @@ if(!$transition_result) {
                            
                        
                            <label>Date: (YYYY-MM-DD)</label>
-						  <input class="form-control" type="text" tabindex="2" name="date" value="<?php if(isset($_POST['date'])) echo $_POST['date']; ?>">
+							<input id="datepicker" class="form-control datepicker" type="datepicker" name="date" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="<?php if(isset($_POST['date'])) echo $_POST['date']; ?>"></p>						 
+
                            <input type="submit" tabindex="3" name="add" value="add"></td>
                          </div>
                         </form>
