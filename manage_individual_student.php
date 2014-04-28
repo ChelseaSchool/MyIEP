@@ -5,7 +5,7 @@
  * 
  * Work in progress and not ready for incorporation into code base.
  * @todo
- * 1. Try typeahead.js library from Twitter as alternative to jQuery autocomplete.
+ * 1. Put filters in a modal.
  * 
  */
  
@@ -367,7 +367,8 @@ function show_name(person) {
 <h2>Logged in as: <small><?php echo $_SESSION['egps_username']; ?></small></h2>
 
 <?php if ($system_message) { echo "<h3>System Message <small>" . $system_message . "</small></h3>";} ?>
-<button id="toggle" class="btn btn-lg btn-primary" role="button">Toggle <small>(Based on Permissions)</small> &raquo;</button>
+<!-- <button id="toggle" class="btn btn-lg btn-primary" role="button">Toggle <small>(Based on Permissions)</small> &raquo;</button>-->
+<button id="filter-data" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#filter-modal" role="button">Filter Data &raquo;</button>
 </div> <!-- close container -->
 
 </div> <!-- Close Jumbotron -->
