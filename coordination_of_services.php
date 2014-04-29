@@ -329,16 +329,11 @@ if(!$coord_result) {
 /************************ end popup chooser support funtion  ******************/
 
 ?> 
-<!DOCTYPE HTML>
-<HTML lang=en>
-<HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
+<?php print_html5_primer(); ?>
+
+    
     <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
+ 
     
     <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
     <script language="javascript" src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script>
@@ -373,99 +368,46 @@ if(!$coord_result) {
        //output the javascript array for the chooser popup
        echoJSServicesArray();
     ?>
+
+<?php print_bootstrap_head(); ?>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+	<script src="//code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	<script> 
+	$(function() {
+	$( "#datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
+	});
+	</script>
 </HEAD>
     <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("student_view.php?student_id=$student_id"); ?></center>
-                    </td></tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+<?php print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']); ?>
+<?php print_jumbotron_with_page_name("Coordination of Services", $student_row['first_name'] . "&nbsp;" . $student_row['last_name'], $our_permissions); ?>
+ 
+ <?php if ($system_message) { echo $system_message; } ?>
+<!-- $student_row['first_name'] . " " . $student_row['last_name']; -->
+ 
+ <div class="container">
+ <h2>Services</h2>
+<form spellcheck="true" name="strengthneedslist" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "coordination_of_services.php"; ?>" method="get">
+<input type="hidden" name="student_id" value="<?php echo $student_id ?>">
+<table class="table table-striped table-hover">
 
-                        <center><table><tr><td><center><p class="header">-Coordination of Services(<?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?>)-</p></center></td></tr></table></center>
-                        <BR>
-
-                        <!-- BEGIN add new entry -->
-                        <center>
-                        <form name="add_coordination_of_services" enctype="multipart/form-data" action="<?php echo IPP_PATH . "coordination_of_services.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
-                        <tr>
-                          <td colspan="3">
-                          <p class="info_text">Add a new entry</p>
-                           <input type="hidden" name="add_coordination_of_services" value="1">
-                           <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
-                          </td>
-                        </tr>
-                        <tr>
-                            <td bgcolor="#E0E2F2" class="row_default">Services:</td><td bgcolor="#E0E2F2" class="row_default">
-                            <input type="text" tabindex="1" name="agency" size="30" maxsize="255" value="<?php if(isset($_POST['agency'])) echo $_POST['agency']; ?>" onkeypress="return autocomplete(this,event,popuplist)"> &nbsp;<img src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" width="17" border=0 onClick="popUpChooser(this,document.all.agency)" >
-                            </td>
-                            <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="5" class="row_default"><input type="submit" tabindex="6" name="add" value="add"></td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">Date: (YYYY-MM-DD)</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="text" tabindex="2" name="date" value="<?php if(isset($_POST['date'])) echo $_POST['date']; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.date, 'yyyy-m-dd', 0, 0)">
-                           </td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">Optional File Upload:<BR>(.doc,.pdf,.txt,.rtf)</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
-                               <input type="file" tabindex="3" name="supporting_file" value="<?php if(isset($_FILES['supporting_file']['name'])) echo $_FILES['supporting_file']['name'] ?>">
-                           </td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">Report in File:</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="checkbox" tabindex="4" name="report_in_file" <?php if(isset($_POST['report_in_file']) && $_POST['report_in_file']) echo "checked";?>>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Description:</td><td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="description" tabindex="5" cols="30" rows="3" wrap="soft"><?php if(isset($_POST['description'])) echo $_POST['description']; ?></textarea></td>
-                        </tr>
-                        </table>
-                        </form>
-                        </center>
-                        <!-- END add new entry -->
-
-                        <!-- BEGIN strength/needs table -->
-                        <form spellcheck="true" name="strengthneedslist" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "coordination_of_services.php"; ?>" method="get">
-                        <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
-                        <center><table width="80%" border="0" cellpadding="0" cellspacing="1">
-                        <tr><td colspan="7">Coordination of Services (click fields to edit):</td></tr>
-                        <?php
-                        $bgcolor = "#DFDFDF";
+ <?php
+                       
 
                         //print the header row...
-                        echo "<tr><td bgcolor=\"#E0E2F2\">&nbsp;</td><td bgcolor=\"#E0E2F2\">uid</td><td align=\"center\" bgcolor=\"#E0E2F2\">Services</td><td align=\"center\" bgcolor=\"#E0E2F2\">Date</td><td align=\"center\" bgcolor=\"#E0E2F2\">Description</td><td align=\"center\" bgcolor=\"#E0E2F2\">In File</td><td align=\"center\" bgcolor=\"#E0E2F2\">File</td></tr>\n";
+                        echo "<tr><th>Select</th><th>uid</th><th>Services</th><th>Date</th><th>Description</th><th>In File</th><th>File</th></tr>\n";
                         while ($coord_row=mysql_fetch_array($coord_result)) { //current...
                             echo "<tr>\n";
-                            echo "<td bgcolor=\"#E0E2F2\"><input type=\"checkbox\" name=\"" . $coord_row['uid'] . "\"></td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\">" . $coord_row['uid'] . "</td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_coordination_of_services.php?uid=" . $coord_row['uid'] . "\" class=\"editable_text\">" . $coord_row['agency']  ."</a></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_coordination_of_services.php?uid=" . $coord_row['uid'] . "\" class=\"editable_text\">" . $coord_row['date']  ."</a></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_coordination_of_services.php?uid=" . $coord_row['uid'] . "\" class=\"editable_text\">" . clean_in_and_out($coord_row['description']) . "</a></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><center><a href=\"" . IPP_PATH . "edit_coordination_of_services.php?uid=" . $coord_row['uid'] . "\" class=\"editable_text\">" . $coord_row['report_in_file'] . "</a></center></td>\n";
-                            //echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><center>"; if($coord_row['report_in_file'] =="") echo "-none"; else echo "<a href=\"javascript: openDoc('" . IPP_PATH . "get_attached.php?table=coordination_of_services&uid=" . $coord_row['uid'] ."&student_id=" . $student_id ."','_doc')"  . "\">File</a>"; echo "</center></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><center>"; if($coord_row['filename'] =="") echo "-none-"; else echo "<a href=\"" . IPP_PATH . "get_attached.php?table=coordination_of_services&uid=" . $coord_row['uid'] ."&student_id=" . $student_id ."\">Download</a>"; echo "</center></td>\n";
+                            echo "<td><input type=\"checkbox\" name=\"" . $coord_row['uid'] . "\"></td>";
+                            echo "<td class=\"row_default\">" . $coord_row['uid'] . "</td>";
+                            echo "<td class=\"row_default\"><a href=\"" . IPP_PATH . "edit_coordination_of_services.php?uid=" . $coord_row['uid'] . "\" class=\"editable_text\">" . $coord_row['agency']  ."</a></td>\n";
+                            echo "<td class=\"row_default\"><a href=\"" . IPP_PATH . "edit_coordination_of_services.php?uid=" . $coord_row['uid'] . "\" class=\"editable_text\">" . $coord_row['date']  ."</a></td>\n";
+                            echo "<td class=\"row_default\"><a href=\"" . IPP_PATH . "edit_coordination_of_services.php?uid=" . $coord_row['uid'] . "\" class=\"editable_text\">" . clean_in_and_out($coord_row['description']) . "</a></td>\n";
+                            echo "<td class=\"row_default\"><center><a href=\"" . IPP_PATH . "edit_coordination_of_services.php?uid=" . $coord_row['uid'] . "\" class=\"editable_text\">" . $coord_row['report_in_file'] . "</a></center></td>\n";
+                            echo "<td class=\"row_default\"><center>"; if($coord_row['filename'] =="") echo "-none-"; else echo "<a href=\"" . IPP_PATH . "get_attached.php?table=coordination_of_services&uid=" . $coord_row['uid'] ."&student_id=" . $student_id ."\">Download</a>"; echo "</center></td>\n";
                             echo "</tr>\n";
-                            if($bgcolor=="#DFDFDF") $bgcolor="#CCCCCC";
-                            else $bgcolor="#DFDFDF";
+                            
                         }
                         ?>
                         <tr>
@@ -489,28 +431,50 @@ if(!$coord_result) {
                         </tr>
                         </table></center>
                         </form>
-                        <!-- end strength/needs table -->
+                        <!-- end services -->
+              
+                    
+                    
+ <!-- BEGIN add new entry -->
+<h2>Add a New Entry</h2>
+<form name="add_coordination_of_services" enctype="multipart/form-data" action="<?php echo IPP_PATH . "coordination_of_services.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+                        
+<input type="hidden" name="add_coordination_of_services" value="1">
+<input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
+<div class="form-group">                         
+<label>Services</label>
+<input type="text" class="form-control" tabindex="1" name="agency" size="30" maxsize="255" value="<?php if(isset($_POST['agency'])) echo $_POST['agency']; ?>" onkeypress="return autocomplete(this,event,popuplist)">
+</div>                        
+<div class="form-group"> 
+<label>Date (YYYY-MM-DD)</label>
+<input class="form-control" class="datepicker" type="datepicker" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" tabindex="2" name="date" value="<?php if(isset($_POST['date'])) echo $_POST['date']; ?>">
+</div>   
+<div class="form-group">                        
+<label>Optional File Upload (.doc,.pdf,.txt,.rtf)</label>
+<input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+<input type="file" tabindex="3" name="supporting_file" value="<?php if(isset($_FILES['supporting_file']['name'])) echo $_FILES['supporting_file']['name'] ?>">
+</div>
+<div class="form-group">                            
+<label>Report in File</label>
+<input type="checkbox" tabindex="4" name="report_in_file" <?php if(isset($_POST['report_in_file']) && $_POST['report_in_file']) echo "checked";?>>
+</div>
+<div class="form-group">                          
+<label>Description</label>
+<textarea class="form-control" spellcheck="true" name="description" tabindex="5" cols="30" rows="3" wrap="soft"><?php if(isset($_POST['description'])) echo $_POST['description']; ?></textarea>
+</div>  
+<input type="submit" tabindex="6" name="add" value="add">
+</form>
+                       
+                        <!-- END add new entry -->
 
-                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-             <?php navbar("student_view.php?student_id=$student_id"); ?>
-            </td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
-        <center></center>
+                        
+                        
+             
+      
+       
+       
+        <?php print_complete_footer();?> 
+        </div> <!-- Close container -->
+        <?php print_bootstrap_js(); ?>
     </BODY>
 </HTML>

@@ -335,7 +335,7 @@ EOF;
  *  1. Remove
  */
  
-/*
+
 function print_bootstrap_datepicker_depends() {
 $dependencies = <<<EOF
 <!-- Example Invokation of Datepicker -->
@@ -356,7 +356,7 @@ $dependencies = <<<EOF
 EOF;
    echo $dependencies;
 }
-*/
+
 
 /** @fn print_bootsrap_js()
  *  @brief Prints JavaScript references that bootsrap relies on
