@@ -280,7 +280,7 @@ if(!$performance_result) {
 <form name="performancetesting" spellcheck="true" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "achieve_level.php"; ?>" method="get">
 <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
 
-<h3>Achievement Levels</h3>
+<h2>Achievement Levels</h2>
 <table class="table table-striped table-hover">
 <?php
 
@@ -341,13 +341,14 @@ echo "<tr><th>Select</th><th>uid</th><th>Test Name</th><th>Results</th><th>Date<
 <p>&nbsp;</p>
 <label>Results</label>
 <textarea class="form-control" spellcheck="true" name="results" tabindex="4" cols="30" rows="3" wrap="soft"><?php if(isset($_POST['results'])) echo $_POST['results']; ?></textarea></td>
-                       
-<input type="submit" tabindex="5" name="add" value="add">
+<button type="submit" name="add" value="add" class="btn btn-default">Add</button>                       
+
 </div>
                         </form>
                         </center>
                         <!-- END add new entry --> 
         <?php print_complete_footer(); ?>
         </div>
+        <?php print_bootstrap_js(); ?>
     </BODY>
 </HTML>
