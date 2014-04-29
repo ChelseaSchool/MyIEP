@@ -377,8 +377,9 @@ if(!$medical_result) {
                        
  <!-- END add new entry -->
                         
-           
+<p>          
 <?php print_complete_footer();?> 
+</p>
         </div>
 <?php print_bootstrap_js();?>
         
