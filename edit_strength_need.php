@@ -182,9 +182,9 @@ if(isset($_POST['edit_strength_or_need']) && $have_write_permission) {
 <option value="N" <?php if($strength_row['is_valid'] == 'N') echo "SELECTED"; ?>>No</option>
 </select>
 </div>
-<div class="form-group">                      
-<input class="form-control" type="submit" tabindex="4" name="Update" value="Update">
-</div>
+                   
+<input type="submit" tabindex="4" name="Update" value="Update">
+
 </form>
 <!-- END add supervisor -->
 

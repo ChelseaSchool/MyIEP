@@ -250,6 +250,14 @@ if(isset($_POST['edit_performance_testing']) && $have_write_permission) {
 
     </SCRIPT>
     <?php print_bootstrap_head(); ?>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+	<script src="//code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	<script> 
+	$(function() {
+	$( "#datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
+	});
+	</script>
 </HEAD>
     <BODY>
     <?php print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']) ; ?>
@@ -274,7 +282,7 @@ if(isset($_POST['edit_performance_testing']) && $have_write_permission) {
 </div>
 <div class="form-group">
 	<label>Date: (YYYY-MM-DD)</label>
-	<input id="datepicker" type="text" tabindex="2" name="date" value="<?php echo $performance_row['date']; ?>">
+	<input id="datepicker" class="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" type="datepicker" tabindex="2" name="date" value="<?php echo $performance_row['date']; ?>">
 </div>
 <div class="form-group">
 <label>Optional File Upload <small>(.doc,.pdf,.txt,.rtf)</small></label>
