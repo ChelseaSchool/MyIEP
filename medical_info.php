@@ -32,7 +32,6 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/navbar.php');
 require_once(IPP_PATH . 'include/supporting_functions.php');
 
 header('Pragma: no-cache'); //don't cache this page!
@@ -256,17 +255,10 @@ if(!$medical_result) {
 }
 
 ?> 
-<!DOCTYPE HTML>
-<HTML lang=en>
-<HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
+<?php print_html5_primer(); ?>
     <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
-    
+<?php print_bootstrap_head(); ?>
+<?php print_datepicker_depends(); ?>    
     <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
     <SCRIPT LANGUAGE="JavaScript">
       function confirmChecked() {
@@ -296,148 +288,99 @@ if(!$medical_result) {
 
 
     </SCRIPT>
+  
 </HEAD>
     <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("student_view.php?student_id=$student_id"); ?></center>
-                    </td></tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+<?php print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']); ?>
+<?php print_jumbotron_with_page_name("Medical Information", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission); ?>
+<div class="container">       
+ <?php if ($system_message) { echo "<p>" . $system_message . "</p>";} ?>
 
-                        <center><table><tr><td><center><p class="header">-Medical Information(<?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?>)-</p></center></td></tr></table></center>
-                        <BR>
-
-                        <!-- BEGIN add new entry -->
-                        <center>
-                        <form name="add_medical_info" enctype="multipart/form-data" action="<?php echo IPP_PATH . "medical_info.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
-                        <tr>
-                          <td colspan="3">
-                          <p class="info_text">Add a new entry</p>
-                           <input type="hidden" name="add_medical_info" value="1">
-                           <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
-                          </td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">Date: (YYYY-MM-DD)</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="text" tabindex="1" name="date" value="<?php if(isset($_POST['date'])) echo $_POST['date']; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.date, 'yyyy-m-dd', 0, 0)">
-                           </td>
-                           <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="5" class="row_default"><input type="submit" tabindex="6" name="add" value="add"></td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">Optional File Upload:<BR>(.doc,.pdf,.txt,.rtf)</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
-                               <input type="file" tabindex="2" name="supporting_file" value="<?php if(isset($_FILES['supporting_file']['name'])) echo $_FILES['supporting_file']['name'] ?>">
-                           </td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">Report in File:</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="checkbox" tabindex="3" name="report_in_file" <?php if(isset($_POST['report_in_file']) && $_POST['report_in_file']) echo "checked";?>>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">Priority Entry:</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="checkbox" tabindex="4" name="is_priority" <?php if(isset($_POST['is_priority']) && $_POST['is_priority']) echo "checked";?>>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Description:</td><td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="description" tabindex="5" cols="30" rows="3" wrap="SOFT"><?php  if(isset($_POST['description'])) echo $_POST['description']; ?></textarea></td>
-                        </tr>
-                        </table>
-                        </form>
-                        </center>
-                        <!-- END add new entry -->
+ 
 
                         <!-- BEGIN medical table -->
                         <form name="medicalinfo" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "medical_info.php"; ?>" method="get">
                         <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
-                        <center><table width="80%" border="0" cellpadding="0" cellspacing="1">
-                        <tr><td colspan="7">Current Medical Information (click to edit):</td></tr>
+                        <table class="table table-striped table-hover">
+                        
                         <?php
-                        $bgcolor = "#DFDFDF";
+                        
 
                         //print the header row...
-                        echo "<tr><td bgcolor=\"#E0E2F2\">&nbsp;</td><td bgcolor=\"#E0E2F2\">uid</td><td align=\"center\" bgcolor=\"#E0E2F2\">Date</td><td align=\"center\" bgcolor=\"#E0E2F2\">Description</td><td align=\"center\" bgcolor=\"#E0E2F2\">In File</td><td align=\"center\" bgcolor=\"#E0E2F2\">Priority</td><td align=\"center\" bgcolor=\"#E0E2F2\">File</td></tr>\n";
+                        echo "<tr><th>Select</th><th>uid</th><th>Date</th><th>Description</th><th>In File</th><th>Priority</th><th>File</th></tr>\n";
                         while ($medical_row=mysql_fetch_array($medical_result)) { //current...
                             echo "<tr>\n";
-                            echo "<td bgcolor=\"#E0E2F2\"><input type=\"checkbox\" name=\"" . $medical_row['uid'] . "\"></td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\">" . $medical_row['uid'] . "</td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_medical_info.php?uid=" . $medical_row['uid'] . "\" class=\"editable_text\">" . $medical_row['date']  ."</a></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_medical_info.php?uid=" . $medical_row['uid'] . "\" class=\"editable_text\">" . $medical_row['description']  ."</a></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><center><a href=\"" . IPP_PATH . "edit_medical_info.php?uid=" . $medical_row['uid'] . "\" class=\"editable_text\">" . $medical_row['copy_in_file'] . "</a></center></td>\n";
-                            echo "<td spellcheck=\"TRUE\" bgcolor=\"$bgcolor\" class=\"row_default\"><center><a href=\"" . IPP_PATH . "edit_medical_info.php?uid=" . $medical_row['uid'] . "\" class=\"editable_text\">"; if($medical_row['is_priority'] == "Y") echo "<img src=\"" . IPP_PATH . "images/caution.gif" . "\" border=\"0\">"; else echo "N"; echo "</a></center></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><center>"; if($medical_row['filename'] =="") echo "-none-"; else echo "<a href=\"" . IPP_PATH . "get_attached.php?table=medical_info&uid=" . $medical_row['uid'] ."&student_id=" . $student_id ."\">Download</a>"; echo "</center></td>\n";
+                            echo "<td><input type=\"checkbox\" name=\"" . $medical_row['uid'] . "\"></td>";
+                            echo "<td>" . $medical_row['uid'] . "</td>";
+                            echo "<td><a href=\"" . IPP_PATH . "edit_medical_info.php?uid=" . $medical_row['uid'] . "\" class=\"editable_text\">" . $medical_row['date']  ."</a></td>\n";
+                            echo "<td><a href=\"" . IPP_PATH . "edit_medical_info.php?uid=" . $medical_row['uid'] . "\" class=\"editable_text\">" . $medical_row['description']  ."</a></td>\n";
+                            echo "<td><center><a href=\"" . IPP_PATH . "edit_medical_info.php?uid=" . $medical_row['uid'] . "\" class=\"editable_text\">" . $medical_row['copy_in_file'] . "</a></center></td>\n";
+                            echo "<td><center><a href=\"" . IPP_PATH . "edit_medical_info.php?uid=" . $medical_row['uid'] . "\" class=\"editable_text\">"; if($medical_row['is_priority'] == "Y") echo "<img src=\"" . IPP_PATH . "images/caution.gif" . "\" border=\"0\">"; else echo "N"; echo "</a></center></td>\n";
+                            echo "<td>"; if($medical_row['filename'] =="") echo "-none-"; else echo "<a href=\"" . IPP_PATH . "get_attached.php?table=medical_info&uid=" . $medical_row['uid'] ."&student_id=" . $student_id ."\">Download</a>"; echo "</td>\n";
                             echo "</tr>\n";
-                            if($bgcolor=="#DFDFDF") $bgcolor="#CCCCCC";
-                            else $bgcolor="#DFDFDF";
+                            
                         }
                         ?>
+                        </table>
+                        
+                        <table>
                         <tr>
-                          <td colspan="7" align="left">
-                             <table>
-                             <tr>
-                             <td nowrap>
-                                <img src="<?php echo IPP_PATH . "images/table_arrow.png"; ?>">&nbsp;With Selected:
-                             </td>
-                             <td>
+                        <td nowrap>
+                        <img src="<?php echo IPP_PATH . "images/table_arrow.png"; ?>">&nbsp;With Selected:
+                        </td>
+                        <td>
                              <?php
-                                //if($have_write_permission) {
-                                //    echo "<INPUT NAME=\"set_not_in_file\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=Not+In+File\" border=\"0\" value=\"1\">";
-                                //    echo "<INPUT NAME=\"set_in_file\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=In+File\" border=\"0\" value=\"1\">";
-                                //}
-                                //if we have permissions also allow delete and set all.
-                                if($permission_level <= $IPP_MIN_DELETE_MEDICAL_INFO && $have_write_permission) {
+                               if($permission_level <= $IPP_MIN_DELETE_MEDICAL_INFO && $have_write_permission) {
                                     echo "<INPUT NAME=\"delete\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=Delete\" border=\"0\" value=\"1\">";
                                 }
                              ?>
                              </td>
                              </tr>
                              </table>
-                          </td>
-                        </tr>
-                        </table></center>
-                        </form>
+                          </form>
                         <!-- end medical table -->
 
-                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-            <?php navbar("student_view.php?student_id=$student_id"); ?>
-            </td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
-        <center></center>
+                        
+<!-- BEGIN add new entry -->
+<h2>Add a New Entry</h2>
+<form name="add_medical_info" enctype="multipart/form-data" action="<?php echo IPP_PATH . "medical_info.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+<input type="hidden" name="add_medical_info" value="1">
+<input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
+<div class=form-group">                          
+<label>Date (YYYY-MM-DD)</label>
+<input class="form-control datepicker" data-date-format="yyyy-mm-dd" type="datepicker" id="datepicker" tabindex="1" name="date" value="<?php if(isset($_POST['date'])) echo $_POST['date']; ?>">
+</div>
+<p>
+<label>Optional File Upload (.doc,.pdf,.txt,.rtf)</label>
+<input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+<input type="file" tabindex="2" name="supporting_file" value="<?php if(isset($_FILES['supporting_file']['name'])) echo $_FILES['supporting_file']['name'] ?>">
+</p>
+
+<div class="form-group">
+<label>Description</label>
+<textarea class="form-control" spellcheck="true" name="description" tabindex="5" cols="30" rows="3" wrap="SOFT"><?php  if(isset($_POST['description'])) echo $_POST['description']; ?></textarea>
+</div>
+
+<p>
+<label>Report in File</label>
+<input type="checkbox" tabindex="3" name="report_in_file" <?php if(isset($_POST['report_in_file']) && $_POST['report_in_file']) echo "checked";?>>
+</p>
+
+
+                       
+<p>
+<label>Priority Entry</label>
+<input type="checkbox" tabindex="4" name="is_priority" <?php if(isset($_POST['is_priority']) && $_POST['is_priority']) echo "checked";?>>
+</p>
+<button type="submit" name="add" value="add" class="btn btn-default">Add Entry</button>                       
+</form>
+                       
+ <!-- END add new entry -->
+                        
+           
+<?php print_complete_footer();?> 
+        </div>
+<?php print_bootstrap_js();?>
+        
     </BODY>
 </HTML>
