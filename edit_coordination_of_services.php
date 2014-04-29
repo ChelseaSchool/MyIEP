@@ -14,21 +14,11 @@
  * 1. Filter input/escape output
  * 2. Priority UI overhaul
  */ 
- 
+//ini_set('display_errors',1);
+//error_reporting(E_ALL);
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100; //everybody
 
-/**
- * edit_coordination_of_services.php
- *
- * Copyright (c) 2005 Grasslands Regional Division #6
- * All rights reserved
- *
- * Created: March 11, 2005
- * By: M. Nielsen
- * Modified: February 17,2007 M. Nielsen
- *
- */
 
 /*   INPUTS: $_GET['uid'] || $_POST['uid']
  *
@@ -48,7 +38,7 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
-require_once (IPP_PATH . 'include/config.inc.php');
+//require_once (IPP_PATH . 'include/config.inc.php');
 require_once (IPP_PATH . 'include/supporting_functions.php');
 
 header('Pragma: no-cache'); //don't cache this page!
@@ -289,12 +279,7 @@ if(isset($_POST['edit_coordination_of_services'])) {
 <HEAD>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
     <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
-    
+
     <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
     <script language="javascript" src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script>
     <script language="javascript" src="<?php echo IPP_PATH . "include/autocomplete.js"; ?>"></script>
@@ -334,86 +319,43 @@ if(isset($_POST['edit_coordination_of_services'])) {
     <BODY>
     <?php print_student_navbar($student_id, $student_row['first_name'] . " &nbsp" . $student_row['last_name']); ?>
      <?php print_jumbotron_with_page_name("Edit Coordination of Services", $student_row['first_name'] . " " . $student_row['last_name'], $permission_level); ?>
+    <div class="container">
+     <?php if ($system_message) echo "$system_message"; ?>
     
-    <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-    
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                   
-                    <tr><td>
+<!-- BEGIN add new entry -->
+                        
+<form name="edit_coordination_of_services" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_coordination_of_services.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+<div class="form-group">
+<input type="hidden" name="edit_coordination_of_services" value="1">
+<input type="hidden" name="uid" value="<?php echo $uid; ?>">
+                          
+<label>Services</label>
+<input class="form-control" type="text" tabindex="1" name="agency" size="30" maxsize="255" value="<?php echo $coord_row['agency']; ?>" onkeypress="return autocomplete(this,event,popuplist)"> &nbsp;<img src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" width="17" border=0 onClick="popUpChooser(this,document.all.agency)" >
+                      
+
+                        
+                         <label>Date: (YYYY-MM-DD)</label>
+                         <input class=form-control type="text" tabindex="2" name="date" value="<?php echo $coord_row['date']; ?>">
+ </div>                          
+  <label>Optional File Upload(.doc,.pdf,.txt,.rtf)</label>
+<input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+<input type="file" tabindex="3" name="supporting_file" value="<?php echo $_FILES['supporting_file']['name'] ?>">
+                           
+<label>Report in File</label>
+<input type="checkbox" tabindex="4"  name="report_in_file" <?php if($coord_row['report_in_file']=='Y') echo "checked";?>>
+<div class="form-group">
+<label>Description</label>
+<textarea class="form-control" spellcheck="true" name="description" tabindex="5" cols="30" rows="5" wrap="soft"><?php echo $coord_row['description']; ?></textarea></td>
+</div>                     
+<input type="submit" tabindex="6" name="Update" value="Update">
+                        
+ </form>
                     
-                    </td></tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+ <!-- END add new entry -->
 
-                        <center><table><tr><td><center><p class="header">- IPP Edit Coordination of Services<BR> (<?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?>)-</p></center></td></tr></table></center>
-                        <BR>
-
-                        <!-- BEGIN add new entry -->
-                        <center>
-                        <form name="edit_coordination_of_services" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_coordination_of_services.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
-                        <tr>
-                          <td colspan="3">
-                          <p class="info_text">Edit Coordination of Services Entry</p>
-                           <input type="hidden" name="edit_coordination_of_services" value="1">
-                           <input type="hidden" name="uid" value="<?php echo $uid; ?>">
-                          </td>
-                        </tr>
-                        <tr>
-                            <td bgcolor="#E0E2F2" class="row_default">Services:</td><td bgcolor="#E0E2F2" class="row_default">
-                            <input type="text" tabindex="1" name="agency" size="30" maxsize="255" value="<?php echo $coord_row['agency']; ?>" onkeypress="return autocomplete(this,event,popuplist)"> &nbsp;<img src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" width="17" border=0 onClick="popUpChooser(this,document.all.agency)" >
-                            </td>
-                            <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="5" class="row_default"><input type="submit" tabindex="6" name="Update" value="Update"></td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">Date: (YYYY-MM-DD)</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="text" tabindex="2" name="date" value="<?php echo $coord_row['date']; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.date, 'yyyy-m-dd', 0, 0)">
-                           </td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">Optional File Upload:<BR>(.doc,.pdf,.txt,.rtf)</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
-                               <input type="file" tabindex="3" name="supporting_file" value="<?php echo $_FILES['supporting_file']['name'] ?>">
-                           </td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">Report in File:</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="checkbox" tabindex="4"  name="report_in_file" <?php if($coord_row['report_in_file']=='Y') echo "checked";?>>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Description:</td><td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="description" tabindex="5" cols="30" rows="5" wrap="soft"><?php echo $coord_row['description']; ?></textarea></td>
-                        </tr>
-                        </table>
-                        </form>
-                        </center>
-                        <!-- END add new entry -->
-
-                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-             
-            </td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        
-        </table> 
+                       
         <?php print_complete_footer(); ?>
+        </div>
         <?php print_bootstrap_js(); ?>
     </BODY>
 </HTML>

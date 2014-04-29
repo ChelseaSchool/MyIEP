@@ -37,7 +37,7 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/navbar.php');
+//require_once(IPP_PATH . 'include/navbar.php');
 require_once(IPP_PATH . 'include/supporting_functions.php');
 
 header('Pragma: no-cache'); //don't cache this page!
@@ -263,92 +263,39 @@ if(!$performance_result) {
 
 
     </SCRIPT>
-  <?php print_datepicker_depends(); ?>
 	  
-	
+    <?php print_bootstrap_head(); ?>
+    <?php print_datepicker_depends(); ?>	
 	
 </HEAD>
     <BODY>
-        
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("student_view.php?student_id=$student_id"); ?></center>
-                    </td></tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+     <?php print_student_navbar($student_id, $student_row['first_name'] . " &nbsp" . $student_row['last_name']); ?>
+     <?php print_jumbotron_with_page_name("Achievement Level", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission); ?>
+<div class="container">
+    <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+          
+                      
 
-                        <center><table><tr><td><center><p class="header">-Achievement Level (<?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?>)-</p></center></td></tr></table></center>
-                        <BR>
+<!-- BEGIN Achievements table -->
+<form name="performancetesting" spellcheck="true" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "achieve_level.php"; ?>" method="get">
+<input type="hidden" name="student_id" value="<?php echo $student_id ?>">
 
-                        <!-- BEGIN add new entry -->
-                        <center>
-                        <form name="add_performance_testing" enctype="multipart/form-data" action="<?php echo IPP_PATH . "achieve_level.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
-                        <tr>
-                          <td colspan="3">
-                          <p class="info_text">Add a new entry</p>
-                           <input type="hidden" name="add_performance_testing" value="1">
-                           <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
-                          </td>
-                        </tr>
-                        <tr>
-                            <td bgcolor="#E0E2F2" class="row_default">Test Name:</td><td bgcolor="#E0E2F2" class="row_default">
-                            <input type="text" tabindex="1" name="test_name" size="30" maxsize="255" value="<?php if(isset($_POST['test_name'])) echo $_POST['test_name']; ?>">
-                            </td>
-                            <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="4" class="row_default"><input type="submit" tabindex="5" name="add" value="add"></td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">Date: (YYYY-MM-DD)</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <input id="datepicker" class="datepicker" tabindex="2" data-date-format="yyyy-mm-dd" name="date" value="<?php if(isset($_POST['date'])) echo $_POST['date']; ?>">
-                           </td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">Optional File Upload:<BR>(.doc,.pdf,.txt,.rtf)</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
-                               <input type="file" tabindex="3" name="supporting_file" value="<?php if(isset($_FILES['supporting_file']['name'])) echo $_FILES['supporting_file']['name'] ?>">
-                           </td>
-                        </tr>
-                        <tr>
-                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Results:</td><td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="results" tabindex="4" cols="30" rows="3" wrap="soft"><?php if(isset($_POST['results'])) echo $_POST['results']; ?></textarea></td>
-                        </tr>
-                        </table>
-                        </form>
-                        </center>
-                        <!-- END add new entry -->
+<h3>Achievement Levels</h3>
+<table class="table table-striped table-hover">
+<?php
 
-                        <!-- BEGIN strength/needs table -->
-                        <form name="performancetesting" spellcheck="true" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "achieve_level.php"; ?>" method="get">
-                        <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
-                        <center><table width="80%" border="0" cellpadding="0" cellspacing="1">
-                        <tr><td colspan="6">Achievement Levels:</td></tr>
-                        <?php
-                        $bgcolor = "#DFDFDF";
-
-                        //print the header row...
-                        echo "<tr><td bgcolor=\"#E0E2F2\">&nbsp;</td><td bgcolor=\"#E0E2F2\">uid</td><td align=\"center\" bgcolor=\"#E0E2F2\">Test Name</td><td align=\"center\" bgcolor=\"#E0E2F2\">Results</td><td align=\"center\" bgcolor=\"#E0E2F2\">Date</td><td align=\"center\" bgcolor=\"#E0E2F2\">File</td></tr>\n";
+//print the header row...
+echo "<tr><th>Select</th><th>uid</th><th>Test Name</th><th>Results</th><th>Date</th><th>File</th></tr>\n";
                         while ($performance_testing_row=mysql_fetch_array($performance_result)) { //current...
                             echo "<tr>\n";
-                            echo "<td bgcolor=\"#E0E2F2\"><input type=\"checkbox\" name=\"" . $performance_testing_row['uid'] . "\"></td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\">" . $performance_testing_row['uid'] . "</td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_achieve_level.php?uid=" . $performance_testing_row['uid'] . "\" class=\"editable_text\">" . $performance_testing_row['test_name']  ."</a></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_achieve_level.php?uid=" . $performance_testing_row['uid'] . "\" class=\"editable_text\">" . clean_in_and_out($performance_testing_row['results'])  ."</a></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_achieve_level.php?uid=" . $performance_testing_row['uid'] . "\" class=\"editable_text\">" . $performance_testing_row['date'] . "</a></td>\n";
-                            //echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><center>"; if($coord_row['report_in_file'] =="") echo "-none"; else echo "<a href=\"javascript: openDoc('" . IPP_PATH . "get_attached.php?table=coordination_of_services&uid=" . $coord_row['uid'] ."&student_id=" . $student_id ."','_doc')"  . "\">File</a>"; echo "</center></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><center>"; if($performance_testing_row['filename'] =="") echo "-none-"; else echo "<a href=\"" . IPP_PATH . "get_attached.php?table=performance_testing&uid=" . $performance_testing_row['uid'] ."&student_id=" . $student_id ."\">Download</a>"; echo "</center></td>\n";
+                            echo "<td><input type=\"checkbox\" name=\"" . $performance_testing_row['uid'] . "\"></td>";
+                            echo "<td>" . $performance_testing_row['uid'] . "</td>";
+                            echo "<td><a href=\"" . IPP_PATH . "edit_achieve_level.php?uid=" . $performance_testing_row['uid'] . "\" class=\"editable_text\">" . $performance_testing_row['test_name']  ."</a></td>\n";
+                            echo "<td><a href=\"" . IPP_PATH . "edit_achieve_level.php?uid=" . $performance_testing_row['uid'] . "\" class=\"editable_text\">" . clean_in_and_out($performance_testing_row['results'])  ."</a></td>\n";
+                            echo "<td><a href=\"" . IPP_PATH . "edit_achieve_level.php?uid=" . $performance_testing_row['uid'] . "\" class=\"editable_text\">" . $performance_testing_row['date'] . "</a></td>\n";
+                            echo "<td>"; if($performance_testing_row['filename'] =="") echo "-none-"; else echo "<a href=\"" . IPP_PATH . "get_attached.php?table=performance_testing&uid=" . $performance_testing_row['uid'] ."&student_id=" . $student_id ."\">Download</a>"; echo "</td>\n";
                             echo "</tr>\n";
-                            if($bgcolor=="#DFDFDF") $bgcolor="#CCCCCC";
-                            else $bgcolor="#DFDFDF";
+                            
                         }
                         ?>
                         <tr>
@@ -374,26 +321,33 @@ if(!$performance_result) {
                         </form>
                         <!-- end strength/needs table -->
 
-                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-                <?php navbar("student_view.php?student_id=$student_id"); ?>
-            </td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
+ <!-- BEGIN add new entry -->
+<h2>Add a New Entry</h2>                        
+<form name="add_performance_testing" enctype="multipart/form-data" action="<?php echo IPP_PATH . "achieve_level.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+<div class="form-group">
+<input type="hidden" name="add_performance_testing" value="1">
+<input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
+                         
+<label>Test Name</label>
+<input class="form-control" type="text" tabindex="1" name="test_name" size="30" maxsize="255" value="<?php if(isset($_POST['test_name'])) echo $_POST['test_name']; ?>">
+                           
+<label>Date (YYYY-MM-DD)</label>
+<input id="datepicker" class="form-control datepicker" tabindex="2" data-date-format="yyyy-mm-dd" name="date" value="<?php if(isset($_POST['date'])) echo $_POST['date']; ?>">
+</div>                         
+<label>Optional File Upload(.doc,.pdf,.txt,.rtf)</label>
+<input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+<input type="file" tabindex="3" name="supporting_file" value="<?php if(isset($_FILES['supporting_file']['name'])) echo $_FILES['supporting_file']['name'] ?>">
+<div class="form-group">
+<p>&nbsp;</p>
+<label>Results</label>
+<textarea class="form-control" spellcheck="true" name="results" tabindex="4" cols="30" rows="3" wrap="soft"><?php if(isset($_POST['results'])) echo $_POST['results']; ?></textarea></td>
+                       
+<input type="submit" tabindex="5" name="add" value="add">
+</div>
+                        </form>
+                        </center>
+                        <!-- END add new entry --> 
         <?php print_complete_footer(); ?>
+        </div>
     </BODY>
 </HTML>
