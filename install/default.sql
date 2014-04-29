@@ -1018,7 +1018,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_name` varchar(128) NOT NULL default 'Unknown',
   `school_code` smallint(6) default NULL,
   `aliased_name` varchar(255) default NULL,
-  `stored_hash` varchar(100)
   PRIMARY KEY  (`login_name`),
   UNIQUE KEY `login_name` (`login_name`),
   KEY `last_name` (`last_name`),
@@ -1033,7 +1032,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- 
 
 INSERT INTO `users` (`login_name`, `encrypted_password`, `unencrypted_password`, `first_name`, `last_name`, `school_code`, `aliased_name`) VALUES 
-('admin', '43e9a4ab75570f5b', 'admin', 'Administrator', 'Administrator', NULL, NULL, '$2y$10$1LXApA/fdulmHVLq67EMRegStX/NpyKDOvEcQPS1OwmtQYw/q9b7K',);
+('admin', '43e9a4ab75570f5b', 'admin', 'Administrator', 'Administrator', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1076,3 +1075,4 @@ INSERT INTO `valid_coding` (`uid`, `code_number`, `code_text`) VALUES
 (19, 301, 'English as a Second Language (Funded)'),
 (20, 302, 'English as a Second Language (non funded)'),
 (21, 303, 'Canadian-born English as a Second Language');
+
