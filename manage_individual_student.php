@@ -335,14 +335,24 @@ EOF;
 function show_name(person) {
 	if (person != null)
 	{
-		$("tr.student").hide()
-		$(document.getElementById(person)).show()
+		$("tr.student").hide();
+		$(document.getElementById(person)).show();
 	
-	console.log("#" + person)
 	}
 	else $("#students").show();
 }
-</script>  
+</script> 
+
+<script>
+$(document).ready (function(){
+$("#clear").click(function() {
+	$( "#tags" ).val("");
+	$( "tr.student" ).show();
+});
+});
+
+
+</script>
   <?php print_jquery_autocomplete(); ?>
     
     
@@ -368,7 +378,7 @@ function show_name(person) {
 
 <?php if ($system_message) { echo "<h3>System Message <small>" . $system_message . "</small></h3>";} ?>
 <!-- <button id="toggle" class="btn btn-lg btn-primary" role="button">Toggle <small>(Based on Permissions)</small> &raquo;</button>-->
-<button id="filter-data" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#filter-modal" role="button">Filter Data &raquo;</button>
+<button class="btn btn-lg btn-primary" id="clear" role="button">Clear Filter &raquo;</button>
 </div> <!-- close container -->
 
 </div> <!-- Close Jumbotron -->

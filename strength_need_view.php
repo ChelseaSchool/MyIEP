@@ -274,9 +274,9 @@ $enum_options_area = mysql_enum_values("area_of_strength_or_need","area");
 <h2>Strengths and Needs <small>View and Edit</small></h2>
                         <!-- BEGIN strength/needs table -->
                         <form name="strengthneedslist" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "strength_need_view.php"; ?>" method="get">
-                        <div class="form-group">
+                        
                         <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
-                        </div>
+                        
                         
                         
                         
@@ -341,7 +341,7 @@ $enum_options_area = mysql_enum_values("area_of_strength_or_need","area");
                       <div class="form-group">
                            <label>Add Strength or Need</label>
                            <select class="form-control" name="strength_or_need" tabindex="1">
-                                   <option value="">Select Strength or Neeed</option>
+                                   <option value="">Select Strength or Need</option>
                                    <option value="Strength" <?php if(isset($_GET['strength_or_need']) && $_GET['strength_or_need'] == 'Strength') echo "SELECTED"; ?>>Strength</option>
                                    <option value="Need" <?php if(isset($_GET['strength_or_need']) && $_GET['strength_or_need'] == 'Need') echo "SELECTED"; ?>>Need</option>
                            </select>

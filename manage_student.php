@@ -1,18 +1,12 @@
 <?php
 
 /** @file
- * @brief 	manage from list of students
+ * @brief 	find and manage a specific IEP
  * 
- * This page needs confirmation of function. Filename doesn't match devs description.
+ * Work in progress and not ready for incorporation into code base.
  * @todo
- * 1. Confirm filename reflects what is in the page
- * 2. Bootstrap theme
- * 3. Navbar, depending on content
- * @Remarks
- * # New Features
- * 1. New UI
- * 2. Filter out students user doesn't have permissions for
- * 3. Requires Javascript
+ * 1. Put filters in a modal.
+ * 
  */
  
  
@@ -227,6 +221,16 @@ if(!$sqlStudents) {
     IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
 }
 
+function list_names_for_autocomplete($student_row, $sqlStudents){
+	echo "<script>\n";
+	echo "var available_names = [";
+	while ($student_row=mysql_fetch_array($sqlStudents)) {
+		echo "\"" . $student_row['first_name'] . " " . $student_row['last_name'] . "\",";
+	}; //end loop
+	echo "];\n";
+	echo "</script>\n";	
+}
+
 
 //set back vars...
 $szBackGetVars="";
@@ -236,21 +240,61 @@ foreach($_GET as $key => $value) {
 //strip trailing '&'
 $szBackGetVars = substr($szBackGetVars, 0, -1);
 
+list_names_for_autocomplete($student_row, $sqlStudents);
+
+function print_jquery_autocomplete() {
+echo <<< EOF
+<script>
+$(function() {
+    var person;
+    $('#tags').autocomplete({
+        source: available_names,
+        open: function () {
+             $('ul.ui-autocomplete')
+             .addClass('opened') 
+             $('#students').hide()
+		},
+        close: function () 
+        { 
+		  
+          $('ul.ui-autocomplete')
+           .removeClass('opened'),
+		  $('#students').show()
+		  
+		  
+		   person = $('#tags').val(),
+		   show_name(person)
+			},
+        autofocus: true,
+        minlength: 1,
+        
+        //change: function( event, ui ) 
+        //{
+		
+         
+     
+		
+		})
+	 
+    });
+   </script>
+EOF;
+}
+
 ?>
 
-
-
-
-
 <!DOCTYPE HTML>
-<HTML lang=en>
+<HTML lang="en">
 <HEAD>
+
 <?php print_meta_for_html5($page_title); ?>
 <TITLE><?php echo $page_title; ?></TITLE>
 <?php print_bootstrap_head(); ?>
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">   
+<!--  <script src="js/autocomplete-html.js" type="text/javascript"></script>-->
 
-    <SCRIPT LANGUAGE="JavaScript">
+
+    <SCRIPT>
       function deleteChecked() {
           var szGetVars = "delete_users=";
           var szConfirmMessage = "Are you sure you want to delete or duplicate:\n";
@@ -280,26 +324,50 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
           alert("You don't have the permissions"); return false;
       }
     </SCRIPT>
-    
+
 	<!-- jQuery -->
 	<script src="js/jquery-ui-1.10.4.custom.min.js"></script>
-    <script src="js/jquery-1.10.2.js"></script>
-    
-    <script>
-    $(document).ready(function() {
-        $('#toggle').on('click',
-    	function() {
-      	  $("tr.NONE").toggle ();
-    	});
-    });
-    </script> 
-<?php //list_names_for_autocomplete($student_row, $sqlStudents); //names for autocomplete ?>    
-<?php //$sqlStudents=getStudents();  //get students again ?>
+    <script src="js/jquery-2.1.0.min.js"></script>
+	<script src="js/jquery.autocomplete.min.js" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="css/jquery.autocomplete.min.css">   
 
+<script>   
+function show_name(person) {
+	if (person != null)
+	{
+		$("tr.student").hide();
+		$(document.getElementById(person)).show();
+	
+	}
+	else $("#students").show();
+}
+</script> 
+
+<script>
+$(document).ready (function(){
+$("#clear").click(function() {
+	$( "#tags" ).val("");
+	$( "tr.student" ).show();
+});
+});
+
+
+</script>
+  <?php print_jquery_autocomplete(); ?>
+    
+    
+
+
+
+
+
+
+
+<?php $sqlStudents=getStudents(); ?>  
+
+   
 </HEAD>
-    <BODY>
-     
-     	
+<BODY>   	
 <?php echo print_general_navbar(); ?>
 <div class="jumbotron"><div class="container">     
 
@@ -309,7 +377,8 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
 <h2>Logged in as: <small><?php echo $_SESSION['egps_username']; ?></small></h2>
 
 <?php if ($system_message) { echo "<h3>System Message <small>" . $system_message . "</small></h3>";} ?>
-<button id="toggle" class="btn btn-lg btn-primary" role="button">Toggle <small>(Based on Permissions)</small> &raquo;</button>
+<!-- <button id="toggle" class="btn btn-lg btn-primary" role="button">Toggle <small>(Based on Permissions)</small> &raquo;</button>-->
+<button class="btn btn-lg btn-primary" id="clear" role="button">Clear Filter &raquo;</button>
 </div> <!-- close container -->
 
 </div> <!-- Close Jumbotron -->
@@ -317,10 +386,28 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
     
 <div class="container">     
 
+<!--  form for autocomplete first and last names-->
+
+
+
+
+<div class="input-group">
+  <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span>
+  </span>
+  <input id="tags" class="form-control" placeholder="Search for student">
+</div>
+
+
+
+
+
+      
+
+
 <p>&nbsp;</p>
-  	<form name="studentlist" onSubmit="return deleteChecked()" enctype="multipart/form-data" action="<?php echo IPP_PATH . "manage_student.php"; ?>" method="post">				
-    <table border=0 class="table table-hover" class="table table-striped">
-  	
+  					
+    <table id="students" border=0 class="table table-hover" class="table table-striped">
+  	<!-- <form name="studentlist" onSubmit="return deleteChecked()" enctype="multipart/form-data" action="<?php //echo IPP_PATH . "manage_student.php"; ?>" method="post">-->
   	<tr><th width=10>Select <small>(Disabled)</small></th><th>UID</th><th>Student Name</th><th width="20%"><center><abbr title="Individual Education Plan">IEP</abbr> (<abbr title="Portable Document Format">PDF</abbr>)</center></th><th>School</th><th>Permission</th></tr>
 	
 	<!-- loop -->
@@ -328,7 +415,7 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
 	while ($student_row=mysql_fetch_array($sqlStudents)) {
                             $current_student_permission = getStudentPermission($student_row['student_id']);
                             $tablerow = <<<EOF
-                            <div id={$student_row['first_name']} &nbsp;{$student_row['last_name']}><tr class="$current_student_permission">
+                             <tr class="$current_student_permission student" id="{$student_row['first_name']} {$student_row['last_name']}">
                             	<td><input id="{$student_row['student_id']}" type="checkbox"></td>
                                 <td>{$student_row['student_id']}</td>
                             	<td><a href="student_view.php?student_id={$student_row['student_id']}">{$student_row['first_name']} &nbsp;{$student_row['last_name']}</a></td>
@@ -341,6 +428,10 @@ EOF;
                             echo $tablerow;
 }
  ?>
+
+  
+  
+  
                            <?php /* if($current_student_permission == "READ" || $current_student_permission != "WRITE" || $current_student_permission != "ALL")
                                 echo "<a href=\"". IPP_PATH . "ipp_pdf.php?student_id=" . $student_row['student_id'] . "\" class=\"default\" target=\"_blank\"";
                             if($current_student_permission == "NONE" || $current_student_permission == "ERROR") {
@@ -353,9 +444,10 @@ EOF;
                             //permission
                             echo "<td>" . $current_student_permission . "</td>";
                             echo "</tr>";//close row */
-							?>
-</form>
-</table>	
+						 ?>
+</table>							
+<!-- </form> -->
+	
 <!-- <button type="submit" name="delete" title="delete" class="btn btn-default">Submit</button>-->
 <!--  <?php if($permission_level <= $IPP_MIN_DELETE_STUDENT_PERMISSION)
                             echo "<button type=\"submit\" name=\"delete\" value=\"1\">Delete Selected</button>";?>-->
@@ -374,7 +466,7 @@ EOF;
         <?php print_complete_footer(); ?>
         
         <?php print_bootstrap_js() ?>
-         
+        
 		 
     </BODY>
 </HTML>
