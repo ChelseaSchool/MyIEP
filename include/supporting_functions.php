@@ -71,7 +71,7 @@ if(!defined('IPP_PATH')) define('IPP_PATH','../');
  */
 function clean_in_and_out($input){
 	$input = strip_tags($input);
-	$input = htmlentities($input);
+	$input = htmlentities($input,$charset="utf8");
 	$input = stripslashes($input);
 	return mysql_real_escape_string($input);
 }
@@ -249,6 +249,20 @@ EOF;
 	echo $jumbotron;
 }
 
+function print_lesser_jumbotron($page_name, $permission) {
+	$lesser_jumbotron = <<<EOF
+	<div class="jumbotron"><div class="container">
+<h1>$page_name</h1>
+<h2>Logged in as: <small>{$_SESSION['egps_username']} (Permission: $permission)</small></h2>
+<h3>$system_message</h3>
+
+</div> <!-- close container -->
+
+</div> <!-- Close Jumbotron -->
+
+EOF;
+	echo $lesser_jumbotron;
+}
 /** @fn print_student_navbar($student)
  * @brief Outputs HTML student context navbar (bootstrap)
  * @remark

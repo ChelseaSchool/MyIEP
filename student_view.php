@@ -284,7 +284,7 @@ function get_age_by_date($yyyymmdd)
         <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
-        <h1>Student View: <?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?></h1>
+        <h1>Student View: <small><?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?></small></h1>
         <p>Current Age: <?php echo get_age_by_date($student_row['birthday']) ?></p>
 		<p>Grade: <?php echo $student_row['current_grade']; ?></p>
 		<p>User: <?php echo $_SESSION['egps_username'] ?> (Access Level: <?php echo $our_permission ?>)

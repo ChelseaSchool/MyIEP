@@ -5,7 +5,7 @@
  * 
  * Work in progress and not ready for incorporation into code base.
  * @todo
- * 1. Add a tooltip for the filter field
+ * 1. Add a tooltip or popover for the button to clear filters
  * 
  */
  
@@ -358,11 +358,16 @@ $("#clear").click(function() {
 <script>
 $(document).ready (function(){
 $('#popover').popover();
-
-
 });
 </script>
 
+<script>
+//$(document).ready (function(){
+//	$('#clear').popover();
+//});
+	
+
+</script>
 
 
 
@@ -380,8 +385,8 @@ $('#popover').popover();
 <h2>Logged in as: <small><?php echo $_SESSION['egps_username']; ?></small></h2>
 
 <?php if ($system_message) { echo "<h3>System Message <small>" . $system_message . "</small></h3>";} ?>
-<!-- <button id="toggle" class="btn btn-lg btn-primary" data-toggle="popover" data-placement="top" data-title="Clear Filters" data-content="If a filter has been used, this button will return a list of all students in the system - it clears filters." role="button">Toggle <small>(Based on Permissions)</small> &raquo;</button>-->
-<div id="clear-filter" data-toggle="popover" data-placement="top" data-title="Clear Filters" data-content="If a filter has been used, this button will return a list of all students in the system - it clears filters."><button class="btn btn-lg btn-primary" id="clear" role="button" >Clear Filter &raquo;</button></div>
+
+<button data-toggle="popover" data-placement="top" data-title="Clear Filters" data-content="If a filter has been used, this button will return a list of all students in the system - it clears filters." class="btn btn-lg btn-primary" id="clear" alt="Clears all filters" role="button">Clear Filter &raquo;</button>&nbsp;<button id="toggle" class="btn btn-lg btn-primary" role="button">Toggle Visible Students <small>Based on Permissions </small> &raquo;</button>
 </div> <!-- close container -->
 
 </div> <!-- Close Jumbotron -->

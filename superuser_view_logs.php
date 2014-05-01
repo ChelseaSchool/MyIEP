@@ -11,7 +11,9 @@
     You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * @authors		Rik Goldman, Sabre Goldman, Jason Banks, Alex, James, Paul, Bryan, TJ, Jonathan, Micah, Stephen, Joseph
  * @author		M. Nielson
- * @todo		Filter input
+ * @todo		
+ * * reenable paging php - currently commented out
+ * 
  */  
  
 
@@ -190,34 +192,12 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
               return false;
       }
     </SCRIPT>
+<?php print_bootstrap_head();?>
 </HEAD>
     <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-       
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
-
-                        <center><table><tr><td><center><p class="header">- View Log Files -</p></center></td></tr></table></center>
-
-                        <!-- search logs to be implemented...
-                        <form enctype="multipart/form-data" action="<?php echo IPP_PATH . "superuser_manage_users.php"; ?>" method="get">
-                        <center><table width="80%"><tr>
-                        <td align=center bgcolor="#E0E2F2">
-                            Search Username:&nbsp;&nbsp;<input type="text" name="username" size="30">&nbsp;&nbsp;<input type="submit" value="Query">
-                            <p class="small_text">(Wildcards: '%'=match any '_'=match single)</p>
-                        </td>
-                        </tr></table></center>
-                        </form>
-                        end search logs -->
+    <?php print_general_navbar(); ?>
+    <?php print_lesser_jumbotron("View Logs", $permission_level); ?>
+    <div class="container">
 
                         <?php //display users... ?>
                         <form name="loglist" enctype="multipart/form-data" action="<?php echo IPP_PATH . "superuser_view_logs.php"; ?>" method="post">
@@ -225,33 +205,36 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
                         <input type="hidden" name="iCur" value="0">
                         <input type="hidden" name="iLimit" value="<?php echo $iLimit; ?>">
                         <BR>
-                        <center>View:
+                        <div class="form-group"><label>View</label>
                         <SELECT name="szLevel">
                             <OPTION value="ALL" selected>ALL
                             <OPTION value="ERROR">Errors
                             <OPTION value="WARNING">Warnings
                             <OPTION value="INFORMATIONAL">Informational
                         </SELECT>
-                        Limit:
+                        <label>Limit</label>
                         <INPUT name="iLimit" value="<?php echo $iLimit; ?>" size="5">
-                        <INPUT type="submit" value="Go">
-                        </center>
-                        <center><table width="80%" border="0">
+                        
+                        <button type="submit" value="Go">Go</button></div>
+                        
+                        
+                        
 
                         <?php
-                        $bgcolor = "#DFDFDF";
-
+                       /*
+						echo "<table>";
                         //print the next and prev links...
-                        echo "<tr><td>&nbsp;</td><td>";
+                       
                         if($iCur != 0) {
                             //we have previous values...
-                            echo "<a href=\"./superuser_view_logs.php?iCur=" . ($iCur-$iLimit) . "&iLimit=$iLimit&szLevel=$szLevel\" class=\"default\">previous $iLimit</a>";
+                            echo "<tr><td>";
+							echo "<a href=\"./superuser_view_logs.php?iCur=" . ($iCur-$iLimit) . "&iLimit=$iLimit&szLevel=$szLevel\" class=\"default\">previous $iLimit</a>";
                         } else {
                             echo "&nbsp;";
                         }
-                        echo "</td><td colspan=\"2\">";
-                        echo "&nbsp;";
                         echo "</td>";
+                        
+                        
                         if(($iLimit+$iCur < $sqlLogTotals)) {
                             echo "<td align=\"right\"><a href=\"./superuser_view_logs.php?iCur=" . ($iCur+$iLimit) . "&iLimit=$iLimit&szLevel=$szLevel\" class=\"default\">next ";
                             if( $sqlLogTotals-($iCur+$iLimit) > $iLimit) {
@@ -259,49 +242,29 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
                             } else {
                                 echo ($sqlLogTotals-($iCur+$iLimit)) . "</td>";
                             }
-                        } else {
-                            echo "<td>&nbsp;</td>";
-                        }
+                        } 
+                        
                         echo "</tr>\n";
+                        echo "</table>";
+                        */
                         //end print next and prev links
-
+						echo "<table class=\"table table-striped table-hover\">";
                         //print the header row...
-                        echo "<tr><td bgcolor=\"#E0E2F2\">UID</td><td align=\"center\" bgcolor=\"#E0E2F2\">Level</td><td align=\"center\" bgcolor=\"#E0E2F2\">Username</td><td align=\"center\" bgcolor=\"#E0E2F2\">Student ID</td><td align=\"center\" bgcolor=\"#E0E2F2\">Date & Time</td><td align=\"center\" bgcolor=\"#E0E2F2\">Message</td></tr>\n";
+                        echo "<tr><th>UID</th><th>Level</th><th>Username</th><th>Student ID</th><th>Date & Time</th><th>Message</th></tr>\n";
                         while ($log_row=mysql_fetch_array($sqlLog)) {
                             echo "<tr>\n";
-                            echo "<td bgcolor=\"$bgcolor\"><p class=\"small_text\">" . $log_row['uid'] . "<p></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\"><p class=\"small_text\">" . $log_row['level'] . "<p></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\"><p class=\"small_text\">" . $log_row['username'] . "<p></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\"><p class=\"small_text\">" . $log_row['student_id'] . "<p></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\"><p class=\"small_text\">" . $log_row['time'] . "<p></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\"><p class=\"small_text\">" . $log_row['message'] . "<p></td>\n";
+                            echo "<td>" . $log_row['uid'] . "<p></td>\n";
+                            echo "<td>" . $log_row['level'] . "<p></td>\n";
+                            echo "<td>" . $log_row['username'] . "<p></td>\n";
+                            echo "<td>" . $log_row['student_id'] . "<p></td>\n";
+                            echo "<td>" . $log_row['time'] . "<p></td>\n";
+                            echo "<td>" . $log_row['message'] . "<p></td>\n";
                             echo "</tr>\n";
-                            if($bgcolor=="#DFDFDF") $bgcolor="#CCCCCC";
-                            else $bgcolor="#DFDFDF";
+                            
                         }
                         ?>
                         </table></center>
                         </form>
-                        <BR>
-
-                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center"><table border="0" width="100%"><tr><td width="60"><a href="<?php echo IPP_PATH . "main.php"; ?>"><img src="<?php echo IPP_PATH; ?>images/back-arrow.png" border=0></a></td><td width="60"><a href="<?php echo IPP_PATH . "main.php"; ?>"><img src="<?php echo IPP_PATH; ?>images/homebutton.png" border=0></a></td><td valign="bottom" align="center">Logged in as: <?php echo $_SESSION['egps_username'];?></td><td width="60"><a href="<?php echo IPP_PATH;?>"><img src="<?php echo IPP_PATH; ?>images/logout.png" border=0></a></td></tr></table></td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
-        <?php print_complete_footer(); ?>
+        <?php print_complete_footer(); ?></div>
     </BODY>
 </HTML>

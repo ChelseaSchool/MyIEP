@@ -10,7 +10,11 @@
     You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * @authors		Rik Goldman, Sabre Goldman, Jason Banks, Alex, James, Paul, Bryan, TJ, Jonathan, Micah, Stephen, Joseph
  * @author		M. Nielson
- * @todo		Filter input
+ * @todo		
+ * * Filter input
+ * * Require Fields for form
+ * * Bootstrap Theme
+ * * Add datepicker
  */ 
  
 //the authorization level for this page!
@@ -255,19 +259,19 @@ if(!$student_result) {
                         <tr>
                           <td bgcolor="#E0E2F2" align="left">First Name:</td>
                           <td bgcolor="#E0E2F2">
-                            <input type="text" name="first_name" size="30" maxsize="125" value="<?php echo $student_row['first_name']; ?>">
+                            <input type="text" required name="first_name" size="30" maxsize="125" value="<?php echo $student_row['first_name']; ?>">
                           </td>
                         </tr>
                         <tr>
                           <td bgcolor="#E0E2F2" align="left">Last Name:</td>
                           <td bgcolor="#E0E2F2">
-                            <input type="text" name="last_name" size="30" maxsize="125" value="<?php echo $student_row['last_name']; ?>">
+                            <input type="text" required name="last_name" size="30" maxsize="125" value="<?php echo $student_row['last_name']; ?>">
                           </td>
                         </tr>
                         <tr>
-                          <td bgcolor="#E0E2F2" align="left">Birthday: (YYYY-MM-DD)&nbsp;</td>
+                          <td bgcolor="#E0E2F2" align="left">Birthdate: (YYYY-MM-DD)&nbsp;</td>
                           <td bgcolor="#E0E2F2">
-                            <input type="text" name="birthday" value="<?php echo $student_row['birthday']; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.birthday, 'yyyy-m-dd', 0, 0)">
+                            <input type="text" required name="birthday" value="<?php echo $student_row['birthday']; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.birthday, 'yyyy-m-dd', 0, 0)">
                           </td>
                         </tr>
                         <tr>
