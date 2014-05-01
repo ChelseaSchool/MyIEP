@@ -5,7 +5,7 @@
  * 
  * Work in progress and not ready for incorporation into code base.
  * @todo
- * 1. Put filters in a modal.
+ * 1. Add a tooltip for the filter field
  * 
  */
  
@@ -32,8 +32,7 @@ require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
 require_once(IPP_PATH . 'include/supporting_functions.php');
-//require_once(IPP_PATH . 'include/navbar.php');
-//require_once(IPP_PATH . 'include/print_html_functions.php');
+
 header('Pragma: no-cache'); //don't cache this page!
 
 if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
@@ -330,7 +329,7 @@ EOF;
     <script src="js/jquery-2.1.0.min.js"></script>
 	<script src="js/jquery.autocomplete.min.js" type="text/javascript"></script>
 	<link rel="stylesheet" type="text/css" href="css/jquery.autocomplete.min.css">   
-
+    <script src="js/bootstrap-tooltip.js"></script>
 <script>   
 function show_name(person) {
 	if (person != null)
@@ -356,9 +355,13 @@ $("#clear").click(function() {
   <?php print_jquery_autocomplete(); ?>
     
     
+<script>
+$(document).ready (function(){
+$('#popover').popover();
 
 
-
+});
+</script>
 
 
 
@@ -377,8 +380,8 @@ $("#clear").click(function() {
 <h2>Logged in as: <small><?php echo $_SESSION['egps_username']; ?></small></h2>
 
 <?php if ($system_message) { echo "<h3>System Message <small>" . $system_message . "</small></h3>";} ?>
-<!-- <button id="toggle" class="btn btn-lg btn-primary" role="button">Toggle <small>(Based on Permissions)</small> &raquo;</button>-->
-<button class="btn btn-lg btn-primary" id="clear" role="button">Clear Filter &raquo;</button>
+<!-- <button id="toggle" class="btn btn-lg btn-primary" data-toggle="popover" data-placement="top" data-title="Clear Filters" data-content="If a filter has been used, this button will return a list of all students in the system - it clears filters." role="button">Toggle <small>(Based on Permissions)</small> &raquo;</button>-->
+<div id="clear-filter" data-toggle="popover" data-placement="top" data-title="Clear Filters" data-content="If a filter has been used, this button will return a list of all students in the system - it clears filters."><button class="btn btn-lg btn-primary" id="clear" role="button" >Clear Filter &raquo;</button></div>
 </div> <!-- close container -->
 
 </div> <!-- Close Jumbotron -->
@@ -392,7 +395,7 @@ $("#clear").click(function() {
 
 
 <div class="input-group">
-  <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span>
+  <span class="input-group-addon"><span id="popover" data-toggle="popover" data-placement="top" data-title="Filter Info" data-content="Type part of a student's name to filter the results on this page." class="glyphicon glyphicon-search"></span>
   </span>
   <input id="tags" class="form-control" placeholder="Search for student">
 </div>
