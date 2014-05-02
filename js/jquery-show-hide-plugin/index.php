@@ -33,7 +33,7 @@ font-size:14px;}
  $link = '| <a href="http://papermashup.com/jquery-show-hide-plugin/">Back To Tutorial</a>';
 ?>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery-2.1.0.min.js" type="text/javascript"></script>
 <script src="showHide.js" type="text/javascript"></script>
 <script type="text/javascript">
 

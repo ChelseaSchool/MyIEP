@@ -394,7 +394,7 @@ if(isset($_POST['edit_accomodation']) && $have_write_permission)
 <!-- Bootstrap core JavaScript
  ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="js/jquery-2.1.0.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>   
 <script type="text/javascript" src="./js/jquery-ui-1.10.4.custom.min.js"></script>	
     <?php print_complete_footer(); ?>
