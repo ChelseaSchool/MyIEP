@@ -289,7 +289,7 @@ EOF;
 <?php print_meta_for_html5($page_title); ?>
 <TITLE><?php echo $page_title; ?></TITLE>
 <?php print_bootstrap_head(); ?>
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">   
+<link href="assets/glyphs/bootstrap-glyphicons.css" rel="stylesheet">   
 <!--  <script src="js/autocomplete-html.js" type="text/javascript"></script>-->
 
 
@@ -329,7 +329,8 @@ EOF;
     <script src="js/jquery-2.1.0.min.js"></script>
 	<script src="js/jquery.autocomplete.min.js" type="text/javascript"></script>
 	<link rel="stylesheet" type="text/css" href="css/jquery.autocomplete.min.css">   
-    <script src="js/bootstrap-tooltip.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <script>   
 function show_name(person) {
 	if (person != null)
@@ -344,7 +345,7 @@ function show_name(person) {
 
 <script>
 $(document).ready (function(){
-$("#clear").click(function() {
+$("#filter-clear").click(function() {
 	$( "#tags" ).val("");
 	$( "tr.student" ).show();
 });
@@ -352,22 +353,16 @@ $("#clear").click(function() {
 
 
 </script>
-  <?php print_jquery_autocomplete(); ?>
-    
-    
+
 <script>
-$(document).ready (function(){
-$('#popover').popover();
+$(document).ready(function(){
+	$("#popover").popover();
 });
 </script>
+  <?php print_jquery_autocomplete(); ?>
+ 
+    
 
-<script>
-//$(document).ready (function(){
-//	$('#clear').popover();
-//});
-	
-
-</script>
 
 
 
@@ -386,7 +381,7 @@ $('#popover').popover();
 
 <?php if ($system_message) { echo "<h3>System Message <small>" . $system_message . "</small></h3>";} ?>
 
-<button data-toggle="popover" data-placement="top" data-title="Clear Filters" data-content="If a filter has been used, this button will return a list of all students in the system - it clears filters." class="btn btn-lg btn-primary" id="clear" alt="Clears all filters" role="button">Clear Filter &raquo;</button>&nbsp;<button id="toggle" class="btn btn-lg btn-primary" role="button">Toggle Visible Students <small>Based on Permissions </small> &raquo;</button>
+
 </div> <!-- close container -->
 
 </div> <!-- Close Jumbotron -->
@@ -398,22 +393,19 @@ $('#popover').popover();
 
 
 
-
-<div class="input-group">
+<div class="row">
+<div class="input-group col-md-8">
   <span class="input-group-addon"><span id="popover" data-toggle="popover" data-placement="top" data-title="Filter Info" data-content="Type part of a student's name to filter the results on this page." class="glyphicon glyphicon-search"></span>
   </span>
   <input id="tags" class="form-control" placeholder="Search for student">
 </div>
 
-
-
-
-
-      
-
-
-<p>&nbsp;</p>
-  					
+<div class="col-md-4">
+   <button type="button" id="filter-clear" class="btn btn-default" alt="Clears all filters" role="button">Clear Filter</button>
+   <button id="toggle" role="button" alt="Filter based on your permissions in relation to the students listed" type="button" class="btn btn-default">Filter by Access Level</button>
+</div>
+</div>
+	
     <table id="students" border=0 class="table table-hover" class="table table-striped">
   	<!-- <form name="studentlist" onSubmit="return deleteChecked()" enctype="multipart/form-data" action="<?php //echo IPP_PATH . "manage_student.php"; ?>" method="post">-->
   	<tr><th width=10>Select <small>(Disabled)</small></th><th>UID</th><th>Student Name</th><th width="20%"><center><abbr title="Individual Education Plan">IEP</abbr> (<abbr title="Portable Document Format">PDF</abbr>)</center></th><th>School</th><th>Permission</th></tr>
