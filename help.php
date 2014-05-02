@@ -152,8 +152,8 @@ header('Pragma: no-cache'); //don't cache this page!
 <h3>MyIEP</h3>
 <p>&copy; 2014 Chelsea School</p>
 
-<address><strong>Chelsea School</strong><br>
-2970 Belcrest Center Drive - Suite 300<br>
+<strong>Chelsea School</strong><br>
+<address>2970 Belcrest Center Drive - Suite 300<br>
 Hyattsville, Maryland 20782</address>
 <h3>Legacy Code</h3>
 <p>&copy; 2004 Grasslands Regional Public Schools #6</p>
@@ -196,17 +196,17 @@ Hyattsville, Maryland 20782</address>
 <!-- Second Row, Right Column -->
 <div class="col-md-4">
 <h1>Development Process</h1>
-<p>Developed by students in Information Systems Management and Web Design &amp; Development courses at Chelsea School.
+<p>Developed by students in Information Systems Management and Web Design &amp; Development courses at Chelsea School.</p>
 <ul>
 <li>Developed using Scrum Framework (an Agile methodology)</li>
 <li>HTML5 &amp; CSS3</li>
-<li>Vagrant &amp; Virtualbox Development Environment</li>
-<li>Source Code Management (SCM) with Git and Github</li>
+<li><a href="http://vagrantup.com">Vagrant</a> &amp; Virtualbox Development Environment</li>
+<li>Source Code Management (SCM) with Git and <a href="http://github.com">Github</a></li>
 <li>Apache web-server administration</li>
 <li>Data processing with PHP</li>
 <li>Data storage with MySQL</li>
 <li>Active web pages with jQuery and JavaScript</li>
-<li>Responsive design (in progress) with Bootstrap</li>
+<li>Responsive design (in progress) with <a href="http://getbootstrap.com">Bootstrap</a></li>
 </ul>
 </div>
 </div>  
