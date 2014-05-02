@@ -75,7 +75,10 @@ function clean_in_and_out($input){
 	$input = stripslashes($input);
 	return mysql_real_escape_string($input);
 }
-
+function filter_html($input) {
+	$clean=htmlentities($input, $charset="UTF8");
+	return $clean;
+}
 /* @fn print_html5_primer()
  * @brief to start html5 doc
  * @remark has constant base path to take advantage of favicon, CSS, site wide JS

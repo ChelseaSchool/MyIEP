@@ -15,8 +15,11 @@
  * * Require Fields for form
  * * Bootstrap Theme
  * * Add datepicker
+ * * Needs HTMLEntities filter UTF8
  */ 
- 
+ini_set('display_errors', '1');
+error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
+
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 60; //TA
 /*
@@ -58,6 +61,7 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
+require_once(IPP_PATH . 'include/supporting_functions.php');
 require_once(IPP_PATH . 'include/navbar.php');
 
 header('Pragma: no-cache'); //don't cache this page!
