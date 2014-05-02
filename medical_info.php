@@ -3,9 +3,7 @@
 /** @file
  * @brief 	display medical information
  * @todo
- * 1. Bootstrap
- * 2. Student context navbar
- * 3. filter, spellcheck, escape
+ * * Datepicker
  * @remark Replaced checkSpelling() with HTML spellcheck="TRUE"
  */
  

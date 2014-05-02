@@ -149,14 +149,14 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
       </div>
     </div>
 
-<?php //my_error_handler($e_number,$e_message, $e_file,$e_line, $e_vars) ?>
 
 
 
-<p><center>Access to the following sections is restricted.</center></p>
+
 <?php if ($system_message) { echo "<p>" . $system_message . "</p>";} ?>
     <div class="container">
-      <!-- Example row of columns -->
+      <p>Access to the following sections is restricted. All areas are displayed here; as you explore keep in mind that you won't be able to access some areas.</p>
+    
       <div class="row">
         <div class="col-md-4">
           <h2>Students</h2>

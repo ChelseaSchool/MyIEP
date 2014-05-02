@@ -107,7 +107,7 @@ You should have received a copy of the GNU General Public License along with thi
 * @brief deletes a logged in user from logged in table in MySQL; or returns error.
 * @return boolean
 * @todo
-* 1. Add logout mechanism to main page navbar
+* 1. Add are you sure alert and ask for confirmation for logout
 */
     function logout() {
         if(!session_id()) session_start();

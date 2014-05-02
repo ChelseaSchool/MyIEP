@@ -209,5 +209,6 @@ $(function() {
                 
 <?php print_complete_footer(); ?>    
 </div> 
+<?php print_bootstrap_js();?>
 </BODY>
 </HTML>

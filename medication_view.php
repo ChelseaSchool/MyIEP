@@ -3,8 +3,7 @@
 /** @file
  * @brief view student's medications
  * @todo
- * 1. Filter
- * 2. Escape
+ * * datepicker
  */
  
  
@@ -168,6 +167,7 @@ if(!$medication_result) {
         $system_message= $system_message . $error_message;
         IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
 }
+print_datepicker_depends();
 ?> 
 <!DOCTYPE HTML>
 <HTML lang=en>
@@ -207,7 +207,7 @@ if(!$medication_result) {
 </HEAD>
     <BODY>
    <?php print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']) ; ?>
-   <?php print_jumbotron_with_page_name("Medication", $student_row['first_name'] . " " . $student_row['last_name'], $permission_level) ; ?>
+   <?php print_jumbotron_with_page_name("Medication", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission) ; ?>
         
    <div class="container">
    <?php if ($system_message) { echo $system_message; } ?>
@@ -296,7 +296,7 @@ if(!$medication_result) {
 </div>
 <div class="form-group">
 <label>Medication Start Date (YYYY-MM-DD)</label>                   
-<input class="form-control" type="datepicker" pattern="\d{4}-\d{1,2}-\d{1,2}" name="start_date" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" tabindex="3" value="<?php if(isset($_GET['start_date'])) echo $_GET['start_date']; ?>">
+<input class="form-control datpicker" id="datepicker" type="datepicker" pattern="\d{4}-\d{1,2}-\d{1,2}" name="start_date" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" tabindex="3" value="<?php if(isset($_GET['start_date'])) echo $_GET['start_date']; ?>">
 </div>                          
 <button type="submit" class="btn btn-default" type="submit" tabindex="4" value="add">Add Medication</button>                        
 </form></div>
@@ -304,21 +304,10 @@ if(!$medication_result) {
 </div>
 <!-- END  supervisor -->
 
-                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
+                        
          
 <?php print_complete_footer(); ?>
+</div>
 
 <!-- Bootstrap core JavaScript
  ================================================== -->
@@ -326,6 +315,6 @@ if(!$medication_result) {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>   
 <script type="text/javascript" src="./js/jquery-ui-1.10.4.custom.min.js"></script>
-<?php print_datepicker_depends(); ?>   
+<?php print_bootstrap_js(); ?>   
 </BODY>
 </HTML>
