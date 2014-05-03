@@ -240,18 +240,6 @@ if(!$long_goal_result) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 /** @fn print_goal_area_checklist()
  *  @brief While there are goal areas to list, list them as checkbox input
  *  @remark
@@ -270,92 +258,62 @@ function print_goal_area_checklist() {
 		IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
 	}
 	while ($area_row=mysql_fetch_array($area_result)) {
-		echo "<label><input id=\"area\" type=\"checkbox\" checked value=\"" . $area_row['name'] . "\">" . $area_row['name'] . "</label><br>\n";
+		echo "<label><input class=\"area\" id=\"{$area_row['name']}\" type=\"checkbox\">" . $area_row['name'] . "</label><br>\n";
 	} //closes loop
 } //closes function
 
 
-/*************************** popup chooser support function ******************/
 
-/*
-    function createJavaScript($dataSource,$arrayName='rows'){
-      // validate variable name
-      if(!is_string($arrayName)){
-        $system_message = $system_message . "Error in popup chooser support function name supplied not a valid string  (" . __FILE__ . ":" . __LINE__ . ")";
-        return FALSE;
-      }
-
-    // initialize JavaScript string
-      $javascript='<!--Begin popup array--><script>var '.$arrayName.'=[];';
-
-    // check if $dataSource is a file or a result set
-      if(is_file($dataSource)){
-       
-        // read data from file
-        $row=file($dataSource);
-
-        // build JavaScript array
-        for($i=0;$i<count($row);$i++){
-          $javascript.=$arrayName.'['.$i.']="'.trim($row[$i]).'";';
-        }
-      }
-
-      // read data from result set
-      else{
-
-        // check if we have a zero resultant set
-        if(!$numRows=mysql_num_rows($dataSource)){
-          //zero result set (create empty array)
-          $javascript.='</script><!--End popup array-->'."\n";
-          return $javascript;
-        }
-        for($i=0;$i<$numRows;$i++){
-          // build JavaScript array from result set
-          $javascript.=$arrayName.'['.$i.']="';
-          $tempOutput='';
-          //output only the first column
-          $row=mysql_fetch_array($dataSource);
-
-          $tempOutput.=$row[0].' ';
-
-          $javascript.=trim($tempOutput).'";';
-        }
-      }
-      $javascript.='</script><!--End popup array-->'."\n";
-
-      // return JavaScript code
-      return $javascript;
-    }
-
-    function echoJSServicesArray() {
-        global $system_message;
-        //get a list of all available goal categories...
-        $catlist_query="SELECT * FROM typical_long_term_goal_category where is_deleted='N' ORDER BY name ASC";
-        $catlist_result=mysql_query($catlist_query);
-        if(!$catlist_result) {
-            $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$catlist_query'<BR>";
-            $system_message= $system_message . $error_message;
-            IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
-            return;
-        }
-
-        while($catlist=mysql_fetch_array($catlist_result)) {
-           $objlist_query="SELECT typical_long_term_goal.goal FROM typical_long_term_goal WHERE cid=" . $catlist['cid'] . " AND typical_long_term_goal.is_deleted='N'";
-           $objlist_result = mysql_query($objlist_query);
-           if(!$objlist_result) {
-             $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$objlist_query'<BR>";
-             $system_message= $system_message . $error_message;
-             IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
-           } else {
-             //call the function to create the javascript array...
-             echo createJavaScript($objlist_result,$catlist['name']);
-           }
-        }
-    }
-
+/** @fn print_goal_area_jQuery()
+ *  @brief Print jQuery to toggle goals by area based on check list choices
+* 	@param unknown $area_result
 */
-/************************ end popup chooser support funtion  ******************/
-?> 
+function print_goal_area_jQuery() {
+	$area_query = "SELECT * FROM `typical_long_term_goal_category` WHERE `is_deleted` = 'N'";
+	$area_result = mysql_query($area_query);
+	if(!$area_result) {
+		$error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$area_query'<BR>";
+		$system_message=$system_message . $error_message;
+		IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
+	} //closes if
+	
+	//Start javascript conditionals
+	echo "<script type=\"text/javascript\"> \n";
+	echo "$(document).ready(function() { \n";
+	//echo "$('input[type=\"checkbox\"]').click(function(){ \n";
+	while ($area_row=mysql_fetch_array($area_result)) {
+		
+		
+		echo "\t $('.area#". $area_row['name'] . "').click(function() {  \n";
+	//	echo "\t\t if($(\".goal#" . $area_row['name'] . ".prop(\"value\")==\"" . $area_row['name'] . "\") \n";
+		//echo "\t { \n";
+		echo "\t \t if ($(\".area#". $area_row['name'] . "\").is(\":checked\"))";
+		echo "\t{ \n";
+		echo "\t $('.goal#" . $area_row['name'] . "').show() ; \n";
+		echo "\t $('.objective').show(); \n";
+		//echo ") \n";
+		echo "\t } \n";
+		echo "\t else \n";
+		echo "\t { \n";
+		echo "\t $('.goal#" .$area_row['name'] . "').hide(); \n";
+		echo "\t $('.objective').hide(); \n";
+		echo "} \n";
+		echo "});";
+		
+		
+
+	}  //closes loop
+
+	echo "});\n";
+
+	
+
+	echo "</script> \n";
+
+
+} //closes function
+?>
+ 
 
 <!DOCTYPE html>
 <html lang="en">
@@ -376,63 +334,27 @@ function print_goal_area_checklist() {
 	<style type="text/css">body { padding-bottom: 70px; }</style>
     <script type="text/javascript" src=./js/jquery-2.1.0.min.js></script>
      
-     <!-- <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script> -->
-     <!-- <script language="javascript" src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script> -->
+
      
-     <?php
-       //output the javascript array for the chooser popup
-       //echoJSServicesArray();
-     ?>
-     <SCRIPT LANGUAGE="JavaScript">
-      function notYetImplemented() {
-          alert("Functionality not yet implemented"); return false;
-      }
+     
+    
 
-      function noPermission() {
-          alert("You don't have the permission level necessary"); return false;
-      }
 
-      function noSelection() {
-          alert("You must choose a goal category to enable the chooser"); return false;
-      }
-
-    </SCRIPT>
 <link rel=stylesheet type=text/css href=./css/jquery-ui-1.10.4.custom.css>
 
-<?php 
-/** @fn print_goal_area_jQuery()
- *  @brief Print jQuery to toggle goals by area based on check list choices
- * 	@param unknown $area_result
- */
-function print_goal_area_jQuery() {
-	$area_query = "SELECT * FROM `typical_long_term_goal_category` WHERE `is_deleted` = 'N'";
-	$area_result = mysql_query($area_query);
-	if(!$area_result) {
-		$error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$area_query'<BR>";
-		$system_message=$system_message . $error_message;
-		IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
-	}
-	echo "<script type=\"text/javascript\"> \n";
-	echo "$(document).ready(function() { \n";
-	echo "$('input[type=\"checkbox\"]').click(function(){ \n";
-	while ($area_row=mysql_fetch_array($area_result)) {
-		echo "if($(this).attr(\"value\")==\"" . $area_row['name'] . "\"){ \n";
-		echo "$(\"div." . $area_row['name'] . "\").toggle(); \n";
-		echo "} \n";
-
-	}  //closes loop
-
-	echo "});\n";
-
-	echo "}); \n";
-
-	echo "</script> \n";
 
 
-} //closes function
-?>
+</script>
 
+<script type="text/javascript">
+$(document).ready(function() {
+$("#toggle-detail").change(function() {
+	$("div#detail").toggle("explode", 100);
+}
+);
+});
 
+</script>
 <script type="text/javascript">
 function toggle () //toggles objective details
 {
@@ -441,18 +363,25 @@ function toggle () //toggles objective details
 </script>
 
 
-<script type="text/javascript">
-$(document).ready(function() {
-	$( '.goal' ).show();
-	$( '.objectives' ).show();
-});
 
 </script>
 
-
-  
-
 <?php print_goal_area_jQuery(); ?>
+
+	
+<script type="text/javascript">
+//$(document).ready(function() {
+//	$('#check_all').click(function(){
+	//	if ($('#check_all').prop('checked','true')){
+
+	//			$(".area:checked").prop('checked', 'true');
+			
+			
+	//	};
+	//})
+	//});
+</script>
+
 
 </HEAD>
 <BODY>
@@ -516,18 +445,7 @@ $(document).ready(function() {
             </li>
           </ul>
          </div>
-         <!--/.nav-collapse -->
-        <!--<div class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" role="form" nctype="multipart/form-data" action="jumbotron.php" method="post">
-            <div class="form-group">
-              <input type="text" placeholder="User Name" class="form-control" value="<?php echo $LOGIN_NAME;?>">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control" name="PASSWORD" value="">
-            </div>
-            <button type="submit" value="submit" class="btn btn-success">Sign in</button>
-          </form>
-        </div><!--/.navbar-collapse -->
+         
       </div>
     </div>
 
@@ -553,10 +471,8 @@ $(document).ready(function() {
         <h4 class="Filters" id="Filters">Show only these Areas:</h4>
       </div><!-- Modal Header end -->
       <div class="modal-body">
-        	<label><input id="check_all" type="checkbox" checked value="=">Check all Areas <small>(Feature yet enabled)</small></label>
-        	<hr>
-        	<?php print_goal_area_checklist(); ?>
-        	
+      		<small><?php print_goal_area_checklist(); ?></small>
+        	<?php print_goal_area_jQuery(); ?>
         	<hr>
 			<!-- Toggle displayed objectives' details -->
 			<label><input type="checkbox" id="toggle_detail" onclick="toggle ()" checked value="">Hide Objective Details</label>
@@ -580,7 +496,7 @@ $(document).ready(function() {
  
 <!--  End Jumbotron -->
 <div class=container>
-<p><em><strong>Release Note</strong>: Goals, objectives, and details (such as progress) are hidden until filters are specified. Click "Show Filter" button above to activate filters.</em></p>
+<div class="alert alert-block alert-info"><a href="#" class="close" data-dismiss="alert">&times;</a><em><strong>Release Note</strong>: Objective details, such as progress, are hidden by default. Click "Show Filter" button above to activate or manipulate filters.</div>
 
 
 <?php
@@ -594,7 +510,7 @@ if(mysql_num_rows($long_goal_result) == 0 ) {
 		$div_id=$goal['area'];
 		echo "<div class=\"container\">\n";
 		
-		echo "<div class=\"goal $div_id\">\n<div class=\"col-md-12\">\n";
+		echo "<div class=\"goal\" hidden id=\"$div_id\">\n<div class=\"col-md-12\">\n";
 		echo "<h2><a href=\"" . IPP_PATH . "add_objectives.php?student_id=" . $student_id . "&lto=" . $goal['goal_id']  . "\"";
 		if (!$have_write_permission) echo " onClick=\"return noPermission();\">\n";
 		else echo " onClick=\"return changeStatusCompleted();\">\n";
@@ -686,7 +602,7 @@ if(!$short_term_objective_result) {
 		}*/
 	$obj_num=1;
 	while ($short_term_objective_row = mysql_fetch_array($short_term_objective_result)) {
-		echo "<div class=\"goal " . $div_id . "\">\n<div class=\"col-md-12\">\n<div class=\"container\">\n";
+		echo "<div class=\"objective\" hidden ". "\">\n<div class=\"col-md-12\">\n<div class=\"container\">\n";
 
 		echo "<h4><small>" . $obj_num . ")&nbsp;</small>\n";
 		$obj_num++; //increment goal

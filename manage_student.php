@@ -3,9 +3,9 @@
 /** @file
  * @brief 	find and manage a specific IEP
  * 
- * Work in progress and not ready for incorporation into code base.
- * @todo
- * 1. Add a tooltip or popover for the button to clear filters
+ * 
+ *
+ * 
  * 
  */
  
@@ -353,7 +353,12 @@ $("#filter-clear").click(function() {
 
 
 </script>
+<script>
+$(document).ready (function(){
+	$(.alert).hide();
+}
 
+</script>
 <script>
 $(document).ready(function(){
 	$("#popover").popover();
@@ -389,24 +394,27 @@ $(document).ready(function(){
     
 <div class="container">     
 
+<div class="alert alert-block alert-info"><a href="#" class="close" data-dismiss="alert">&times;</a><em><strong>Release Note</strong>: All students are shown by default. Use the search box to filter students by name. Use the bottom navigation buttons to manipulate the filters (clear, etc.).</div>
+
+
 <!--  form for autocomplete first and last names-->
 
 
 
 <div class="row">
-<div class="input-group col-md-8">
-  <span class="input-group-addon"><span id="popover" data-toggle="popover" data-placement="top" data-title="Filter Info" data-content="Type part of a student's name to filter the results on this page." class="glyphicon glyphicon-search"></span>
+<div class="input-group">
+  <span class="input-group-addon"><span id="popover" data-toggle="popover" data-placement="top" data-title="Filter Info" data-content="Type part of a student's name to filter the results on this page; see the black bar at the bottom of the page to work with filters." class="glyphicon glyphicon-search"></span>
   </span>
-  <input id="tags" class="form-control" placeholder="Search for student">
+  <input id="tags" class="form-control" placeholder="Search for student by name...">
 </div>
 
-<div class="col-md-4">
+<!-- <div class="btn-group">
    <button type="button" id="filter-clear" class="btn btn-default" alt="Clears all filters" role="button">Clear Filter</button>
    <button id="toggle" role="button" alt="Filter based on your permissions in relation to the students listed" type="button" class="btn btn-default">Filter by Access Level</button>
 </div>
-</div>
+</div>-->
 	
-    <table id="students" border=0 class="table table-hover" class="table table-striped">
+    <a name="students"><table id="students" border=0 class="table table-hover" class="table table-striped"></a>
   	<!-- <form name="studentlist" onSubmit="return deleteChecked()" enctype="multipart/form-data" action="<?php //echo IPP_PATH . "manage_student.php"; ?>" method="post">-->
   	<tr><th width=10>Select <small>(Disabled)</small></th><th>UID</th><th>Student Name</th><th width="20%"><center><abbr title="Individual Education Plan">IEP</abbr> (<abbr title="Portable Document Format">PDF</abbr>)</center></th><th>School</th><th>Permission</th></tr>
 	
@@ -458,14 +466,38 @@ EOF;
    			
   	</div><!-- End Container -->			
   					
-  					
-
+					
+<div class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+<div class="container">
+<div class="navbar-header">
+<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+<span class="sr-only">Toggle navigation</span>
+</button>
+<a class="navbar-brand" href="main.php">MyIEP</a>
+</div>
+<div class="navbar-collapse collapse">
+<ul class="nav navbar-nav">
+<a href="#students"><li id="filter-clear" alt="Clears all filters">Clear Student Filter</a></li>
+<a href="#students"><li id="toggle" alt="Filter based on which students you have access to">Filter Students based on Access Level</a></li>
+ 
+<ul class="nav navbar-nav navbar-right">
+            <li><a onclick="history.go(-1);">Back</a></li>
+            
+          </ul>
+         </div>
+         <!--/.nav-collapse -->
+        
+      </div>
+    </div>
 
                        
                        
         <?php print_complete_footer(); ?>
         
+ 
+ 
         <?php print_bootstrap_js() ?>
+
         
 		 
     </BODY>

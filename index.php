@@ -197,7 +197,7 @@ Hyattsville, Maryland 20782</address>
 <ul>
 <li>Developed using Scrum Framework (an Agile methodology)</li>
 <li>HTML5 &amp; CSS3</li>
-<li><Vagrant &amp; Virtualbox Development Environment</li>
+<li>Vagrant & Virtualbox Development Environment</li>
 <li>Source Code Management (SCM) with Git and Github</li>
 <li>Apache web-server administration</li>
 <li>Data processing with PHP</li>
@@ -205,6 +205,7 @@ Hyattsville, Maryland 20782</address>
 <li>Active web pages with jQuery and JavaScript</li>
 <li>Responsive design (in progress) with Bootstrap</li>
 </ul>
+</div>
 </div>
 </div>
 <?php print_complete_footer(); ?>  
