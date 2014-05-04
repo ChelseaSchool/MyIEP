@@ -2,11 +2,8 @@
 
 /** @file
  * @brief 	find and manage a specific IEP
- * 
- * 
- *
- * 
- * 
+ * @todo
+ * * perhaps move bottom filter controls to top navbar
  */
  
  
@@ -361,7 +358,7 @@ $(document).ready (function(){
 </script>
 <script>
 $(document).ready(function(){
-	$("#popover").popover();
+	$("#filter-tip").popover();
 });
 </script>
   <?php print_jquery_autocomplete(); ?>
@@ -383,18 +380,43 @@ $(document).ready(function(){
 
 <h1>Manage Students</h1>
 <h2>Logged in as: <small><?php echo $_SESSION['egps_username']; ?></small></h2>
-
+<!-- Button trigger modal -->
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#filter_options">
+  Manage Filters &raquo;
+</button>
 <?php if ($system_message) { echo "<h3>System Message <small>" . $system_message . "</small></h3>";} ?>
-
 
 </div> <!-- close container -->
 
 </div> <!-- Close Jumbotron -->
     
     
-<div class="container">     
+<div class="container">  
 
-<div class="alert alert-block alert-info"><a href="#" class="close" data-dismiss="alert">&times;</a><em><strong>Release Note</strong>: All students are shown by default. Use the search box to filter students by name. Use the bottom navigation buttons to manipulate the filters (clear, etc.).</div>
+
+<!-- Modal--> 
+<div class="modal fade" id="filter_options" tabindex="-1" role="dialog" aria-labelledby="options" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="Filters" id="Filters">Manage Filters</h4>
+      </div><!-- Modal Header end -->
+      <div class="modal-body">
+      	<div class="btn-group">
+      		<button role="button" class="btn btn-default btn-med" id="filter-clear">Clear Student Filter &raquo;</button>
+     		<button role="button" class="btn btn-default btn-med" id="toggle" alt="Show Only Students I have Access To">Show Only Students to Whom I have Access &raquo;</button>		
+	    </div>
+	  </div><!-- end modal body -->
+      <div class="modal-footer">
+          </div><!-- end modal footer -->
+    </div><!-- end modal content -->
+  </div>
+  <!-- end modal dialog -->
+</div>
+<!-- end modal fade -->
+
+<div class="alert alert-block alert-info"><a href="#" class="close" data-dismiss="alert">&times;</a><strong>Release Note</strong>: All students are shown by default.  Use the search box to filter students by name. Use the "Manage Filters" button above to manipulate the filters (clear, etc.).</div>
 
 
 <!--  form for autocomplete first and last names-->
@@ -403,20 +425,18 @@ $(document).ready(function(){
 
 <div class="row">
 <div class="input-group">
-  <span class="input-group-addon"><span id="popover" data-toggle="popover" data-placement="top" data-title="Filter Info" data-content="Type part of a student's name to filter the results on this page; see the black bar at the bottom of the page to work with filters." class="glyphicon glyphicon-search"></span>
+  <span class="input-group-addon">
+  <span id="filter-tip" data-toggle="popover" data-placement="top" data-title="Filter Info" data-content="Type part of a student's name to filter the results on this page; see the black bar at the bottom of the page to work with filters. (To dismiss this message, click the magnifying glass icon again.)" class="glyphicon glyphicon-search">
+  </span>
   </span>
   <input id="tags" class="form-control" placeholder="Search for student by name...">
 </div>
-
-<!-- <div class="btn-group">
-   <button type="button" id="filter-clear" class="btn btn-default" alt="Clears all filters" role="button">Clear Filter</button>
-   <button id="toggle" role="button" alt="Filter based on your permissions in relation to the students listed" type="button" class="btn btn-default">Filter by Access Level</button>
-</div>
-</div>-->
+<p>&nbsp;</p>
+<div class="row">
 	
-    <a name="students"><table id="students" border=0 class="table table-hover" class="table table-striped"></a>
+    <table id="students" class="table table-hover table-striped">
   	<!-- <form name="studentlist" onSubmit="return deleteChecked()" enctype="multipart/form-data" action="<?php //echo IPP_PATH . "manage_student.php"; ?>" method="post">-->
-  	<tr><th width=10>Select <small>(Disabled)</small></th><th>UID</th><th>Student Name</th><th width="20%"><center><abbr title="Individual Education Plan">IEP</abbr> (<abbr title="Portable Document Format">PDF</abbr>)</center></th><th>School</th><th>Permission</th></tr>
+  	<tr><th>Select</th><th>UID</th><th>Student Name</th><th><abbr title="Individual Education Plan">IEP</abbr> (<abbr title="Portable Document Format">PDF</abbr>)</th><th>School</th><th>Permission</th></tr>
 	
 	<!-- loop -->
 	<?php 
@@ -454,47 +474,21 @@ EOF;
                             echo "</tr>";//close row */
 						 ?>
 </table>							
-<!-- </form> -->
-	
-<!-- <button type="submit" name="delete" title="delete" class="btn btn-default">Submit</button>-->
-<!--  <?php if($permission_level <= $IPP_MIN_DELETE_STUDENT_PERMISSION)
-                            echo "<button type=\"submit\" name=\"delete\" value=\"1\">Delete Selected</button>";?>-->
-
+</div>
 
 	
  
    			
-  	</div><!-- End Container -->			
+  				
   					
 					
-<div class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
-<div class="container">
-<div class="navbar-header">
-<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-<span class="sr-only">Toggle navigation</span>
-</button>
-<a class="navbar-brand" href="main.php">MyIEP</a>
-</div>
-<div class="navbar-collapse collapse">
-<ul class="nav navbar-nav">
-<a href="#students"><li id="filter-clear" alt="Clears all filters">Clear Student Filter</a></li>
-<a href="#students"><li id="toggle" alt="Filter based on which students you have access to">Filter Students based on Access Level</a></li>
- 
-<ul class="nav navbar-nav navbar-right">
-            <li><a onclick="history.go(-1);">Back</a></li>
-            
-          </ul>
-         </div>
-         <!--/.nav-collapse -->
+
         
-      </div>
-    </div>
+    
 
                        
-                       
-        <?php print_complete_footer(); ?>
-        
- 
+<footer><?php print_complete_footer(); ?></footer>
+  
  
         <?php print_bootstrap_js() ?>
 

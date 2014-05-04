@@ -119,6 +119,7 @@ if($our_permission == "WRITE" || $our_permission == "ASSIGN" || $our_permission 
 
 
 
+
 $student_query = "SELECT * FROM student WHERE student_id = " . mysql_real_escape_string($student_id);
 $student_result = mysql_query($student_query);
 if(!$student_result) {
@@ -280,7 +281,6 @@ function print_goal_area_jQuery() {
 	//Start javascript conditionals
 	echo "<script type=\"text/javascript\"> \n";
 	echo "$(document).ready(function() { \n";
-	//echo "$('input[type=\"checkbox\"]').click(function(){ \n";
 	while ($area_row=mysql_fetch_array($area_result)) {
 		
 		
@@ -299,15 +299,8 @@ function print_goal_area_jQuery() {
 		echo "\t $('.objective').hide(); \n";
 		echo "} \n";
 		echo "});";
-		
-		
-
 	}  //closes loop
-
 	echo "});\n";
-
-	
-
 	echo "</script> \n";
 
 
@@ -344,7 +337,7 @@ function print_goal_area_jQuery() {
 
 
 
-</script>
+
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -353,8 +346,9 @@ $("#toggle-detail").change(function() {
 }
 );
 });
-
 </script>
+
+
 <script type="text/javascript">
 function toggle () //toggles objective details
 {
@@ -363,30 +357,11 @@ function toggle () //toggles objective details
 </script>
 
 
-
-</script>
-
 <?php print_goal_area_jQuery(); ?>
 
 	
-<script type="text/javascript">
-//$(document).ready(function() {
-//	$('#check_all').click(function(){
-	//	if ($('#check_all').prop('checked','true')){
-
-	//			$(".area:checked").prop('checked', 'true');
-			
-			
-	//	};
-	//})
-	//});
-</script>
-
-
 </HEAD>
 <BODY>
-
-
  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -450,13 +425,14 @@ function toggle () //toggles objective details
     </div>
 
  
-<div class="jumbotron"><div class="container">     
+<div class="jumbotron">
+<div class="container">     
 
-<?php if ($system_message) echo $system_message; ?>
+
 
 <h1>Goals: <small><?php echo $student_row['first_name'] . " " . $student_row['last_name'] ?> </small></h1>
 <h2>Logged in as: <small><?php echo $_SESSION['egps_username']; ?> (Permission: <?php echo $our_permission; ?>)</small></h2>
-
+<?php if ($system_message) echo $system_message; ?>
 <!-- Button trigger modal -->
 <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#filter_options">
   Show Filters &raquo;
@@ -493,10 +469,13 @@ function toggle () //toggles objective details
 
 </div> <!-- Close Jumbotron -->
 
- 
-<!--  End Jumbotron -->
+
 <div class=container>
-<div class="alert alert-block alert-info"><a href="#" class="close" data-dismiss="alert">&times;</a><em><strong>Release Note</strong>: Objective details, such as progress, are hidden by default. Click "Show Filter" button above to activate or manipulate filters.</div>
+
+<!--  jQuery Alert to guide users through filters -->
+<div class="alert alert-block alert-info">
+	<a href="#" class="close" data-dismiss="alert">&times;</a>
+	<strong>Release Note</strong>: Objective details, such as progress, are hidden by default. Click "Show Filter" button above to activate or manipulate filters.</div>
 
 
 <?php
@@ -504,19 +483,16 @@ function toggle () //toggles objective details
 if(mysql_num_rows($long_goal_result) == 0 ) {
 	echo "<p>There are no goals to view</p>\n";
 	}
-	$goal_num=1;
+	$goal_num = 1;
 	while($goal = mysql_fetch_array($long_goal_result)) {
 		//div for use by jquery filter action
 		$div_id=$goal['area'];
 		echo "<div class=\"container\">\n";
-		
 		echo "<div class=\"goal\" hidden id=\"$div_id\">\n<div class=\"col-md-12\">\n";
 		echo "<h2><a href=\"" . IPP_PATH . "add_objectives.php?student_id=" . $student_id . "&lto=" . $goal['goal_id']  . "\"";
 		if (!$have_write_permission) echo " onClick=\"return noPermission();\">\n";
 		else echo " onClick=\"return changeStatusCompleted();\">\n";
-		
-		
-		
+
 		echo "<h2>" . $goal['area'] . "</h2>\n";
 		echo "<h3><small>" . $goal_num . ") </small>\n";
         $goal_num++; //increment goal
@@ -556,16 +532,16 @@ if(mysql_num_rows($long_goal_result) == 0 ) {
 					echo "\">\n<button type=\"button\" class=\"btn btn-xs btn-primary\">Set Completed</button></a>\n";
 				}
         //output the add objectives button.
-		/*echo "<a href=\" . IPP_PATH . "add_objectives.php?&student_id=" . $student_id  . "&lto=" . $goal['goal_id'] . "\"";
- 		if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
-		else echo "onClick=\"return changeStatusCompleted();\"";
-		echo "\"><button type=\"button\" class=\"btn btn-xs btn-primary\">Add Objective</a>"; */
+		//echo "<a href=\" . IPP_PATH . "add_objectives.php?&student_id=" . $student_id  . "&lto=" . $goal['goal_id'] . "\"";
+ 		//if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
+		//else echo "onClick=\"return changeStatusCompleted();\"";
+		//echo "\"><button type=\"button\" class=\"btn btn-xs btn-primary\">Add Objective</a>";
 
 		//output the edit button.
-		/* echo "<a href=\"" . IPP_PATH . "add_objectives.php?student_id=$student_id&lto=" . $goal['goal_id']  . "\"";
+		echo "<a href=\"" . IPP_PATH . "add_objectives.php?student_id=$student_id&lto=" . $goal['goal_id']  . "\"";
 		if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
   		else echo "onClick=\"return changeStatusCompleted();\"";
-		echo "\"><button type=\"button\" class=\"btn btn-xs btn-primary\">Edit</button></a>"; */
+		echo "\"><button type=\"button\" class=\"btn btn-xs btn-primary\">Edit Goal</button></a>";
 
     	echo "<a href=\"" . IPP_PATH . "long_term_goal_view.php?student_id=" . $student_id  . "&deleteLTG=" . $goal['goal_id'] . "\"";
   		if (!$have_write_permission) echo " onClick=\"return noPermission();\"";

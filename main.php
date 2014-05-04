@@ -40,7 +40,7 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
         $system_message = $system_message . $error_message;
         if(isset($_SESSION['egps_username'])) IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
         else IPP_LOG($system_message,'no session','ERROR');
-        require(IPP_PATH . 'index_new.php');
+        require(IPP_PATH . 'index.php');
         exit();
     }
 } else {
