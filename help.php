@@ -12,16 +12,8 @@
  * 
  */
 
-/** @mainpage
- * MyIEP Documentation
- * @todo
- * 1. Deploy new functions
- * 2. Move js (Javascript files) into JS folder and change all references
- * 3. Move css out of style folder and into css folder (standard)
- */
 
-
-//the authorization level for this page!
+ //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100;    //anybody
 
 
@@ -58,14 +50,7 @@ header('Pragma: no-cache'); //don't cache this page!
     <!-- Custom styles for this template -->
     <link href="./css/jumbotron.css" rel="stylesheet">
 
-    <!-- Just for debugging purposes. Don't actually copy this line! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
   </head>
 
   <body>
@@ -86,6 +71,7 @@ header('Pragma: no-cache'); //don't cache this page!
             <li><a href="main.php">Home</a></li>
             <li class="active"><a href="help.php">Help</a></li>
             <li><a href="about.php">About</a></li>
+            <li><a href="sprint_feedback.php">Leave Feedback</a></li>
             <li><a href="index.php">Logout</a></li></ul>
              
           <ul class="nav navbar-nav navbar-right">
@@ -93,12 +79,12 @@ header('Pragma: no-cache'); //don't cache this page!
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Navigation <b class="caret"></b></a>
               <ul class="dropdown-menu">
                
-                <li><a href="./manage_student.php">Students</a></li>
+                <li><a href="manage_student.php">Students</a></li>
                 <li class="divider"></li>
                 <li><a href="change_ipp_password.php">Reset Password</a></li>
                 <li><a href="superuser_add_goals.php">Goals Database</a></li>
-                <li><a href="./student_archive.php">Archive</a></li>
-                <li><a href="./user_audit.php">Audit</a></li>
+                <li><a href="student_archive.php">Archive</a></li>
+                <li><a href="user_audit.php">Audit</a></li>
                 <li><a href="superuser_manage_coding.php">Manage Codes</a></li>
                 <li><a href="school_info.php">Manage Schools</a></li>
                 <li><a href="superuser_view_logs.php">View Logs</a></li>
@@ -123,6 +109,28 @@ header('Pragma: no-cache'); //don't cache this page!
 <div class="row">
 <!-- Left column -->
 <div class="col-md-4">
+<h1>Basic Requirements</h1>
+<h2>Compatible Browsers</h2>
+<div class="alert alert-block alert-danger">
+<a href="#" class="close" data-dismiss="alert">&times;</a><strong>Warning</strong>: <em>MyIEP</em> is not designed for compatibility with Microsoft's Internet Explorer.
+</div>
+<p><em>MyIEP</em> is optimized for the following browsers:</p>
+<ul>
+<li>Mozilla Firefox</li>
+<li>Safari</li>
+<li>Google Chrome</li>
+<li>Chromium</li>
+</ul>
+<h2>JavaScript</h2>
+<p>JavaScript must be permitted to run in your browser for <em>MyIEP</em> to function.</p>
+
+
+</div>
+
+
+
+<!-- Middle column -->
+<div class="col-md-4">
 <h1>Legacy Documentation</h1>
 <p>Thorough documentation for IEP-IPP, the software upon which MyIEP is based, is available in PDF format - except the installation guide, which is in MS Word format.</p>
 <P>There are three reference guides available:
@@ -136,16 +144,8 @@ header('Pragma: no-cache'); //don't cache this page!
 <option value="http://iep-ipp.sourceforge.net/documents/v1Admin.pdf">Administrator's Guide</option>
 <option value="http://iep-ipp.sourceforge.net/documents/v1.0%20Installation.doc">Installation Guide</option>
 </select>
-</div>
-<!-- Middle column -->
-<div class="col-md-4">
-<h1>Credits</h1>
-<h3>MyIEP</h3>
-<p>Rik Goldman, Sabre Goldman, Jason Banks, Alex, Tristan, Micah, Paul, Kenny, Stephen, Jonathan, James, Bryan</p>
-<h3>Legacy Code</h3>
-<p>M. Nielson</p>
-<p><a class="btn btn-default" href="https://github.com/ChelseaSchool/MyIEP" role="button">MyIEP Source Code &raquo;</a></p>
-</div>
+</div> <!-- End Middle Column -->
+
 <!-- Right column -->
 <div class="col-md-4">
 <h1>Copyright</h1>

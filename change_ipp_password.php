@@ -183,16 +183,13 @@ if(!$permission_result) {
     <?php print_bootstrap_head(); ?>
 </HEAD>
     <BODY>
-<?php 
+<header><?php 
 print_general_navbar();
 print_lesser_jumbotron("Change Password", $permission_level);
-?>
+?></header>
 <div class = "container">
 <?php if ($system_message) { echo $system_message;} ?>
-       
-                       
-                        
-     
+ 
 <form enctype="multipart/form-data" action="<?php echo IPP_PATH . "change_ipp_password.php"; ?>" method="post">
 <input type="hidden" name="username" value="<?php echo $user_row['egps_username']; ?>">
                         
@@ -215,13 +212,13 @@ print_lesser_jumbotron("Change Password", $permission_level);
 <button class="btn btn-default btn-large" type="submit" name="Update" value="Update" tabindex="3">Update</button>
 </form>
                    
-
+</div>
                      
         
             
        
-<?php print_complete_footer(); ?>        
-</div>
+<footer><?php print_complete_footer(); ?></footer>        
+
 <?php print_bootstrap_js(); ?>
     </BODY>
 </HTML>

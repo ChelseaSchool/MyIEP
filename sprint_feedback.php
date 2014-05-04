@@ -100,6 +100,7 @@ if (isset ($_POST['contents'])) {
 				<ul class="nav navbar-nav">
 					<li><a href="main.php">Home</a></li>
 					<li><a href="about.php">About</a></li>
+            		<li class="active"><a href="sprint_feedback.php">Leave Feedback</a></li>
 					<li><a href="help.php">Help</a></li>
 					<li><a href="index.php">Logout</a></li>
 				</ul>
