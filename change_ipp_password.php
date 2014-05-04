@@ -16,6 +16,9 @@
  * * bootstrap ui overhaul
  * * hash
  * * add password strength guage
+ * * add valid password info
+ * * add valid password pattern
+ * * add valid password match indicator (and mismatch indicator)
  * @remark		Password encryption is mentioned on 120 or so, but encryption method is unclear. See also superuser_new_member_2.php
  */
  
