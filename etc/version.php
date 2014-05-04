@@ -1,6 +1,8 @@
 <?php
 /**@file
- * @brief a single variable set to current version
+ * @brief a single constant set to current version
+ * 
+ * Versions follow Ubuntu's model: Year.Month
  * @todo
  * 1. Include as necessary
  * @remark:

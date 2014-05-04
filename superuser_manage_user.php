@@ -13,7 +13,6 @@
  * @author		M. Nielson
  * @todo		Investigate purpose of this page
  */  
- 
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 20;
 
@@ -34,6 +33,7 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
+require_once 'include/supporting_functions.php';
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -74,6 +74,7 @@ if(isLocalAdministrator($_SESSION['egps_username']) && getPermissionLevel($_SESS
   //we are a local administrator with no other access rights (ie we're a local admin but not a principal as well)
   $user_query= "SELECT * FROM support_member WHERE egps_username='$ippuserid'";
   $user_result = mysql_query($user_query);
+  $change_password_button = "<button href=\"" . IPP_PATH . "change_ipp_password.php?username=" . $user_row['egps_username'] . "\" class=\"btn btn-default btn-large\" role=\"button\">Change Password</button>";
   if(!$user_result) {
     $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$user_query'<BR>";
     $system_message= $system_message . $error_message;
@@ -81,10 +82,12 @@ if(isLocalAdministrator($_SESSION['egps_username']) && getPermissionLevel($_SESS
   } else {
     if(mysql_num_rows($user_result) <= 0) "IPP Member not found<BR>Query=$user_query";
     $user_row=mysql_fetch_array($user_result);
+    $change_password_button = "";
   }
 
   $us_query= "SELECT * FROM support_member WHERE egps_username='" . $_SESSION['egps_username'] . "'";
   $us_result = mysql_query($us_query);
+  $change_password_button = "<button href=\"" . IPP_PATH . "change_ipp_password.php?username=" . $user_row['egps_username'] . "\" class=\"btn btn-default btn-large\" role=\"button\">Change Password</button>";
   if(!$us_result) {
     $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$us_query'<BR>";
     $system_message= $system_message . $error_message;
@@ -92,6 +95,7 @@ if(isLocalAdministrator($_SESSION['egps_username']) && getPermissionLevel($_SESS
   } else {
     if(mysql_num_rows($us_result) <= 0) $system_message .= "IPP Member not found<BR>Query=$us_query";
     $us_row=mysql_fetch_array($us_result);
+    $change_password_button = "";
   }
 
   if($user_row['school_code'] != $us_row['school_code']) {
@@ -148,6 +152,7 @@ if(isset($_POST['Update'])) {
 
 $user_query= "SELECT * FROM support_member WHERE egps_username='$ippuserid'";
 $user_result = mysql_query($user_query);
+
 if(!$user_result) {
     $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$user_query'<BR>";
     $system_message= $system_message . $error_message;
@@ -155,6 +160,7 @@ if(!$user_result) {
 } else {
   if(mysql_num_rows($user_result) <= 0) $system_message .= "IPP Member not found<BR>";
   $user_row=mysql_fetch_array($user_result);
+  $change_password_button = "";
 }
 
 $school_query="SELECT * FROM school WHERE 1=1";
@@ -175,81 +181,39 @@ if(!$permission_result) {
 }
 
 ?> 
-<!DOCTYPE HTML>
-<HTML lang=en>
-<HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
-    <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
-    <!-- All code Copyright &copy; 2005 Grasslands Regional Division #6.
-         -Concept and Design by Grasslands IPP Focus Group 2005
-         -Programming and Database Design by M. Nielsen, Grasslands
-          Regional Division #6
-         -User Interface Design and Educational Factors by P Stoddart,
-          Grasslands Regional Division #6
-         -CSS and layout images are courtesy A. Clapton.
-     -->
-</HEAD>
-    <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+<?php 
+print_html5_primer();
+print_bootstrap_head()
+?>    
+<BODY>
+<?php 
+print_general_navbar();
+print_lesser_jumbotron("Manage User", $permission_level);
+?>
+<div class="container">
+<?php 
+if ($system_message) {
+	echo "<p>" . $system_message . "</p>";
+} 
 
-                        <center><table><tr><td><center><p class="header">- Manage Member -</p></center></td></tr></table></center>
+?>
+<h2>Edit User <small>and click "update" or, alternatively, "change password."</small></h2>
+                        
+<form enctype="multipart/form-data" action="<?php echo IPP_PATH . "superuser_manage_user.php"; ?>" method="post">
+<div class="form-group">
+<input type="hidden" name="ippuserid" value="<?php echo $user_row['egps_username']; ?>">
 
-                        <center><table width="80%" border="0"><tr>
-                          <td align="center">
-                          <?php echo "<a href=\"" . IPP_PATH . "change_ipp_password.php?username=" . $user_row['egps_username'] . "\"><img src=\"" . IPP_PATH  . "images/mainbutton.php?title=Change Password\" border=0>\n";
-                          ?>
-                          </td>
-                        </tr>
-                        </table></center><BR>
+<label>Username</label>
+<input class="form-control" type="text" value="<?php echo $user_row['egps_username']; ?>" disabled name="userid" length="30">
 
-                        <center>
-                        <form enctype="multipart/form-data" action="<?php echo IPP_PATH . "superuser_manage_user.php"; ?>" method="post">
-                        <input type="hidden" name="ippuserid" value="<?php echo $user_row['egps_username']; ?>">
-                        <table border="0" cellpadding="0" cellspacing="0" width="80%">
-                        <tr>
-                          <td colspan="3">
-                          <p class="info_text">Edit and Click Update</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td bgcolor="#E0E2F2" align="right">Username:</td><td bgcolor="#E0E2F2"><input type="text" value="<?php echo $user_row['egps_username']; ?>" disabled name="userid" length="30"></td><td align="left" bgcolor="#E0E2F2" rowspan="8">&nbsp;&nbsp;<input type="submit" name="Update" value="Update"></td>
-                        </tr>
-                        <tr>
-                        <td bgcolor="#E0E2F2" align="right">First Name:</td>
-                        <td bgcolor="#E0E2F2"><input type="text" name="first_name" value="<?php echo $user_row['first_name'];?>"></td>
-                        </tr>
-                        <tr>
-                        <td bgcolor="#E0E2F2" align="right">Last Name:</td>
-                        <td bgcolor="#E0E2F2"><input type="text" name="last_name" value="<?php echo $user_row['last_name'];?>"></td>
-                        </tr>
-                        <tr>
-                        <td bgcolor="#E0E2F2" align="right">Email:</td>
-                        <td bgcolor="#E0E2F2"><input type="text" name="email" value="<?php echo $user_row['email'];?>"></td>
-                        </tr>
-
-                        <tr><td bgcolor="#E0E2F2" align="right">School </td><td bgcolor="#E0E2F2">
-                        <SELECT name="school_code" <?php if($permission_level != 0) echo "disabled"; ?>>
+<label>First Name</label>
+<input class="form-control" type="text" name="first_name" value="<?php echo $user_row['first_name'];?>">
+<label>Last Name</label>
+<input class="form-control" type="text" name="last_name" value="<?php echo $user_row['last_name'];?>">
+<label>Email</label>
+<input class="form-control" type="email" name="email" value="<?php echo $user_row['email'];?>">
+<label>School</label>
+<SELECT class="form-control" name="school_code" <?php if($permission_level != 0) echo "disabled"; ?>>
                         <?php
                             while($school_row=mysql_fetch_array($school_result)) {
                                 if($user_row['school_code'] == $school_row['school_code']) {
@@ -259,53 +223,36 @@ if(!$permission_result) {
                                 }
                             }
                         ?>
-                        </SELECT>
-                        </td></tr>
-                        <tr><td bgcolor="#E0E2F2" align="right">Permission Level </td><td bgcolor="#E0E2F2">
-                        <?php
-                            echo "<SELECT name=\"permission_level\" style=\"width:200px;text-align: left;\">\n";
-                              while($pval = mysql_fetch_array($permission_result)) {
-                                 if($permission_level == 0 || $pval['level'] > 20) //only allow school based to add up to principal.
-                                  echo "\t<OPTION value=" . $pval['level'];
-                                  if($user_row['permission_level'] == $pval['level']) echo " selected ";
-                                  echo  ">" . $pval['level_name'] . "</OPTION>\n";
-                              }
-                              echo "</SELECT>\n"
-                        ?>
-                        </td>
-                        </tr>
-                        <tr>
-                          <td bgcolor="#E0E2F2" align="right">Local Administrator:</td><td bgcolor="#E0E2F2"><input type="checkbox" name="is_local_ipp_administrator" <?php if($user_row['is_local_ipp_administrator'] =='Y') echo "checked"; ?> <?php if($permission_level != 0) echo "disabled"; ?>></td>
-                        </tr>
-                        <tr>
-                        <td colspan="2" bgcolor="#E0E2F2" align="center"><p class="small_text">(Wildcards: '%'=match any '_'=match single)</p></td>
-                        </tr>
-                        </table>
-                        <input type="hidden" name="szBackGetVars" value="<?php echo $szBackGetVars; ?>">
-                        </form>
-                        </center>
+</SELECT>
+<label>Permission Level</label>
+<?php
+echo "<SELECT class=\"form-control\" name=\"permission_level\" style=\"width:200px;text-align: left;\">\n";
+	while($pval = mysql_fetch_array($permission_result)) {
+		if($permission_level == 0 || $pval['level'] > 20) //only allow school based to add up to principal.
+			echo "\t<OPTION value=" . $pval['level'];
+			if($user_row['permission_level'] == $pval['level']) echo " selected ";
+				echo  ">" . $pval['level_name'] . "</OPTION>\n";
+}
+echo "</SELECT>\n"
+?>
+<label>Local Administrator</label>
+<input type="checkbox" name="is_local_ipp_administrator" <?php if($user_row['is_local_ipp_administrator'] =='Y') echo "checked"; ?> <?php if($permission_level != 0) echo "disabled"; ?>>
+<input type="hidden" name="szBackGetVars" value="<?php echo $szBackGetVars; ?>">
 
-                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center"><table border="0" width="100%"><tr><td width="60"><a href="
-            <?php
-                echo IPP_PATH . "superuser_manage_users.php?$szBackGetVars";
-            ?>"><img src="<?php echo IPP_PATH; ?>images/back-arrow-white.png" border=0></a></td><td width="60"><a href="<?php echo IPP_PATH . "main.php"; ?>"><img src="<?php echo IPP_PATH; ?>images/homebutton-white.png" border=0></a></td><td valign="bottom" align="center">Logged in as: <?php echo $_SESSION['egps_username'];?></td><td align="right"><a href="<?php echo IPP_PATH;?>"><img src="<?php echo IPP_PATH; ?>images/logout-white.png" border=0></a></td></tr></table></td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
-        <center></center>
+</div>
+<div class="button-group">
+<button class="btn btn-default btn-large" type="submit" name="Update" value="Update">Update</button>
+<?php 
+if (isset($user_row['egps_username'])){
+	$change_password_button = "<button href=\"" . IPP_PATH . "change_ipp_password.php?username=" . $user_row['egps_username'] . "\" class=\"btn btn-default btn-large\" role=\"button\">Change Password</button>";
+	echo $change_password_button;
+}
+?>
+
+</div>
+</form>
+
+<footer><?php print_complete_footer();?></footer>  
+<?php print_bootstrap_js();?>      
     </BODY>
 </HTML>
