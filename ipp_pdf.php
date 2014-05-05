@@ -1,12 +1,8 @@
 <?php
 /** @file
  * @brief 	produces IEP PDF report
- * 
- */
- 
- 
-/* Notes
- * 1. Produces the IEP PDF report - note it relies on old pdf tool.
+ * @remarks
+ * 1. Produces the IEP PDF report - note it relies on old pdf tool. This tool should be updated
  * 2. some code is commented out. If it serves no testing or other productive purpose, consider removing it
  * 3. setting the variable $message to " " is a security precaution. check for consistency.
  * 4. note the file name is wrong in the header

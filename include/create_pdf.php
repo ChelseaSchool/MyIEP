@@ -8,6 +8,8 @@
  * 4. Some dev notes to self. Make productive.
  * 5. Change copyright header
  * 6. include abbreviated gpl in header - see license for guidelines
+ * 7. look into character set
+ * 8. What happens to this file if we update fpdf?
 */
 //the authorization level for this page!
 //$MINIMUM_AUTHORIZATION_LEVEL = 100; //everybody
@@ -32,12 +34,12 @@ $system_message = "";
 //$this->SetFont('chanticl.ttf','B',12);
 
 /* eGPS required files. */
-require_once(IPP_PATH . 'etc/init.php');
-require_once(IPP_PATH . 'include/db.php');
-require_once(IPP_PATH . 'include/auth.php');
-require_once(IPP_PATH . 'include/log.php');
-require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/fpdf/fpdf.php');
+require_once 'etc/init.php';
+require_once 'include/db.php';
+require_once 'include/auth.php';
+require_once 'include/log.php';
+require_once 'include/user_functions.php';
+require_once 'include/fpdf/fpdf.php';
 //require_once("Numbers/Roman.php"); //require pear roman numerals class
 
 //Header('Pragma: public, no-cache');
@@ -372,9 +374,10 @@ function create_pdf($student_id) {
     //just carry on
   }
 
+//And retrieve IEP from database tables
 
-  //lets get some PDF making done...
-  class IPP extends FPDF  //all this and OO too weeeeeeee
+//Begin making PDF
+  class IPP extends FPDF
 
   {
     
@@ -414,14 +417,14 @@ function create_pdf($student_id) {
          //Arial italic 8
          $this->SetFont('Arial','I',8);
          //Page number
-         $this->Cell(0,3,'Individualized Education Program for ' . $student_row['first_name'] . ' ' . $student_row['last_name'] . '-' . date('dS \of F Y') . ' (Page '.$this->PageNo().'/{nb})',0,1,'C');
+         $this->Cell(0,3,'Individualized Education Program for ' . $student_row['first_name'] . ' ' . $student_row['last_name'] . ': ' . date('dS \of F Y') . ' (Page '.$this->PageNo().'/{nb})',0,1,'C');
 
          //output a little information on this
          $this->SetFont('Arial','i',6);
          $this->SetTextColor(153,153,153);  //greyish
          $this->SetFillColor(255,255,255);
          $this->Ln(1);
-         $this->MultiCell(0,5,"MYIEP System Copyright 2014 Chelsea School | �2005-2007 Grasslands Public Schools | licensed under the Gnu Public License",'T','C',1);
+         $this->MultiCell(0,5,"MyIEP System Copyright | 2014 Chelsea School | Licensed under the Gnu Public License",'T','C',1);
 
          //Set colour back
          $this->SetTextColor(0,0,0);  // Well, I'm back in black, yes I'm back in black!
@@ -436,14 +439,15 @@ function create_pdf($student_id) {
   //set the pdf information
   $pdf->SetAuthor(username_to_common($_SESSION['egps_username']));
   $pdf->SetCreator('MyIEP Special Education Program Management');
-  $pdf->SetTitle('Individual Program Plan - ' . $student_row['first_name'] . ' ' . $student_row['last_name']);
+  $pdf->SetTitle('Individual Education Plan - ' . $student_row['first_name'] . ' ' . $student_row['last_name']);
 
 
   //begin pdf...
   $pdf->SetFont('Times','',20);
-  $pdf->SetTextColor(220,50,50); //set the colour a loverly redish
+  $pdf->SetTextColor(48,78,124); //Chelsea Blue Heading
+  //$pdf->SetTextColor(220,50,50); //set the colour a loverly redish
   $pdf->Cell(30);
-  $pdf->Cell(130,5,'  Program Plan ',0,0,'C');
+  $pdf->Cell(130,5,'  Individual Education Program ',0,0,'C');
   //$pdf->Image(IPP_PATH . 'images/bounding_box.png',$pdf->GetX()-1,$pdf->GetY()-4);
   $mark = $pdf->GetY();
   /* if(isset($code) && is_numeric($code)) {
@@ -453,8 +457,8 @@ function create_pdf($student_id) {
     if($code >9999) $pdf->SetFont('Times','B',20);
   }else { */
     $pdf->SetFont('Times','B',10);
-    //$code=$code; //
-    $code="Not Coded";
+    //$code=$code; 
+    $code=""; //code and bounding box disabled
  // } 
   $pdf->SetTextColor(0,51,0);  //grey
   $pdf->SetFillColor(240,240,240);  // white
@@ -465,12 +469,12 @@ function create_pdf($student_id) {
   $pdf->SetY($mark);
   $pdf->Ln(10);
   $pdf->SetFont('Times','B',15);
-  $pdf->SetTextColor(220,50,50); //set the colour a loverly redish
-  $pdf->Cell(0,0,'- '. $student_row['first_name'] . " " . $student_row['last_name'] . ' -',0,0,'C');
+  $pdf->SetTextColor(48,78,124); //set the colour a loverly redish
+  $pdf->Cell(0,0,$student_row['first_name'] . " " . $student_row['last_name'],0,0,'C');
 
   //Set colour back
   $pdf->Ln(15);
-  $pdf->SetTextColor(0,0,0);  // Well, I'm back in black, yes I'm back in black! Ow!
+  $pdf->SetTextColor(0,0,0);  //black
 
    //Begin student information
    $pdf->SetFont('Arial','B',14);
@@ -643,13 +647,13 @@ function create_pdf($student_id) {
      $ipp_present_text = "";
      switch($school_history_row['ipp_present']) {
         case 'Y':
-          $ipp_present_text = "IPP present at this school";
+          $ipp_present_text = "IEP present at this school";
         break;
         case 'N':
-          $ipp_present_text = "IPP not present at this school";
+          $ipp_present_text = "IEP not present at this school";
         break;
         default:
-          $ipp_present_text = "Unknown if IPP present at this school";
+          $ipp_present_text = "Unknown if IEP present at this school";
      }
      $pdf->Cell(30);
      $pdf->Cell(30,5,'IPP Present:',0,0,'J',0);
@@ -667,11 +671,11 @@ function create_pdf($student_id) {
    $pdf->Ln(5);
    //End School Information
 
-   //BEGIN IPP information
+   //BEGIN IEP information
    $pdf->SetFont('Arial','B',14);
    $pdf->SetFillColor(204,255,255);
    $pdf->SetDrawColor(0,80,180);
-   $pdf->MultiCell(0,5,'Individual Program Plan Information','B','L',0);
+   $pdf->MultiCell(0,5,'Individual Education Program Information','B','L',0);
    $pdf->Ln(5);
    $pdf->SetDrawColor(0,0,0);
 
@@ -1192,19 +1196,19 @@ function create_pdf($student_id) {
    //begin signature page
    $pdf->AddPage();
    $pdf->SetFont('Times','',20);
-   $pdf->SetTextColor(220,50,50); //set the colour a loverly redish
+   $pdf->SetTextColor(48,78,124); //set the colour a loverly redish
    $pdf->Cell(30);
    $pdf->Cell(130,15,'Signatures',0,1,'C');
    $pdf->SetFont('Times','B',15);
-   $pdf->SetTextColor(220,50,50); //set the colour a loverly redish
+   $pdf->SetTextColor(48,78,124); //set the colour a loverly redish
    $pdf->Cell(0,0,'- '. $student_row['first_name'] . " " . $student_row['last_name'] . ' -',0,0,'C');
 
    //disclaimer...
-   $pdf->SetTextColor(255,0,0);
+   $pdf->SetTextColor(0,0,0);
    $pdf->SetFont('Arial','BI',10);
    $pdf->Ln(8);
    $pdf->Cell(15);
-   $pdf->MultiCell(160,5,'I understand and agree with the information contained in this Program Plan',0,1,'L');
+   $pdf->MultiCell(160,5,'I understand and agree with the information contained in this Education Plan.',0,1,'L');
 
    //Set colour back
    $pdf->Ln(5);
