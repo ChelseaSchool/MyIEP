@@ -36,7 +36,7 @@ $system_message = "";
 define('IPP_PATH','./');
 
 /* eGPS required files. */
-require_once(IPP_PATH . 'etc/init.php');
+require_once IPP_PATH . 'etc/init.php';
 require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
@@ -180,15 +180,7 @@ if(!$permission_result) {
     IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
 }
 
-function random_password($length)
-{
-	$ch=curl_init("https://infamia.com/hints/pwgen.php?length=" . $length . "&quiet");
-	curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
-	$pw_suggestion = curl_exec( $ch );
-	curl_close($ch);
-	return $pw_suggestion;
 
-}
 
 ?> 
 <!DOCTYPE HTML>
@@ -198,28 +190,35 @@ function random_password($length)
     <?php print_bootstrap_head(); ?>
 </HEAD>
     <BODY>
-<header><?php 
+<header>
+<?php 
 print_general_navbar();
 print_lesser_jumbotron("Change Password", $permission_level);
-?></header>
+?>
+</header>
 <div class = "container">
-<?php if ($system_message) { echo $system_message;} ?>
+<?php 
+if ($system_message) 
+{ 
+	echo $system_message;
+} 
+?>
 <h2>Enter &amp; Confirm New Password <small>and click Update</small></h2>
 
 
 
 <p><div class="alert alert-block alert-danger"><a href="#" class="close" data-dismiss="alert">&times;</a><strong>Required</strong>: Please choose a strong password. Passwords for MyIEP must include:
-<ul><li>At least one capital letter;
-<li>At least one lower-case letter;
-<li>At least one numeral;
-<li>At least one special character (keyboard symbol);
-<li>At least 6 characters (max 30 characters)
+<ul><li>At least one capital letter;</li>
+<li>At least one lower-case letter;</li>
+<li>At least one numeral;</li>
+<li>At least one special character (keyboard symbol);</li>
+<li>At least 6 characters (max 30 characters).</li>
 </ul> 
 Password Resources:
 <ul>
 <li><a target="_new" href="https://www.microsoft.com/en-gb/security/pc-security/password-checker.aspx">Password Check</a> <small>A Microsoft site to help evaluate passwords</small></li>
-<li><a target="_new" href="http://blog.kaspersky.com/password-check/">Password Evaluator</a> <small>Very helpful password evaluation tool from Kaspersky</small>
-<li>Click <a target="_new" href="https://infamia.com/hints/pwgen.php?length=10&quiet">here</a> to generate a random, secure password.
+<li><a target="_new" href="http://blog.kaspersky.com/password-check/">Password Evaluator</a> <small>Very helpful password evaluation tool from Kaspersky</small></li>
+<li>Click <a target="_new" href="https://infamia.com/hints/pwgen.php?length=10&quiet">here</a> to generate a random, secure password.</li>
 </ul>
 </div></p> 
 
