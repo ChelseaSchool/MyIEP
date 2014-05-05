@@ -213,6 +213,7 @@ print_lesser_jumbotron("Change Password", $permission_level);
 <li>At least one lower-case letter;
 <li>At least one numeral;
 <li>At least one special character (keyboard symbol);
+<li>At least 6 characters (max 30 characters)
 </ul> 
 Password Resources:
 <ul>
@@ -238,7 +239,7 @@ Password Resources:
 <input type="password" class="form-control" name="pwd1" size="30" maxsize="30" tabindex="1" required pattern="(?=^.{6,30}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$" placeholder="Please enter a complex password">
                         
 <label>Password (retype)</label>
-<input type="password" required class="form-control" name="pwd2" size="30" maxsize="30" tabindex="2" required pattern="(?=^.{6,30}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$" placeholder="Please enter a complex password">
+<input type="password" required class="form-control" name="pwd2" size="30" maxsize="30" tabindex="2" required pattern="(?=^.{6,30}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$" placeholder="Please confirm password">
 </div>                      
                        
 <input type="hidden" required name="szBackGetVars" value="<?php echo $szBackGetVars; ?>">

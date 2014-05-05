@@ -245,35 +245,51 @@ print_html5_primer();
 	print_general_navbar();
 	print_lesser_jumbotron("Create New Account", $permission_level);
 	?>
-	<div class="container">
+<div class="container">
 		<?php if ($system_message) 
 		{
 			echo "<p>" . $system_message . "</p>";
 		}
 		?>
-		<h2>Enter Account Details</h2>
-		<form name="addName" enctype="multipart/form-data" action="<?php echo IPP_PATH . "superuser_new_member_2.php"; ?>"	method="get" onsubmit="return CheckNum()">
+<h2>Enter Account Details</h2>
+
+<p><div class="alert alert-block alert-danger"><a href="#" class="close" data-dismiss="alert">&times;</a><strong>Required</strong>: Please choose a strong password. Passwords for MyIEP must include:
+<ul><li>At least one capital letter;
+<li>At least one lower-case letter;
+<li>At least one numeral;
+<li>At least one special character (keyboard symbol);
+<li>At least 6 characters (max 30 characters)
+</ul> 
+Password Resources:
+<ul>
+<li><a target="_new" href="https://www.microsoft.com/en-gb/security/pc-security/password-checker.aspx">Password Check</a> <small>A Microsoft site to help evaluate passwords</small></li>
+<li><a target="_new" href="http://blog.kaspersky.com/password-check/">Password Evaluator</a> <small>Very helpful password evaluation tool from Kaspersky</small>
+<li>Click <a target="_new" href="https://infamia.com/hints/pwgen.php?length=10&quiet">here</a> to generate a random, secure password.
+</ul>
+</div></p> 
+
+<form name="addName" enctype="multipart/form-data" action="<?php echo IPP_PATH . "superuser_new_member_2.php"; ?>"	method="get" onsubmit="return CheckNum()">
 			<div class="row">
 				<!-- Start Left Column -->
 				<div class="col-md-6">
 					<div class="form-group">
-						<input type="hidden" name="add_user" value="1"> <label>Login
-							Username</label> <input type="text" required class="form-control"
-							name="add_username" value="" tabindex="1">
+						<input type="hidden" name="add_user" value="1"> 
+						<label>Login Username</label> 
+						<input type="text" required class="form-control" name="add_username" value="" tabindex="1">
 						<?php echo $mysql_user_append_to_login; ?>
-						<label>First Name</label> <input required class="form-control"
-							type="text" name="first_name" value="" tabindex="2"> <label>Last
-							Name</label> <input class="form-control" required type="text"
-							name="last_name" value="" tabindex="3"> <label>Email Address</label>
-						<input class="form-control" required type="EMAIL" name="email"
-							tabindex="6">
+						<label>First Name</label>
+						<input required class="form-control" type="text" name="first_name" value="" tabindex="2"> 
+						<label>Last Name</label>
+						<input class="form-control" required type="text" name="last_name" value="" tabindex="3"> 
+						<label>Email Address</label>
+						<input class="form-control" required type="EMAIL" name="email" required tabindex="4">
 					</div>
 				</div>
 				<div class="col-md-6 form-group">
 					<label>Password</label>
-					<input class="form-control" required type="password" name="pwd1" pattern="(?=^.{6,30}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$" tabindex="4"> 
+					<input class="form-control" required type="password" name="pwd1" pattern="(?=^.{6,30}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$" tabindex="5"> 
 					<label>Confirm Password</label>
-					<input class="form-control" required type="password" name="pwd2" pattern="(?=^.{6,30}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$"  tabindex="5">
+					<input class="form-control" required type="password" name="pwd2" pattern="(?=^.{6,30}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$"  tabindex="6">
 					<label>Permission Level</label>
 					<?php
 					echo "<SELECT class=\"form-control\" tabindex=\"7\" name=\"permission_level\">\n";
@@ -284,8 +300,8 @@ print_html5_primer();
                               echo "</SELECT>\n"
  		?>
 
-					<label>School</label> <select class="form-control" tabindex="8"
-						name="school_code"
+					<label>School</label> 
+					<select class="form-control" tabindex="8"	name="school_code"
 						<?php //if($permission_level != 0) echo "disabled"; ?>>
 						<?php
 						if($permission_level==0) {
@@ -308,13 +324,13 @@ print_html5_primer();
                                   }
                                }
                                ?>
-					</select> <label>Send email notification</label> <input
-						tabindex="9" type="checkbox"
+					</select> 
+					<label>Send email notification</label>
+					<input tabindex="9" type="checkbox"
 						<?php if(!isset($_GET['add_username']) || (isset($_GET['add_username']) && isset($_GET['mail_notification']))) echo "checked"; ?>
-						name="mail_notification"> <input type="hidden"
-						name="szBackGetVars" value="&lt;?php echo $szBackGetVars; ?&gt;"> <input
-						type="hidden" name="egps_username"
-						value="&lt;?php echo $_GET['egps_username'] ?&gt;">
+						name="mail_notification"> 
+					<input type="hidden" name="szBackGetVars" value="<?php echo $szBackGetVars; ?>;"> 
+					<input type="hidden" name="egps_username" value="<?php echo $_GET['egps_username'] ?>;">
 					<p>
 						<button class="btn btn-default" type="submit" value="Add"
 							tabindex="10">Create Account</button>

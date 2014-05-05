@@ -446,4 +446,19 @@ $_SESSION = array(); // Destroy the variables.
                 //}
          }
     }
+    
+/** fn random_password($length)
+ * @brief uses curl for php to grap a random password of $length characters
+ * @param integer $length
+ * @return string $pw_suggestion
+ */
+function random_password($length)
+    {
+    	$ch = curl_init("https://infamia.com/hints/pwgen.php?length=" . $length . "&quiet");
+    	curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
+    	$pw_suggestion = curl_exec($ch);
+    	curl_close($ch);
+    	echo $pw_suggestion;
+    
+    }
 ?>
