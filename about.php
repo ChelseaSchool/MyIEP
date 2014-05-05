@@ -232,6 +232,7 @@ Hyattsville, Maryland 20782</address>
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery-2.1.0.min.js"></script>
     <script src="./js/bootstrap.min.js"></script> 
- <?php print_complete_footer(); ?>
+<hr>
+    <?php print_complete_footer(); ?>
 </BODY>
 </HTML>

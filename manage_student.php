@@ -361,12 +361,7 @@ $(document).ready(function(){
 	$("#filter-tip").popover();
 });
 </script>
-  <?php print_jquery_autocomplete(); ?>
- 
-    
-
-
-
+<?php print_jquery_autocomplete(); ?>
 
 <?php $sqlStudents=getStudents(); ?>  
 
@@ -486,7 +481,7 @@ EOF;
         
     
 
-                       
+<hr>                      
 <footer><?php print_complete_footer(); ?></footer>
   
  
