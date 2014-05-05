@@ -2,6 +2,9 @@
 
 /** @file
  * @brief 	add objective to goal
+ * @detail
+ * 
+ * This page answers to "Edit" in the goal list. One can add an objective here too. The filename is misleading.
  * @copyright 	2014 Chelsea School 
  * @copyright 	2005 Grasslands Regional Division #6
  * @copyright		This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
@@ -11,7 +14,10 @@
     You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * @authors		Rik Goldman, Sabre Goldman, Jason Banks, Alex, James, Paul, Bryan, TJ, Jonathan, Micah, Stephen, Joseph, Sean
  * @author		M. Nielson
- * @todo		Filter input
+ * @todo		
+ * * Filter input
+ * * check datepicker (for all pages)
+ * 
  */
  
  
@@ -283,7 +289,7 @@ if($student_id) {
 
 //last thing...add an instructional note:
 
-$system_message = $system_message . "<BR>Please add short term objectives to achieve this goal.<BR>Click the done button when done adding goals<BR>";
+$system_message = $system_message . "<BR>Please add short term objectives to achieve this goal.<BR>Click the done button when done adding objectives.<BR>";
 
 /*************************** popup chooser support function ******************/
     function createJavaScript($dataSource,$arrayName='rows'){
@@ -360,23 +366,18 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
     <link rel="shortcut icon" href="./assets/ico/favicon.ico">
     <TITLE><?php echo $page_title; ?></TITLE>
     <!-- Bootstrap core CSS -->
+    <?php print_bootstrap_head();?>
+    <?php print_bootstrap_datepicker_depends(); ?>
     <link href="./css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="./css/jumbotron.css" rel="stylesheet">
 	<style type="text/css">body { padding-bottom: 70px; }</style>
     <!-- Bootstrap Datepicker CSS -->
-	<link href="./css/datepicker.css" rel="stylesheet">
-    <script src="//code.jquery.com/jquery-1.9.1.js"></script>
-	 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-     <script src="./js/bootstrap-datepicker.js"></script>
-    <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
-    <script language="javascript" src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script>
-    <?php
-       //output the javascript array for the chooser popup
-       echoJSServicesArray();
-    ?>
-    <script language="javascript" src="<?php echo IPP_PATH . "include/autocomplete.js"; ?>"></script>
+	<link href="css/datepicker.css" rel="stylesheet">
+    <script src="js/jquery-2.1.0.min.js"></script>
+	 <script src="js/jquery-ui-1.10.4.custom.min.js></script>
+     <script src="js/bootstrap-datepicker.js"></script>
     <SCRIPT LANGUAGE="JavaScript">
       function confirmChecked() {
           var szGetVars = "strengthneedslist=";
@@ -404,9 +405,9 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
       }
     </SCRIPT>
 
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+	<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 	<script src="//code.jquery.com/jquery-1.9.1.js"></script>
-	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>-->
 	<script> 
 	$(function() {
 	$( ".datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
@@ -500,9 +501,9 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
 <!--  End hidden -->
 <div class="form-group">
 <label>Goal Area</label>
-<input class="form-control" type="text" size="30" spellcheck="true" maxsize="100" name="goal_area" value="<?php echo $goal_row['area']; ?>"></p>                 
+<input spellcheck="true" "form-control" type="text" size="30" spellcheck="true" maxsize="100" name="goal_area" value="<?php echo $goal_row['area']; ?>"></p>                 
 <label>Goal</label></p>
-<textarea class="form-control" name="goal_text" spellcheck="true" cols="45" rows="3" wrap="soft"><?php echo $goal_row['goal']; ?></textarea></p>
+<textarea spellcheck="true" class="form-control" name="goal_text" spellcheck="true" cols="45" rows="3" wrap="soft"><?php echo $goal_row['goal']; ?></textarea></p>
 <label>Review Date</label>
 <input class="form-control datepicker" type="datepicker" name="goal_review_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="<?php echo $goal_review_date; ?>"></p>
 </div>
@@ -535,23 +536,24 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
 <!-- End Hidden -->
 
 <div class="form-group">
-<label>Objective</label></p>
-<textarea class="form-control" spellcheck="true" spellcheck="true" name="description" tabindex="1" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['description'])) echo $_POST['description']; ?></textarea></p>
-<label>Review Date (YYYY-MM-DD)</label></p>
+<label>Objective</label>
+<textarea spellcheck="true" class="form-control" spellcheck="true" spellcheck="true" name="description" tabindex="1" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['description'])) echo $_POST['description']; ?></textarea></p>
+<label>Review Date (YYYY-MM-DD)</label>
 <input type="datepicker" class="form-control datepicker" name="goal_review_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" tabindex="2" name="review_date" value="<?php if(isset($_POST['review_date'])) echo $_POST['review_date']; ?>">
-<label>Assessment Procedure</label></p>
-<textarea class="form-control" spellcheck="true" spellcheck="true" name="assessment_procedure" tabindex="3" cols="35" rows="3" onkeypress="return autocomplete(this,event,popuplist)" wrap="soft"><?php if(isset($_POST['assessment_procedure'])) echo $_POST['assessment_procedure']; ?></textarea> &nbsp;<img src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" width="17" border=0 onClick="popUpChooser(this,document.all.assessment_procedure)" ></p>
-<label>Strategies</label></p>
+<label>Assessment Procedure</label>
+<textarea class="form-control" spellcheck="true" spellcheck="true" name="assessment_procedure" tabindex="3" cols="35" rows="3" wrap="soft"><?php if(isset($_POST['assessment_procedure'])) echo $_POST['assessment_procedure']; ?></textarea></p>
+<label>Strategies</label>
 <textarea class="form-control" spellcheck="true" spellcheck="true" name="strategies" tabindex="4" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['strategies'])) echo $_POST['strategies']; ?></textarea>
-<label>Progress Review</label></p>
+<label>Progress Review</label>
 <textarea class="form-control" spellcheck="true" spellcheck="true" name="results_and_recommendations" tabindex="5" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['results_and_recommendations'])) echo $_POST['results_and_recommendations']; ?></textarea></p>
 </div>
-<input type="submit" tabindex="6" name="Add" value="Add"></p>
+<input type="submit" tabindex="6" name="Add" value="Add">
 </div>
 </form>
 </div> <!-- end column -->
 </div> <!-- end row -->
 </div>
     <?php print_complete_footer(); ?>
+    <?php print_bootstrap_js()?>
     </BODY>
 </HTML>

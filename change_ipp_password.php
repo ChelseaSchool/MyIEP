@@ -11,7 +11,14 @@
     You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * @authors		Rik Goldman, Sabre Goldman, Jason Banks, Alex, James, Paul, Bryan, TJ, Jonathan, Micah, Stephen, Joseph, Sean
  * @author		M. Nielson
- * @todo		Filter input
+ * @todo
+ * * Filter input
+ * * bootstrap ui overhaul
+ * * hash
+ * * add password strength guage
+ * * add valid password info
+ * * add valid password pattern
+ * * add valid password match indicator (and mismatch indicator)
  * @remark		Password encryption is mentioned on 120 or so, but encryption method is unclear. See also superuser_new_member_2.php
  */
  
@@ -34,6 +41,7 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
+require_once 'include/supporting_functions.php';
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -170,98 +178,50 @@ if(!$permission_result) {
     $system_message=$system_message . $error_message;
     IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
 }
-
 ?> 
 <!DOCTYPE HTML>
 <HTML lang=en>
-<HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
+<?php print_html5_primer(); ?>
     <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
-    <!-- All code Copyright &copy; 2005 Grasslands Regional Division #6.
-         -Concept and Design by Grasslands IPP Focus Group 2005
-         -Programming and Database Design by M. Nielsen, Grasslands
-          Regional Division #6
-         -CSS and layout images are courtesy A. Clapton.
-     -->
+    <?php print_bootstrap_head(); ?>
 </HEAD>
     <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+<header><?php 
+print_general_navbar();
+print_lesser_jumbotron("Change Password", $permission_level);
+?></header>
+<div class = "container">
+<?php if ($system_message) { echo $system_message;} ?>
+ 
+<form enctype="multipart/form-data" action="<?php echo IPP_PATH . "change_ipp_password.php"; ?>" method="post">
+<input type="hidden" name="username" value="<?php echo $user_row['egps_username']; ?>">
+                        
+<h2>Enter &amp; Confirm New Password <small>and click Update</small></h2>
+<div class="form-group">                       
+<label>Username</label>
+<input type="text" class="form-control" value="<?php echo $user_row['egps_username']; ?>" disabled name="userid">
 
-                        <center><table><tr><td><center><p class="header">- Change Password-</p></center></td></tr></table></center>
+<p><div class="alert alert-block alert-danger"><a href="#" class="close" data-dismiss="alert">&times;</a><strong>Reminder</strong>: Please choose a strong password. Strong passwords may include a combination of upper and lower case characters <em>in addition to</em> numerals and symbols.</div></p>          
 
-                        <center>
-                        <form enctype="multipart/form-data" action="<?php echo IPP_PATH . "change_ipp_password.php"; ?>" method="post">
-                        <input type="hidden" name="username" value="<?php echo $user_row['egps_username']; ?>">
-                        <table border="0" cellpadding="0" cellspacing="0" width="80%">
-                        <tr>
-                          <td colspan="3">
-                          <p class="info_text">Edit and Click Update</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td bgcolor="#E0E2F2" align="left">Username:</td><td bgcolor="#E0E2F2"><input type="text" value="<?php echo $user_row['egps_username']; ?>" disabled name="userid" length="30"></td><td align="left" bgcolor="#E0E2F2" rowspan="5">&nbsp;&nbsp;<input type="submit" name="Update" value="Update" tabindex="3"></td>
-                        </tr>
-                        <tr><td bgcolor="#E0E2F2" align="right">&nbsp;</td><td bgcolor="#E0E2F2">
-                        &nbsp;
-                        </td></tr>
-                        <tr><td bgcolor="#E0E2F2" align="letf">Password </td><td bgcolor="#E0E2F2">
-                        <input type="password" name="pwd1" size="30" maxsize="30" tabindex="1">
-                        </td>
-                        </tr>
-                        <tr><td bgcolor="#E0E2F2" align="left">Password (retype)</td><td bgcolor="#E0E2F2">
-                        <input type="password" name="pwd2" size="30" maxsize="30" tabindex="2">
-                        </td>
-                        </tr>
-                        <tr>
-                        <td colspan="2" bgcolor="#E0E2F2" align="center">&nbsp;</td>
-                        </tr>
-                        </table>
-                        <input type="hidden" name="szBackGetVars" value="<?php echo $szBackGetVars; ?>">
-                        </form>
-                        </center>
+<label>Password</label>
+<input type="password" class="form-control" name="pwd1" size="30" maxsize="30" tabindex="1">
+                        
+<label>Password (retype)</label>
+<input type="password" required class="form-control" name="pwd2" size="30" maxsize="30" tabindex="2">
+</div>                      
+                       
+<input type="hidden" required name="szBackGetVars" value="<?php echo $szBackGetVars; ?>">
 
-                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center"><table border="0" width="100%"><tr><td width="60"><a href="
-            <?php
-                echo IPP_PATH . "main.php";
-            ?>"><img src="<?php echo IPP_PATH; ?>images/back-arrow-white.png" border=0></a></td><td width="60"><a href="<?php echo IPP_PATH . "main.php"; ?>"><img src="<?php echo IPP_PATH; ?>images/homebutton-white.png" border=0></a></td><td valign="bottom" align="center">Logged in as: <?php echo $_SESSION['egps_username'];?></td><td align="right"><a href="<?php echo IPP_PATH;?>"><img src="<?php echo IPP_PATH; ?>images/logout-white.png" border=0></a></td></tr></table></td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
-        <center></center>
+<button class="btn btn-default btn-large" type="submit" name="Update" value="Update" tabindex="3">Update</button>
+</form>
+                   
+</div>
+                     
+        
+            
+       
+<footer><?php print_complete_footer(); ?></footer>        
+
+<?php print_bootstrap_js(); ?>
     </BODY>
 </HTML>

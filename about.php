@@ -84,6 +84,7 @@ header('Pragma: no-cache'); //don't cache this page!
           <ul class="nav navbar-nav">
             <li><a href="main.php">Home</a></li>
             <li class="active"><a href="about.php">About</a></li>
+                        <li><a href="sprint_feedback.php">Leave Feedback</a></li>
             <li><a href="help.php">Help</a></li>
             <li><a href="index.php">Logout</a></li></ul>
              
@@ -229,8 +230,9 @@ Hyattsville, Maryland 20782</address>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="js/jquery-2.1.0.min.js"></script>
     <script src="./js/bootstrap.min.js"></script> 
- <?php print_complete_footer(); ?>
+<hr>
+    <?php print_complete_footer(); ?>
 </BODY>
 </HTML>

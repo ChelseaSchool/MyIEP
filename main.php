@@ -40,7 +40,7 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
         $system_message = $system_message . $error_message;
         if(isset($_SESSION['egps_username'])) IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
         else IPP_LOG($system_message,'no session','ERROR');
-        require(IPP_PATH . 'index_new.php');
+        require(IPP_PATH . 'index.php');
         exit();
     }
 } else {
@@ -103,6 +103,7 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
             <li><a href="about.php">About</a></li>
+			<li><a href="sprint_feedback.php">Leave Feedback</a></li>
             <li><a href="help.php">Help</a></li>
             <li><a href="index.php">Logout</a></li>
             </ul>
@@ -153,9 +154,18 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
 
 
 
-<?php if ($system_message) { echo "<p>" . $system_message . "</p>";} ?>
+
     <div class="container">
-      <p>Access to the following sections is restricted. All areas are displayed here; as you explore keep in mind that you won't be able to access some areas.</p>
+    <?php if ($system_message) 
+    {
+    	echo "<p>" . $system_message . "</p>";
+    } 
+    ?>
+      <div class="alert alert-block alert-info"><a href="#" class="close" data-dismiss="alert">&times;</a>
+      <strong>Note</strong>: Access to the following sections is restricted. All areas are displayed here; as you explore keep in mind that you won't be able to access some areas. Please do contact support if you're blocked from a necessary area.
+      </div>
+      
+      <p></p>
     
       <div class="row">
         <div class="col-md-4">
@@ -205,8 +215,8 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
        </div>
         <div class="col-md-4">
           <h2>Manage Accounts</h2>
-          <p>Manage MyIEP user accounts.</p>
-          <p><a class="btn btn-default" href="./superuser_manage_users.php" role="button">Access Accounts &raquo;</a></p>
+          <p>Configure MyIEP user accounts and access control; create new accounts.</p>
+          <p><a class="btn btn-default" href="./superuser_manage_users.php" role="button">Manage Accounts &raquo;</a></p>
         </div>
       </div>     
       <hr>
@@ -219,7 +229,7 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="js/jquery-2.1.0.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
   </body>
 </html>

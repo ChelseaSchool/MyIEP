@@ -191,8 +191,8 @@ function print_datepicker_depends() {
 	<!-- Example Invokation of Datepicker -->
 	<!-- input type=datepicker name="review_date" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd"  -->
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-	<script src="//code.jquery.com/jquery-1.9.1.js"></script>
-	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	<script src="js/jquery-2.1.0.min.js"></script>
+	<script src="js/jquery-ui-1.10.4.custom.min.js"></script>
 	</script>
 	 <script> 
 	$(function() {
@@ -290,6 +290,7 @@ function print_student_navbar($student_id, $student) {
 <div class="navbar-collapse collapse">
 <ul class="nav navbar-nav">
 <li><a href="main.php">Home</a></li>
+<li><a href="sprint_feedack.php">User Feedback</a></li>
 <li><a href="index.php">Logout</a></li>
 <li><a href="about.php">About</a></li>
 <li><a href="help.php">Help</a></li>
@@ -364,7 +365,7 @@ $dependencies = <<<EOF
 	 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
 	 <script type="text/javascript" src="./js/bootstrap-datepicker.js">$('.datepicker').datepicker()</script>
-	 <!-- jQuery Intantiation -->
+	 <!-- jQuery Instantiation -->
 	 <script>
 	$(function() {
 	$( "#datepicker" ).datepicker();
@@ -384,8 +385,8 @@ EOF;
  */
 function print_bootstrap_js(){
 	$bootsrapjs=<<<EOF
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="./js/bootstrap.min.js"></script>
+<script src="js/jquery-2.1.0.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="./js/jquery-ui-1.10.4.custom.min.js"></script>
 EOF;
 	echo $bootsrapjs;
@@ -413,6 +414,7 @@ function print_general_navbar() {
 <div class="navbar-collapse collapse">
 <ul class="nav navbar-nav">
 <li><a href="main.php">Home</a></li>
+<li><a href="sprint_feedback.php">User Feedback</a></li>
 <li><a href="index.php">Logout</a></li>
 <li><a href="about.php">About</a></li>
 <li><a href="help.php">Help</a></li>

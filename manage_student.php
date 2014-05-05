@@ -2,11 +2,8 @@
 
 /** @file
  * @brief 	find and manage a specific IEP
- * 
- * Work in progress and not ready for incorporation into code base.
  * @todo
- * 1. Add a tooltip or popover for the button to clear filters
- * 
+ * * perhaps move bottom filter controls to top navbar
  */
  
  
@@ -289,7 +286,7 @@ EOF;
 <?php print_meta_for_html5($page_title); ?>
 <TITLE><?php echo $page_title; ?></TITLE>
 <?php print_bootstrap_head(); ?>
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">   
+<link href="assets/glyphs/bootstrap-glyphicons.css" rel="stylesheet">   
 <!--  <script src="js/autocomplete-html.js" type="text/javascript"></script>-->
 
 
@@ -329,7 +326,8 @@ EOF;
     <script src="js/jquery-2.1.0.min.js"></script>
 	<script src="js/jquery.autocomplete.min.js" type="text/javascript"></script>
 	<link rel="stylesheet" type="text/css" href="css/jquery.autocomplete.min.css">   
-    <script src="js/bootstrap-tooltip.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <script>   
 function show_name(person) {
 	if (person != null)
@@ -344,7 +342,7 @@ function show_name(person) {
 
 <script>
 $(document).ready (function(){
-$("#clear").click(function() {
+$("#filter-clear").click(function() {
 	$( "#tags" ).val("");
 	$( "tr.student" ).show();
 });
@@ -352,24 +350,18 @@ $("#clear").click(function() {
 
 
 </script>
-  <?php print_jquery_autocomplete(); ?>
-    
-    
 <script>
 $(document).ready (function(){
-$('#popover').popover();
+	$(.alert).hide();
+}
+
+</script>
+<script>
+$(document).ready(function(){
+	$("#filter-tip").popover();
 });
 </script>
-
-<script>
-//$(document).ready (function(){
-//	$('#clear').popover();
-//});
-	
-
-</script>
-
-
+<?php print_jquery_autocomplete(); ?>
 
 <?php $sqlStudents=getStudents(); ?>  
 
@@ -383,40 +375,63 @@ $('#popover').popover();
 
 <h1>Manage Students</h1>
 <h2>Logged in as: <small><?php echo $_SESSION['egps_username']; ?></small></h2>
-
+<!-- Button trigger modal -->
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#filter_options">
+  Manage Filters &raquo;
+</button>
 <?php if ($system_message) { echo "<h3>System Message <small>" . $system_message . "</small></h3>";} ?>
 
-<button data-toggle="popover" data-placement="top" data-title="Clear Filters" data-content="If a filter has been used, this button will return a list of all students in the system - it clears filters." class="btn btn-lg btn-primary" id="clear" alt="Clears all filters" role="button">Clear Filter &raquo;</button>&nbsp;<button id="toggle" class="btn btn-lg btn-primary" role="button">Toggle Visible Students <small>Based on Permissions </small> &raquo;</button>
 </div> <!-- close container -->
 
 </div> <!-- Close Jumbotron -->
     
     
-<div class="container">     
+<div class="container">  
+
+
+<!-- Modal--> 
+<div class="modal fade" id="filter_options" tabindex="-1" role="dialog" aria-labelledby="options" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="Filters" id="Filters">Manage Filters</h4>
+      </div><!-- Modal Header end -->
+      <div class="modal-body">
+      	<div class="btn-group">
+      		<button role="button" class="btn btn-default btn-med" id="filter-clear">Clear Student Filter &raquo;</button>
+     		<button role="button" class="btn btn-default btn-med" id="toggle" alt="Show Only Students I have Access To">Show Only Students to Whom I have Access &raquo;</button>		
+	    </div>
+	  </div><!-- end modal body -->
+      <div class="modal-footer">
+          </div><!-- end modal footer -->
+    </div><!-- end modal content -->
+  </div>
+  <!-- end modal dialog -->
+</div>
+<!-- end modal fade -->
+
+<div class="alert alert-block alert-info"><a href="#" class="close" data-dismiss="alert">&times;</a><strong>Release Note</strong>: All students are shown by default.  Use the search box to filter students by name. Use the "Manage Filters" button above to manipulate the filters (clear, etc.).</div>
+
 
 <!--  form for autocomplete first and last names-->
 
 
 
-
+<div class="row">
 <div class="input-group">
-  <span class="input-group-addon"><span id="popover" data-toggle="popover" data-placement="top" data-title="Filter Info" data-content="Type part of a student's name to filter the results on this page." class="glyphicon glyphicon-search"></span>
+  <span class="input-group-addon">
+  <span id="filter-tip" data-toggle="popover" data-placement="top" data-title="Filter Info" data-content="Type part of a student's name to filter the results on this page; see the black bar at the bottom of the page to work with filters. (To dismiss this message, click the magnifying glass icon again.)" class="glyphicon glyphicon-search">
   </span>
-  <input id="tags" class="form-control" placeholder="Search for student">
+  </span>
+  <input id="tags" class="form-control" placeholder="Search for student by name...">
 </div>
-
-
-
-
-
-      
-
-
 <p>&nbsp;</p>
-  					
-    <table id="students" border=0 class="table table-hover" class="table table-striped">
+<div class="row">
+	
+    <table id="students" class="table table-hover table-striped">
   	<!-- <form name="studentlist" onSubmit="return deleteChecked()" enctype="multipart/form-data" action="<?php //echo IPP_PATH . "manage_student.php"; ?>" method="post">-->
-  	<tr><th width=10>Select <small>(Disabled)</small></th><th>UID</th><th>Student Name</th><th width="20%"><center><abbr title="Individual Education Plan">IEP</abbr> (<abbr title="Portable Document Format">PDF</abbr>)</center></th><th>School</th><th>Permission</th></tr>
+  	<tr><th>Select</th><th>UID</th><th>Student Name</th><th><abbr title="Individual Education Plan">IEP</abbr> (<abbr title="Portable Document Format">PDF</abbr>)</th><th>School</th><th>Permission</th></tr>
 	
 	<!-- loop -->
 	<?php 
@@ -454,26 +469,24 @@ EOF;
                             echo "</tr>";//close row */
 						 ?>
 </table>							
-<!-- </form> -->
-	
-<!-- <button type="submit" name="delete" title="delete" class="btn btn-default">Submit</button>-->
-<!--  <?php if($permission_level <= $IPP_MIN_DELETE_STUDENT_PERMISSION)
-                            echo "<button type=\"submit\" name=\"delete\" value=\"1\">Delete Selected</button>";?>-->
-
+</div>
 
 	
  
    			
-  	</div><!-- End Container -->			
+  				
   					
-  					
+					
 
-
-                       
-                       
-        <?php print_complete_footer(); ?>
         
+    
+
+<hr>                      
+<footer><?php print_complete_footer(); ?></footer>
+  
+ 
         <?php print_bootstrap_js() ?>
+
         
 		 
     </BODY>

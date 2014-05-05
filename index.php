@@ -86,7 +86,7 @@ if(isset($LOGIN_NAME)) $LOGIN_NAME = $LOGIN_NAME; else $LOGIN_NAME="";
         <div class="navbar-collapse collapse">
           <form class="navbar-form navbar-right" role="form" action="<?php echo IPP_PATH . 'main.php'; ?>" method="post">
             <div class="form-group">
-              <input name="LOGIN_NAME" autofocus required type="text" placeholder="User Name" name="LOGIN_NAME" value="<?php echo $LOGIN_NAME;?>" class="form-control" value="<?php echo $LOGIN_NAME;?>">
+              <input name="LOGIN_NAME" autofocus required autocomplete="off" type="text" placeholder="User Name" name="LOGIN_NAME" value="<?php echo $LOGIN_NAME;?>" class="form-control" value="<?php echo $LOGIN_NAME;?>">
             </div>
             <div class="form-group">
               <input name=PASSWORD required type="password" placeholder="Password" class="form-control" name="PASSWORD" value="" placeholder="Password">
@@ -197,7 +197,7 @@ Hyattsville, Maryland 20782</address>
 <ul>
 <li>Developed using Scrum Framework (an Agile methodology)</li>
 <li>HTML5 &amp; CSS3</li>
-<li><Vagrant &amp; Virtualbox Development Environment</li>
+<li>Vagrant & Virtualbox Development Environment</li>
 <li>Source Code Management (SCM) with Git and Github</li>
 <li>Apache web-server administration</li>
 <li>Data processing with PHP</li>
@@ -207,11 +207,13 @@ Hyattsville, Maryland 20782</address>
 </ul>
 </div>
 </div>
+</div>
+<hr>
 <?php print_complete_footer(); ?>  
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="js/jquery-2.1.0.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>     
 </BODY>
 </HTML>

@@ -1,6 +1,8 @@
 <?php
 /**@file
- * @brief a single variable set to current version
+ * @brief a single constant set to current version
+ * 
+ * Versions follow Ubuntu's model: Year.Month
  * @todo
  * 1. Include as necessary
  * @remark:
@@ -9,5 +11,5 @@
  * 3. Note the comment on 8 is redundant
  */
 
-    $IPP_CURRENT_VERSION="14.3"; //This version
+    $IPP_CURRENT_VERSION="14.5"; //This version
 ?>
