@@ -498,6 +498,12 @@ function print_meta_for_html5($page_title)
 	<link rel="shortcut icon" href="./assets/ico/favicon.ico">
 EOF;
 	echo $metadata;
-}    
+} 
+
+/** fn random_password($length)
+ * @brief uses curl for php to grap a random password of $length characters
+ * @param integer $length
+ * @return string $pw_suggestion
+ */
 
 ?>

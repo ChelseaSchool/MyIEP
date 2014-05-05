@@ -42,6 +42,7 @@ require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
 require_once 'include/supporting_functions.php';
+//require_once 'include/page_troubleshoot.php';
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -178,6 +179,17 @@ if(!$permission_result) {
     $system_message=$system_message . $error_message;
     IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
 }
+
+function random_password($length)
+{
+	$ch=curl_init("https://infamia.com/hints/pwgen.php?length=" . $length . "&quiet");
+	curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
+	$pw_suggestion = curl_exec( $ch );
+	curl_close($ch);
+	return $pw_suggestion;
+
+}
+
 ?> 
 <!DOCTYPE HTML>
 <HTML lang=en>
@@ -193,6 +205,7 @@ print_lesser_jumbotron("Change Password", $permission_level);
 <div class = "container">
 <?php if ($system_message) { echo $system_message;} ?>
 <h2>Enter &amp; Confirm New Password <small>and click Update</small></h2>
+
 
 
 <p><div class="alert alert-block alert-danger"><a href="#" class="close" data-dismiss="alert">&times;</a><strong>Required</strong>: Please choose a strong password. Passwords for MyIEP must include:
@@ -222,10 +235,10 @@ Password Resources:
          
 
 <label>Password</label>
-<input type="password" class="form-control" name="pwd1" size="30" maxsize="30" tabindex="1" required pattern="(?=^.{6,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$">
+<input type="password" class="form-control" name="pwd1" size="30" maxsize="30" tabindex="1" required pattern="(?=^.{6,30}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$" placeholder="Please enter a complex password">
                         
 <label>Password (retype)</label>
-<input type="password" required class="form-control" name="pwd2" size="30" maxsize="30" tabindex="2" required pattern="(?=^.{6,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$">
+<input type="password" required class="form-control" name="pwd2" size="30" maxsize="30" tabindex="2" required pattern="(?=^.{6,30}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$" placeholder="Please enter a complex password">
 </div>                      
                        
 <input type="hidden" required name="szBackGetVars" value="<?php echo $szBackGetVars; ?>">

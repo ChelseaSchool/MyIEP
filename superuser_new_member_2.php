@@ -270,10 +270,10 @@ print_html5_primer();
 					</div>
 				</div>
 				<div class="col-md-6 form-group">
-					<label>Password</label> <!-- primer pattern: pattern="^(?=^.{6,}$((?=.*\d)|(?=.*\W+))(?![./n])(?=.*[a-z])(?=.*A-Z])(?!.*\s).*$" -->
-					<input class="form-control" required type="password" name="pwd1" tabindex="4"> 
+					<label>Password</label>
+					<input class="form-control" required type="password" name="pwd1" pattern="(?=^.{6,30}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$" tabindex="4"> 
 					<label>Confirm Password</label>
-					<input class="form-control" required type="password" name="pwd2"  tabindex="5">
+					<input class="form-control" required type="password" name="pwd2" pattern="(?=^.{6,30}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$"  tabindex="5">
 					<label>Permission Level</label>
 					<?php
 					echo "<SELECT class=\"form-control\" tabindex=\"7\" name=\"permission_level\">\n";
