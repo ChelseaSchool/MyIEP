@@ -192,22 +192,40 @@ print_lesser_jumbotron("Change Password", $permission_level);
 ?></header>
 <div class = "container">
 <?php if ($system_message) { echo $system_message;} ?>
- 
+<h2>Enter &amp; Confirm New Password <small>and click Update</small></h2>
+
+
+<p><div class="alert alert-block alert-danger"><a href="#" class="close" data-dismiss="alert">&times;</a><strong>Required</strong>: Please choose a strong password. Passwords for MyIEP must include:
+<ul><li>At least one capital letter;
+<li>At least one lower-case letter;
+<li>At least one numeral;
+<li>At least one special character (keyboard symbol);
+</ul> 
+Password Resources:
+<ul>
+<li><a target="_new" href="https://www.microsoft.com/en-gb/security/pc-security/password-checker.aspx">Password Check</a> <small>A Microsoft site to help evaluate passwords</small></li>
+<li><a target="_new" href="http://blog.kaspersky.com/password-check/">Password Evaluator</a> <small>Very helpful password evaluation tool from Kaspersky</small>
+<li>Click <a target="_new" href="https://infamia.com/hints/pwgen.php?length=10&quiet">here</a> to generate a random, secure password.
+</ul>
+</div></p> 
+
+<!-- Begin Right Column (form) -->
+
 <form enctype="multipart/form-data" action="<?php echo IPP_PATH . "change_ipp_password.php"; ?>" method="post">
 <input type="hidden" name="username" value="<?php echo $user_row['egps_username']; ?>">
                         
-<h2>Enter &amp; Confirm New Password <small>and click Update</small></h2>
+
 <div class="form-group">                       
 <label>Username</label>
 <input type="text" class="form-control" value="<?php echo $user_row['egps_username']; ?>" disabled name="userid">
 
-<p><div class="alert alert-block alert-danger"><a href="#" class="close" data-dismiss="alert">&times;</a><strong>Reminder</strong>: Please choose a strong password. Strong passwords may include a combination of upper and lower case characters <em>in addition to</em> numerals and symbols.</div></p>          
+         
 
 <label>Password</label>
-<input type="password" class="form-control" name="pwd1" size="30" maxsize="30" tabindex="1">
+<input type="password" class="form-control" name="pwd1" size="30" maxsize="30" tabindex="1" required pattern="(?=^.{6,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$">
                         
 <label>Password (retype)</label>
-<input type="password" required class="form-control" name="pwd2" size="30" maxsize="30" tabindex="2">
+<input type="password" required class="form-control" name="pwd2" size="30" maxsize="30" tabindex="2" required pattern="(?=^.{6,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$">
 </div>                      
                        
 <input type="hidden" required name="szBackGetVars" value="<?php echo $szBackGetVars; ?>">
@@ -216,8 +234,8 @@ print_lesser_jumbotron("Change Password", $permission_level);
 </form>
                    
 </div>
-                     
-        
+                        
+    
             
        
 <footer><?php print_complete_footer(); ?></footer>        

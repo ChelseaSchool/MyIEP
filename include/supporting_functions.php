@@ -499,5 +499,5 @@ function print_meta_for_html5($page_title)
 EOF;
 	echo $metadata;
 }    
- 
+
 ?>

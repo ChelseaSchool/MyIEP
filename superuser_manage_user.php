@@ -207,13 +207,13 @@ if ($system_message) {
 <input class="form-control" type="text" value="<?php echo $user_row['egps_username']; ?>" disabled name="userid" length="30">
 
 <label>First Name</label>
-<input class="form-control" type="text" name="first_name" value="<?php echo $user_row['first_name'];?>">
+<input autofocus tabindex=1 class="form-control" required type="text" name="first_name" value="<?php echo $user_row['first_name'];?>">
 <label>Last Name</label>
-<input class="form-control" type="text" name="last_name" value="<?php echo $user_row['last_name'];?>">
+<input class="form-control" tabindex=2 required type="text" name="last_name" value="<?php echo $user_row['last_name'];?>">
 <label>Email</label>
-<input class="form-control" type="email" name="email" value="<?php echo $user_row['email'];?>">
+<input class="form-control" tabindex=3 required type="EMAIL" name="email" value="<?php echo $user_row['email'];?>">
 <label>School</label>
-<SELECT class="form-control" name="school_code" <?php if($permission_level != 0) echo "disabled"; ?>>
+<SELECT class="form-control" tabindex=4 name="school_code" <?php if($permission_level != 0) echo "disabled"; ?>>
                         <?php
                             while($school_row=mysql_fetch_array($school_result)) {
                                 if($user_row['school_code'] == $school_row['school_code']) {
@@ -226,7 +226,7 @@ if ($system_message) {
 </SELECT>
 <label>Permission Level</label>
 <?php
-echo "<SELECT class=\"form-control\" name=\"permission_level\" style=\"width:200px;text-align: left;\">\n";
+echo "<SELECT tabindex=5 class=\"form-control\" name=\"permission_level\" style=\"width:200px;text-align: left;\">\n";
 	while($pval = mysql_fetch_array($permission_result)) {
 		if($permission_level == 0 || $pval['level'] > 20) //only allow school based to add up to principal.
 			echo "\t<OPTION value=" . $pval['level'];
@@ -236,15 +236,15 @@ echo "<SELECT class=\"form-control\" name=\"permission_level\" style=\"width:200
 echo "</SELECT>\n"
 ?>
 <label>Local Administrator</label>
-<input type="checkbox" name="is_local_ipp_administrator" <?php if($user_row['is_local_ipp_administrator'] =='Y') echo "checked"; ?> <?php if($permission_level != 0) echo "disabled"; ?>>
-<input type="hidden" name="szBackGetVars" value="<?php echo $szBackGetVars; ?>">
+<input tabindex=6 type="checkbox" name="is_local_ipp_administrator" <?php if($user_row['is_local_ipp_administrator'] =='Y') echo "checked"; ?> <?php if($permission_level != 0) echo "disabled"; ?>>
+<input tabindex=7 type="hidden" name="szBackGetVars" value="<?php echo $szBackGetVars; ?>">
 
 </div>
 <div class="button-group">
-<button class="btn btn-default btn-large" type="submit" name="Update" value="Update">Update</button>
+<button tabindex=8 class="btn btn-default btn-large" type="submit" name="Update" value="Update">Update</button>
 <?php 
 if (isset($user_row['egps_username'])){
-	$change_password_button = "<button href=\"" . IPP_PATH . "change_ipp_password.php?username=" . $user_row['egps_username'] . "\" class=\"btn btn-default btn-large\" role=\"button\">Change Password</button>";
+	$change_password_button = "<a tabindex=9 href=\"" . "change_ipp_password.php?username=" . $user_row['egps_username'] . "\" class=\"btn btn-default btn-large\" role=\"button\">Change Password</a>";
 	echo $change_password_button;
 }
 ?>
