@@ -135,7 +135,7 @@ if(isset($_POST['add_goal']) && $have_write_permission) {
                 if(!$area_result) $area="Other";
                 else { $area_row=mysql_fetch_array($area_result); $area = $area_row['name'];}
             }
-            $insert_goal_query="INSERT INTO long_term_goal (goal,student_id,review_date,area) VALUES ('$description',$student_id,'" . clean_in_and_out($_POST['review_date']) . "','" . clean_in_and_out($area) . "')";
+            $insert_goal_query="INSERT INTO long_term_goal (goal,student_id,review_date,area) VALUES ('$description',$student_id,'" . mysql_real_escape_string($_POST['review_date']) . "','" . mysql_real_escape_string($area) . "')";
             $insert_goal_result = mysql_query($insert_goal_query);
             if(!$insert_goal_result) {
                 $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$insert_goal_query'<BR>";
@@ -183,8 +183,8 @@ if(isset($_POST['update_goal']) && $have_write_permission) {
    if($_POST['goal_text'] == "") $system_message = $system_message . "You must supply goal text<BR>";
    else {
       $update_query="UPDATE long_term_goal SET area=";
-      $update_query .= "'" . clean_in_and_out($_POST['goal_area']) . "'";
-      $update_query .= ", review_date='" . clean_in_and_out($_POST['goal_review_date']) . "',goal='" . clean_in_and_out($_POST['goal_text']) . "' WHERE goal_id=$goal_id LIMIT 1";
+      $update_query .= "'" . mysql_real_escape_string($_POST['goal_area']) . "'";
+      $update_query .= ", review_date='" . mysql_real_escape_string($_POST['goal_review_date']) . "',goal='" . mysql_real_escape_string($_POST['goal_text']) . "' WHERE goal_id=$goal_id LIMIT 1";
       $update_result = mysql_query($update_query);
       if(!$update_result) {
          $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$update_query'<BR>";
@@ -225,17 +225,17 @@ if(isset($_POST['add_objective']) && $have_write_permission) {
        if($_POST['results_and_recommendations'] == "")
           $insert_query = $insert_query . "NULL,";
        else
-          $insert_query = $insert_query . "'" . clean_in_and_out($_POST['results_and_recommendations']) . "',";
+          $insert_query = $insert_query . "'" . mysql_real_escape_string($_POST['results_and_recommendations']) . "',";
 
        if($_POST['strategies'] == "")
           $insert_query = $insert_query . "NULL,";
        else
-          $insert_query = $insert_query . "'" . clean_in_and_out($_POST['strategies']) . "',";
+          $insert_query = $insert_query . "'" . mysql_real_escape_string($_POST['strategies']) . "',";
 
        if($_POST['assessment_procedure'] == "")
           $insert_query = $insert_query . "NULL";
        else
-          $insert_query = $insert_query . "'" . clean_in_and_out($_POST['assessment_procedure']) . "'";
+          $insert_query = $insert_query . "'" . mysql_real_escape_string($_POST['assessment_procedure']) . "'";
 
        $insert_query = $insert_query . ")";
 
@@ -329,7 +329,7 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
           $row=mysql_fetch_array($dataSource);
 
           $bad_chars = array("\n", "\r");
-          $tempOutput.= clean_in_and_out(str_replace($bad_chars, "\\n",$row[0])) . ' ';
+          $tempOutput.= mysql_real_escape_string(str_replace($bad_chars, "\\n",$row[0])) . ' ';
 
           $javascript.=trim($tempOutput).'";';
         }

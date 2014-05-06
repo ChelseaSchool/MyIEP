@@ -282,7 +282,7 @@ while ($asst_tech_row=mysql_fetch_array($asst_tech_result)) {
         echo "<tr>\n";
 		echo "<td><input type=\"checkbox\" name=\"" . $asst_tech_row['uid'] . "\"></td>";
 		echo "<td>" . $asst_tech_row['uid'] . "</td>";
-	    echo "<td><a href=\"" . IPP_PATH . "edit_assistive_technology.php?uid=" . $asst_tech_row['uid'] . "\" class=\"editable_text\">" . clean_in_and_out($asst_tech_row['technology'])  ."</a></td>\n";
+	    echo "<td><a href=\"" . IPP_PATH . "edit_assistive_technology.php?uid=" . $asst_tech_row['uid'] . "\" class=\"editable_text\">" . mysql_real_escape_string($asst_tech_row['technology'])  ."</a></td>\n";
 		echo "</tr>\n";
 }
 ?>

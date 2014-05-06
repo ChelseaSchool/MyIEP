@@ -45,7 +45,7 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
     }
 }
 
-//$user = clean_in_and_out($_POST["LOGIN_NAME"]);
+//$user = mysql_real_escape_string($_POST["LOGIN_NAME"]);
 $session_name = $_SESSION["egps_username"];
 //$session_login = $_SESSION['LOGIN_NAME'];
 //$referrer = $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];

@@ -295,7 +295,7 @@ $enum_options_type = mysql_enum_values("background_info","type");
                             echo "<td bgcolor=\"#E0E2F2\"><input type=\"checkbox\" name=\"" . $background_info_row['uid'] . "\"></td>";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\">" . $background_info_row['uid'] . "</td>";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_background_information.php?uid=" . $background_info_row['uid'] . "\" class=\"editable_text\">" . $background_info_row['type']  ."</a></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_background_information.php?uid=" . $background_info_row['uid'] . "\" class=\"editable_text\">" . clean_in_and_out($background_info_row['description']) . "</a></td>\n";
+                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_background_information.php?uid=" . $background_info_row['uid'] . "\" class=\"editable_text\">" . mysql_real_escape_string($background_info_row['description']) . "</a></td>\n";
                             echo "</tr>\n";
                             if($bgcolor=="#DFDFDF") $bgcolor="#CCCCCC";
                             else $bgcolor="#DFDFDF";

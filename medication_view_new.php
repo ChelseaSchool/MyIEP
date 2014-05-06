@@ -211,7 +211,7 @@ if(!$medication_result) {
 </HEAD>
     <BODY>
    <?php print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']) ; ?>
-   <?php print_jumbotron_with_page_name("Medication", $student_row['first_name'] . " " . $student_row['last_name'], $permission_level) ; ?> )
+   <?php print_jumbotron_with_page_name("Medication", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission) ; ?> )
         
    <div class="container">
    <?php if ($system_message) { echo $system_message; } ?>
@@ -242,7 +242,7 @@ if(!$medication_result) {
                             echo "<tr>\n";
                             echo "<td><input type=\"checkbox\" name=\"" . $medication_row['uid'] . "\"></td>";
                             echo "<td>" . $medication_row['uid'] . "</td>";
-                            echo "<td><a href=\"" . IPP_PATH . "edit_medication.php?uid=" . $medication_row['uid'] . "\" class=\"editable_text\">" . clean_in_and_out($medication_row['medication_name'])  ."</a></td>\n";
+                            echo "<td><a href=\"" . IPP_PATH . "edit_medication.php?uid=" . $medication_row['uid'] . "\" class=\"editable_text\">" . mysql_real_escape_string($medication_row['medication_name'])  ."</a></td>\n";
                             echo "<td><a href=\"" . IPP_PATH . "edit_medication.php?uid=" . $medication_row['uid'] . "\" class=\"editable_text\">" . $medication_row['doctor']  ."</a></td>\n";
                             echo "<td><a href=\"" . IPP_PATH . "edit_medication.php?uid=" . $medication_row['uid'] . "\" class=\"editable_text\">" . $medication_row['start_date'] . "</a></td>\n";
                             echo "<td><center><a href=\"" . IPP_PATH . "edit_medication.php?uid=" . $medication_row['uid'] . "\" class=\"editable_text\">"; if($medication_row['end_date']) echo $medication_row['end_date']; else echo "-current-"; echo "</a></center></td>\n";

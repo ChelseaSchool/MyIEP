@@ -212,7 +212,7 @@ if(!$transition_result) {
                             echo "<tr>\n";
                             echo "<td><input type=\"checkbox\" name=\"" . $transition_row['uid'] . "\"></td>";
                             echo "<td>" . $transition_row['uid'] . "</td>";
-                            echo "<td><a href=\"" . IPP_PATH . "edit_transition_plan.php?uid=" . $transition_row['uid'] . "\" class=\"editable_text\" spellcheck=\"true\">" . clean_in_and_out($transition_row['plan'])  ."</td>\n";
+                            echo "<td><a href=\"" . IPP_PATH . "edit_transition_plan.php?uid=" . $transition_row['uid'] . "\" class=\"editable_text\" spellcheck=\"true\">" . mysql_real_escape_string($transition_row['plan'])  ."</td>\n";
                             echo "<td><a href=\"" . IPP_PATH . "edit_transition_plan.php?uid=" . $transition_row['uid'] . "\" class=\"editable_text\">" . $transition_row['date']  ."</td>\n";
                             echo "</tr>\n";
                            

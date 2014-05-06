@@ -183,7 +183,7 @@ if(isset($_POST['edit_transition_plan']) && $have_write_permission) {
 </HEAD>
     <BODY>
     	<?php print_student_navbar($student_id, $student_row["first_name"] . " " . $student_row["last_name"]); ?>
-    	<?php print_jumbotron_with_page_name("Edit Transition Plan", $student_row["first_name"] . " " . $student_row["last_name"], $permission_level); ?>
+    	<?php print_jumbotron_with_page_name("Edit Transition Plan", $student_row["first_name"] . " " . $student_row["last_name"], $our_permission); ?>
         <?php if ($system_message) { echo $system_message;} ?>
         <div class=container><div class=row><div class=col-md-6>
          <form name="add_transition_plan" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_transition_plan.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>

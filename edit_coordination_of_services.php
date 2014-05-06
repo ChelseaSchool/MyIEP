@@ -318,7 +318,7 @@ if(isset($_POST['edit_coordination_of_services'])) {
 </HEAD>
     <BODY>
     <?php print_student_navbar($student_id, $student_row['first_name'] . " &nbsp" . $student_row['last_name']); ?>
-     <?php print_jumbotron_with_page_name("Edit Coordination of Services", $student_row['first_name'] . " " . $student_row['last_name'], $permission_level); ?>
+     <?php print_jumbotron_with_page_name("Edit Coordination of Services", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission); ?>
     <div class="container">
      <?php if ($system_message) echo "$system_message"; ?>
     

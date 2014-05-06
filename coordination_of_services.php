@@ -403,7 +403,7 @@ if(!$coord_result) {
                             echo "<td class=\"row_default\">" . $coord_row['uid'] . "</td>";
                             echo "<td class=\"row_default\"><a href=\"" . IPP_PATH . "edit_coordination_of_services.php?uid=" . $coord_row['uid'] . "\" class=\"editable_text\">" . $coord_row['agency']  ."</a></td>\n";
                             echo "<td class=\"row_default\"><a href=\"" . IPP_PATH . "edit_coordination_of_services.php?uid=" . $coord_row['uid'] . "\" class=\"editable_text\">" . $coord_row['date']  ."</a></td>\n";
-                            echo "<td class=\"row_default\"><a href=\"" . IPP_PATH . "edit_coordination_of_services.php?uid=" . $coord_row['uid'] . "\" class=\"editable_text\">" . clean_in_and_out($coord_row['description']) . "</a></td>\n";
+                            echo "<td class=\"row_default\"><a href=\"" . IPP_PATH . "edit_coordination_of_services.php?uid=" . $coord_row['uid'] . "\" class=\"editable_text\">" . mysql_real_escape_string($coord_row['description']) . "</a></td>\n";
                             echo "<td class=\"row_default\"><center><a href=\"" . IPP_PATH . "edit_coordination_of_services.php?uid=" . $coord_row['uid'] . "\" class=\"editable_text\">" . $coord_row['report_in_file'] . "</a></center></td>\n";
                             echo "<td class=\"row_default\"><center>"; if($coord_row['filename'] =="") echo "-none-"; else echo "<a href=\"" . IPP_PATH . "get_attached.php?table=coordination_of_services&uid=" . $coord_row['uid'] ."&student_id=" . $student_id ."\">Download</a>"; echo "</center></td>\n";
                             echo "</tr>\n";

@@ -32,7 +32,7 @@ function no_cash() {
 }
 
 
-/** @fn clean_in_and_out($input)
+/** @fn mysql_real_escape_string($input)
  * 
  * Filters input and escapes output to prepare for MySQL
  * 
@@ -42,7 +42,7 @@ function no_cash() {
  * @todo		Test and implement.
  *  
  */
-function clean_in_and_out($input){
+function mysql_real_escape_string($input){
 	$input = strip_tags($input);
 	$input = htmlentities($input);
 	$input = stripslashes($input);

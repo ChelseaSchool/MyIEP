@@ -151,7 +151,7 @@ if(isset($_POST['edit_strength_or_need']) && $have_write_permission) {
 </HEAD>
     <BODY>
    <?php print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']); ?>
-   <?php print_jumbotron_with_page_name("Edit Strengths &amp; Needs", $student_row['first_name'] . " " . $student_row['last_name'], $permission_level); ?>
+   <?php print_jumbotron_with_page_name("Edit Strengths &amp; Needs", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission); ?>
    <div class="container">
    <?php if ($system_message) { echo $system_message;} ?>     
          

@@ -291,7 +291,7 @@ echo "<tr><th>Select</th><th>uid</th><th>Test Name</th><th>Results</th><th>Date<
                             echo "<td><input type=\"checkbox\" name=\"" . $performance_testing_row['uid'] . "\"></td>";
                             echo "<td>" . $performance_testing_row['uid'] . "</td>";
                             echo "<td><a href=\"" . IPP_PATH . "edit_achieve_level.php?uid=" . $performance_testing_row['uid'] . "\" class=\"editable_text\">" . $performance_testing_row['test_name']  ."</a></td>\n";
-                            echo "<td><a href=\"" . IPP_PATH . "edit_achieve_level.php?uid=" . $performance_testing_row['uid'] . "\" class=\"editable_text\">" . clean_in_and_out($performance_testing_row['results'])  ."</a></td>\n";
+                            echo "<td><a href=\"" . IPP_PATH . "edit_achieve_level.php?uid=" . $performance_testing_row['uid'] . "\" class=\"editable_text\">" . mysql_real_escape_string($performance_testing_row['results'])  ."</a></td>\n";
                             echo "<td><a href=\"" . IPP_PATH . "edit_achieve_level.php?uid=" . $performance_testing_row['uid'] . "\" class=\"editable_text\">" . $performance_testing_row['date'] . "</a></td>\n";
                             echo "<td>"; if($performance_testing_row['filename'] =="") echo "-none-"; else echo "<a href=\"" . IPP_PATH . "get_attached.php?table=performance_testing&uid=" . $performance_testing_row['uid'] ."&student_id=" . $student_id ."\">Download</a>"; echo "</td>\n";
                             echo "</tr>\n";

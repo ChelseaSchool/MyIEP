@@ -179,7 +179,7 @@ if(isset($_POST['add_anecdotal']) && $have_write_permission) {
     $system_message = $system_message . $retval;
   } else {
     //we add the entry.
-    $insert_query = "INSERT INTO anecdotal (student_id,date,report,file,filename) VALUES (" . clean_in_and_out($student_id) . ",'" . clean_in_and_out($_POST['date']) . "','" . clean_in_and_out($_POST['report']) . "','$content','$fileName')";
+    $insert_query = "INSERT INTO anecdotal (student_id,date,report,file,filename) VALUES (" . mysql_real_escape_string($student_id) . ",'" . mysql_real_escape_string($_POST['date']) . "','" . mysql_real_escape_string($_POST['report']) . "','$content','$fileName')";
     $insert_result = mysql_query($insert_query);
      if(!$insert_result) {
         $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$insert_query' <BR>";
@@ -268,7 +268,7 @@ if(!$anecdotal_result) {
 </HEAD>
     <BODY>
     <?php  print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']); ?>
-    <?php print_jumbotron_with_page_name(Anecdotals, $student_row['first_name'] . " " . $student_row['last_name'], $permission_level) ?> 
+    <?php print_jumbotron_with_page_name("Anecdotals", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission) ?> 
      <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
      
                 
@@ -319,7 +319,7 @@ if(!$anecdotal_result) {
                             echo "<tr>\n";
                             echo "<td bgcolor=\"#E0E2F2\"><input type=\"checkbox\" name=\"" . $anecdotal_row['uid'] . "\"></td>";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\">" . $anecdotal_row['uid'] . "</td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_anecdotal.php?uid=" . $anecdotal_row['uid'] . "\" class=\"editable_text\">" . clean_in_and_out($anecdotal_row['report'])  ."</td>\n";
+                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_anecdotal.php?uid=" . $anecdotal_row['uid'] . "\" class=\"editable_text\">" . mysql_real_escape_string($anecdotal_row['report'])  ."</td>\n";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_anecdotal.php?uid=" . $anecdotal_row['uid'] . "\" class=\"editable_text\">" . $anecdotal_row['date']  ."</td>\n";
                             echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><center>"; if($anecdotal_row['filename'] =="") echo "-none-"; else echo "<a href=\"" . IPP_PATH . "get_attached.php?table=anecdotal&uid=" . $anecdotal_row['uid'] ."&student_id=" . $student_id ."\">Download</a>"; echo "</center></td>\n";
                             echo "</tr>\n";
