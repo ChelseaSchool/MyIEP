@@ -233,7 +233,8 @@ if ($system_message)
 
 
 
-<p><div class="alert alert-block alert-info"><a href="#" class="close" data-dismiss="alert">&times;</a><strong>Required</strong>: Please choose a strong password. Passwords for MyIEP must include:
+
+<div class="alert alert-block alert-info"><a href="#" class="close" data-dismiss="alert">&times;</a><strong>Required</strong>: Please choose a strong password. Passwords for MyIEP must include:
 <ul><li>At least one capital letter;</li>
 <li>At least one lower-case letter;</li>
 <li>At least one numeral;</li>
@@ -246,15 +247,18 @@ Password Resources:
 <li><a target="_new" href="http://blog.kaspersky.com/password-check/">Password Evaluator</a> <small>Very helpful password evaluation tool from Kaspersky</small></li>
 <li>Click <a target="_new" href="https://infamia.com/hints/pwgen.php?length=10&quiet">here</a> to generate a random, secure password.</li>
 </ul>
-Proposed Password(s):
-<ul><li>System Generated: <strong><?php generate_password();?></strong></li>
 
-<li>Externally Harvested: <strong><?php random_password(8);?></strong></li>
+<hr>
+Proposed, Random, and Complex Password(s):
+<ul>
+<li>System Generated: <strong><?php generate_password();?></strong></li>
+
+<li>Externally Harvested: <strong><?php random_password(8);?></strong></li> 
 
 </ul>
-</div> 
+</div>
 
-<!-- Begin Right Column (form) -->
+
 
 <form enctype="multipart/form-data" action="<?php echo IPP_PATH . "change_ipp_password.php"; ?>" method="post">
 <input type="hidden" name="username" value="<?php echo $user_row['egps_username']; ?>">
@@ -272,7 +276,7 @@ Proposed Password(s):
 <label>Password (retype)</label>
 <input type="password" required class="form-control" data-toggle="tooltip" data-placement="top" data-title="Caps lock is on" name="pwd2" size="30" maxsize="30" tabindex="2" required pattern="(?=^.{6,30}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$" placeholder="Please confirm password">
 </div>                      
-<div id=capsWarning>Caps Lock is on.</div>                       
+                      
 <input type="hidden" required name="szBackGetVars" value="<?php echo $szBackGetVars; ?>">
 
 <button class="btn btn-default btn-large" type="submit" name="Update" value="Update" tabindex="3">Update</button>

@@ -1,7 +1,7 @@
 <?php
 
 /** @file
- * @brief 	add a user
+ * @brief 	add a user - this script was never developed
  * @copyright 	2014 Chelsea School 
  * @copyright 	2005 Grasslands Regional Division #6
  * @copyright		This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
