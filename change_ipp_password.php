@@ -188,6 +188,32 @@ if(!$permission_result) {
 <?php print_html5_primer(); ?>
     <TITLE><?php echo $page_title; ?></TITLE>
     <?php print_bootstrap_head(); ?>
+<script src="js/caps_lock.js" type="text/javascript"></script>    
+<script>
+
+$(document).ready(function() {
+
+	$('#pwd1').keypress(function(e) {
+		  var $password = $(this),
+		      tooltipVisible = $('.tooltip').is(':visible'),
+		      s = String.fromCharCode(e.which);
+		 
+		  //Check if capslock is on. No easy way to test for this
+		  //Tests if letter is upper case and the shift key is NOT pressed.
+		  if ( s.toUpperCase() === s && s.toLowerCase() !== s && !e.shiftKey ) {
+		    if (!tooltipVisible)
+		        $password.tooltip('show');
+		  } else {
+		    if (tooltipVisible)
+		        $password.tooltip('hide');
+		  }
+		 
+		  //Hide the tooltip when moving away from the password field
+		  $password.blur(function(e) {
+		    $password.tooltip('hide');
+		  });
+		});
+</script>
 </HEAD>
     <BODY>
 <header>
@@ -207,7 +233,7 @@ if ($system_message)
 
 
 
-<p><div class="alert alert-block alert-danger"><a href="#" class="close" data-dismiss="alert">&times;</a><strong>Required</strong>: Please choose a strong password. Passwords for MyIEP must include:
+<p><div class="alert alert-block alert-info"><a href="#" class="close" data-dismiss="alert">&times;</a><strong>Required</strong>: Please choose a strong password. Passwords for MyIEP must include:
 <ul><li>At least one capital letter;</li>
 <li>At least one lower-case letter;</li>
 <li>At least one numeral;</li>
@@ -222,12 +248,11 @@ Password Resources:
 </ul>
 Proposed Password(s):
 <ul><li>System Generated: <strong><?php generate_password();?></strong></li>
-<?php random_password(8);?>
-<?php if (isset ($pw_suggestion)) { 
-	echo "<li>Externally Harvested: " . $pw_suggestion . "</li>";
-} ?> 
+
+<li>Externally Harvested: <strong><?php random_password(8);?></strong></li>
+
 </ul>
-</div></p> 
+</div> 
 
 <!-- Begin Right Column (form) -->
 
@@ -242,12 +267,12 @@ Proposed Password(s):
          
 
 <label>Password</label>
-<input type="password" class="form-control" name="pwd1" size="30" maxsize="30" tabindex="1" required pattern="(?=^.{6,30}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$" placeholder="Please enter a complex password">
+<input type="password" class="form-control" data-toggle="tooltip" data-placement="top" data-title="Caps lock is on" name="pwd1" size="30" maxsize="30" tabindex="1" required pattern="(?=^.{6,30}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$" placeholder="Please enter a complex password">
                         
 <label>Password (retype)</label>
-<input type="password" required class="form-control" name="pwd2" size="30" maxsize="30" tabindex="2" required pattern="(?=^.{6,30}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$" placeholder="Please confirm password">
+<input type="password" required class="form-control" data-toggle="tooltip" data-placement="top" data-title="Caps lock is on" name="pwd2" size="30" maxsize="30" tabindex="2" required pattern="(?=^.{6,30}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$" placeholder="Please confirm password">
 </div>                      
-                       
+<div id=capsWarning>Caps Lock is on.</div>                       
 <input type="hidden" required name="szBackGetVars" value="<?php echo $szBackGetVars; ?>">
 
 <button class="btn btn-default btn-large" type="submit" name="Update" value="Update" tabindex="3">Update</button>

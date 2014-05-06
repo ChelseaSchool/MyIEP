@@ -253,7 +253,7 @@ print_html5_primer();
 		?>
 <h2>Enter Account Details</h2>
 
-<p><div class="alert alert-block alert-danger"><a href="#" class="close" data-dismiss="alert">&times;</a><strong>Required</strong>: Please choose a strong password. Passwords for MyIEP must include:
+<div class="alert alert-block alert-info"><a href="#" class="close" data-dismiss="alert">&times;</a><strong>Required</strong>: Please choose a strong password. Passwords for MyIEP must include:
 <ul><li>At least one capital letter;
 <li>At least one lower-case letter;
 <li>At least one numeral;
@@ -266,7 +266,13 @@ Password Resources:
 <li><a target="_new" href="http://blog.kaspersky.com/password-check/">Password Evaluator</a> <small>Very helpful password evaluation tool from Kaspersky</small>
 <li>Click <a target="_new" href="https://infamia.com/hints/pwgen.php?length=10&quiet">here</a> to generate a random, secure password.
 </ul>
-</div></p> 
+Proposed Password(s):
+<ul><li>System Generated: <strong><?php generate_password();?></strong></li>
+
+<li>Externally Harvested: <strong><?php random_password(8);?></strong></li>";
+
+</ul>
+</div>
 
 <form name="addName" enctype="multipart/form-data" action="<?php echo IPP_PATH . "superuser_new_member_2.php"; ?>"	method="get" onsubmit="return CheckNum()">
 			<div class="row">
