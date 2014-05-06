@@ -34,6 +34,7 @@ require_once(IPP_PATH . 'include/user_functions.php');
 require_once(IPP_PATH . 'include/navbar.php');
 //require_once(IPP_PATH . 'include/config.inc.php');
 require_once(IPP_PATH . 'include/supporting_functions.php');
+require_once 'include/page_troubleshoot.php';
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -238,7 +239,7 @@ print_datepicker_depends();
                             echo "<tr>\n";
                             echo "<td><input type=\"checkbox\" name=\"" . $medication_row['uid'] . "\"></td>";
                             echo "<td>" . $medication_row['uid'] . "</td>";
-                            echo "<td><a href=\"" . IPP_PATH . "edit_medication.php?uid=" . $medication_row['uid'] . "\" class=\"editable_text\">" . clean_in_and_out($medication_row['medication_name'])  ."</a></td>\n";
+                            echo "<td><a href=\"" . IPP_PATH . "edit_medication.php?uid=" . $medication_row['uid'] . "\" class=\"editable_text\">" . mysql_real_escape_string($medication_row['medication_name'])  ."</a></td>\n";
                             echo "<td><a href=\"" . IPP_PATH . "edit_medication.php?uid=" . $medication_row['uid'] . "\" class=\"editable_text\">" . $medication_row['doctor']  ."</a></td>\n";
                             echo "<td><a href=\"" . IPP_PATH . "edit_medication.php?uid=" . $medication_row['uid'] . "\" class=\"editable_text\">" . $medication_row['start_date'] . "</a></td>\n";
                             echo "<td><center><a href=\"" . IPP_PATH . "edit_medication.php?uid=" . $medication_row['uid'] . "\" class=\"editable_text\">"; if($medication_row['end_date']) echo $medication_row['end_date']; else echo "-current-"; echo "</a></center></td>\n";

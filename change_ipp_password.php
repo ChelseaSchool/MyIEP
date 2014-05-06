@@ -234,29 +234,8 @@ if ($system_message)
 
 
 
-<div class="alert alert-block alert-info"><a href="#" class="close" data-dismiss="alert">&times;</a><strong>Required</strong>: Please choose a strong password. Passwords for MyIEP must include:
-<ul><li>At least one capital letter;</li>
-<li>At least one lower-case letter;</li>
-<li>At least one numeral;</li>
-<li>At least one special character (keyboard symbol);</li>
-<li>At least 6 characters (max 30 characters).</li>
-</ul> 
-Password Resources:
-<ul>
-<li><a target="_new" href="https://www.microsoft.com/en-gb/security/pc-security/password-checker.aspx">Password Check</a> <small>A Microsoft site to help evaluate passwords</small></li>
-<li><a target="_new" href="http://blog.kaspersky.com/password-check/">Password Evaluator</a> <small>Very helpful password evaluation tool from Kaspersky</small></li>
-<li>Click <a target="_new" href="https://infamia.com/hints/pwgen.php?length=10&quiet">here</a> to generate a random, secure password.</li>
-</ul>
+<div class="alert alert-block alert-info"><a href="#" class="close" data-dismiss="alert">&times;</a><strong>Notice</strong>: For password support, look for the question mark icon beside the password field.</div>
 
-<hr>
-Proposed, Random, and Complex Password(s):
-<ul>
-<li>System Generated: <strong><?php generate_password();?></strong></li>
-
-<li>Externally Harvested: <strong><?php random_password(8);?></strong></li> 
-
-</ul>
-</div>
 
 
 
@@ -270,8 +249,13 @@ Proposed, Random, and Complex Password(s):
 
          
 
+
 <label>Password</label>
-<input type="password" class="form-control" data-toggle="tooltip" data-placement="top" data-title="Caps lock is on" name="pwd1" size="30" maxsize="30" tabindex="1" required pattern="(?=^.{6,30}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$" placeholder="Please enter a complex password">
+<div class="input-group">
+
+
+<input type="password" class="form-control" data-toggle="tooltip" data-placement="top" data-title="Caps lock is on" name="pwd1" size="30" maxsize="30" tabindex="1" required pattern="(?=^.{6,30}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$" placeholder="Please enter a complex password"><span class="input-group-addon" data-toggle="modal" data-target="#pw_support">?</span>
+</div>
                         
 <label>Password (retype)</label>
 <input type="password" required class="form-control" data-toggle="tooltip" data-placement="top" data-title="Caps lock is on" name="pwd2" size="30" maxsize="30" tabindex="2" required pattern="(?=^.{6,30}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$" placeholder="Please confirm password">
@@ -284,7 +268,44 @@ Proposed, Random, and Complex Password(s):
                    
 </div>
                         
-    
+<!-- Modal--> 
+<div class="modal fade" id="pw_support" tabindex="-1" role="dialog" aria-labelledby="options" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4>Password Support</h4>
+      </div><!-- Modal Header end -->
+      <div class="modal-body"><p>Please choose a strong password. Passwords for MyIEP must include:</p>
+      <ul><li>At least one capital letter;</li>
+<li>At least one lower-case letter;</li>
+<li>At least one numeral;</li>
+<li>At least one special character (keyboard symbol);</li>
+<li>At least 6 characters (max 30 characters).</li>
+</ul> 
+<h5>Password Resources</h5>
+<ul>
+<li><a target="_new" href="https://www.microsoft.com/en-gb/security/pc-security/password-checker.aspx">Password Check</a> <small>A Microsoft site to help evaluate passwords</small></li>
+<li><a target="_new" href="http://blog.kaspersky.com/password-check/">Password Evaluator</a> <small>Very helpful password evaluation tool from Kaspersky</small></li>
+<li>Click <a target="_new" href="https://infamia.com/hints/pwgen.php?length=10&quiet">here</a> to generate a random, secure password.</li>
+</ul>
+
+<hr>
+<h5>Proposed, Random, and Complex Password(s)</h5>
+<ul>
+<li>System Generated: <strong><?php generate_password();?></strong></li>
+
+<li>Externally Harvested: <strong><?php random_password(8);?></strong></li> 
+
+</ul>	
+	  </div><!-- end modal body -->
+      <div class="modal-footer">
+          </div><!-- end modal footer -->
+    </div><!-- end modal content -->
+  </div>
+  <!-- end modal dialog -->
+</div>
+<!-- end modal fade -->    
             
        
 <footer><?php print_complete_footer(); ?></footer>        
