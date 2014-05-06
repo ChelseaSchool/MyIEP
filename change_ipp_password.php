@@ -207,7 +207,7 @@ if ($system_message)
 
 
 
-<p><div class="alert alert-block alert-danger"><a href="#" class="close" data-dismiss="alert">&times;</a><strong>Required</strong>: Please choose a strong password. Passwords for MyIEP must include:
+<div class="alert alert-block alert-danger"><a href="#" class="close" data-dismiss="alert">&times;</a><strong>Required</strong>: Please choose a strong password. Passwords for MyIEP must include:
 <ul><li>At least one capital letter;</li>
 <li>At least one lower-case letter;</li>
 <li>At least one numeral;</li>
@@ -220,16 +220,16 @@ Password Resources:
 <li><a target="_new" href="http://blog.kaspersky.com/password-check/">Password Evaluator</a> <small>Very helpful password evaluation tool from Kaspersky</small></li>
 <li>Click <a target="_new" href="https://infamia.com/hints/pwgen.php?length=10&quiet">here</a> to generate a random, secure password.</li>
 </ul>
-Proposed Password(s):
-<ul><li>System Generated: <strong><?php generate_password();?></strong></li>
-<?php random_password(8);?>
-<?php if (isset ($pw_suggestion)) { 
-	echo "<li>Externally Harvested: " . $pw_suggestion . "</li>";
-} ?> 
-</ul>
-</div></p> 
+<hr>
+Proposed, Random, and Complex Password(s):
+<ul>
+<li>System Generated: <strong><?php generate_password();?></strong></li>
 
-<!-- Begin Right Column (form) -->
+<li>Externally Harvested: <strong><?php random_password(8);?></strong></li> 
+
+</ul>
+</div>
+
 
 <form enctype="multipart/form-data" action="<?php echo IPP_PATH . "change_ipp_password.php"; ?>" method="post">
 <input type="hidden" name="username" value="<?php echo $user_row['egps_username']; ?>">
