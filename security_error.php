@@ -25,12 +25,10 @@ $MINIMUM_AUTHORIZATION_LEVEL = 100;    //anybody
  * Path for IPP required files.
  */
 
-$system_message = $system_message;
-error_reporting(1);
-
 define('IPP_PATH','./');
 require_once(IPP_PATH . 'include/supporting_functions.php');
 require_once(IPP_PATH . 'include/auth.php');
+require_once 'include/supporting_functions.php';
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -39,54 +37,30 @@ header('Pragma: no-cache'); //don't cache this page!
 <!DOCTYPE HTML>
 <HTML lang=en>
 <HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
+    <META charset=UTF-8>
     <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
-    
+<?php print_bootstrap_head()?>
 </HEAD>
     <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-       
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
-
-                        <center><table width="80%" cellspacing="0" cellpadding="0"><tr><td><center><p class="header">- Insufficient Permissions -</p></center></td></tr><tr><td><center><p class="header"> <?php echo $student_row['first_name'] . " " . $student_row['last_name']?></p></center></td></tr></table></center>
-                        <BR>
-                        You are trying to access a page that you do not seem to have the permissions to access.
-                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center"><table border="0" width="100%"><tr><td width="60"><a href="
-            <?php
-                echo IPP_PATH . "main.php";
-            ?>"><img src="<?php echo IPP_PATH; ?>images/back-arrow.png" border=0></a></td><td width="60"><a href="<?php echo IPP_PATH . "main.php"; ?>"><img src="<?php echo IPP_PATH; ?>images/homebutton.png" border=0></a></td><td valign="bottom" align="center">Logged in as: <?php echo $_SESSION['egps_username'];?></td><td align="right"><a href="<?php echo IPP_PATH;?>"><img src="<?php echo IPP_PATH; ?>images/logout.png" border=0></a></td></tr></table></td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
-        <?php print_complete_footer(); ?>
+<?php 
+print_general_navbar();
+?>
+<header><?php if ($system_message) { echo $system_message;} ?></header>
+<div class="container">
+<div class="row">
+ <p>&nbsp;</p>
+ <div class="alert alert-block alert-danger"><a href="#" class="close" data-dismiss="alert">&times;</a>
+      <strong>Insufficient Permissions</strong>: You are trying to access a page that you do not seem to have the permissions to access.     
+ </div>                        
+</div>                      
+</div>                      
+<footer><?php print_complete_footer(); ?></footer> 
+                  
+                 
+           
+            
+      
+ 
+<?php print_bootstrap_js(); ?>   
     </BODY>
 </HTML>
