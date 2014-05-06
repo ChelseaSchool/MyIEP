@@ -476,7 +476,7 @@ INSERT INTO `performance_testing` (`uid`, `student_id`, `test_name`, `results`, 
 
 CREATE TABLE IF NOT EXISTS `permission_levels` (
   `level` int(11) NOT NULL default '100',
-  `level_name` varchar(15) NOT NULL default '-unknown-',
+  `level_name` varchar(25) NOT NULL default '-unknown-',
   PRIMARY KEY  (`level`)
 ) ENGINE=MyISAM CHARSET=utf8;
 
@@ -492,7 +492,7 @@ INSERT INTO `permission_levels` (`level`, `level_name`) VALUES
 (30, 'Principal'),
 (20, 'Assistant Admin'),
 (10, 'Administrator'),
-(0, 'Super Administr');
+(0, 'Super Administrator');
 
 -- --------------------------------------------------------
 
