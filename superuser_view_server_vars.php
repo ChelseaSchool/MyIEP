@@ -1,7 +1,7 @@
 <?php
 
 /** @file
- * @brief 	display logs (superuser)
+ * @brief 	display server vars (superuser)
  * @copyright 	2014 Chelsea School 
  * @copyright 	2005 Grasslands Regional Division #6
  * @copyright		This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
@@ -11,8 +11,6 @@
     You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * @authors		Rik Goldman, Sabre Goldman, Jason Banks, Alex, James, Paul, Bryan, TJ, Jonathan, Micah, Stephen, Joseph
  * @author		M. Nielson
- * @todo		
- * * reenable paging php - currently commented out
  * 
  */  
  
@@ -192,75 +190,23 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
 </HEAD>
     <BODY>
     <?php print_general_navbar(); ?>
-    <?php print_lesser_jumbotron("View Logs", $permission_level); ?>
+    <?php print_lesser_jumbotron("Server Characteristics", $permission_level); ?>
     <div class="container">
-
-                        <?php //display users... ?>
-                        <form name="loglist" enctype="multipart/form-data" action="<?php echo IPP_PATH . "superuser_view_logs.php"; ?>" method="post">
-                        <input type="hidden" name="select_level" value="1">
-                        <input type="hidden" name="iCur" value="0">
-                        <input type="hidden" name="iLimit" value="<?php echo $iLimit; ?>">
-                        <BR>
-                        <div class="form-group"><label>View</label>
-                        <SELECT name="szLevel">
-                            <OPTION value="ALL" selected>ALL
-                            <OPTION value="ERROR">Errors
-                            <OPTION value="WARNING">Warnings
-                            <OPTION value="INFORMATIONAL">Informational
-                        </SELECT>
-                        <label>Limit</label>
-                        <INPUT name="iLimit" value="<?php echo $iLimit; ?>" size="5">
-                        
-                        <button type="submit" value="Go">Go</button></div>
-                        
-                        
-                        
-
-                        <?php
-                       /*
-						echo "<table>";
-                        //print the next and prev links...
+    <table class="table table-striped table-hover"
+    <tr><th>Key</th><th>Value</th><tr>
+    <?php
+    
+    	
+    foreach ($_SERVER as $key => $value) {
+    	
+		echo "<tr><td>" . $key . "</td><td>" . $value . "</td></tr>\n";
+    	
+    	
+    }
+    
+    ?>
+     </table>                   
                        
-                        if($iCur != 0) {
-                            //we have previous values...
-                            echo "<tr><td>";
-							echo "<a href=\"./superuser_view_logs.php?iCur=" . ($iCur-$iLimit) . "&iLimit=$iLimit&szLevel=$szLevel\" class=\"default\">previous $iLimit</a>";
-                        } else {
-                            echo "&nbsp;";
-                        }
-                        echo "</td>";
-                        
-                        
-                        if(($iLimit+$iCur < $sqlLogTotals)) {
-                            echo "<td align=\"right\"><a href=\"./superuser_view_logs.php?iCur=" . ($iCur+$iLimit) . "&iLimit=$iLimit&szLevel=$szLevel\" class=\"default\">next ";
-                            if( $sqlLogTotals-($iCur+$iLimit) > $iLimit) {
-                                echo $iLimit . "</td>";
-                            } else {
-                                echo ($sqlLogTotals-($iCur+$iLimit)) . "</td>";
-                            }
-                        } 
-                        
-                        echo "</tr>\n";
-                        echo "</table>";
-                        */
-                        //end print next and prev links
-						echo "<table class=\"table table-striped table-hover\">";
-                        //print the header row...
-                        echo "<tr><th>UID</th><th>Level</th><th>Username</th><th>Student ID</th><th>Date & Time</th><th>Message</th></tr>\n";
-                        while ($log_row=mysql_fetch_array($sqlLog)) {
-                            echo "<tr>\n";
-                            echo "<td>" . $log_row['uid'] . "<p></td>\n";
-                            echo "<td>" . $log_row['level'] . "<p></td>\n";
-                            echo "<td>" . $log_row['username'] . "<p></td>\n";
-                            echo "<td>" . $log_row['student_id'] . "<p></td>\n";
-                            echo "<td>" . $log_row['time'] . "<p></td>\n";
-                            echo "<td>" . $log_row['message'] . "<p></td>\n";
-                            echo "</tr>\n";
-                            
-                        }
-                        ?>
-                        </table></center>
-                        </form>
-        <?php print_complete_footer(); ?></div>
+       <footer><?php print_complete_footer(); ?></footer></div>
     </BODY>
 </HTML>

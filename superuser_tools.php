@@ -167,9 +167,8 @@ if($permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NULL
 </div>
 <!-- Right column -->
 <div class="col-md-4">
-<h1>Placeholder</h1>
-
-<p><a class="btn btn-default" href="#" role="button">Placeholder &raquo;</a></p>
+<h1>Server Info</h1>
+<p><a class="btn btn-default" href="superuser_view_server_vars.php" role="button">Server Array &raquo;</a></p>
 </div>
 </div>
 <!-- End Row -->
