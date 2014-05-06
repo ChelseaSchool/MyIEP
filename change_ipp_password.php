@@ -220,6 +220,13 @@ Password Resources:
 <li><a target="_new" href="http://blog.kaspersky.com/password-check/">Password Evaluator</a> <small>Very helpful password evaluation tool from Kaspersky</small></li>
 <li>Click <a target="_new" href="https://infamia.com/hints/pwgen.php?length=10&quiet">here</a> to generate a random, secure password.</li>
 </ul>
+Proposed Password(s):
+<ul><li>System Generated: <strong><?php generate_password();?></strong></li>
+<?php random_password(8);?>
+<?php if (isset ($pw_suggestion)) { 
+	echo "<li>Externally Harvested: " . $pw_suggestion . "</li>";
+} ?> 
+</ul>
 </div></p> 
 
 <!-- Begin Right Column (form) -->
