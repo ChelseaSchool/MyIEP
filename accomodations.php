@@ -353,7 +353,7 @@ if(!$accomodation_result) {
                             echo "<tr>";
                             echo "<td hidden align=\"center\"><input type=\"checkbox\" name=\"{$accomodation_row['uid']}\"></td>";
                             echo "<td>" . $accomodation_row['uid'] . "</td>";
-                            echo "<td><a title=\"click to edit accomodation\" href=\"" . IPP_PATH . "edit_accomodations.php?uid=" . $accomodation_row['uid'] . "\" class=\"editable_text\">" . clean_in_and_out($accomodation_row['accomodation'])  ."</a></td>\n";
+                            echo "<td><a title=\"click to edit accomodation\" href=\"" . IPP_PATH . "edit_accomodations.php?uid=" . $accomodation_row['uid'] . "\" class=\"editable_text\">" . mysql_real_escape_string($accomodation_row['accomodation'])  ."</a></td>\n";
                             echo "<td><a href=\"" . IPP_PATH . "edit_accomodations.php?uid=" . $accomodation_row['uid'] . "\" class=\"editable_text\">" . $accomodation_row['subject'] . "</a></td>\n";
                             echo "<td><a href=\"" . IPP_PATH . "edit_accomodations.php?uid=" . $accomodation_row['uid'] . "\" class=\"editable_text\">" . $accomodation_row['start_date'] . "</a></td>\n";
                             if($accomodation_row['end_date'] =="")

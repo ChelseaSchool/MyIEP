@@ -500,4 +500,32 @@ EOF;
 	echo $metadata;
 } 
 
+/** fn random_password($length)
+ * @brief uses curl for php to grap a random password of $length characters
+ * @param integer $length
+ * @return string $pw_suggestion
+ */
+function random_password($length)
+{
+	$ch = curl_init("https://infamia.com/hints/pwgen.php?length=" . $length . "&quiet");
+	curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
+	$pw_suggestion = curl_exec($ch);
+	curl_close($ch);
+	return $pw_suggestion;
+
+}
+
+function generate_password
+($length=8,$characters='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%^&*()-_{}[]|:<>') {
+
+	if (!is_int($length) || $length<0) {
+		return false;
+	}
+	$characters_length=strlen($characters) -1;
+	$proposed_password = '';
+	for ($i = $length; $i > 0; $i--) {
+		$proposed_password .= $characters[mt_rand(0, $characters_length)];
+	}
+	echo $proposed_password;
+}
 ?>
