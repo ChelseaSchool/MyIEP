@@ -158,8 +158,8 @@ if($permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NULL
 <!-- Left column -->
 <div class="col-md-4">
 <h1>Development Tools</h1>
-<a class="btn btn-default" href="php_info.php" role="button">PHP Configuration &raquo;</a>
-</div>
+<!-- <a class="btn btn-default" href="php_info.php" role="button">PHP Configuration &raquo;</a>
+</div>-->
 <!-- Middle column -->
 <div class="col-md-4">
 <h1>View Logs</h1>
