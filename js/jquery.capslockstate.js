@@ -1,3 +1,4 @@
+/*
 *!
  * jQuery capslockstate plugin v1.2.1
  * https://github.com/nosilleg/capslockstate-jquery-plugin/
@@ -130,4 +131,4 @@
 		}
 
 	};
-})(jQuery);
+}) //(jQuery);
