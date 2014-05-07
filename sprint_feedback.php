@@ -15,7 +15,6 @@ else $system_message = "";
 define('IPP_PATH','./');
 
 /* eGPS required files. */
-include 'Mail.php';
 require_once 'include/mail_functions.php';
 require_once(IPP_PATH . 'etc/init.php');
 require_once(IPP_PATH . 'include/db.php');
