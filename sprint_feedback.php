@@ -15,17 +15,17 @@ else $system_message = "";
 define('IPP_PATH','./');
 
 /* eGPS required files. */
+include 'Mail.php';
 require_once 'include/mail_functions.php';
 require_once(IPP_PATH . 'etc/init.php');
 require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 if ((int)phpversion() < 5) { require_once(IPP_PATH . 'include/fileutils.php'); } //only for pre v5
 require_once(IPP_PATH . 'include/log.php');
-//require_once(IPP_PATH . 'include/navbar.php');
 require_once(IPP_PATH . 'include/supporting_functions.php');
 //require_once(IPP_PATH . 'include/config.inc.php');
 header('Pragma: no-cache'); //don't cache this page!
-
+//require_once 'include/page_troubleshoot.php';
 
 if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
     if(!validate( $_POST['LOGIN_NAME'] ,  $_POST['PASSWORD'] )) {
@@ -49,12 +49,17 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
 $session_name = $_SESSION["egps_username"];
 //$session_login = $_SESSION['LOGIN_NAME'];
 //$referrer = $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+$headers="from: rgoldman@chelseaschool.edu";
 if (isset ($_POST['contents'])) {
+	
 	$feedback = implode("; ", $_POST);
 	mail_notification("rgoldman@chelseaschool.edu", $feedback);
-	mail("rgoldman@chelseaschool.edu", "MyIEP Sprint Feedback", $feedback);
+	
+	mail("rgoldman@chelseaschool.edu", "MyIEP Sprint Feedback", $feedback, $headers);
+	
 	IPP_Log($feedback, $_SESSION['egps_username'], $level='INFORMATIONAL');
-	header('Location: main.php');
+
+	require(IPP_PATH . 'main.php');
 }
 
 ?>
@@ -151,12 +156,11 @@ if (isset ($_POST['contents'])) {
 
 
 <div class="container">
-<form enctype="multipart/form-data" action="sprint_feedback.php" method="post">
+<form enctype="multipart/form-data" autocomplete="off" action="sprint_feedback.php" method="post">
 <input hidden type="text" name="session_name" value="<?php echo $session_name;?>">
-<input hidden type="URL" name="referrer" value="http://<?php echo $referrer; ?>">
 <div class="form-group">
 <label>Subject</label>
-<input required class="form-control" type="text" spellcheck="true" name="RE" placeholder="This is about...">
+<input required class="form-control" type="text" spellcheck="true" name="subject" placeholder="This is about...">
 <label>Message</label>
 <textarea required class="form-control" rows="10" name="contents" spellcheck="true"></textarea>
 </div>
