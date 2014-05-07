@@ -185,34 +185,177 @@ if(!$permission_result) {
 <!DOCTYPE HTML>
 <HTML lang=en>
 <?php print_html5_primer(); ?>
-    <TITLE><?php echo $page_title; ?></TITLE>
-    <?php print_bootstrap_head(); ?>
-<script src="js/caps_lock.js" type="text/javascript"></script>    
+<script src="js/jquery-2.1.1.js"></script>
 <script>
+(function($) {
 
+	var capsLockState = "unknown";
+
+	var methods = {
+	init : function(options) {
+
+	// Create some defaults, extending them with any options that were provided
+	var settings = $.extend({
+	// No defaults, because there are no options
+	}, options);
+
+	// Some systems will always return uppercase characters if Caps Lock is on.
+	var capsLockForcedUppercase = /MacPPC|MacIntel/.test(window.navigator.platform) === true;
+
+	var helpers = {
+	isCapslockOn : function(event) {
+
+	var shiftOn = false;
+	if (event.shiftKey) { // determines whether or not the shift key was held
+	shiftOn = event.shiftKey; // stores shiftOn as true or false
+	} else if (event.modifiers) { // determines whether or not shift, alt or ctrl were held
+	shiftOn = !!(event.modifiers & 4);
+	}
+
+	var keyString = String.fromCharCode(event.which); // logs which key was pressed
+	if (keyString.toUpperCase() === keyString.toLowerCase()) {
+	// We can't determine the state for these keys
+	} else if (keyString.toUpperCase() === keyString) {
+	if (capsLockForcedUppercase === true && shiftOn) {
+	// We can't determine the state for these keys
+	} else {
+	capsLockState = !shiftOn;
+	}
+	} else if (keyString.toLowerCase() === keyString) {
+	capsLockState = shiftOn;
+	}
+
+	return capsLockState;
+
+	},
+
+	isCapslockKey : function(event) {
+
+	var keyCode = event.which; // logs which key was pressed
+	if (keyCode === 20) {
+	if (capsLockState !== "unknown") {
+	capsLockState = !capsLockState;
+	}
+	}
+
+	return capsLockState;
+
+	},
+
+	hasStateChange : function(previousState, currentState) {
+
+	if (previousState !== currentState) {
+	$('body').trigger("capsChanged");
+
+	if (currentState === true) {
+	$('body').trigger("capsOn");
+	} else if (currentState === false) {
+	$('body').trigger("capsOff");
+	} else if (currentState === "unknown") {
+	$('body').trigger("capsUnknown");
+	}
+	}
+	}
+	};
+
+	// Check all keys
+	$('body').bind("keypress.capslockstate", function(event) {
+	var previousState = capsLockState;
+	capsLockState = helpers.isCapslockOn(event);
+	helpers.hasStateChange(previousState, capsLockState);
+	});
+
+	// Check if key was Caps Lock key
+	$('body').bind("keydown.capslockstate", function(event) {
+	var previousState = capsLockState;
+	capsLockState = helpers.isCapslockKey(event);
+	helpers.hasStateChange(previousState, capsLockState);
+	});
+
+	// If the window loses focus then we no longer know the state
+	$(window).bind("focus.capslockstate", function() {
+	var previousState = capsLockState;
+	capsLockState = "unknown";
+	helpers.hasStateChange(previousState, capsLockState);
+	});
+
+	// Trigger events on initial load of plugin
+	helpers.hasStateChange(null, "unknown");
+
+	// Maintain chainability
+	return this.each(function() {});
+
+	},
+	state : function() {
+	return capsLockState;
+	},
+	destroy : function() {
+	return this.each(function() {
+	$('body').unbind('.capslockstate');
+	$(window).unbind('.capslockstate');
+	})
+	}
+	}
+
+	jQuery.fn.capslockstate = function(method) {
+
+	// Method calling logic
+	if (methods[method]) {
+	return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+	} else if (typeof method === 'object' || !method) {
+	return methods.init.apply(this, arguments);
+	} else {
+	$.error('Method ' + method + ' does not exist on jQuery.capslockstate');
+	}
+
+	};
+	})(jQuery);
+</script>
+
+<script>
 $(document).ready(function() {
 
-	$('#pwd1').keypress(function(e) {
-		  var $password = $(this),
-		      tooltipVisible = $('.tooltip').is(':visible'),
-		      s = String.fromCharCode(e.which);
-		 
-		  //Check if capslock is on. No easy way to test for this
-		  //Tests if letter is upper case and the shift key is NOT pressed.
-		  if ( s.toUpperCase() === s && s.toLowerCase() !== s && !e.shiftKey ) {
-		    if (!tooltipVisible)
-		        $password.tooltip('show');
-		  } else {
-		    if (tooltipVisible)
-		        $password.tooltip('hide');
-		  }
-		 
-		  //Hide the tooltip when moving away from the password field
-		  $password.blur(function(e) {
-		    $password.tooltip('hide');
-		  });
-		});
+    /* 
+    * Bind to capslockstate events and update display based on state 
+    */
+    $(window).bind("capsOn", function(event) {
+        if ($('input[type="password"]:focus').length > 0) {
+            $("#capsWarning").show();
+            console.log("Warning");
+        }
+    });
+    $(window).bind("capsOff capsUnknown", function(event) {
+        $("#capsWarning").hide();
+    });
+    $('input[type="password"]').bind("focusout", function(event) {
+        $("#capsWarning").hide();
+    });
+    $('input[type="password"]').bind("focusin", function(event) {
+        if ($(window).capslockstate("state") === true) {
+            $("#capsWarning").show();
+        }
+    });
+
+    /* 
+    * Initialize the capslockstate plugin.
+    * Monitoring is happening at the window level.
+    */
+    $(window).capslockstate();
+
+});
 </script>
+
+<TITLE><?php echo $page_title; ?></TITLE>
+<!-- Bootstrap core CSS -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="css/jumbotron.css" rel="stylesheet">
+<style type="text/css">body { padding-bottom: 70px; }</style>
+
+
+
+
 </HEAD>
     <BODY>
 <header>
@@ -235,7 +378,8 @@ if ($system_message)
 
 <div class="alert alert-block alert-info"><a href="#" class="close" data-dismiss="alert">&times;</a><strong>Notice</strong>: For password support, look for the question mark icon beside the password field.</div>
 
-
+<!-- Caps Lock Alert, for Now -->
+<div class="alert alert-danger" id="capsWarning" style="display:none;">Caps Lock is on.</div>
 
 
 <form enctype="multipart/form-data" action="<?php echo IPP_PATH . "change_ipp_password.php"; ?>" method="post">
@@ -253,13 +397,12 @@ if ($system_message)
 <div class="input-group">
 
 
-<input type="password" class="form-control" data-toggle="tooltip" data-placement="top" data-title="Caps lock is on" name="pwd1" size="30" maxsize="30" tabindex="1" required pattern="(?=^.{6,30}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$" placeholder="Please enter a complex password"><span class="input-group-addon" data-toggle="modal" data-target="#pw_support">?</span>
+<input class="form-control" type="password" name="pwd1" size="30" maxsize="30" tabindex="1" required pattern="(?=^.{6,30}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$" placeholder="Please enter a complex password"><span class="input-group-addon" data-toggle="modal" data-target="#pw_support">?</span>
 </div>
                         
 <label>Password (retype)</label>
-<input type="password" required class="form-control" data-toggle="tooltip" data-placement="top" data-title="Caps lock is on" name="pwd2" size="30" maxsize="30" tabindex="2" required pattern="(?=^.{6,30}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$" placeholder="Please confirm password">
+<input class="form-control" type="password" required name="pwd2" size="30" maxsize="30" tabindex="2" required pattern="(?=^.{6,30}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$" placeholder="Please confirm password">
 </div>                      
-                      
 <input type="hidden" required name="szBackGetVars" value="<?php echo $szBackGetVars; ?>">
 
 <button class="btn btn-default btn-large" type="submit" name="Update" value="Update" tabindex="3">Update</button>
@@ -309,6 +452,8 @@ if ($system_message)
        
 <footer><?php print_complete_footer(); ?></footer>        
 
-<?php print_bootstrap_js(); ?>
+
+<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js"></script>
     </BODY>
 </HTML>

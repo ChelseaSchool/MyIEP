@@ -194,7 +194,7 @@ function get_age_by_date($yyyymmdd)
     <link href="./css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="./jumbotron.css" rel="stylesheet">
+    <link href="css/jumbotron.css" rel="stylesheet">
 
    
 

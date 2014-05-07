@@ -149,7 +149,7 @@ if(!$student_result) {
 <link href="./css/bootstrap.min.css" rel="stylesheet">
 <!-- Using Jumbotron Style Sheet for NOw -->
  <!-- Custom styles for this template -->
-<link href="./jumbotron.css" rel="stylesheet">
+<link href="css/jumbotron.css" rel="stylesheet">
 <!-- Bootstrap Datepicker CSS -->
 <link href="./css/datepicker.css" rel="stylesheet">
 

@@ -257,7 +257,7 @@ print_html5_primer();
 
 
 
-<form name="addName" enctype="multipart/form-data" action="<?php echo IPP_PATH . "superuser_new_member_2.php"; ?>"	method="get" onsubmit="return CheckNum()">
+<form autocomplete="off" name="addName" enctype="multipart/form-data" action="<?php echo IPP_PATH . "superuser_new_member_2.php"; ?>"	method="get" onsubmit="return CheckNum()">
 			<div class="row">
 				<!-- Start Left Column -->
 				<div class="col-md-6">
@@ -279,10 +279,10 @@ print_html5_primer();
 					<div class="input-group">
 
 
-<input type="password" class="form-control" data-toggle="tooltip" data-placement="top" data-title="Caps lock is on" name="pwd1" size="30" maxsize="30" tabindex="1" required pattern="(?=^.{6,30}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$" placeholder="Please enter a complex password"><span class="input-group-addon" data-toggle="modal" data-target="#pw_support">?</span>
+<input type="password" class="form-control" name="pwd1" size="30" maxsize="30" tabindex="1" required pattern="(?=^.{6,30}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$" placeholder="Please enter a complex password"><span class="input-group-addon" data-toggle="modal" data-target="#pw_support">?</span>
 </div>
 					<label>Confirm Password</label>
-					<input class="form-control" required type="password" name="pwd2" pattern="(?=^.{6,30}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$"  tabindex="6">
+					<input class="form-control" value="" required type="password" name="pwd2" pattern="(?=^.{6,30}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z]).*$"  tabindex="6">
 					<label>Permission Level</label>
 					<?php
 					echo "<SELECT class=\"form-control\" tabindex=\"7\" name=\"permission_level\">\n";

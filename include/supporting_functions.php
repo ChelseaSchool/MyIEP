@@ -188,7 +188,7 @@ function print_complete_footer() {
 
 
 /**@fn print_datepicker_depends()
- * @brief 		prints to html the dependencies for Bootstrap datepicker
+ * @brief 		prints to html the dependencies for  datepicker
  * @detail 		assumes the date form input has an id of "datepicker"; this can be changed to a class instead of an ID.
  * @todo
  * 1. Deploy to anywhere that takes date input
@@ -199,7 +199,7 @@ function print_datepicker_depends() {
 	<!-- Example Invokation of Datepicker -->
 	<!-- input type=datepicker name="review_date" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd"  -->
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-	<script src="js/jquery-2.1.0.min.js"></script>
+	<script src="js/jquery-2.1.1.js"></script>
 	<script src="js/jquery-ui-1.10.4.custom.min.js"></script>
 	</script>
 	 <script> 
@@ -211,11 +211,7 @@ EOF;
 	echo $print_depends;
 }
 
-/** @fn print_bootstrap_head()
- * @brief Bootstrap Dependencies
- *
- * Just core and Jumbotron
- */
+
 
 /**fn print_bootrap_head()
  * @brief stuff for jumbotron and bootstrap.min.css to go in html head.
@@ -227,11 +223,11 @@ EOF;
 function print_bootstrap_head() {
 	$myieppath='IPP_PATH';
 	$bootstrap_depends=<<<EOF
-	   <!-- Bootstrap core CSS -->
+	<!-- Bootstrap core CSS -->
     <link href="./css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="./css/jumbotron.css" rel="stylesheet">
+    <link href="css/jumbotron.css" rel="stylesheet">
 	<style type="text/css">body { padding-bottom: 70px; }</style>
 EOF;
 	echo $bootstrap_depends;
@@ -386,7 +382,7 @@ $dependencies = <<<EOF
 	<!-- Bootstrap Datepicker CSS -->
 	<link href="./css/datepicker.css" rel="stylesheet">
 	 <!-- jQuery Libraries -->
-	 <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+	 <script src="js/jquery-2.1.1.js"></script>
 	 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
 	 <script type="text/javascript" src="./js/bootstrap-datepicker.js">$('.datepicker').datepicker()</script>
@@ -410,9 +406,9 @@ EOF;
  */
 function print_bootstrap_js(){
 	$bootsrapjs=<<<EOF
-<script src="js/jquery-2.1.0.min.js"></script>
+<script src="js/jquery-2.1.1.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script type="text/javascript" src="./js/jquery-ui-1.10.4.custom.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.min.js"></script>
 EOF;
 	echo $bootsrapjs;
 }
