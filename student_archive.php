@@ -1,10 +1,10 @@
 <?php
 
 /** @file
- * @brief 	document a student history
+ * @brief 	Archives a student (disenrolls from a member institution)
  * @copyright 	2014 Chelsea School 
  * @copyright 	2005 Grasslands Regional Division #6
- * @copyright		This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
+ * @license		This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
     the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
     This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
@@ -20,18 +20,7 @@
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100;  //all, decide in the page
 
-/**
- * superuser_manage_users.php -- IPP manage users main menu
- *
- * Copyright (c) 2005 Grasslands Regional Division #6
- * All rights reserved
- *
- * Created: June 06, 2005
- * By: M. Nielsen
- * Modified: March 11, 2005
- * Modified: April 20, 2006 M. Nielsen (empty school table not showing in list)
- *
- */
+
 
 /**
  * Path for IPP required files.
@@ -48,7 +37,7 @@ require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
 require_once(IPP_PATH . 'include/navbar.php');
-
+require_once 'include/supporting_functions.php';
 header('Pragma: no-cache'); //don't cache this page!
 
 if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
@@ -202,22 +191,10 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
 
 
 ?> 
-<!DOCTYPE HTML>
-<HTML lang=en>
-<HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
+<?php print_html5_primer();?>
     <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
-    <!-- All code Copyright &copy; 2005 Grasslands Regional Division #6.
-         -Concept and Design by Grasslands IPP Focus Group 2005
-         -Programming and Database Design by M. Nielsen, Grasslands
-          Regional Division #6
-         -CSS and layout images are courtesy A. Clapton.
-     -->
+    
+    
 
     <SCRIPT LANGUAGE="JavaScript">
       function deleteChecked() {
@@ -249,93 +226,51 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
           alert("You don't have the permissions"); return false;
       }
     </SCRIPT>
+<?php print_bootstrap_head();?>
 </HEAD>
     <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    <tr><td>
-                    <center><?php navbar("main.php"); ?></center>
-                    </td></tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+<?php 
+print_general_navbar();
+print_general_navbar();
+print_lesser_jumbotron("Student Archive", $permission_level);
+?>
+<div class="container">
+<?php if ($system_message) { echo "<p>" . $system_message . "</p>";} ?>
 
-                        <center><table><tr><td><center><p class="header">-Archive-</p></center></td></tr></table></center>
-                        <HR>
-
-                        <!-- search fx >
-                        <form enctype="multipart/form-data" action="<?php echo IPP_PATH . "manage_student.php"; ?>" method="get">
-                        <center><table width="80%" cellspacing="0">
-                        <tr>
-                        <td align=center bgcolor="#E0E2F2">&nbsp;
-                        </td>
-                        </tr>
-                        <tr>
-                        <td align=center bgcolor="#E0E2F2">
-                            Search:&nbsp;
-                            <SELECT name="field">
-                            <option value="last_name" <?php if($_GET['field'] == "last_name") echo "selected"; ?>>Last Name
-                            <option value="first_name" <?php if($_GET['field'] == "first_name") echo "selected"; ?>>First Name
-                            <option value="school_name" <?php if($_GET['field'] == "school_name") echo "selected"; ?>>School Name
-                            <option value="school_code" <?php if($_GET['field'] == "school_code") echo "selected"; ?>>School Code
-                            </SELECT>
-                            &nbsp;is&nbsp;&nbsp;<input type="text" name="szSearchVal" size="15" value="<?php echo $_GET['szSearchVal'];?>">&nbsp;Limit:&nbsp;<input type="text" name="iLimit" size="5" value="<?php echo $iLimit; ?>">&nbsp;<input type="submit" value="Query" name="SEARCH">
-                            <p class="small_text">(Wildcards: '%'=match any '_'=match single)</p>
-                        </td>
-                        </tr></table></center>
-                        </form>
-                        <-- end search fx -->
-
-
-                        <form name="studentlist" onSubmit="return deleteChecked()" enctype="multipart/form-data" action="<?php echo IPP_PATH . "student_archive.php"; ?>" method="post">
-                        <center><table width="80%" border="0">
-                        <?php
-                        $bgcolor = "#DFDFDF";
-
+<form name="studentlist" onSubmit="return deleteChecked()" enctype="multipart/form-data" action="<?php echo IPP_PATH . "student_archive.php"; ?>" method="post">
+<table class="table table-striped table-hover">
+<?php
                         //print the next and prev links...
-                        echo "<tr><td>&nbsp;</td><td>";
+                        
                         if($iCur != 0) {
                             //we have previous values...
                             echo "<a href=\"./student_archive.php?iCur=" . ($iCur-$iLimit) . "&iLimit=$iLimit&szSearch=&szSearchVal=" . $_GET['szSearchVal'] . "&field=" . $_GET['field'] . "&SEARCH=" . $_GET['SEARCH'] . "\" class=\"default\">previous $iLimit</a>";
                         } else {
                             echo "&nbsp;";
                         }
-                        echo "</td><td colspan=\"2\" align=\"center\">";
-                        echo "Click Username to view";
-                        echo "</td>";
+                        
                         if(($iLimit+$iCur < $szTotalStudents)) {
-                            echo "<td align=\"right\"><a href=\"./student_archive.php?iCur=" . ($iCur+$iLimit) . "&iLimit=$iLimit&szSearchVal=" . $_GET['szSearchVal'] . "&field=" . $_GET['field'] . "&SEARCH=" . $_GET['SEARCH'] . "\" class=\"default\">next ";
+                            echo "<a href=\"./student_archive.php?iCur=" . ($iCur+$iLimit) . "&iLimit=$iLimit&szSearchVal=" . $_GET['szSearchVal'] . "&field=" . $_GET['field'] . "&SEARCH=" . $_GET['SEARCH'] . "\">next ";
                             if( $sqlLogTotals-($iCur+$iLimit) > $iLimit) {
                                 echo $iLimit . "</td>";
                             } else {
-                                echo ($szTotalStudents-($iCur+$iLimit)) . "</td>";
+                                echo ($szTotalStudents-($iCur+$iLimit));
                             }
                         } else {
-                            echo "<td>&nbsp;</td>";
+                            echo "&nbsp;";
                         }
-                        echo "</tr>\n";
+                        //echo "</tr>\n";
                         //end print next and prev links
 
                         //print the header row...
-                        echo "<tr><td bgcolor=\"#E0E2F2\">&nbsp;</td><td align=\"center\" bgcolor=\"#E0E2F2\">UID</td><td align=\"center\" bgcolor=\"#E0E2F2\">Last Name, First Name</td><td align=\"center\" bgcolor=\"#E0E2F2\">School</td><td align=\"center\" bgcolor=\"#E0E2F2\">Permission</td></tr>\n";
+                        echo "<tr><th>Select</th><th>UID</th><th>Last Name, First Name</th><th>School</th><th>Permission</th></tr>\n";
                         while ($student_row=mysql_fetch_array($sqlStudents)) {
                             $current_student_permission = getStudentPermission($student_row['student_id']);
                             echo "<tr>\n";
-                            $school_colour = "#FFFFFF"; //all white.
-                            echo "<td bgcolor=\"$school_colour\"><input type=\"checkbox\" name=\"" . $student_row['student_id'] . "\" value=\"" . $student_row['first_name'] . " " . $student_row['last_name'] . "\"></td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\">" . $student_row['student_id'] . "<p></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\"><a href=\"" . IPP_PATH . "student_view.php?student_id=" . $student_row['student_id'] . "\" class=\"default\" ";
+                            
+                            echo "<td><input type=\"checkbox\" name=\"" . $student_row['student_id'] . "\" value=\"" . $student_row['first_name'] . " " . $student_row['last_name'] . "\"></td>";
+                            echo "<td>" . $student_row['student_id'] . "<p></td>\n";
+                            echo "<td><a href=\"" . IPP_PATH . "student_view.php?student_id=" . $student_row['student_id'] . "\"  ";
                             if($current_student_permission == "NONE" || $current_student_permission == "ERROR") {
                                 echo "onClick=\"return noPermission();\" ";
                             }
@@ -345,43 +280,23 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
                                 if($current_student_permission == "NONE" || $current_student_permission == "ERROR") {
                                 echo "onClick=\"return noPermission();\" ";
                                 }
-                                echo "><img src=\"". IPP_PATH . "images/pdf.png\" align=\"top\" border=\"0\"></a>";
+                                echo ">&nbsp;<img src=\"". IPP_PATH . "images/pdf.png\" align=\"top\" border=\"0\"></a>";
                             }
                             echo "</td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><p class=\"small_text\">-none-<p></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" align=\"center\" class=\"row_default\"><p class=\"small_text\">$current_student_permission<p></td>\n";
+                            echo "<td><p>-none-<p></td>\n";
+                            echo "<td><p>$current_student_permission<p></td>\n";
                             echo "</tr>\n";
-                            if($bgcolor=="#DFDFDF") $bgcolor="#CCCCCC";
-                            else $bgcolor="#DFDFDF";
+                            
                         }
                         if($permission_level <= $IPP_MIN_DELETE_STUDENT_PERMISSION)
                             echo "<tr><td colspan=\"5\" align=\"left\"><img src=\"" . IPP_PATH . "images/table_arrow.png\">&nbsp;With Selected: <INPUT TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=Delete\" border=\"0\" name=\"delete\" value=\"1\"></td></tr>\n";
                         
                         ?>
-                        </table></center>
+                        </table>
                         </form>
-                        <BR>
-
-                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-            <center><?php navbar("main.php"); ?></center>
-            </td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
-        <center></center>
+<footer><?php print_complete_footer(); ?></footer>                       
+ </div>
+ 
+<?php print_bootstrap_js(); ?>
     </BODY>
 </HTML>

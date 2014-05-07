@@ -33,8 +33,7 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/navbar.php');
-
+require_once 'include/supporting_functions.php';
 header('Pragma: no-cache'); //don't cache this page!
 
 if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
@@ -166,17 +165,9 @@ if(1==0 && isset($_POST['add_accomodation']) && $have_write_permission) {
 /************************ end popup chooser support funtion  ******************/
 
 ?> 
-<!DOCTYPE HTML>
-<HTML lang=en>
-<HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
+<?php print_html5_primer();?>
     <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
-    
+        
     <script language="javascript" src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script>
     <script language="javascript" src="<?php echo IPP_PATH . "include/autocomplete.js"; ?>"></script>
     <script language="javascript" src="<?php echo IPP_PATH . "include/autocomplete.js"; ?>"></script>
@@ -209,66 +200,45 @@ if(1==0 && isset($_POST['add_accomodation']) && $have_write_permission) {
       function noPermission() {
           alert("You don't have the permission level necessary"); return false;
       }
-    </SCRIPT>
+
+      </SCRIPT>
+      <?php print_bootstrap_head(); ?>
 </HEAD>
     <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("main.php"); ?></center>
-                    </td></tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+    <?php 
+    print_general_navbar();
+    print_lesser_jumbotron("User Audit", $permission_level);
+    ?>
+       
+<div class="container">                
+<?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
 
-                        <center><table width="80%"><tr><td><center><p class="header">- Audit User (<?php if(mysql_real_escape_string($_POST['username']) != "" )echo mysql_real_escape_string($_POST['username']); else echo "nobody choosen yet"; ?>)-</p></center></td></tr></table></center>
-                        <BR>
+                       
+ <!-- BEGIN choose user -->
+                       
+<form name="chooseuser" enctype="multipart/form-data" action="<?php echo IPP_PATH . "user_audit.php"; ?>" method="post" >
 
-                        <!-- BEGIN choose user -->
-                        <center>
-                        <form name="chooseuser" enctype="multipart/form-data" action="<?php echo IPP_PATH . "user_audit.php"; ?>" method="post" >
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
-                        <tr>
-                          <td colspan="3">
-                          <p class="info_text">Find Users Support List</p>
-                          </td>
-                        </tr>
-                        <tr>
-                            <td valign="bottom" bgcolor="#F4EFCF" class="row_default">Username: </td><td bgcolor="#F4EFCF">
-                            <input type="text" tabindex="1" name="username" size="40" maxsize="255" value="<?php echo $_POST['username']; ?>" onkeypress="return autocomplete(this,event,popuplist)">
-                            </td>
-                            <td valign="center" align="center" bgcolor="#F4EFCF" rowspan="1"><input type="submit" tabindex="2" ="Check" value="Check"></td>
-                        </tr>
-                        <tr>
-                            <td valign="bottom" align="center" bgcolor="#F4EFCF" colspan="3">&nbsp;</td>
-                        </tr>
-                        </table>
-                        </form>
-                        </center>
-                        <!-- END choose user -->
+                        
+<h2>Find Users Support List</h2>
+<div class="form-group">
+<label>Username</label>
+<input type="text" tabindex="1" name="username" size="40" maxsize="255" value="<?php echo $_POST['username']; ?>" onkeypress="return autocomplete(this,event,popuplist)">
+</div>                 
+<button class="btn btn-large btn-regular type="submit" tabindex="2" ="Check" value="Check">Check</button>
+</form>
+                        
+<!-- END choose user -->
 
                         <!-- BEGIN audit table -->
                         <form name="accomodationhistory" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "accomodations.php"; ?>" method="get">
                         <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
-                        <center><table width="80%" border="0">
+                        <table class="table table-striped table-hover">
 
                         <?php
-                        $bgcolor = "#DFDFDF";
+                        
                         if (isset($_POST['username'])) echo "<center>" . mysql_real_escape_string($_POST['username']) . " is a support member to the following students</center><BR>";
                         //print the header row...
-                        echo "<tr><td bgcolor=\"#F4EFCF\">&nbsp;</td><td align=\"center\" bgcolor=\"#F4EFCF\">Student Last Name</td><td align=\"center\" bgcolor=\"#F4EFCF\">Student First Name</td><td align=\"center\" bgcolor=\"#F4EFCF\">Permission</td><td align=\"center\" bgcolor=\"#F4EFCF\">Students Current School</td></tr>\n";
+                        echo "<tr><th bgcolor=\"#F4EFCF\">&nbsp;</th><th align=\"center\" bgcolor=\"#F4EFCF\">Student Last Name</th><th align=\"center\" bgcolor=\"#F4EFCF\">Student First Name</th><th align=\"center\" bgcolor=\"#F4EFCF\">Permission</th><th align=\"center\" bgcolor=\"#F4EFCF\">Students Current School</th></tr>\n";
                         while (isset($user_result) && $user_row=mysql_fetch_array($user_result)) { //current...
                             //try to get this students current school...
                             $school_query = "SELECT * FROM school_history where student_id=" . $user_row['student_id'] . " AND end_date IS NULL";
@@ -326,7 +296,6 @@ if(1==0 && isset($_POST['add_accomodation']) && $have_write_permission) {
         <tr>
             <td class="shadow-left">&nbsp;</td>
             <td class="shadow-center">
-            <?php navbar("main.php"); ?>
             </td>
             <td class="shadow-right">&nbsp;</td>
         </tr>
@@ -337,5 +306,6 @@ if(1==0 && isset($_POST['add_accomodation']) && $have_write_permission) {
         </tr>
         </table> 
         <center></center>
+        <?php print_bootstrap_js();?>
     </BODY>
 </HTML>
