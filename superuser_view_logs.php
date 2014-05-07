@@ -157,6 +157,7 @@ foreach($_GET as $key => $value) {
 $szBackGetVars = substr($szBackGetVars, 0, -1);
 
 
+
 ?> 
 <!DOCTYPE HTML>
 <HTML lang=en>
@@ -193,6 +194,7 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
     <BODY>
     <?php print_general_navbar(); ?>
     <?php print_lesser_jumbotron("View Logs", $permission_level); ?>
+    
     <div class="container">
 
                         <?php //display users... ?>

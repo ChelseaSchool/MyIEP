@@ -104,7 +104,7 @@ function toggle ()
 </HEAD>
     <BODY>
     <?php echo print_general_navbar(); ?>
-    <?php print_jumbotron_with_page_name("Logged Users", "No Student Context", $permission_level); ?>;
+    <?php print_lesser_jumbotron("View Logs", $permission_level); ?>;
   <div class="container">      
        
 <?php if ($system_message){

@@ -18,6 +18,13 @@
 
 if(!defined('IPP_PATH')) define('IPP_PATH','../');
 
+/** @fn getPermissionName($permission_level='')
+ * @brief determines what resources the logged in user has access to.
+ * @param string $permission_level
+ * @return NULL or string $permission_name
+ */
+
+
 /** @fn checkSpelling ( $string )
  *  @brief	function to make use of pspell (PEAR): given a string, returns error check and makes spelling recommendations
  *  @detail	No longer necessary; Making use of spellcheck attribute in HTML5 and browsers. 
@@ -105,6 +112,7 @@ function print_html5_primer()
 EOF;
 	echo $print_head;
 }
+
 
 
 /** @fn print_intellectual_property()
@@ -237,11 +245,12 @@ EOF;
  * @remark echoes HTML jumbotron populated with data
  */
 
-function print_jumbotron_with_page_name($page_name, $student, $perms) {
+function print_jumbotron_with_page_name($page_name, $student, $permission) {
+	
 	$jumbotron = <<<EOF
 	<div class="jumbotron"><div class="container">
 <h1>$page_name: &nbsp; <small>$student</small></h1>
-<h2>Logged in as: <small>{$_SESSION['egps_username']} (Permission: $perms)</small></h2>
+<h2>Logged in as: <small>{$_SESSION['egps_username']} (Permission: $permission);)</small></h2>
 <h3>$system_message</h3>
 
 </div> <!-- close container -->
@@ -252,11 +261,26 @@ EOF;
 	echo $jumbotron;
 }
 
+function getPermissionName($permission_level) {
+	//returns permission level or NULL on fail.
+	global $error_message;
+
+	$error_message = "";
+	
+	$query = "SELECT level_name FROM permission_levels WHERE level=$permission_level";
+	$result = mysql_query($query);
+
+	$row=mysql_fetch_array($result);
+	$permission_name=$row[0];
+	return $permission_name;
+}
+
+
 function print_lesser_jumbotron($page_name, $permission) {
 	$lesser_jumbotron = <<<EOF
 	<div class="jumbotron"><div class="container">
-<h1>$page_name</h1>
-<h2>Logged in as: <small>{$_SESSION['egps_username']} (Permission: $permission)</small></h2>
+    <h1>$page_name</h1>
+    <h2>Logged in as: <small>{$_SESSION['egps_username']} (Authorization: $permission) </small></h2>
 <h3>$system_message</h3>
 
 </div> <!-- close container -->
@@ -529,4 +553,7 @@ function generate_password
 	}
 	echo $proposed_password;
 }
+
+
+
 ?>
