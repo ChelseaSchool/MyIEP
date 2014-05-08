@@ -147,7 +147,7 @@ if($permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NULL
     <div class="jumbotron">
       <div class="container">
         <h1>Admin Tools<small>&nbsp; MyIEP (Version <?php echo $IPP_CURRENT_VERSION; ?>)</small></h1> 
-          <a class="btn btn-lg btn-primary" href="main.php" role="button">Return to Main &raquo;</a>
+          
          <h2>Logged in as: <small><?php echo $_SESSION['egps_username']; ?> (Permission: <?php echo $permission_level; ?>)</small></h2>
         </p>
       </div>
@@ -157,23 +157,31 @@ if($permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NULL
 <!-- Row 1 -->
 <div class="row">
 
-<div class="col-md-6">
+<div class="col-md-4">
 <h1>View Logs</h1>
-<p><a class="btn btn-default" href="superuser_view_logs.php" role="button">View Logs &raquo;</a></p>
+<p>Access logged errors and system information/messages - including user feedback.</p>
+<p><a class="btn btn-lg btn-default" href="superuser_view_logs.php" role="button">View Logs &raquo;</a></p>
 </div>
 <!-- Right column -->
-<div class="col-md-6">
+<div class="col-md-4">
 <h1>Server Info</h1>
-<p><a class="btn btn-default" href="superuser_view_server_vars.php" role="button">Server Array &raquo;</a></p>
+<p>Privileged server configuration info.</p>
+<p><a class="btn btn-lg btn-default" href="superuser_view_server_vars.php" role="button">Server Array &raquo;</a></p>
 </div>
-</div>
-<!-- End Row -->
 
+
+<div class="col-md-4">
+<h1>Manage Active Sessions</h1>
+<p>List of accounts the database believes are still logged in. Optionally, delete unused sessions.</p> 
+<p><a class="btn btn-lg btn-default" href="superuser_view_logged_in.php" role="button">Manage Sessions &raquo;</a></p>
+
+</div>
+</div>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery-2.1.0.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>     
 
-    <?php print_intellectual_property() ?></BODY>
+    <?php print_intellectual_property(); ?></BODY>
 </HTML>

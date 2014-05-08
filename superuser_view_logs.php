@@ -206,10 +206,10 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
                         <BR>
                         <div class="form-group"><label>View</label>
                         <SELECT name="szLevel">
-                            <OPTION value="ALL" selected>ALL
-                            <OPTION value="ERROR">Errors
-                            <OPTION value="WARNING">Warnings
-                            <OPTION value="INFORMATIONAL">Informational
+                            <OPTION value="ALL">ALL</OPTION>
+                            <OPTION value="ERROR" selected>Errors</OPTION>
+                            <OPTION value="WARNING">Warnings</OPTION>
+                            <OPTION value="INFORMATIONAL">Informational</OPTION>
                         </SELECT>
                         <label>Limit</label>
                         <INPUT name="iLimit" value="<?php echo $iLimit; ?>" size="5">
@@ -265,5 +265,6 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
                         </table></center>
                         </form>
         <?php print_complete_footer(); ?></div>
+        <?php print_bootstrap_js();?>
     </BODY>
 </HTML>

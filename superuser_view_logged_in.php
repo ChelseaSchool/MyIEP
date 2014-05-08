@@ -122,8 +122,8 @@ $result = mysql_query($query);
 	if (!$result) die ("Database access failed: " . mysql_error());
 $rows = mysql_num_rows($result);
 ?>
-<h2>Connected Users</h2>
-<?php echo "<button class=\"btn btn-lg btn-primary\" onclick=\"toggle ()\" role=\"button\">" . $rows . " Logged Users: Toggle Details &raquo;</button></button>"; ?>
+<h2>Connected Users: <small><?php echo $rows . " sessions are active.";?></small></h2>
+<p><?php echo "<button class=\"btn btn-lg btn-primary\" onclick=\"toggle ()\" role=\"button\">Toggle Details &raquo;</button>"; ?></p>
 <div id="logged" hidden="hidden">
 <?php 
 echo "<form action=\"superuser_view_logged_in.php\" method=\"post\">";
