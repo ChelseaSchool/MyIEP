@@ -379,6 +379,7 @@ $(document).ready(function(){
 <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#filter_options">
   Manage Filters &raquo;
 </button>
+<a class="btn btn-primary btn-lg" href="./new_student.php">New Student &raquo;</a>
 <?php if ($system_message) { echo "<h3>System Message <small>" . $system_message . "</small></h3>";} ?>
 
 </div> <!-- close container -->
@@ -398,10 +399,10 @@ $(document).ready(function(){
         <h4 class="Filters" id="Filters">Manage Filters</h4>
       </div><!-- Modal Header end -->
       <div class="modal-body">
-      	<div class="btn-group">
+      	
       		<button role="button" class="btn btn-default btn-med" id="filter-clear">Clear Student Filter &raquo;</button>
-     		<button role="button" class="btn btn-default btn-med" id="toggle" alt="Show Only Students I have Access To">Show Only Students to Whom I have Access &raquo;</button>		
-	    </div>
+     		<!-- <button role="button" class="btn btn-default btn-med" id="toggle" alt="Show Only Students I have Access To">Show Only Students to Whom I have Access &raquo;</button>-->		
+	    
 	  </div><!-- end modal body -->
       <div class="modal-footer">
           </div><!-- end modal footer -->
