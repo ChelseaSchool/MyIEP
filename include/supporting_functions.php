@@ -65,7 +65,7 @@ if(!defined('IPP_PATH')) define('IPP_PATH','../');
 */
 
 /** @fn clean_in_and_out($input)
- * @brief Filters input and escapes output to prepare for MySQL
+ * @brief BROKEN DO NOT USE Filters input and escapes output to prepare for MySQL
  * @param $input
  * @return mysql_real_escape_string($input)
  * @detail 		Strips tags, then sanitizes html entities, and then strips slashes. Finally, uses mysql_real_escape_string() to prepare for MySQL use.
@@ -74,6 +74,7 @@ if(!defined('IPP_PATH')) define('IPP_PATH','../');
  * @todo		
  * 1. Test and implement (not done yet)
  * 2. find system to use on all db input: perhaps when UPDATE query is used.
+ * 3. htmlentities is missing parameter
  *
  */
 function clean_in_and_out($input){
@@ -257,19 +258,24 @@ EOF;
 	echo $jumbotron;
 }
 
-function getPermissionName($permission_level) {
+
+
+
+
+/*function getPermissionName($permission_level) {
 	//returns permission level or NULL on fail.
 	global $error_message;
-
 	$error_message = "";
 	
 	$query = "SELECT level_name FROM permission_levels WHERE level=$permission_level";
 	$result = mysql_query($query);
-
-	$row=mysql_fetch_array($result);
-	$permission_name=$row[0];
-	return $permission_name;
+    
+    $row = mysql_fetch_row($result); 
+	
+	echo $row[0];
+	
 }
+*/
 
 
 function print_lesser_jumbotron($page_name, $permission) {

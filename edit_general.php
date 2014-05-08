@@ -17,8 +17,6 @@
  * * Add datepicker
  * * Needs HTMLEntities filter UTF8
  */ 
-ini_set('display_errors', '1');
-error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 60; //TA

@@ -192,8 +192,9 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
 <?php print_bootstrap_head();?>
 </HEAD>
     <BODY>
-    <?php print_general_navbar(); ?>
-    <?php print_lesser_jumbotron("View Logs", $permission_level); ?>
+    <?php print_general_navbar();
+    getPermissionName($permission_level);    
+    print_lesser_jumbotron("View Logs", $permission_level); ?>
     
     <div class="container">
 
