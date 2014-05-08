@@ -221,6 +221,8 @@ if(isset($_POST['edit_accomodation']) && $have_write_permission)
     <link href="./css/jumbotron.css" rel="stylesheet">
 	<style type="text/css">body { padding-bottom: 70px; }</style>
     
+    <!-- Datepicker Depends -->
+    <?php print_datepicker_depends(); ?>
 
     
     <script language="javascript" src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script>

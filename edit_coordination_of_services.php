@@ -14,8 +14,7 @@
  * 1. Filter input/escape output
  * 2. Priority UI overhaul
  */ 
-//ini_set('display_errors',1);
-//error_reporting(E_ALL);
+
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100; //everybody
 
@@ -332,8 +331,8 @@ if(isset($_POST['edit_coordination_of_services'])) {
                       
 
                         
-                         <label>Date: (YYYY-MM-DD)</label>
-                         <input class=form-control type="text" tabindex="2" name="date" value="<?php echo $coord_row['date']; ?>">
+                         <label>Date (YYYY-MM-DD)</label>
+                         <input class="form-control datepicker" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" type="datepicker" tabindex="2" name="date" value="<?php echo $coord_row['date']; ?>">
  </div>                          
   <label>Optional File Upload(.doc,.pdf,.txt,.rtf)</label>
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000">

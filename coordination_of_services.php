@@ -370,7 +370,7 @@ if(!$coord_result) {
     ?>
 
 <?php print_bootstrap_head(); ?>
-<link rel="stylesheet" href="css/smoothness/jquery-ui-1.10.4.custon.css">
+<link rel="stylesheet" href="css/smoothness/jquery-ui-1.10.4.custom.css">
 	<script src="js/jquery-2.1.1.js"></script>
 	<script src="js/jquery-ui-1.10.4.custom.js"></script>
 	<script> 
