@@ -637,7 +637,7 @@ CREATE TABLE IF NOT EXISTS `student` (
   `student_id` bigint(20) unsigned NOT NULL auto_increment,
   `first_name` varchar(255) NOT NULL default '',
   `last_name` varchar(255) NOT NULL default '',
-  `gender` enum('M','F') NOT NULL default 'M',
+  `gender` enum('M','F','O') NOT NULL default 'O',
   `current_grade` tinyint(3) NOT NULL default '0',
   `prov_ed_num` varchar(64) default NULL,
   `birthday` date NOT NULL default '0000-00-00',
@@ -653,7 +653,7 @@ CREATE TABLE IF NOT EXISTS `student` (
 -- 
 
 INSERT INTO `student` (`student_id`, `first_name`, `last_name`, `gender`, `current_grade`, `prov_ed_num`, `birthday`, `address_id`) VALUES 
-(304, 'Jane', 'Smith', 'F', 0, '4321-4321-4321', '2000-02-04', 0),
+(304, 'Jane', 'Smith', 'O', 0, '4321-4321-4321', '2000-02-04', 0),
 (306, 'Test', 'Student', 'M', 0, '1245-12354-1233', '1997-02-14', 0);
 
 -- --------------------------------------------------------

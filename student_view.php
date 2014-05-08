@@ -167,6 +167,15 @@ function get_age_by_date($yyyymmdd)
     return "-unknown-";
 }
 
+//Guardian Query
+$guardians_query = "SELECT * FROM guardians LEFT JOIN guardian ON guardians.guardian_id=guardian.guardian_id LEFT JOIN address on guardian.address_id=address.address_id WHERE guardians.student_id=" . $_GET['student_id'] . " AND guardians.to_date IS NULL";
+$guardians_result = mysql_query($guardians_query);
+if(!$guardians_result) {
+	$error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$guardians_query'<BR>";
+	$system_message=$system_message . $error_message;
+	IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
+	$guardian_row=mysql_fetch_array($guardians_result_result);
+}
 
 ?>
 <!DOCTYPE html>
@@ -181,7 +190,7 @@ function get_age_by_date($yyyymmdd)
     <TITLE><?php echo $page_title; ?></TITLE>
     
     
-     <SCRIPT LANGUAGE="JavaScript">
+     <SCRIPT>
       function notYetImplemented() {
           alert("Functionality not yet implemented"); return false;
       }
@@ -198,11 +207,7 @@ function get_age_by_date($yyyymmdd)
 
    
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+
 
 </head>
     <BODY>
@@ -333,7 +338,7 @@ function get_age_by_date($yyyymmdd)
 <div class="col-md-4">
 <h2>General Information</h2>
 <h4><small>Name: </small><?php echo $student_row['first_name'] . " " . $student_row['last_name'];?></h4>
-<h4><small>Gender: </small><?php if($student_row['gender'] =="F") echo "Female"; else echo "Male";?></h4>
+<h4><small>Gender: </small><?php if($student_row['gender'] =="F") echo "Female"; if($student_row['gender'] =="O") echo "Other"; else echo "Male";?></h4>
 <h4><small>Birthdate: </small><?php echo $student_row['birthday'];?></h4>
 <h4><small>Grade: </small><?php
                                       switch ($student_row['current_grade']) {
@@ -393,7 +398,8 @@ echo $school_row['school_name'] . "</h4> <p>(since " . $school_row['start_date']
 
 
 <div class="col-md-4">
-
+<h2>Guardian Information</h2>
+<p><a class="btn btn-default btn-lg" href="<?php echo IPP_PATH . "guardian_view.php?student_id=" . $student_id ?>" role="button">View Guardian Information &raquo;</a></p>
 </div><!-- End Column -->
 <!-- End Row -->
 </div>
