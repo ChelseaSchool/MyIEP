@@ -405,7 +405,7 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
       }
     </SCRIPT>
 
-	<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+	<!-- <link rel="stylesheet" href="css/smoothness/jquery-ui-1.10.4.css">
 	<script src="//code.jquery.com/jquery-1.9.1.js"></script>
 	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>-->
 	<script> 

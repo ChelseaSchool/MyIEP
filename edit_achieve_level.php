@@ -250,9 +250,9 @@ if(isset($_POST['edit_performance_testing']) && $have_write_permission) {
 
     </SCRIPT>
     <?php print_bootstrap_head(); ?>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-	<script src="//code.jquery.com/jquery-1.9.1.js"></script>
-	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <link rel="stylesheet" href="css/smoothness/jquery-ui-1.10.4.custom.css">
+	<script src="js/jquery-2.1.1.js"></script>
+	<script src="js/smoothness/jquery-ui-1.10.4.custom.js"></script>
 	<script> 
 	$(function() {
 	$( "#datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });

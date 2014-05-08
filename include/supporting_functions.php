@@ -107,7 +107,7 @@ function print_html5_primer()
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Edit Short Term Objective">
-	<meta name="author" content="Rik Goldman">
+	<meta name="author" content="Rik Goldman" >
 	<title>$page_tite</title>
 	
 EOF;
@@ -200,8 +200,8 @@ function print_datepicker_depends() {
 	<!-- Example Invokation of Datepicker -->
 	<!-- input type=datepicker name="review_date" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd"  -->
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-	<script src="js/jquery-2.1.1.js"></script>
-	<script src="js/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="js/jquery-1.10.2.js"></script>
+	<script src="js/jquery-ui-1.10.4.custom.js"></script>
 	</script>
 	 <script> 
 	$(function() {
