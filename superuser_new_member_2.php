@@ -211,6 +211,41 @@ if(!$school_result) {
 
 print_html5_primer();
 ?>
+<script src="js/jquery-2.1.1.js"></script>
+<script src="js/capslock.js"></script>
+
+<script>
+$(document).ready(function() {
+
+    /* 
+    * Bind to capslockstate events and update display based on state 
+    */
+    $(window).bind("capsOn", function(event) {
+        if ($('input[type="password"]:focus').length > 0) {
+            $("#capsWarning").show();
+            console.log("Warning");
+        }
+    });
+    $(window).bind("capsOff capsUnknown", function(event) {
+        $("#capsWarning").hide();
+    });
+    $('input[type="password"]').bind("focusout", function(event) {
+        $("#capsWarning").hide();
+    });
+    $('input[type="password"]').bind("focusin", function(event) {
+        if ($(window).capslockstate("state") === true) {
+            $("#capsWarning").show();
+        }
+    });
+
+    /* 
+    * Initialize the capslockstate plugin.
+    * Monitoring is happening at the window level.
+    */
+    $(window).capslockstate();
+
+});
+</script>
 
 <script language="JavaScript" type="text/javascript">
     <!--
@@ -238,8 +273,13 @@ print_html5_primer();
 }
 //-->
 </script>
-<?php print_bootstrap_head(); ?>
-<head></head>
+<!-- Bootstrap core CSS -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="css/jumbotron.css" rel="stylesheet">
+<style type="text/css">body { padding-bottom: 70px; }</style>
+</head>
 <body>
 	<?php
 	print_general_navbar();
@@ -255,7 +295,8 @@ print_html5_primer();
 
 <div class="alert alert-block alert-info"><a href="#" class="close" data-dismiss="alert">&times;</a><strong>Notice</strong>: For password support, look for the question mark icon beside the password field.</div>
 
-
+<!-- Caps Lock Alert, for Now -->
+<div class="alert alert-danger" id="capsWarning" style="display:none;">Caps Lock is on.</div>
 
 <form autocomplete="off" name="addName" enctype="multipart/form-data" action="<?php echo IPP_PATH . "superuser_new_member_2.php"; ?>"	method="get" onsubmit="return CheckNum()">
 			<div class="row">
@@ -376,6 +417,9 @@ print_html5_primer();
   <!-- end modal dialog -->
 </div>
 <!-- end modal fade -->    
-<?php print_bootstrap_js(); ?>	
+
+
+<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js"></script>
 </body>
 </html>
