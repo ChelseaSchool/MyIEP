@@ -238,6 +238,7 @@ if(isset($_POST['edit_medical_info']) && $have_write_permission) {
 
     </SCRIPT>
 <?php print_bootstrap_head(); ?>
+<?php print_datepicker_depends(); ?>
     </HEAD>
     <BODY>
 <?php print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']);?>
@@ -252,7 +253,7 @@ if(isset($_POST['edit_medical_info']) && $have_write_permission) {
 <input type="hidden" name="uid" value="<?php echo $uid; ?>">
 <div class="form-group">
 <label>Date (YYYY-MM-DD)</label>
-<input class="form-control datepicker" required type="datepicker" name="date" tabindex="1" value="<?php echo $medical_row['date']; ?>">
+<input class="form-control datepicker" required type="datepicker" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" name="date" tabindex="1" value="<?php echo $medical_row['date']; ?>">
 </div>
 <label>Optional File Upload (.doc,.pdf,.txt,.rtf)</label>
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
