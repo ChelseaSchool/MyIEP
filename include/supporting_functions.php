@@ -531,6 +531,8 @@ EOF;
  * @brief uses curl for php to grap a random password of $length characters
  * @param integer $length
  * @return string $pw_suggestion
+ * @todo
+ * * conditional: only use if curl is installed and the server can reach outside (?).
  */
 function random_password($length)
 {
@@ -541,6 +543,17 @@ function random_password($length)
 	return $pw_suggestion;
 
 }
+
+
+/** @fn generate_password()
+ * @param number $length
+ * @param string $characters
+ * @return boolean
+ * @remark echoes a randomly generated pw from the system that meets specified length and character complexity.
+ * @author Rik Goldman
+ * @copyright 2014 Chelsea School
+ * @license GPLv2
+ */
 
 function generate_password
 ($length=8,$characters='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%^&*()-_{}[]|:<>') {

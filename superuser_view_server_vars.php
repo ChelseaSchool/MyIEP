@@ -208,5 +208,6 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
      </table>                   
                        
        <footer><?php print_complete_footer(); ?></footer></div>
+       <?php print_bootstrap_js();?>
     </BODY>
 </HTML>
