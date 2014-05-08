@@ -52,13 +52,14 @@ $headers="from: rgoldman@chelseaschool.edu";
 if (isset ($_POST['contents'])) {
 	
 	$feedback = implode("; ", $_POST);
-	mail_notification("rgoldman@chelseaschool.edu", $feedback);
+	//mail_notification("rgoldman@chelseaschool.edu", $feedback);
 	
-	mail("rgoldman@chelseaschool.edu", "MyIEP Sprint Feedback", $feedback, $headers);
+	//mail("rgoldman@chelseaschool.edu", "MyIEP Sprint Feedback", $feedback, $headers);
 	
 	IPP_Log($feedback, $_SESSION['egps_username'], $level='INFORMATIONAL');
 
 	require(IPP_PATH . 'main.php');
+	exit();
 }
 
 ?>

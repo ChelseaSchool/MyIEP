@@ -406,7 +406,7 @@ echo "<button NAME=\"delete\" type=\"submit\" value=\"delete\">Delete Selected</
  
    
 <input type="text" required tabindex="1" class="form-control" name="accomodation" class="form-control" id="Accomodation" placeholder="Accomodation" value="<?php if(isset($_GET['accomodation'])) echo $_GET['accomodation']; ?>">
-    <img title="click to choose from among common accomodations" src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" width="17" border=0 alt="Choose from among common accomodations" onClick="popUpChooser(this,document.all.accomodation)">
+    
   </div>
   <div class="form-group">
     <label class="sr-only" for="Subject">Subject</label>

@@ -280,9 +280,7 @@ if(isset($_POST['edit_coordination_of_services'])) {
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
     <TITLE><?php echo $page_title; ?></TITLE>
 
-    <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
-    <script language="javascript" src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script>
-    <script language="javascript" src="<?php echo IPP_PATH . "include/autocomplete.js"; ?>"></script>
+    
     <SCRIPT LANGUAGE="JavaScript">
       function confirmChecked() {
           var szGetVars = "strengthneedslist=";
@@ -330,7 +328,7 @@ if(isset($_POST['edit_coordination_of_services'])) {
 <input type="hidden" name="uid" value="<?php echo $uid; ?>">
                           
 <label>Services</label>
-<input class="form-control" type="text" tabindex="1" name="agency" size="30" maxsize="255" value="<?php echo $coord_row['agency']; ?>" onkeypress="return autocomplete(this,event,popuplist)"> &nbsp;<img src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" width="17" border=0 onClick="popUpChooser(this,document.all.agency)" >
+<input class="form-control" type="text" tabindex="1" name="agency" size="30" maxsize="255" value="<?php echo $coord_row['agency']; ?>">
                       
 
                         

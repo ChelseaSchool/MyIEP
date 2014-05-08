@@ -256,7 +256,7 @@ if(isset($_POST['edit_asst_tech']) && $have_write_permission) {
 <input type="hidden" name="uid" value="<?php echo $uid; ?>">
                           
 <label>Technology</label>
-<textarea class="form-control" spellcheck="true" name="technology" tabindex="1" cols="30" rows="5" wrap="soft" onkeypress="return autocomplete(this,event,popuplist)"><?php echo $asst_tech_row['technology']; ?></textarea>&nbsp;<img src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" align="top" width="17" border=0 onClick="popUpChooser(this,document.all.technology)">
+<textarea class="form-control" spellcheck="true" name="technology" tabindex="1" cols="30" rows="5" wrap="soft" onkeypress="return autocomplete(this,event,popuplist)"><?php echo $asst_tech_row['technology']; ?></textarea>
 </div>
 <button type="submit" tabindex="2" name="Edit" value="Edit" class="btn btn-default">Submit Edited Assistive Technology</button>
 

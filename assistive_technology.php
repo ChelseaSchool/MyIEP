@@ -314,7 +314,7 @@ if($permission_level <= $IPP_MIN_DELETE_ASSISTIVE_TECHNOLOGY && $have_write_perm
 <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
 <div class="form-group">                          
 <label>Technology</label>
-<textarea class="form-control" spellcheck="true" name="technology" tabindex="1" cols="30" rows="5" wrap="soft" onkeypress="return autocomplete(this,event,popuplist)"><?php if(isset($_POST['technology'])) echo $_POST['technology']; ?></textarea><img src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" align="top" width="17" border=0 onClick="popUpChooser(this,document.all.technology)"></td>
+<textarea class="form-control" spellcheck="true" name="technology" tabindex="1" cols="30" rows="5" wrap="soft" onkeypress="return autocomplete(this,event,popuplist)"><?php if(isset($_POST['technology'])) echo $_POST['technology']; ?></textarea></td>
 
 <button type="submit" name="add" value="add" class="btn btn-default">Add Assistive Technology</button>
 </div>

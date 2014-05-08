@@ -246,7 +246,7 @@ function print_jumbotron_with_page_name($page_name, $student, $permission) {
 	$jumbotron = <<<EOF
 	<div class="jumbotron"><div class="container">
 <h1>$page_name: &nbsp; <small>$student</small></h1>
-<h2>Logged in as: <small>{$_SESSION['egps_username']} (Permission: $permission);)</small></h2>
+<h2>Logged in as: <small>{$_SESSION['egps_username']} (Permission: $permission)</small></h2>
 <h3>$system_message</h3>
 
 </div> <!-- close container -->

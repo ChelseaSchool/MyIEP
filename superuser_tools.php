@@ -156,18 +156,13 @@ if($permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NULL
 <?php if ($system_message) { echo "<p>" . $system_message . "</p>";} ?>
 <!-- Row 1 -->
 <div class="row">
-<!-- Left column -->
-<div class="col-md-4">
-<h1>Development Tools</h1>
-<!-- <a class="btn btn-default" href="php_info.php" role="button">PHP Configuration &raquo;</a>
-</div>-->
-<!-- Middle column -->
-<div class="col-md-4">
+
+<div class="col-md-6">
 <h1>View Logs</h1>
 <p><a class="btn btn-default" href="superuser_view_logs.php" role="button">View Logs &raquo;</a></p>
 </div>
 <!-- Right column -->
-<div class="col-md-4">
+<div class="col-md-6">
 <h1>Server Info</h1>
 <p><a class="btn btn-default" href="superuser_view_server_vars.php" role="button">Server Array &raquo;</a></p>
 </div>
