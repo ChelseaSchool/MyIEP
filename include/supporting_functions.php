@@ -262,7 +262,7 @@ EOF;
 
 
 
-/*function getPermissionName($permission_level) {
+function getPermissionName($permission_level) {
 	//returns permission level or NULL on fail.
 	global $error_message;
 	$error_message = "";
@@ -272,17 +272,19 @@ EOF;
     
     $row = mysql_fetch_row($result); 
 	
-	echo $row[0];
+	return implode(", ", $row);
+	
 	
 }
-*/
+
 
 
 function print_lesser_jumbotron($page_name, $permission) {
+	$permission_name = getPermissionName($permission);
 	$lesser_jumbotron = <<<EOF
 	<div class="jumbotron"><div class="container">
     <h1>$page_name</h1>
-    <h2>Logged in as: <small>{$_SESSION['egps_username']} (Authorization: $permission) </small></h2>
+    <h2>Logged in as: <small>{$_SESSION['egps_username']} (Authorization: $permission_name) </small></h2>
 <h3>$system_message</h3>
 
 </div> <!-- close container -->

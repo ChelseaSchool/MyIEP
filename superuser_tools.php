@@ -71,7 +71,7 @@ if($permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NULL
     require(IPP_PATH . 'security_error.php');
     exit();
 }
-
+$permission_name = getPermissionName($permission_level);
 ?> 
 <!DOCTYPE html>
 <html lang="en">
@@ -148,7 +148,7 @@ if($permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NULL
       <div class="container">
         <h1>Admin Tools<small>&nbsp; MyIEP (Version <?php echo $IPP_CURRENT_VERSION; ?>)</small></h1> 
           
-         <h2>Logged in as: <small><?php echo $_SESSION['egps_username']; ?> (Permission: <?php echo $permission_level; ?>)</small></h2>
+         <h2>Logged in as: <small><?php echo $_SESSION['egps_username']; ?> (Permission: <?php echo $permission_name; ?>)</small></h2>
         </p>
       </div>
     </div> <!-- /container -->
