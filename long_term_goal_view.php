@@ -283,20 +283,20 @@ function print_goal_area_jQuery() {
 	echo "$(document).ready(function() { \n";
 	while ($area_row=mysql_fetch_array($area_result)) {
 		
-		
+		echo "\n\t var area = \"" . $area_row['name'] . "\" \n;";
 		echo "\t $('.area#". $area_row['name'] . "').click(function() {  \n";
 	//	echo "\t\t if($(\".goal#" . $area_row['name'] . ".prop(\"value\")==\"" . $area_row['name'] . "\") \n";
 		//echo "\t { \n";
 		echo "\t \t if ($(\".area#". $area_row['name'] . "\").is(\":checked\"))";
 		echo "\t{ \n";
 		echo "\t $('.goal#" . $area_row['name'] . "').show() ; \n";
-		echo "\t $('.objective').show(); \n";
+		echo "\t $('.objective#" . $area_row['name'] . "').show(); \n";
 		//echo ") \n";
 		echo "\t } \n";
 		echo "\t else \n";
 		echo "\t { \n";
 		echo "\t $('.goal#" .$area_row['name'] . "').hide(); \n";
-		echo "\t $('.objective').hide(); \n";
+		echo "\t $('.objective#" . $area_row['name'] . "').hide(); \n";
 		echo "} \n";
 		echo "});";
 	}  //closes loop
@@ -448,7 +448,6 @@ function toggle () //toggles objective details
       </div><!-- Modal Header end -->
       <div class="modal-body">
       		<small><?php print_goal_area_checklist(); ?></small>
-        	<?php print_goal_area_jQuery(); ?>
         	<hr>
 			<!-- Toggle displayed objectives' details -->
 			<label><input type="checkbox" id="toggle_detail" onclick="toggle ()" checked value="">Hide Objective Details</label>
@@ -578,7 +577,7 @@ if(!$short_term_objective_result) {
 		}*/
 	$obj_num=1;
 	while ($short_term_objective_row = mysql_fetch_array($short_term_objective_result)) {
-		echo "<div class=\"objective\" hidden ". "\">\n<div class=\"col-md-12\">\n<div class=\"container\">\n";
+		echo "<div class=\"objective\" id=$div_id hidden ". "\">\n<div class=\"col-md-12\">\n<div class=\"container\">\n";
 
 		echo "<h4><small>" . $obj_num . ")&nbsp;</small>\n";
 		$obj_num++; //increment goal
