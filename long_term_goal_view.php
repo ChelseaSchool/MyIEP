@@ -587,7 +587,7 @@ if(!$short_term_objective_result) {
 	//begin review date
 		
 		$now = time(); #today's date in seconds since January 1, 1970
-		$date_split = split("-",$short_term_objective_row['review_date']);
+		$date_split = explode("-",$short_term_objective_row['review_date']);
 		$date_seconds = mktime(0,0,0,$date_split[1],$date_split[2],$date_split[0]); //since j1,1970
 		/* if($now > $date_seconds && $short_term_objective_row['achieved']!='Y') { //$today >= $date_seconds) {
 			echo "<p>Review Date (expired)</p><a href=\"" . IPP_PATH . "edit_short_term_objective.php?sto=" . $short_term_objective_row['uid'] . "&student_id=" . $student_id . "\"";
