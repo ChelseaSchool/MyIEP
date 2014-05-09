@@ -29,12 +29,13 @@ $system_message = "";
 define('IPP_PATH','./');
 
 /* eGPS required files. */
-require_once(IPP_PATH . 'etc/init.php');
-require_once(IPP_PATH . 'include/db.php');
-require_once(IPP_PATH . 'include/auth.php');
-require_once(IPP_PATH . 'include/log.php');
-require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/navbar.php');
+require_once IPP_PATH . 'etc/init.php';
+require_once IPP_PATH . 'include/db.php';
+require_once IPP_PATH . 'include/auth.php';
+require_once IPP_PATH . 'include/log.php';
+require_once IPP_PATH . 'include/user_functions.php';
+require_once IPP_PATH . 'include/navbar.php';
+require_once 'include/supporting_functions.php';
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -125,19 +126,12 @@ if(!$code_result) {
         IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
 }
 
-?> 
-<!DOCTYPE HTML>
-<HTML lang=en>
-<HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
-    <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
-    
-   <SCRIPT LANGUAGE="JavaScript">
+?>
+<?php print_html5_primer(); ?>
+<title><?php echo $page_title; ?></title>
+
+
+<script language="JavaScript">
       function confirmChecked() {
           var szGetVars = "codelist=";
           var szConfirmMessage = "Are you sure you want to delete the following:\n";
@@ -158,123 +152,79 @@ if(!$code_result) {
           else
               return false;
       }
-    </SCRIPT>
+    </script>
+<?php print_bootstrap_head();?>
+</head>
+<body>
+	<?php 
+    print_general_navbar();
+    print_lesser_jumbotron("Manage Codes", $permission_level);
+    ?>
+	<div class="container">
+		<?php if ($system_message) { echo "<p>" . $system_message . "</p>";} ?>
+ 		
 
-</HEAD>
-    <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("main.php"); ?></center>
-                    </td></tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
-
-                        <center><table><tr><td><center><p class="header">-Manage Codes-</p></center></td></tr></table></center>
-                        <BR>
-
-                        <!-- BEGIN add code -->
-                        <center>
-                        <form name="add_code" enctype="multipart/form-data" action="<?php echo IPP_PATH . "superuser_manage_coding.php"; ?>" method="post">
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
-                        <tr>
-                          <td colspan="3">
-                          <p class="info_text">Edit and click 'Add'.</p>
-                           <input type="hidden" name="add_code" value="1">
-                          </td>
-                        </tr>
-                        <tr>
-                            <td valign="bottom" bgcolor="#E0E2F2" class="row_default">Code Number:</td>
-                            <td bgcolor="#E0E2F2" class="row_default">
-                            <input type="text" tabindex="1" name="code" value="<?php if(isset($_POST['code']))  echo $_POST['code']; ?>" size="10" maxsize="10">
-                            </td>
-                            <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="2" class="row_default"><input type="submit" tabindex="3" value="add" value="add"></td>
-                        </tr>
-                        <tr>
-                            <td valign="bottom" bgcolor="#E0E2F2" class="row_default">Code Description</td>
-                            <td bgcolor="#E0E2F2" class="row_default">
-                            <input type="text" tabindex="2" name="code_text" value="<?php if(isset($_POST['code_text'])) echo $_POST['code_text']; ?>" size="30" maxsize="254">
-                            </td>
-                        </tr>
-                        </table>
-                        </form>
-                        </center>
-                        <!-- END add code -->
-
-                        <!-- BEGIN codes table -->
-                        <form name="codelist" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "superuser_manage_coding.php"; ?>" method="post">
-                        <center><table width="80%" border="0" cellpadding="0" cellspacing="1">
-                        <tr><td colspan="6">Codes:</td></tr>
-                        <?php
-                        $bgcolor = "#DFDFDF";
-
-                        //print the header row...
-                        echo "<tr><td bgcolor=\"#E0E2F2\">&nbsp;</td><td align=\"center\" bgcolor=\"#E0E2F2\">Code</td><td align=\"center\" bgcolor=\"#E0E2F2\">Code Description</td></tr>\n";
+<!-- BEGIN codes table -->
+<h2>Code Reference <small>Scroll Down to Add Codes</small></h2>
+<form name="codelist" onsubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "superuser_manage_coding.php"; ?>" method="post">
+			
+<table class="table table-striped table-hover">
+<?php 					
+//print the header row...
+                        echo "<tr><th>Select</th><th>Code</th><th>Code Description</th></tr>\n";
                         while ($code_row=mysql_fetch_array($code_result)) { //current...
                             echo "<tr>\n";
-                            echo "<td bgcolor=\"#E0E2F2\"><input type=\"checkbox\" name=\"" . $code_row['code_number'] . "\"></td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\">" . $code_row['code_number'] . "</td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\">" . $code_row['code_text']  . "</td>\n";
+                            echo "<td><input type=\"checkbox\" name=\"" . $code_row['code_number'] . "\"></td>";
+                            echo "<td>" . $code_row['code_number'] . "</td>\n";
+                            echo "<td>" . $code_row['code_text']  . "</td>\n";
                             echo "</tr>\n";
-                            if($bgcolor=="#DFDFDF") $bgcolor="#CCCCCC";
-                            else $bgcolor="#DFDFDF";
+                   
                         }
                         ?>
-                        <tr>
-                          <td colspan="6" align="left">
-                             <table>
-                             <tr>
-                             <td nowrap>
-                                <img src="<?php echo IPP_PATH . "images/table_arrow.png"; ?>">&nbsp;With Selected:
-                             </td>
-                             <td>
-                             <?php
+					
+						<table>
+								<tr>
+									<td nowrap><img
+										src="<?php echo IPP_PATH . "images/table_arrow.png"; ?>">&nbsp;With
+										Selected:</td>
+									<td><?php
                                 //if we have permissions also allow delete.
                                 if($permission_level <= $IPP_MIN_DELETE_SCHOOL) {
                                     echo "<INPUT NAME=\"delete\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=Delete\" border=\"0\" value=\"1\">";
                                 }
                              ?>
-                             </td>
-                             </tr>
-                             </table>
-                          </td>
-                        </tr>
-                        </table></center>
-                        </form>
-                        <!-- end codes table -->
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</center>
+		</form>
+		<!-- end codes table -->
+		
+<!-- BEGIN add code -->
+<h2>Enter New Coding and Click "Create Code"</h2>
+<form name="add_code" enctype="multipart/form-data" action="<?php echo IPP_PATH . "superuser_manage_coding.php"; ?>" method="post">
+<input type="hidden" name="add_code" value="1">
+<div class="form-group">				
+<label>Code Number</label>						
+<input required class="form-control" type="text" tabindex="1" name="code" value="<?php if(isset($_POST['code']))  echo $_POST['code']; ?>" size="10" maxsize="10">
+						
+<label>Code Description</label>	
+<input required class="form-control" type="text" tabindex="2" name="code_text" value="<?php if(isset($_POST['code_text'])) echo $_POST['code_text']; ?>" size="30" maxsize="254"></td>
+</div>							
+<button type="submit" tabindex="3" value="add" value="add">Create Code</button>
+					
+				
+</form>
+<!-- END add code -->
 
-                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-              <?php navbar("main.php"); ?>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
-        <center></center>
-    </BODY>
-</HTML>
+	
+	<footer>
+		<?php print_complete_footer(); ?>
+	</footer>
+	<?php print_bootstrap_js(); ?>
+	</div>
+</body>
+</html>
