@@ -2,7 +2,7 @@
 
 /** @file
  * @brief 	view school specific information / add school
- * @copyright 	2014 Chelsea School 
+ * @copyright 	2014 Chelsea School
  * @copyright 	2005 Grasslands Regional Division #6
  * @license		This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
     the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
@@ -11,14 +11,14 @@
     You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * @authors		Rik Goldman, Sabre Goldman, Jason Banks, Alex, James, Paul, Bryan, TJ, Jonathan, Micah, Stephen, Joseph
  * @author		M. Nielson
- * @todo		
+ * @todo
  * 1. filter input, escape output
  * 2. confirm this page's role
  * 3. bootstrap and nav
  * 4. spellcheck?
  * 5. Can we draw from information here to customize the application?
- */  
- 
+ */
+
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 0; //only super administrator
 
@@ -46,15 +46,15 @@ require_once 'include/supporting_functions.php';
 
 header('Pragma: no-cache'); //don't cache this page!
 
-if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
-    if(!validate( $_POST['LOGIN_NAME'] ,  $_POST['PASSWORD'] )) {
+if (isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
+    if (!validate( $_POST['LOGIN_NAME'] ,  $_POST['PASSWORD'] )) {
         $system_message = $system_message . $error_message;
         IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
         require(IPP_PATH . 'index.php');
         exit();
     }
 } else {
-    if(!validate()) {
+    if (!validate()) {
         $system_message = $system_message . $error_message;
         IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
         require(IPP_PATH . 'index.php');
@@ -63,10 +63,9 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
 }
 //************* SESSION active past here **************************
 
-
 //check permission levels
 $permission_level = getPermissionLevel($_SESSION['egps_username']);
-if( $permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NULL) {
+if ($permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NULL) {
     $system_message = $system_message . "You do not have permission to view this page (IP: " . $_SERVER['REMOTE_ADDR'] . ")";
     IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
     require(IPP_PATH . 'security_error.php');
@@ -75,7 +74,8 @@ if( $permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NUL
 
 //************** validated past here ****************
 
-function parse_submission() {
+function parse_submission()
+{
     //returns null on success else returns $szError
     global $content,$fileName,$fileType;
     $regexp='/^[0-9]*$/';
@@ -92,9 +92,9 @@ function parse_submission() {
 }
 
 //check if we are modifying a student...
-if(isset($_POST['add_school'])) {
+if (isset($_POST['add_school'])) {
   $retval=parse_submission();
-  if($retval != NULL) {
+  if ($retval != NULL) {
     //no way...
     $system_message = $system_message . $retval;
   } else {
@@ -104,7 +104,7 @@ if(isset($_POST['add_school'])) {
     $blue=substr($_POST['school_colour'],5,2);
     $insert_query = "INSERT INTO school (school_code,school_name,school_address,red,green,blue) VALUES ('" . mysql_real_escape_string($_POST['school_code']) . "','" . mysql_real_escape_string($_POST['school_name']) . "','" . mysql_real_escape_string($_POST['school_address']) . "','$red','$green','$blue')";
     $insert_result = mysql_query($insert_query);
-     if(!$insert_result) {
+     if (!$insert_result) {
         $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '" . $insert_query . "<BR>";
         $system_message= $system_message . $error_message;
         IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
@@ -119,9 +119,9 @@ if(isset($_POST['add_school'])) {
 }
 
 //check if we are deleting some entries...
-if(isset($_GET['delete_x']) && $permission_level <= $IPP_MIN_DELETE_SCHOOL) {
+if (isset($_GET['delete_x']) && $permission_level <= $IPP_MIN_DELETE_SCHOOL) {
     $delete_query = "DELETE FROM school WHERE ";
-    foreach($_GET as $key => $value) {
+    foreach ($_GET as $key => $value) {
         if(preg_match('/^(\d)*$/',$key))
         $delete_query = $delete_query . "school_code=" . $key . " or ";
     }
@@ -129,47 +129,47 @@ if(isset($_GET['delete_x']) && $permission_level <= $IPP_MIN_DELETE_SCHOOL) {
     $delete_query = substr($delete_query, 0, -4);
     //$system_message = $system_message . $delete_query . "<BR>";
     $delete_result = mysql_query($delete_query);
-    if(!$delete_result) {
+    if (!$delete_result) {
         $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$delete_query'<BR>";
         $system_message= $system_message . $error_message;
         IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
    }
 }
 
-
 //get the medication for this student...
 $school_query="SELECT * FROM school WHERE 1 ORDER by school_name ASC";
 $school_result = mysql_query($school_query);
-if(!$school_result) {
+if (!$school_result) {
         $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$school_query'<BR>";
         $system_message= $system_message . $error_message;
         IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
 }
 
 print_html5_primer();
-?> 
+?>
 
     <TITLE><?php echo $page_title; ?></TITLE>
-    
-    
+
     <script language="javascript" src="<?php echo IPP_PATH . "include/picker.js"; ?>"></script>
     <SCRIPT LANGUAGE="JavaScript">
-      function confirmChecked() {
+      function confirmChecked()
+      {
           var szGetVars = "schoollist=";
           var szConfirmMessage = "Are you sure you want to delete the following:\n";
           var count = 0;
           form=document.schoollist;
-          for(var x=0; x<form.elements.length; x++) {
-              if(form.elements[x].type=="checkbox") {
-                  if(form.elements[x].checked) {
+          for (var x=0; x<form.elements.length; x++) {
+              if (form.elements[x].type=="checkbox") {
+                  if (form.elements[x].checked) {
                      szGetVars = szGetVars + form.elements[x].name + "|";
                      szConfirmMessage = szConfirmMessage + form.elements[x].name + ",";
                      count++;
                   }
               }
           }
-          if(!count) { alert("Nothing Selected"); return false; }
+          if (!count) { alert("Nothing Selected"); return false; }
           if(confirm(szConfirmMessage))
+
               return true;
           else
               return false;
@@ -178,7 +178,7 @@ print_html5_primer();
 <?php print_bootstrap_head();?>
 </HEAD>
     <BODY>
-    <?php 
+    <?php
     print_general_navbar();
     print_lesser_jumbotron("Manage Schools", $permission_level);
     ?>
@@ -188,13 +188,12 @@ print_html5_primer();
     <h2>View and Edit Schools <small>Scroll Down to Add Schools</small></h2>
                         <!-- BEGIN school table -->
                         <form name="schoollist" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "school_info.php"; ?>" method="get">
-                        
+
                         <table class="table table-striped table-hover">
                         <?php
-                        
-						
+
                         //print the header row...
-                        
+
                         echo "<tr><th>Select</th><th>Code</th><th>School Name</th><th>School Address</th><th>School Colour</th></tr>\n";
                         while ($school_row=mysql_fetch_array($school_result)) { //current...
                             echo "<tr>\n";
@@ -204,8 +203,7 @@ print_html5_primer();
                             echo "<td><address>" . $school_row['school_address'] . "</address></td>\n";
                             echo "<td>" . $school_row['red'] . $school_row['green'] . $school_row['blue']  . "</td>\n";
                             echo "</tr>\n";
-                            
-                            
+
                         }
                         ?>
                              </table>
@@ -217,48 +215,46 @@ print_html5_primer();
                              <td>
                              <?php
                                 //if we have permissions also allow delete.
-                                if($permission_level <= $IPP_MIN_DELETE_SCHOOL) {
+                                if ($permission_level <= $IPP_MIN_DELETE_SCHOOL) {
                                     echo "<INPUT NAME=\"delete\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=Delete\" border=\"0\" value=\"1\">";
                                 }
                              ?>
                              </td>
                              </tr>
                              </table>
-                          
+
                         </form>
                         <!-- end school table -->
-    
-    <h2>Add School <small>Edit and Click "Add School"</small></h2>         
+
+    <h2>Add School <small>Edit and Click "Add School"</small></h2>
                         <!-- BEGIN add school -->
-                        
+
                         <form name="add_school" enctype="multipart/form-data" action="<?php echo IPP_PATH . "school_info.php"; ?>" method="post">
                         <input type="hidden" name="add_school" value="1">
                         <div class="form-group"></div>
                          <label>School Code</label>
                          <input class="form-control" type="text" tabindex="1" name="school_code" value="<?php if(isset($_POST['school_code']))  echo $_POST['school_code']; ?>" size="30" maxsize="254">
-                           
-                        
+
                             <label>School Name</label>
-                            
+
                             <input required class="form-control" type="text" tabindex="2" name="school_name" value="<?php if(isset($_POST['school_name'])) echo $_POST['school_name']; ?>" size="30" maxsize="254">
-                           
+
                            <label>School Address</label>
                           <textarea class="form-control" required spellcheck="true" name="school_address" tabindex="3" cols="30" rows="3" wrap="soft"><?php if(isset($_POST['school_address'])) echo $_POST['school_address']; ?></textarea>
-                        
+
                            <label>School Colour</label>
                            <INPUT class="form-control" TYPE="color" NAME="school_colour" MAXLENGTH="7" tabindex="4" SIZE="7" value="<?php if(isset($_POST['school_colour']))echo $_POST['school_colour']; ?>">
-                          
+
                           <button type="submit" tabindex="5" value="add" value="add">Add School</button>
                         </form>
                         <!-- END add school -->
-						
 
                         </div>
                         </td>
                     </tr>
                 </table></center>
             </td>
-            <td class="shadow-right"></td>   
+            <td class="shadow-right"></td>
         </tr>
         <tr>
             <td class="shadow-left">&nbsp;</td>
@@ -271,7 +267,7 @@ print_html5_primer();
             <td class="shadow-bottom"></td>
             <td class="shadow-bottomRight"></td>
         </tr>
-        </table> 
+        </table>
         <center></center>
     </BODY>
 </HTML>
