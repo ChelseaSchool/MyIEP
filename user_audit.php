@@ -207,7 +207,7 @@ if(1==0 && isset($_POST['add_accomodation']) && $have_write_permission) {
     <BODY>
     <?php 
     print_general_navbar();
-    print_lesser_jumbotron("User Audit", $permission_level);
+    print_lesser_jumbotron("Find Cases by User", $permission_level);
     ?>
        
 <div class="container">                
@@ -219,12 +219,13 @@ if(1==0 && isset($_POST['add_accomodation']) && $have_write_permission) {
 <form name="chooseuser" enctype="multipart/form-data" action="<?php echo IPP_PATH . "user_audit.php"; ?>" method="post" >
 
                         
-<h2>Find Users Support List</h2>
+<h2>Find Case Load</h2>
 <div class="form-group">
 <label>Username</label>
 <input type="text" tabindex="1" name="username" size="40" maxsize="255" value="<?php echo $_POST['username']; ?>" onkeypress="return autocomplete(this,event,popuplist)">
-</div>                 
-<button class="btn btn-large btn-regular type="submit" tabindex="2" ="Check" value="Check">Check</button>
+                
+<button class="btn btn-large btn-regular type="submit" tabindex="2" ="Check" value="Check">Search</button>
+</div> 
 </form>
                         
 <!-- END choose user -->
@@ -250,13 +251,12 @@ if(1==0 && isset($_POST['add_accomodation']) && $have_write_permission) {
                             } else {if(!mysql_num_rows($school_result)) $school_row=array("school_name" => "-archived student-"); else $school_row=mysql_fetch_array($school_result);}
 
                             echo "<tr>\n";
-                            echo "<td bgcolor=\"#F4EFCF\"><input type=\"checkbox\" name=\"" . $user_row['uid'] . "\"></td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "student_view.php?student_id=" . $user_row['student_id'] . "\" class=\"editable_text\">" . $user_row['last_name']  ."</a></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "student_view.php?student_id=" . $user_row['student_id'] . "\" class=\"editable_text\">" . $user_row['first_name'] . "</a></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "modify_ipp_permission.php?student_id=" . $user_row['student_id'] . "\" class=\"editable_text\">" . $user_row['permission'] . "</a></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><center>" . $school_row['school_name'] . "</center></td>";
-                            if($bgcolor=="#DFDFDF") $bgcolor="#CCCCCC";
-                            else $bgcolor="#DFDFDF";
+                            echo "<td><input type=\"checkbox\" name=\"" . $user_row['uid'] . "\"></td>";
+                            echo "<td><a href=\"" . IPP_PATH . "student_view.php?student_id=" . $user_row['student_id'] . "\" class=\"editable_text\">" . $user_row['last_name']  ."</a></td>\n";
+                            echo "<td><a href=\"" . IPP_PATH . "student_view.php?student_id=" . $user_row['student_id'] . "\" class=\"editable_text\">" . $user_row['first_name'] . "</a></td>\n";
+                            echo "<td><a href=\"" . IPP_PATH . "modify_ipp_permission.php?student_id=" . $user_row['student_id'] . "\" class=\"editable_text\">" . $user_row['permission'] . "</a></td>\n";
+                            echo "<td><center>" . $school_row['school_name'] . "</center></td>";
+                            
                         }
                         ?>
                         <tr>
