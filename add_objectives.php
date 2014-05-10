@@ -180,11 +180,11 @@ if($our_permission == "WRITE" || $our_permission == "ASSIGN" || $our_permission 
 
 //check if we are updating the goal text...
 if(isset($_POST['update_goal']) && $have_write_permission) {
-   if($_POST['goal_text'] == "") $system_message = $system_message . "You must supply goal text<BR>";
+   if($_POST['goal_description'] == "") $system_message = $system_message . "You must supply goal text<BR>";
    else {
       $update_query="UPDATE long_term_goal SET area=";
       $update_query .= "'" . mysql_real_escape_string($_POST['goal_area']) . "'";
-      $update_query .= ", review_date='" . mysql_real_escape_string($_POST['goal_review_date']) . "',goal='" . mysql_real_escape_string($_POST['goal_text']) . "' WHERE goal_id=$goal_id LIMIT 1";
+      $update_query .= ", review_date='" . mysql_real_escape_string($_POST['review_date']) . "',goal='" . mysql_real_escape_string($_POST['goal_description']) . "' WHERE goal_id=$goal_id LIMIT 1";
       $update_result = mysql_query($update_query);
       if(!$update_result) {
          $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$update_query'<BR>";
@@ -537,7 +537,7 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
 
 <div class="form-group">
 <label>Objective</label>
-<textarea spellcheck="true" class="form-control" spellcheck="true" spellcheck="true" name="description" tabindex="1" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['description'])) echo $_POST['description']; ?></textarea></p>
+<textarea spellcheck="true" class="form-control" spellcheck="true" spellcheck="true" name="description" tabindex="1" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['goal_description'])) echo $_POST['goal_description']; ?></textarea></p>
 <label>Review Date (YYYY-MM-DD)</label>
 <input type="datepicker" class="form-control datepicker" name="goal_review_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" tabindex="2" name="review_date" value="<?php if(isset($_POST['review_date'])) echo $_POST['review_date']; ?>">
 <label>Assessment Procedure</label>

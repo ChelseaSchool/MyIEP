@@ -431,6 +431,7 @@ function toggle () //toggles objective details
 <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#filter_options">
   Show Filters &raquo;
 </button>
+<a class="btn btn-primary btn-lg" href="<?php echo IPP_PATH . "add_goal_1.php?student_id=" . $student_row['student_id'] ;?>">Add New Goal &raquo;</a>
 
 <!-- Modal--> 
 <div class="modal fade" id="filter_options" tabindex="-1" role="dialog" aria-labelledby="options" aria-hidden="true">
