@@ -119,13 +119,15 @@ if(!$student_result) {
     IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
 } else {$student_row= mysql_fetch_array($student_result);}
 
-$goal_category_name_query= "SELECT * FROM typical_long_term_goal_category where cid=" . mysql_real_escape_string($goal_area) . " limit 1";
+/** Legacy Procedure
+$goal_category_name_query= "SELECT * FROM typical_long_term_goal_category where goal_area = " . mysql_real_escape_string($goal_area) . " limit 1";
 $goal_category_name_result=mysql_query($goal_category_name_query);
 if(!$goal_category_name_result) {
     $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$goal_category_name_query'<BR>";
     $system_message=$system_message . $error_message;
     IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
 } else {$goal_category_row= mysql_fetch_array($goal_category_name_result);}
+*/
 
 /*************************** popup chooser support function ******************/
     function createJavaScript($dataSource,$arrayName='rows'){
@@ -197,6 +199,19 @@ if(!$goal_category_name_result) {
     }
 /************************ end popup chooser support funtion  ******************/
 
+
+
+
+$area_query = "SELECT * FROM `typical_long_term_goal_category` WHERE `is_deleted` = \"N\" ORDER BY `typical_long_term_goal_category`.`name` ASC";
+$area_result = mysql_query($area_query);
+if(!$area_result) {
+    	$error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$area_query'<BR>";
+    	$system_message=$system_message . $error_message;
+    	IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
+}
+   
+    
+    
     
 ?> 
 
@@ -223,93 +238,60 @@ if(!$goal_category_name_result) {
       function noSelection() {
           alert("You must choose a goal category to enable the chooser"); return false;
       }
-      <?php print_bootstrap_datepicker_depends(); ?>
+      
     </SCRIPT>
+<?php print_bootstrap_datepicker_depends(); ?>
 </HEAD>
 <BODY>
 <?php print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']); ?>
-<?php print_jumbotron_with_page_name($page_name, $student_row['first_name'] . " " . $student_row['last_name'], $our_permissions); ?>
+<?php print_jumbotron_with_page_name("Add Long Term Goal", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission); ?>
 <div class="container">
 <?php if ($system_message) { echo $system_message ;} ?>
     
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-          
-                    </tr>
-                    
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
+        
+                        <h2>New Goal</h2>
                         
-
-                        <h2>New Goal</h2> <?php echo $student_row['first_name'] . " " . $student_row['last_name'] .  ", Permission: " . $our_permission;?></p></center></td></tr></table></center>
-                        <BR>
-
                         <!-- BEGIN add new entry -->
-                        <center>
-                        <form name="add_long_term_goal" enctype="multipart/form-data" action="<?php echo IPP_PATH . "add_objectives.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
-                        <tr>
-                          <td colspan="3">
-                          <p class="info_text">New long term goal</p>
-                           <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
-                           <input type="hidden" name="goal_area" value="<?php echo $goal_area; ?>">
-                           <input type="hidden" name="add_goal" value="1">
-                          </td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">Goal Area:</td>
-                           <td bgcolor="#E0E2F2" class="row_default"><b>
-                           <?php if(isset($goal_category_row['name']) && $goal_category_row['name'] != "") echo $goal_category_row['name']; else echo "Other"; ?>
-                           </b></td>
-                           <td valign="center" align="center" rowspan="3" bgcolor="#E0E2F2" class="row_default"><input type="submit" tabindex="3" name="Next" value="Next"></td>
-                        </tr>
-                        <tr>
-                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Goal:</td><td bgcolor="#E0E2F2" class="row_default"><textarea name="description" tabindex="1" cols="23" rows="3" wrap="soft"><?php if(isset($_GET['description'])) echo $_GET['description']; ?></textarea>&nbsp;<img align="top" src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" width="17" border=0 onClick="popUpChooser(this,document.all.description);" ></td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">Review Date: (YYYY-MM-DD)</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="datepicker" tabindex="2" size="30" name="review_date" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="<?php  if(isset($_GET['review_date'])) echo $_GET['review_date']; ?>">
-                           </td>
-                        </tr>
-                        </table>
+                        
+                        <form spellcheck="true" name="add_long_term_goal" enctype="multipart/form-data" action="<?php echo IPP_PATH . "add_objectives.php"; ?>" method="post">
+                        <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
+                        <input type="hidden" name="add_goal" value="1">
+                          <div class="form-group">
+                           <label>Goal Area</label>
+                           <select required class="form-control" name="goal_area" placeholder="Choose Goal Area">
+
+<?php   
+
+$area_result_row = mysql_fetch_array($area_result);
+while ($area_result_row=mysql_fetch_array($area_result)) {
+    	echo "<option>" . $area_result_row['name'] . "</option>\n";
+}
+?>
+</select> 
+                          
+                       
+                           <label>Goal</label>
+                           <textarea spellcheck="true" required placeholder="<?php echo $student_row['first_name'] . " " . $student_row['last_name'] . " will..."?>" class="form-control" name="goal_description" tabindex="1" cols="23" rows="3" wrap="soft"></textarea>
+                        
+                           <label>Review Date (YYYY-MM-DD)</label>
+                           <input required class="form-control datepicker" type="datepicker" tabindex="2" size="30" name="review_date" id="datepicker" data-provide="datepicker" data-date-format="yy-mm-dd">
+                         
+                         </div>
+                         <button class="pull-right btn btn-lg btn-regular" type="submit" tabindex="3" name="Next" value="Next">Continue</button>
+                         
+                       
                         </form>
-                        </center>
+                        
                         <!-- END add new entry -->
 
 
-                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-              &nbsp;
-            </td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
+   		
+  
+                       
         
-    <?php print_complete_footer(); ?>
-    </div>   
+    <footer><?php print_complete_footer(); ?></footer>
+</div>   
+    <?php print_bootstrap_js(); ?>
+    
     </BODY>
 </HTML>
