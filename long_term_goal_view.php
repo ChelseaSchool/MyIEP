@@ -47,7 +47,6 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
-//require_once(IPP_PATH . 'include/navbar.php');
 require_once(IPP_PATH . 'include/supporting_functions.php');
 require_once(IPP_PATH . 'include/config.inc.php');
 
@@ -259,7 +258,7 @@ function print_goal_area_checklist() {
 		IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
 	}
 	while ($area_row=mysql_fetch_array($area_result)) {
-		echo "<label><input class=\"area\" id=\"{$area_row['name']}\" type=\"checkbox\">" . $area_row['name'] . "</label><br>\n";
+		echo "<label><input class=\"area\" id=\"{$area_row['name']}\" checked type=\"checkbox\">" . $area_row['name'] . "</label><br>\n";
 	} //closes loop
 } //closes function
 
@@ -487,7 +486,7 @@ if(mysql_num_rows($long_goal_result) == 0 ) {
 		//div for use by jquery filter action
 		$div_id=$goal['area'];
 		echo "<div class=\"container\">\n";
-		echo "<div class=\"goal\" hidden id=\"$div_id\">\n<div class=\"col-md-12\">\n";
+		echo "<div class=\"goal\" id=\"$div_id\">\n<div class=\"col-md-12\">\n";
 		echo "<h2><a href=\"" . IPP_PATH . "add_objectives.php?student_id=" . $student_id . "&lto=" . $goal['goal_id']  . "\"";
 		if (!$have_write_permission) echo " onClick=\"return noPermission();\">\n";
 		else echo " onClick=\"return changeStatusCompleted();\">\n";
@@ -577,7 +576,7 @@ if(!$short_term_objective_result) {
 		}*/
 	$obj_num=1;
 	while ($short_term_objective_row = mysql_fetch_array($short_term_objective_result)) {
-		echo "<div class=\"objective\" id=$div_id hidden ". "\">\n<div class=\"col-md-12\">\n<div class=\"container\">\n";
+		echo "<div class=\"objective\" id=$div_id  ". "\">\n<div class=\"col-md-12\">\n<div class=\"container\">\n";
 
 		echo "<h4><small>" . $obj_num . ")&nbsp;</small>\n";
 		$obj_num++; //increment goal
