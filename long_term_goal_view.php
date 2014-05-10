@@ -18,6 +18,8 @@
  * 6. JQuery to reveal only specified areas (Done)
  * 7. Use PHP to generate checklist in Modal
  * 8. Use PHP to generate JavaScript/jQuery for Filter
+ * @remark
+ * Have switched to filtering out all objectives/goals. Now filtering is on demand.
  */
 
 /** @var $MINIMUM_AUTHORIZATION_LEVEL = 100
@@ -26,9 +28,8 @@
  *  	   2. Should probably be recase as parameter for a function
  *  @bugs  none
  */
+
 $MINIMUM_AUTHORIZATION_LEVEL = 100;
-
-
 
 
 if(isset($system_message)) $system_message = $system_message; else $system_message = "";
@@ -135,13 +136,7 @@ if(isset($_GET['next']) && $have_write_permission) {
      header("Location: ./add_goal_1.php?goal_area=" . $_GET['goal_area'] . "&student_id=" . $student_id);
   }
 }
-/*For later
- * $host  = $_SERVER['HTTP_HOST'];
- * $uri  = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
- * $extra = 'mypage.php';
- * header("Location: http://$host$uri/$extra");
- * exit;
- */
+
 
 if(isset($_GET['setUncompleted']) && $have_write_permission) {
    $update_query = "UPDATE long_term_goal SET is_complete='N' WHERE goal_id=" . mysql_real_escape_string($_GET['setUncompleted']);
