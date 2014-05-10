@@ -73,8 +73,10 @@ if($permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NULL
 }
 
 //check if we do add...
-if(isset($_GET['add'])) {
-    $add_query = "INSERT into area_type (type) VALUES ('" . mysql_real_escape_string($_GET['type']) . "')";
+if(isset($_GET['category'])) {
+    
+	$add_query = "INSERT INTO `typical_long_term_goal_category` (`name`, `is_deleted`) VALUES (\"". mysql_real_escape_string($_GET['category']) . "\", \"N\")";
+	
     $add_result = mysql_query($add_query);
     if(!$add_result) {
         $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$add_query'<BR>";
@@ -82,13 +84,13 @@ if(isset($_GET['add'])) {
         IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
     }
 }
-
+//"UPDATE `MyIEP`.`typical_long_term_goal_category` SET `is_deleted` = \'Y\' WHERE `typical_long_term_goal_category`.`cid` = 50
 //check if we are deleting some peeps...
 if($_GET['delete_x'] && $permission_level <= $IPP_MIN_DELETE_AREA_PERMISSION) {
-    $delete_query = "DELETE FROM area_type WHERE ";
+    $delete_query = "UPDATE typical_long_term_goal_category SET is_deleted = 'Y' WHERE name = " . $_GET['category'];
     foreach($_GET as $key => $value) {
         if(preg_match('/^(\d)*$/',$key))
-        $delete_query = $delete_query . "area_type_id=" . $key . " or ";
+        $delete_query = $delete_query . $key . " or ";
     }
     //strip trailing 'or' and whitespace
     $delete_query = substr($delete_query, 0, -4);
@@ -113,21 +115,11 @@ if(!$area_result) {
 
 
 ?> 
-<!DOCTYPE HTML>
-<HTML lang=en>
-<HEAD>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Add Program Area">
-    <meta name="author" content="Rik Goldman" >
-    <link rel="shortcut icon" href="./assets/ico/favicon.ico">
+<?php print_html5_primer();?>
     <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
+    
+    
+     
     
     <SCRIPT LANGUAGE="JavaScript">
       function confirmChecked() {
@@ -155,62 +147,53 @@ if(!$area_result) {
           alert("You don't have the permission level necessary"); return false;
       }
     </SCRIPT>
+<?php print_bootstrap_head();?>
 </HEAD>
     <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
+    <?php print_general_navbar(); ?>
+    
+    <?php print_lesser_jumbotron("Manage Program Areas", $permission_level);?>
+    <div class="container">   
+          
        
-        <tr>
-            
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+        
+                
+                        <?php if ($system_message) { echo "<h2>" . $system_message . "</h2>";} ?>
 
-                        <center><table><tr><td><center><p class="header">- IPP Add Global Program Area</p></center></td></tr></table></center>
-                        <BR>
-
-                        <!-- BEGIN add area -->
-                        <center>
-                        <form name="addarea" enctype="multipart/form-data" action="<?php echo IPP_PATH . "superuser_add_program_area.php"; ?>" method="get">
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
-                        <tr>
-                          <td colspan="3">
-                          <p class="info_text">Edit and click 'Add'.</p>
-                           <input type="hidden" name="addarea" value="1">
-                          </td>
-                        </tr>
                         
-                        </table>
-                        </form>
-                        </center>
+                        <!-- BEGIN add area -->
+                        <h2>Add Goal Area <small>Feature Not Yet Available</small></h2>
+                        <form name="addarea" enctype="multipart/form-data" action="<?php echo IPP_PATH . "superuser_add_program_area.php"; ?>" method="get">
+                               <input type="hidden" name="addarea" value="1">
+                               <div class="form-group">
+                               <label>Goal Area</label>
+                               <input class="form-control" spellcheck="true" placeholder="Enter new goal area." type="text" name="category">
+                               <button type="submit" class="btn btn-default">Add Goal Area</button>
+                               </div>
+                         </form>
                         <!-- END add area -->
-
+						
                         <!-- BEGIN area table -->
+                        <h2>Program Areas</h2>
                         <form name="arealist" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "superuser_add_program_area.php"; ?>" method="get">
-                        <center><table width="80%" border="0">
-
-                        <?php
-                        $bgcolor = "#DFDFDF";
-
+                      
+						<table class="table table-striped table-hover">
+                        <?php 
                         //print the header row...
-                        echo "<tr><th bgcolor=\"#E0E2F2\">Select</th><th align=\"center\" bgcolor=\"#E0E2F2\">Goal Area</th><th bgcolor=\"#E0E2F2\">Deleted</th></tr>\n";
+                        echo "<tr><th>Select</th><th>Goal Area</th><th>Deleted</th></tr>\n";
                         while ($area_row=mysql_fetch_array($area_result)) { //current...
                             echo "<tr>\n";
-                            echo "<td bgcolor=\"#E0E2F2\"><input type=\"checkbox\" name=\"\"></td>";
-                            echo "<td bgcolor=\"$bgcolor\">" . $area_row['name'] . "</td>";
-                            echo "<td bgcolor=\"$bgcolor\">" . $area_row['is_deleted']  ."</td>\n";
+                            echo "<td>\n\t<button type=\"btn btn-small btn-regular\">Delete</button>";
+                            echo "\n\t<input type=\"text\" hidden name=\"area\" value=\"" . $area_row['name'] . "\">";
+                            
+                            echo "<td>" . $area_row['name'] . "</td>";
+                            echo "<td>" . $area_row['is_deleted']  ."</td>\n";
                             echo "</tr>\n";
-                            if($bgcolor=="#DFDFDF") $bgcolor="#CCCCCC";
-                            else $bgcolor="#DFDFDF";
+                            
                         }
                         ?>
-                        <tr>
-                          <td colspan="6" align="left">
+                        </table>
+                       
                              <table>
                              <tr>
                              <td nowrap>
@@ -226,32 +209,14 @@ if(!$area_result) {
                              </td>
                              </tr>
                              </table>
-                          </td>
-                        </tr>
-                        </table></center>
+                          
                         </form>
                         <!-- end area table -->
-                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center"><table border="0" width="100%"><tr><td><a href="
-            <?php
-                echo IPP_PATH . "main.php";
-            ?>"><img src="<?php echo IPP_PATH; ?>images/back-arrow.png" border=0></a></td><td width="60"><a href="<?php echo IPP_PATH . "main.php"; ?>"><img src="<?php echo IPP_PATH; ?>images/homebutton.png" border=0></a></td><td valign="bottom" align="center">Logged in as: <?php echo $_SESSION['egps_username'];?></td><td align="right"><a href="<?php echo IPP_PATH;?>"><img src="<?php echo IPP_PATH; ?>images/logout.png" border=0></a></td></tr></table></td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
-        <center></center>
+                        
+               
+           
+       
+        </div>
+        <?php print_bootstrap_js(); ?>
     </BODY>
 </HTML>
