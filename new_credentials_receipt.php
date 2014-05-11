@@ -12,7 +12,7 @@ require_once 'include/supporting_functions.php';
 //$_SESSION = array();
 
 if (session_name("Credential Reset")) {
-	die("Please do not make repeated attempts to generate a new password. Click <a href=\"index.php\" here</a> to return to the main page.");
+	//die("Please do not make repeated attempts to generate a new password. Click <a href=\"index.php\" here</a> to return to the main page.");
 }
 session_start();
 session_id();

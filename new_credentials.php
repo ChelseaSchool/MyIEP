@@ -2,15 +2,17 @@
 
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100; //everybody
-
+require_once 'include/supporting_functions.php';
 
 $_POST=array();
+
+
+
+
+
 if (session_name("Credential Reset")) {
-	die ("Please do not make repeated attempts to create access credentials for this system. Click <a href=\"index.php\">here</a> to exit to the main page.");
+	//die ("Please do not make repeated attempts to create access credentials for this system. Click <a href=\"index.php\">here</a> to exit to the main page.");
 }		
-
-
-
 
 
 require_once 'include/supporting_functions.php';
@@ -21,7 +23,11 @@ print_html5_primer();
 print_bootstrap_head();
 ?>
 <script src="js/jquery-2.1.1.js"></script>
+
 <title>Request New Credentials</title>
+
+
+
 <script type="text/javascript">
 $(document).ready(function() {
 	$('#validate').hide();
@@ -32,8 +38,8 @@ $(document).ready (function() {
 		var email1 = $('#email1').val();
 		var email2 = $('#email2').val();
 		var match = "";
-		match = (email1 == email2);
-		if (match) {
+		email = (email1 == email2);
+		if (email) {
 			$('#mustmatch').hide();
 			$('#validate').show();	
 		}
@@ -43,6 +49,60 @@ $(document).ready (function() {
 });
 
 </script>
+<?php 
+/** @brief Code for simple human verification
+ *  @author rik goldman <rgoldman@chelseaschool.edu>
+ *  @copyright 2014 Chelsea School
+ */
+$integer1 = rand(0, 9);
+$integer2 = rand(0, 9);
+$calculated_sum = $integer1 + $integer2;
+//jquery generation
+function human_validator($calculated_sum){
+	$derived_jquery=<<<EOF
+<script>
+
+$(document).ready (function(){
+	function confirm_humanity() {		
+	$('#humanizer').change(function() {
+		var calculated
+		calculated = $calculated_sum;
+		console.log(calculated);
+		var human_entered
+		human_entered=$('#humanizer').val();
+		human_entered=parseInt(human_entered);
+		console.log(human_entered);
+		var human;
+		human = (human_entered==calculated);
+		console.log( human );
+		return human;
+		});
+		}
+var human = confirm_humanity();
+			
+	function confirm_email() {
+	$('.email').change(function() {
+		var email1 = $('#email1').val();
+		var email2 = $('#email2').val();
+		var match = "";
+		email = (email1 == email2);
+		return email;
+		});
+		}
+var email = confirm_email();
+			
+if (human && email) {
+			$('#mustmatch').hide();
+			$('#validate').show();	
+		}
+});
+</script>
+EOF;
+echo $derived_jquery;
+}
+human_validator($calculated_sum);
+?>
+
 </head>
 <body>
 <!-- Jumbo Stock Nav --> 
@@ -81,7 +141,6 @@ $(document).ready (function() {
 <h2>User Validation</h2>       
 </div><!-- End Jumbotron -->
 <div class="container">
-
 <form method="post" name="person_confirmer" role="form" enctype="multipart/form-data" action="new_credentials_receipt.php" method="post">
 <input type="datetime" hidden name="date" required value="<?php echo date("Y-M-d");?>">
 <input type="hidden" name="client_address" required value="<?php echo $_SERVER['remote_addr']; ?>">
@@ -95,13 +154,16 @@ $(document).ready (function() {
 <input autocomplete="off" class="form-control email" type="email" required id="email2" name="email2" placeholder="Please confirm your email address.">
 <label>Username</label>
 <input autocomplete="off" class="form-control" type="text" required id="uname" name="uname" placeholder="Please enter your username...">
+<label>Are you human? Solve <?php echo $integer1 . " + " . $integer2;?></label>
+<input id="humanizer" pattern="<?php echo $calculated_sum; ?>" value="" autocomplete="off" class="form-control" type="text" required name="humanizer" placeholder="Please be human.">
 </div>
 <button role="button" id="validate" class="btn btn-default btn-lg" type="submit">Validate</button>
 <div class="alert alert-block alert-danger" id="mustmatch">
 	<!-- <a href="#" class="close" data-dismiss="alert">&times;</a>-->
-	<strong>Alert</strong>: E-mail fields must match.</div>
+	<strong>Alert</strong>: E-mail fields must match & equation must be solved correctly.</div>
 </div>
 </form>
+
 
 
 
