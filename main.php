@@ -127,7 +127,7 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
          </div>
          <!--/.nav-collapse -->
         <!--<div class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" role="form" nctype="multipart/form-data" action="jumbotron.php" method="post">
+          <form class="navbar-form navbar-right" role="form" enctype="multipart/form-data" action="jumbotron.php" method="post">
             <div class="form-group">
               <input type="text" placeholder="User Name" class="form-control" value="<?php echo $LOGIN_NAME;?>">
             </div>

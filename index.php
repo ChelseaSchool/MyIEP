@@ -89,9 +89,10 @@ if(isset($LOGIN_NAME)) $LOGIN_NAME = $LOGIN_NAME; else $LOGIN_NAME="";
               <input name="LOGIN_NAME" autofocus required autocomplete="off" type="text" placeholder="User Name" name="LOGIN_NAME" value="<?php echo $LOGIN_NAME;?>" class="form-control" value="<?php echo $LOGIN_NAME;?>">
             </div>
             <div class="form-group">
-              <input name=PASSWORD required type="password" placeholder="Password" class="form-control" name="PASSWORD" value="" placeholder="Password">
+              <input name=PASSWORD required autocomplete="off" type="password" placeholder="Password" class="form-control" name="PASSWORD" value="" placeholder="Password">
             </div>
             <button type="submit" class="btn btn-success">Sign in</button>
+            
           </form>
         </div><!--/.navbar-collapse -->
       </div>
@@ -108,7 +109,8 @@ if(isset($LOGIN_NAME)) $LOGIN_NAME = $LOGIN_NAME; else $LOGIN_NAME="";
  <h1>About MyIEP</h1>
         <p>MyIEP (Version <?php echo $IPP_CURRENT_VERSION; ?>) was originally developed as IEP-IPP through the coordinated efforts of many people at Grasslands Public Schools.</p>
         <p>MyIEP is under development by students, faculty, and administrators at <a href="http://chelseaschool.edu">Chelsea School</a> in Hyattsville, MD.</p>
-        
+ <h1>Stuck?</h1>
+        <p><a class="btn btn-primary btn-lg" href="new_credentials.php" role="button">Reset Password &raquo;</a></p>
 </div><!-- end container -->
 </div><!-- End Jumbotron -->
 <div class="container">
