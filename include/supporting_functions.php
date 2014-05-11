@@ -568,9 +568,17 @@ function generate_password
 	for ($i = $length; $i > 0; $i--) {
 		$proposed_password .= $characters[mt_rand(0, $characters_length)];
 	}
-	echo $proposed_password;
+	return $proposed_password;
 }
 
+
+function remove_credential_reset_lock() {
+	session_destroy();
+	$_SESSION=array();
+	if (session_id() != "" || isset($_COOKIE[session_name()]))
+		setcookie(session_name(), '', time() - 2592000, '/');
+	session_destroy();
+}
 
 
 ?>
