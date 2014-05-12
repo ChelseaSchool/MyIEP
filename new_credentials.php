@@ -11,7 +11,8 @@ $_POST=array();
 
 
 if (session_name("Credential Reset")) {
-	die ("Please do not make repeated attempts to create access credentials for this system. Click <a href=\"index.php\">here</a> to exit to the main page.");
+	
+	//die ("Please do not make repeated attempts to create access credentials for this system. Click <a href=\"index.php\">here</a> to exit to the main page.");
 }		
 
 
