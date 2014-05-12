@@ -28,27 +28,6 @@ print_bootstrap_head();
 
 
 
-<script type="text/javascript">
-$(document).ready(function() {
-	$('#validate').hide();
-})
-	
-$(document).ready (function() {
-	$('.email').change(function() {
-		var email1 = $('#email1').val();
-		var email2 = $('#email2').val();
-		var match = "";
-		email = (email1 == email2);
-		if (email) {
-			$('#mustmatch').hide();
-			$('#validate').show();	
-		}
-		
-	});	
-	
-});
-
-</script>
 <?php 
 /** @brief Code for simple human verification
  *  @author rik goldman <rgoldman@chelseaschool.edu>
@@ -62,40 +41,39 @@ function human_validator($calculated_sum){
 	$derived_jquery=<<<EOF
 <script>
 
-$(document).ready (function(){
-	function confirm_humanity() {		
-	$('#humanizer').change(function() {
+$(document).ready (function() {
+	$('#validate').hide(); //hide submit button //works
+//matching email and human calculation
+	$("#humanizer, .email").change(function() { //matching email and human calculation
 		var calculated
 		calculated = $calculated_sum;
 		console.log(calculated);
 		var human_entered
 		human_entered=$('#humanizer').val();
-		human_entered=parseInt(human_entered);
+		human_entered=parseInt(human_entered); //make text field an integer
 		console.log(human_entered);
-		var human;
+		var human; //boolean
+		
 		human = (human_entered==calculated);
-		console.log( human );
-		return human;
-		});
-		}
-var human = confirm_humanity();
-			
-	function confirm_email() {
-	$('.email').change(function() {
+		console.log("Human: " + human);
 		var email1 = $('#email1').val();
 		var email2 = $('#email2').val();
 		var match = "";
-		email = (email1 == email2);
-		return email;
-		});
-		}
-var email = confirm_email();
-			
-if (human && email) {
+		email = (email1 == email2); //boolean
+		console.log("Email" + email);
+		
+		if (email && human) 
+		{
 			$('#mustmatch').hide();
-			$('#validate').show();	
+			$('#validate').show();
 		}
+
+	});
 });
+	
+	
+
+
 </script>
 EOF;
 echo $derived_jquery;
@@ -141,7 +119,7 @@ human_validator($calculated_sum);
 <h2>User Validation</h2>       
 </div><!-- End Jumbotron -->
 <div class="container">
-<form method="post" name="person_confirmer" role="form" enctype="multipart/form-data" action="new_credentials_receipt.php" method="post">
+<form method="post" name="person_confirmer" id="confirmer" role="form" enctype="multipart/form-data" action="new_credentials_receipt.php" method="post">
 <input type="datetime" hidden name="date" required value="<?php echo date("Y-M-d");?>">
 <input type="hidden" name="client_address" required value="<?php echo $_SERVER['remote_addr']; ?>">
 <input type="hidden" name="user_agent" required value="<?php echo $_SERVER['HTTP_USER_AGENT']; ?>">
