@@ -7,12 +7,13 @@
  *  
  */ 
 require_once 'include/supporting_functions.php';
+require_once 'Mail.php';
 //remove_credential_reset_lock(); //security override - delete for production
 
 //$_SESSION = array();
 
 if (session_name("Credential Reset")) {
-	//die("Please do not make repeated attempts to generate a new password. Click <a href=\"index.php\" here</a> to return to the main page.");
+	die("Please do not make repeated attempts to generate a new password. Click <a href=\"index.php\" here</a> to return to the main page.");
 }
 session_start();
 session_id();
@@ -234,7 +235,6 @@ $email_message = str_replace("#123abc^ABC#", $replacement, $email_message);
 ?>
 <?php
 $send_message = mail($email, "MyIEP Password Reset", $email_message);
-
 if ($send_message) {
 	echo "<div class=\"alert alert-info\" id=\"email-queud\"><strong>Notification</strong>: This system has attempted to email your credentials to {$email}.</div>";
 }
