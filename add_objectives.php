@@ -367,17 +367,17 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
     <TITLE><?php echo $page_title; ?></TITLE>
     <!-- Bootstrap core CSS -->
     <?php print_bootstrap_head();?>
-    <?php print_bootstrap_datepicker_depends(); ?>
+    <?php print_datepicker_depends(); ?>
     <link href="./css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="./css/jumbotron.css" rel="stylesheet">
 	<style type="text/css">body { padding-bottom: 70px; }</style>
-    <!-- Bootstrap Datepicker CSS -->
+    <!-- Bootstrap Datepicker CSS
 	<link href="css/datepicker.css" rel="stylesheet">
     <script src="js/jquery-2.1.0.min.js"></script>
 	 <script src="js/jquery-ui-1.10.4.custom.min.js></script>
-     <script src="js/bootstrap-datepicker.js"></script>
+     <script src="js/bootstrap-datepicker.js"></script>-->
     <SCRIPT LANGUAGE="JavaScript">
       function confirmChecked() {
           var szGetVars = "strengthneedslist=";
@@ -505,7 +505,7 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
 <label>Goal</label></p>
 <textarea spellcheck="true" class="form-control" name="goal_text" spellcheck="true" cols="45" rows="3" wrap="soft"><?php echo $goal_row['goal']; ?></textarea></p>
 <label>Review Date</label>
-<input class="form-control datepicker" type="datepicker" name="goal_review_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="<?php echo $goal_review_date; ?>"></p>
+<input class="form-control datepicker" type="datepicker" id="datepicker" name="goal_review_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="<?php echo $goal_review_date; ?>"></p>
 </div>
 <input type="submit" name="Update" value="Update"></p>
 </form>

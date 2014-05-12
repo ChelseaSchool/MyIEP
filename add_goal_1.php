@@ -240,7 +240,7 @@ if(!$area_result) {
       }
       
     </SCRIPT>
-<?php print_bootstrap_datepicker_depends(); ?>
+<?php print_datepicker_depends(); ?>
 </HEAD>
 <BODY>
 <?php print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']); ?>
