@@ -47,20 +47,16 @@ $(document).ready (function() {
 	$("#humanizer, .email").change(function() { //matching email and human calculation
 		var calculated
 		calculated = $calculated_sum;
-		console.log(calculated);
 		var human_entered
 		human_entered=$('#humanizer').val();
 		human_entered=parseInt(human_entered); //make text field an integer
-		console.log(human_entered);
 		var human; //boolean
 		
 		human = (human_entered==calculated);
-		console.log("Human: " + human);
 		var email1 = $('#email1').val();
 		var email2 = $('#email2').val();
 		var match = "";
 		email = (email1 == email2); //boolean
-		console.log("Email" + email);
 		
 		if (email && human) 
 		{
