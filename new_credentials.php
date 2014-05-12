@@ -41,36 +41,34 @@ $calculated_sum = $integer1 + $integer2;
 function human_validator($calculated_sum){
 	$derived_jquery=<<<EOF
 <script>
-
 $(document).ready (function() {
-	$('#validate').hide(); //hide submit button //works
+	$('#validate').hide(); //hide submit button (works)
 //matching email and human calculation
 	$("#humanizer, .email").change(function() { //matching email and human calculation
-		var calculated
-		calculated = $calculated_sum;
-		var human_entered
-		human_entered=$('#humanizer').val();
+		var calculated //new variable
+		calculated = $calculated_sum; //passes PHP calculation to jQuery to work with
+		var human_entered //new variable
+		human_entered=$('#humanizer').val(); //form input for this field is a string
 		human_entered=parseInt(human_entered); //make text field an integer
-		var human; //boolean
+		var human; //variable; this will become boolean
 		
-		human = (human_entered==calculated);
-		var email1 = $('#email1').val();
-		var email2 = $('#email2').val();
-		var match = "";
+		human = (human_entered==calculated); //human is boolean
+		var email1 = $('#email1').val(); //assign field value
+		var email2 = $('#email2').val(); //assign field value
 		email = (email1 == email2); //boolean
-		
+
 		if (email && human) 
 		{
-			$('#mustmatch').hide();
-			$('#validate').show();
+			$('#mustmatch').hide(); //hide submit
+			$('#validate').show();  //show alert
 		}
-
+		else
+		{
+		$('#mustmatch').show(); //hide submit
+		$('#validate').hide();  //show alert	
+		}
 	});
 });
-	
-	
-
-
 </script>
 EOF;
 echo $derived_jquery;
