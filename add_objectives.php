@@ -476,23 +476,23 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
     </div>   
 	
 	
-	<div class="row">
-    <div class=container>
+	
+    <div class="container">
+<div class="row">
 
-
-<h1>Add Short Term Objectives <?php echo "<small>" . $student_row['first_name'] . " " . $student_row['last_name']. "</small>"; ?></h1>
+<h1>Modify Goal <?php echo "<small>" . $student_row['first_name'] . " " . $student_row['last_name']. "</small>"; ?></h1>
 <p><?php if ($system_message) { echo $system_message;} ?></p>
 
-</div></div>
+</div>
 
 
-<div class="container">
-<div class="row">
+
+
 <!-- Left -->
-<div class="col-md-6">
+<div class="col-md-4">
 <h3>Edit Goal</h3>
 <!-- Form Begins -->
-<form spellcheck="true" name="edit_goal" enctype="multipart/form-data" action="<?php echo IPP_PATH . "add_objectives.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+<form spellcheck="true" name="edit_goal" enctype="multipart/form-data" action="goal_change_checker.php" method="post">
 <div class=form-group>
 <!-- Hidden -->
 <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
@@ -501,31 +501,40 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
 <!--  End hidden -->
 <div class="form-group">
 <label>Goal Area</label>
-<input spellcheck="true" "form-control" type="text" size="30" spellcheck="true" maxsize="100" name="goal_area" value="<?php echo $goal_row['area']; ?>"></p>                 
+<select required class="form-control" name="goal_area" placeholder="Choose Goal Area"  value="<?php echo $goal_row['area']; ?>">
+
+<?php   
+$area_query = "SELECT * FROM `typical_long_term_goal_category` WHERE `is_deleted` = \"N\" ORDER BY `typical_long_term_goal_category`.`name` ASC";
+$area_result = mysql_query($area_query);
+if(!$area_result) {
+    $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$area_query'<BR>";
+    $system_message=$system_message . $error_message;
+    IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
+}
+$area_result_row = mysql_fetch_array($area_result);
+while ($area_result_row=mysql_fetch_array($area_result)) {
+    	echo "<option>" . $area_result_row['name'] . "</option>\n";
+}
+$goal=$goal_row['description'];
+?>
+</select> 
 <label>Goal</label></p>
 <textarea spellcheck="true" class="form-control" name="goal_text" spellcheck="true" cols="45" rows="3" wrap="soft"><?php echo $goal_row['goal']; ?></textarea></p>
 <label>Review Date</label>
 <input class="form-control datepicker" type="datepicker" id="datepicker" name="goal_review_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="<?php echo $goal_review_date; ?>"></p>
 </div>
-<input type="submit" name="Update" value="Update"></p>
+<button class="btn btn-lg btn-success" type="submit" name="Update" value="Update">Submit Revision</button>
 </form>
 </div>
 </div>
 
 
 <!-- Right -->
-<div class="col-md-6">
-<h3>Add Short Term Objective</h3>                 
-<?php if($goal_row['description'] != "") {
-	do {
-    echo "<p><label>Objective</label></p>" . "<p>" . $goal_row['description'] . "</p>";
-    } while ($goal_row = mysql_fetch_array($goal_result));
-}
-?>                             
+<div class="col-md-4">
 <!-- BEGIN add short term objective -->
 
-
-<form name="add_objective" enctype="multipart/form-data" action="<?php echo IPP_PATH . "add_objectives.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+<h3>Add an Objective</h3>
+<form name="add_objective" enctype="multipart/form-data" action="<?php echo IPP_PATH . "add_objective_receipt.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
 <div class="form-group">
 
 
@@ -533,24 +542,40 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
 <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
 <input type="hidden" name="lto" value="<?php echo $goal_id; ?>">
 <input type="hidden" name="add_objective" value="1">
+<input type="hidden" name="goal" value="<?php echo $goal; ?>">
+<input type="hidden" name="student_first_name" value="$student_row['first_name']">
+<input type="hidden" name="student_last_name" value="$student_row['last_name']">
 <!-- End Hidden -->
 
 <div class="form-group">
 <label>Objective</label>
-<textarea spellcheck="true" class="form-control" spellcheck="true" spellcheck="true" name="description" tabindex="1" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['goal_description'])) echo $_POST['goal_description']; ?></textarea></p>
+<textarea placeholder="<?php echo $student_row['first_name'];?> will ... " required spellcheck="true" class="form-control" spellcheck="true" spellcheck="true" name="objective" tabindex="1" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['objective'])) echo $_POST['objective']; ?></textarea>
 <label>Review Date (YYYY-MM-DD)</label>
-<input type="datepicker" class="form-control datepicker" name="goal_review_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" tabindex="2" name="review_date" value="<?php if(isset($_POST['review_date'])) echo $_POST['review_date']; ?>">
+<input required type="datepicker" class="form-control datepicker" name="objective_review_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" tabindex="2" value="<?php if(isset($_POST['review_date'])) echo $_POST['review_date']; ?>">
 <label>Assessment Procedure</label>
-<textarea class="form-control" spellcheck="true" spellcheck="true" name="assessment_procedure" tabindex="3" cols="35" rows="3" wrap="soft"><?php if(isset($_POST['assessment_procedure'])) echo $_POST['assessment_procedure']; ?></textarea></p>
+<textarea required class="form-control" spellcheck="true" spellcheck="true" name="assessment_procedure" tabindex="3" cols="35" rows="3" wrap="soft"><?php if(isset($_POST['assessment_procedure'])) echo $_POST['assessment_procedure']; ?></textarea></p>
 <label>Strategies</label>
-<textarea class="form-control" spellcheck="true" spellcheck="true" name="strategies" tabindex="4" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['strategies'])) echo $_POST['strategies']; ?></textarea>
+<textarea required class="form-control" spellcheck="true" spellcheck="true" name="strategies" tabindex="4" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['strategies'])) echo $_POST['strategies']; ?></textarea>
 <label>Progress Review</label>
-<textarea class="form-control" spellcheck="true" spellcheck="true" name="results_and_recommendations" tabindex="5" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['results_and_recommendations'])) echo $_POST['results_and_recommendations']; ?></textarea></p>
+<textarea class="form-control" placeholder="Maybe not yet." spellcheck="true" spellcheck="true" name="results_and_recommendations" tabindex="5" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['results_and_recommendations'])) echo $_POST['results_and_recommendations']; ?></textarea></p>
 </div>
-<input type="submit" tabindex="6" name="Add" value="Add">
+<button class="btn btn-lg btn-success" type="submit" tabindex="6" name="Add" value="Add">Add Objective</button>
 </div>
 </form>
+
+
+        
+
 </div> <!-- end column -->
+<div class="col-md-4">
+<h3>Current Objectives</h3>                 
+<?php if($goal_row['description'] != "") {
+	do {
+    echo "<p><label>Objective</label></p>" . "<p>" . $goal_row['description'] . "</p>";
+    } while ($goal_row = mysql_fetch_array($goal_result));
+}
+?>                             
+</div><!-- end third column -->
 </div> <!-- end row -->
 </div>
     <?php print_complete_footer(); ?>
