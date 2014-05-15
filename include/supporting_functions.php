@@ -199,7 +199,7 @@ function print_datepicker_depends() {
 	$print_depends= <<<EOF
 	<!-- Example Invokation of Datepicker -->
 	<!-- input type=datepicker name="review_date" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd"  -->
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" href="./css/jquery-ui2.css">
 	<script src="js/jquery-1.10.2.js"></script>
 	<script src="js/jquery-ui-1.10.4.custom.js"></script>
 	</script>

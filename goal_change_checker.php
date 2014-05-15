@@ -38,6 +38,13 @@ if( $permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NUL
     require(IPP_PATH . 'security_error.php');
     exit();
 }
+$our_permission = getStudentPermission($student_id);
+if($our_permission == "WRITE" || $our_permission == "ASSIGN" || $our_permission == "ALL") {
+    //we have write permission.
+    $have_write_permission = true;
+}  else {
+    $have_write_permission = false;
+}
 $student_first_name = $_POST['student_first_name'];
 $student_last_name = $_POST['student_last_name'];
 $student_id = $_POST['student_id'];
@@ -74,19 +81,16 @@ print_html5_primer();
 </head>
 <body>
 <?php print_student_navbar($student_id, $student_first_name . " " . $student_last_name); ?>
-
+<?php print_jumbotron_with_page_name("Goal Revision Submitted", $student_first_name . " " . $student_last_name, $our_permission); ?>
 <div class="container">
-<h1>Form Submission Receipt: <small>Goal Revision</small></h1>
 <?php echo $error_message; ?>
 <div class="alert alert-success id="successful_query">Your revision has been recorded successfully.<button type="button" class="close" data-dismiss="alert">&times;</button></div>
+<div class="container">
 
-<div class="well">
-<p><em><?php echo $student_first_name . " " . $student_last_name; ?></em><p>
-<hr>
-<p><em>Goal Area</em>: <?php echo $area; ?></p>
-<p><em>Goal</em>: <?php echo $goal; ?></p>
-<p><em>Review Date</em>: <?php echo $review_date; ?></p>
-</div>
+<h2><small>Goal Area</small> <?php echo $area; ?></h2>
+<h2><small>Goal</small> <?php echo $goal; ?></h2>
+<h2><small>Review Date</small> <?php echo $review_date; ?></h2>
+
 <a class="btn btn-lg btn-warning" href="<?php echo "add_objectives.php?student_id=" . $student_id . "&lto=" . $goal_id; ?>">Edit</a>&nbsp;<a class="btn btn-lg btn-success" href="<?php echo "long_term_goal_view.php?student_id=" . $student_id ; ?>">Return to Goals and Objectives</a>
 <?php 
 if ($error_message) {

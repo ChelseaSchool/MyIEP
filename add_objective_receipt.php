@@ -100,11 +100,11 @@ else {
 
 ?>
 
-<h2>Goal <small><?php echo $goal; ?></small></h2>
-<h2>Objective <small><?php echo $objective; ?></small></h2>
-<h2>Review Date <small><?php echo $review_date; ?></small></h2>
-<h2>Strategies <small><?php echo $strategies; ?></small></h2>
-<h2>Assessment Procedures <small><?php echo $assessment; ?></small></h2>
+<h2><small>Goal</small> <?php echo $goal; ?></h2>
+<h2><small>Objective</small> <?php echo $objective; ?></h2>
+<h2><small>Review Date </small><?php echo $review_date; ?></h2>
+<h2><small>Strategies</small> <?php echo $strategies; ?></h2>
+<h2><small>Assessment Procedures</small> <?php echo $assessment; ?></h2>
 
 
 <a class="btn btn-lg btn-warning" href="<?php echo "add_objectives.php?student_id=" . $student_id . "&lto=" . $goal_id; ?>">Edit</a>&nbsp;<a class="btn btn-lg btn-success" href="<?php echo "long_term_goal_view.php?student_id=" . $student_id ; ?>">Return to Goals and Objectives</a>

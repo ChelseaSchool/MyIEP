@@ -289,7 +289,6 @@ if($student_id) {
 
 //last thing...add an instructional note:
 
-$system_message = $system_message . "<BR>Please add short term objectives to achieve this goal.<BR>Click the done button when done adding objectives.<BR>";
 
 /*************************** popup chooser support function ******************/
     function createJavaScript($dataSource,$arrayName='rows'){
@@ -474,13 +473,13 @@ $system_message = $system_message . "<BR>Please add short term objectives to ach
          
       </div>
     </div>   
-	
+<?php print_jumbotron_with_page_name("Revise Goal", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission);?>	
 	
 	
     <div class="container">
 <div class="row">
 
-<h1>Modify Goal <?php echo "<small>" . $student_row['first_name'] . " " . $student_row['last_name']. "</small>"; ?></h1>
+
 <p><?php if ($system_message) { echo $system_message;} ?></p>
 
 </div>
@@ -521,7 +520,7 @@ $goal=$goal_row['description'];
 <label>Goal</label></p>
 <textarea spellcheck="true" class="form-control" name="goal_text" spellcheck="true" cols="45" rows="3" wrap="soft"><?php echo $goal_row['goal']; ?></textarea></p>
 <label>Review Date</label>
-<input class="form-control datepicker" type="datepicker" id="datepicker" name="goal_review_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="<?php echo $goal_review_date; ?>"></p>
+<input class="form-control datepicker" autocomplete="off" type="datepicker" id="datepicker" name="goal_review_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="<?php echo $goal_review_date; ?>"></p>
 </div>
 <button class="btn btn-lg btn-success" type="submit" name="Update" value="Update">Submit Revision</button>
 </form>
@@ -551,7 +550,7 @@ $goal=$goal_row['description'];
 <label>Objective</label>
 <textarea placeholder="<?php echo $student_row['first_name'];?> will ... " required spellcheck="true" class="form-control" spellcheck="true" spellcheck="true" name="objective" tabindex="1" cols="40" rows="3" wrap="soft"><?php if(isset($_POST['objective'])) echo $_POST['objective']; ?></textarea>
 <label>Review Date (YYYY-MM-DD)</label>
-<input required type="datepicker" class="form-control datepicker" name="objective_review_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" tabindex="2" value="<?php if(isset($_POST['review_date'])) echo $_POST['review_date']; ?>">
+<input required type="datepicker" autocomplete="off" class="form-control datepicker" name="objective_review_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" tabindex="2" value="<?php if(isset($_POST['review_date'])) echo $_POST['review_date']; ?>">
 <label>Assessment Procedure</label>
 <textarea required class="form-control" spellcheck="true" spellcheck="true" name="assessment_procedure" tabindex="3" cols="35" rows="3" wrap="soft"><?php if(isset($_POST['assessment_procedure'])) echo $_POST['assessment_procedure']; ?></textarea></p>
 <label>Strategies</label>
