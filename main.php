@@ -14,13 +14,15 @@ $MINIMUM_AUTHORIZATION_LEVEL = 100;
 if(isset($system_message)) $system_message = $system_message;
 else $system_message = "";
 
-define('IPP_PATH','./');
+define('IPP_PATH', './');
 
 /* eGPS required files. */
 require_once(IPP_PATH . 'etc/init.php');
 require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
-if ((int)phpversion() < 5) { require_once(IPP_PATH . 'include/fileutils.php'); } //only for pre v5
+if ((int)phpversion() < 5) {
+    require_once(IPP_PATH . 'include/fileutils.php'); 
+} //only for pre v5
 require_once(IPP_PATH . 'include/log.php');
 //require_once(IPP_PATH . 'include/navbar.php');
 require_once(IPP_PATH . 'include/supporting_functions.php');
@@ -35,19 +37,21 @@ header('Pragma: no-cache'); //don't cache this page!
 //$szLogin = mysql_real_escape_string($_POST['LOGIN_NAME']);
 //$szPassword = mysql_real_escape_string($_POST['PASSWORD']);
 
-if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
-    if(!validate( $_POST['LOGIN_NAME'] ,  $_POST['PASSWORD'] )) {
+if (isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
+    if (!validate( $_POST['LOGIN_NAME'] ,  $_POST['PASSWORD'] )) {
         $system_message = $system_message . $error_message;
-        if(isset($_SESSION['egps_username'])) IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
-        else IPP_LOG($system_message,'no session','ERROR');
+        if (isset($_SESSION['egps_username'])) 
+            IPP_LOG($system_message, $_SESSION['egps_username'], 'ERROR');
+        else IPP_LOG($system_message, 'no session', 'ERROR');
         require(IPP_PATH . 'index.php');
         exit();
     }
 } else {
     if(!validate()) {
         $system_message = $system_message . $error_message;
-        if(isset($_SESSION['egps_username'])) IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
-        else IPP_LOG($system_message,"no session",'ERROR');
+        if (isset($_SESSION['egps_username'])) 
+            IPP_LOG($system_message, $_SESSION['egps_username'], 'ERROR');
+        else IPP_LOG($system_message, "no session", 'ERROR');
         require(IPP_PATH . 'index.php');
         exit();
     }
@@ -74,16 +78,6 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
 
     <!-- Custom styles for this template -->
     <link href="css/jumbotron.css" rel="stylesheet">
-
-    <!-- Just for debugging purposes. Don't actually copy this line! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-   
   </head>
 
   <body>
@@ -91,7 +85,8 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <button type="button" class="navbar-toggle" 
+            data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -110,7 +105,8 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
              
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Navigation <b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle" 
+                data-toggle="dropdown">Navigation <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="./manage_student.php">Students</a></li>
                 <li class="divider"></li>
@@ -144,25 +140,20 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
     <div class="jumbotron">
       <div class="container">
         <h1>Welcome to MyIEP</h1>
-        <p>MyIEP is a Web-based IEP Management system under active development by students at <a href="http://chelseaschool.edu">Chelsea School</a> in Hyattsville, MD.</p>
+        <p>MyIEP is a Web-based IEP Management system under active development by students at 
+            <a href="http://chelseaschool.edu">Chelsea School</a> in Hyattsville, MD.</p>
         <p>&copy; 2014 Chelsea School - <a href="http://www.gnu.org/licenses/gpl-2.0.html">GPLv2</a>.</p>
         <p><a class="btn btn-primary btn-lg" href="about.php" role="button">Learn More &raquo;</a></p>
       </div>
     </div>
-
-
-
-
-
-
     <div class="container">
-    <?php if ($system_message) 
-    {
-    	echo "<p>" . $system_message . "</p>";
-    } 
+    <?php if ($system_message) {
+    	echo "<p>" . $system_message . "</p>";} 
     ?>
       <div class="alert alert-block alert-info"><a href="#" class="close" data-dismiss="alert">&times;</a>
-      <strong>Note</strong>: Access to the following sections is restricted. All areas are displayed here; as you explore keep in mind that you won't be able to access some areas. Please do contact support if you're blocked from a necessary area.
+      <strong>Note</strong>: Access to the following sections is restricted. 
+        All areas are displayed here; as you explore keep in mind that you won't be able to access some areas.
+         Please do contact support if you're blocked from a necessary area.
       </div>
       
       <p></p>
