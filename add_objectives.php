@@ -101,12 +101,12 @@ if($our_permission == "WRITE" || $our_permission == "ASSIGN" || $our_permission 
 //see if we are adding a goal
 if(isset($_POST['add_goal']) && $have_write_permission) {
 
-    if(!isset($_POST['description']) || $_POST['description'] == "") {
+    if(!isset($_POST['goal_description']) || $_POST['goal_description'] == "") {
         $system_message = $system_message . "You must supply a description of this goal<BR>";
         header("Location: add_goal_1.php?student_id=$student_id&MESSAGE=$system_message");
         exit();
     }  else {
-      $description=strip_tags($_POST['description']);
+      $description=strip_tags($_POST['goal_description']);
       //$description=eregi_replace("\r\n",' ',$description);
       //$description=eregi_replace("\r",' ',$description);
       //$description=eregi_replace("\n",' ',$description);
@@ -122,7 +122,7 @@ if(isset($_POST['add_goal']) && $have_write_permission) {
         $regexp = '/^\d\d\d\d-\d\d?-\d\d?$/';
         if(!preg_match($regexp,$_POST['review_date'])) {
           $system_message = $system_message . "Date must be in YYYY-MM-DD format<BR>";
-          header("Location: " . IPP_PATH . "add_goal_1.php?goal_area=" . $_POST['goal_area'] . "&review_date=" . $_POST['review_date'] . "&description=" .  $_POST['description'] . "&MESSAGE=" . $system_message . "&student_id=" . $student_id);
+          header("Location: " . IPP_PATH . "add_goal_1.php?goal_area=" . $_POST['goal_area'] . "&review_date=" . $_POST['review_date'] . "&description=" .  $_POST['goal_description'] . "&MESSAGE=" . $system_message . "&student_id=" . $student_id);
         }
         else {
             $area="";

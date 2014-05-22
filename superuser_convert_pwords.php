@@ -187,7 +187,6 @@ $(document).ready(function()
         <h1>Mass Password Hasher<small>&nbsp; There is no undo!</small></h1> 
           <a class="btn btn-lg btn-primary" href="superuser_tools.php" role="button">Return to Admin Tools &raquo;</a>
          <h2>Logged in as: <small><?php echo $_SESSION['egps_username']; ?> : Restricted</small></h2>
-        </p>
       </div><!-- /container -->
 </div> <!-- /jumbotron -->
 

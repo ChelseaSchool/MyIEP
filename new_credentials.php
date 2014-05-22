@@ -108,12 +108,14 @@ human_validator($calculated_sum);
        
         
  <!-- End Navbar -->
-
 <div class="jumbotron">
+<div class="container">
 <h1>Password Reset Request</h1>
-<h2>User Validation</h2>       
+<h2>User Validation</h2> 
+</div>      
 </div><!-- End Jumbotron -->
 <div class="container">
+
 <form method="post" name="person_confirmer" id="confirmer" role="form" enctype="multipart/form-data" action="new_credentials_receipt.php" method="post">
 <input type="datetime" hidden name="date" required value="<?php echo date("Y-M-d");?>">
 <input type="hidden" name="client_address" required value="<?php echo $_SERVER['remote_addr']; ?>">
