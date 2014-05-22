@@ -447,8 +447,104 @@ $_SESSION = array(); // Destroy the variables.
          }
     }
     
+function GenerateHash($password="") {
+    require_once 'password.php';
+    $hash = password_hash($password, PASSWORD_BCRYPT);
+    return $hash;
+}
 
- 
+function ValidateHash($password="", $hash="") {
+    require_once 'password.php';
+    $verify=password_verify($password, $hash);
+    return $verify;
+}
+
+
+
+    function new_validate($szLogin='',$szPassword='') {
+        //check username and password against user database
+        //returns TRUE if successful or FALSE on fail.
+        //if FALSE returns $error_message
+        //session_start must be called prior to this function.
+        global $error_message, $mysql_user_select_login, $mysql_user_select_password, $mysql_user_table, $mysql_user_append_to_login,$IPP_TIMEOUT;
+    
+        $error_message = "";
+        //start session...
+        //session_cache_limiter('private'); //IE6 sucks
+        session_cache_limiter('nocache');
+        if(session_id() == "") session_start();
+    
+        //we must double login for IPP
+        //if(!isset($_SESSION['IPP_double_login'])) return FALSE;
+    
+        //check if we already have registered session info
+        //for login and passwd.
+        if(!isset($_SESSION['IPP_double_login'])) {
+            if(!register($szLogin,$szPassword)) {
+                $error_message = $error_message;
+                return FALSE;
+            }
+        }
+    
+        //connect DB:
+    
+        if(!connectIPPDB()) {
+            $error_message = $error_message; //just to remember we need this
+            return FALSE;
+        }
+    
+        //check session logged in...
+        $query = "SELECT * FROM logged_in WHERE ipp_username = '" . $_SESSION['egps_username'] . "' AND last_ip = '" . $_SERVER["REMOTE_ADDR"] . "' AND (time - NOW()) > 0";
+        $result = mysql_query($query);
+        if(!$result) {
+            $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$query'<BR>";
+            return FALSE;
+        }
+    
+        if(mysql_num_rows($result) <= 0 ) {
+            $error_message = "Session has expired<BR>";
+            logout();
+            return FALSE;
+        }
+    
+        //check if we have a valid login/password combination.
+    
+        if(!connectUserDB()) {
+            $error_message = $error_message; //just to remember we need this
+            return FALSE;
+        }
+    
+        $query = "SELECT * FROM $mysql_user_table WHERE (" . $mysql_user_select_login . "='" . $_SESSION['egps_username'] . $mysql_user_append_to_login . "' or " . $mysql_user_select_login . "='" . $_SESSION['egps_username'] . "') and " . $mysql_user_select_password . "='" . $_SESSION['password'] . "' AND aliased_name IS NULL";
+        $result = mysql_query($query);
+        if(!$result) {
+            $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$query'<BR>";
+            return FALSE;
+        }
+    
+        //check if we got no result (no user with that password)
+        if(mysql_num_rows($result) <= 0 ) {
+            $error_message = "Login failed: Unknown username and password<BR>";
+            return FALSE;
+        }
+    
+        if(!connectIPPDB()) {
+            $error_message = $error_message; //just to remember we need this
+            return FALSE;
+        }
+    
+        //update the timeout.
+        $query = "UPDATE logged_in SET TIME=(NOW()+ INTERVAL " . $IPP_TIMEOUT . " MINUTE) where session_id='" . session_id() . "'";
+        $result = mysql_query($query);
+        if(!$result) {
+            $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$query'<BR>";
+            return FALSE;
+        }
+    
+        //******* authorized from now on! *******
+        return TRUE;
+    
+    }
+    
 
  	
  
