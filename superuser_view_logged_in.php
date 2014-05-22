@@ -27,7 +27,7 @@ require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
 require_once(IPP_PATH . 'include/supporting_functions.php');
-
+require_once 'include/page_troubleshoot.php';
 header('Pragma: no-cache'); //don't cache this page!
 
 if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
@@ -64,11 +64,12 @@ if($permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NULL
     require(IPP_PATH . 'security_error.php');
     exit();
 }
- if (isset($post['delete']) && isset($_POST['session']))
- $session_id=get_post('session_id');
- $query = "DELETE from logged_in WHERE session_id='$session_id'";
- if (!mysql_query($query)) {
+ if (isset($_POST['delete']) && isset($_POST['session'])) {
+ 	$session_id=$_POST['session'];
+ 	$query = "DELETE from logged_in WHERE session_id='$session_id'";
+	 if (!mysql_query($query)) {
  		$system_message = "Delete Failed: $query<br>" . mysql_error() . "<br>";
+	}
  }
 ?>
 <html lang="en">
@@ -137,7 +138,7 @@ for ($j = 0; $j < $rows ; ++$j)
 	<tr>
 		<td>{$row[0]}</td>
 		<td>{$row[1]}</td>
-	 	<td><input type="hidden" name="session" value="$session">{$row[3]}</td>
+	 	<td><input type="hidden" name="session" value="$session">{$row[2]} <input type="hidden" name="delete" value="True"></td>
 	 	<td>{$row[3]}</td>
 	 	<td>{$row[4]}</td>
 	 	
