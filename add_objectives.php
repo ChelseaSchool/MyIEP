@@ -135,7 +135,7 @@ if(isset($_POST['add_goal']) && $have_write_permission) {
                 if(!$area_result) $area="Other";
                 else { $area_row=mysql_fetch_array($area_result); $area = $area_row['name'];}
             }
-            $insert_goal_query="INSERT INTO long_term_goal (goal,student_id,review_date,area) VALUES ('$description',$student_id,'" . mysql_real_escape_string($_POST['review_date']) . "','" . mysql_real_escape_string($area) . "')";
+            $insert_goal_query="INSERT INTO long_term_goal (goal,student_id,review_date,area) VALUES ('$description',$student_id,'" . mysql_real_escape_string($_POST['review_date']) . "','" . mysql_real_escape_string($_POST['goal_area']) . "')";
             $insert_goal_result = mysql_query($insert_goal_query);
             if(!$insert_goal_result) {
                 $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$insert_goal_query'<BR>";
@@ -500,9 +500,11 @@ if($student_id) {
 <!--  End hidden -->
 <div class="form-group">
 <label>Goal Area</label>
+
 <select required class="form-control" name="goal_area" placeholder="Choose Goal Area"  value="<?php echo $goal_row['area']; ?>">
 
 <?php   
+
 $area_query = "SELECT * FROM `typical_long_term_goal_category` WHERE `is_deleted` = \"N\" ORDER BY `typical_long_term_goal_category`.`name` ASC";
 $area_result = mysql_query($area_query);
 if(!$area_result) {
@@ -512,9 +514,14 @@ if(!$area_result) {
 }
 $area_result_row = mysql_fetch_array($area_result);
 while ($area_result_row=mysql_fetch_array($area_result)) {
-    	echo "<option>" . $area_result_row['name'] . "</option>\n";
+		if ($area_result_row['name'] != $goal_row['area']) {
+    		echo "<option value=\"" . $area_result_row['name'] . "\">" . $area_result_row['name'] . "</option>\n";
+    	}
+    	else 
+    		echo "<option selected value=\"" . $area_result_row['name'] . "\">" . $area_result_row['name'] . "</option>\n";
+    		
 }
-$goal=$goal_row['description'];
+//$goal=$goal_row['description'];
 ?>
 </select> 
 <label>Goal</label></p>
