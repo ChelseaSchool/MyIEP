@@ -91,7 +91,7 @@ print_html5_primer();
 <h2><small>Goal</small> <?php echo $goal; ?></h2>
 <h2><small>Review Date</small> <?php echo $review_date; ?></h2>
 
-<a class="btn btn-lg btn-warning" href="<?php echo "add_objectives.php?student_id=" . $student_id . "&lto=" . $goal_id; ?>">Edit</a>&nbsp;<a class="btn btn-lg btn-success" href="<?php echo "long_term_goal_view.php?student_id=" . $student_id ; ?>">Return to Goals and Objectives</a>
+<a class="btn btn-md btn-default" href="<?php echo "add_objectives.php?student_id=" . $student_id . "&lto=" . $goal_id; ?>">Back</a>&nbsp;<a class="btn btn-md btn-success" href="<?php echo "long_term_goal_view.php?student_id=" . $student_id ; ?>">Return to Goals and Objectives</a>
 <?php 
 if ($error_message) {
     echo $error_message;
