@@ -109,28 +109,7 @@ You should have received a copy of the GNU General Public License along with thi
 * @todo
 * 1. Add are you sure alert and ask for confirmation for logout
 */
-/*    function logout() {
-        
-        if(!connectIPPDB()) {
-             $error_message = $error_message; //just to remember we need this
-             return FALSE;
-         }
-         $query = "DELETE FROM logged_in WHERE session_id=session_id()";
-         $result = mysql_query($query);
-         if(!$result) {
-            $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$query'<BR>";
-            return FALSE;
-         }
-         //if (!session_id()) {
-         //	session_start();
-         //}
-         unset($_SESSION['egps_username']);
-         unset($_SESSION['password']);
-         unset($_SESSION['IPP_double_login']);
-         $_SESSION = array(); // Destroy the variables.
-         session_destroy();
-    }
-*/
+
     function logout() {
     
     	$session_id=session_id();
