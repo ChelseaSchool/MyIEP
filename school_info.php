@@ -84,9 +84,9 @@ function parse_submission()
     if(!$_POST['school_address']) return "You must supply a school address<BR>";
     if(!$_POST['school_colour']) $_POST['school_colour'] = "#FFFFFF";
 
-    //check that colour is the correct pattern...
+    //check that color is the correct pattern...
     $regexp = '/^#[0-9a-fA-F]{6}$/';
-    if(!preg_match($regexp,$_POST['school_colour'])) return "Colour must be in '#RRGGBB' format<BR>";
+    if(!preg_match($regexp,$_POST['school_colour'])) return "Color must be in '#RRGGBB' format<BR>";
 
     return NULL;
 }
@@ -194,7 +194,7 @@ print_html5_primer();
 
                         //print the header row...
 
-                        echo "<tr><th>Select</th><th>Code</th><th>School Name</th><th>School Address</th><th>School Colour</th></tr>\n";
+                        echo "<tr><th>Select</th><th>Code</th><th>School Name</th><th>School Address</th><th>School Color</th></tr>\n";
                         while ($school_row=mysql_fetch_array($school_result)) { //current...
                             echo "<tr>\n";
                             echo "<td><input type=\"checkbox\" name=\"" . $school_row['school_code'] . "\"></td>";
@@ -231,7 +231,8 @@ print_html5_primer();
 
                         <form name="add_school" enctype="multipart/form-data" action="<?php echo IPP_PATH . "school_info.php"; ?>" method="post">
                         <input type="hidden" name="add_school" value="1">
-                        <div class="form-group"></div>
+                        <div class="form-group">
+  
                          <label>School Code</label>
                          <input class="form-control" type="text" tabindex="1" name="school_code" value="<?php if(isset($_POST['school_code']))  echo $_POST['school_code']; ?>" size="30" maxsize="254">
 
@@ -241,15 +242,16 @@ print_html5_primer();
 
                            <label>School Address</label>
                           <textarea class="form-control" required spellcheck="true" name="school_address" tabindex="3" cols="30" rows="3" wrap="soft"><?php if(isset($_POST['school_address'])) echo $_POST['school_address']; ?></textarea>
-
-                           <label>School Colour</label>
-                           <INPUT class="form-control" TYPE="color" NAME="school_colour" MAXLENGTH="7" tabindex="4" SIZE="7" value="<?php if(isset($_POST['school_colour']))echo $_POST['school_colour']; ?>">
-
-                          <button type="submit" tabindex="5" value="add" value="add">Add School</button>
+                        </div>
+                        <p>
+                           <label>School Color</label>
+                           <INPUT TYPE="color" NAME="school_colour" MAXLENGTH="7" tabindex="4" SIZE="7" value="<?php if(isset($_POST['school_colour']))echo $_POST['school_colour']; ?>">
+                           </p> 
+                          <button class="btn btn-default" type="submit" tabindex="5" value="add" value="add">Add School</button>
                         </form>
                         <!-- END add school -->
 
-                        </div>
+                       </div>
                         </td>
                     </tr>
                 </table></center>
