@@ -277,7 +277,7 @@ while ($area_result_row=mysql_fetch_array($area_result)) {
                            <input required class="form-control datepicker" type="datepicker" tabindex="2" size="30" name="review_date" id="datepicker" data-provide="datepicker" data-date-format="yy-mm-dd">
                          
                          </div>
-                         <button class="pull-right btn btn-lg btn-regular" type="submit" tabindex="3" name="Next" value="Next">Continue</button>
+                         <button class="pull-right btn btn-lg btn-success" type="submit" tabindex="3" name="Next" value="Next">Continue</button>
                          
                        
                         </form>
