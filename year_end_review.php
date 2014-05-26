@@ -1,7 +1,7 @@
 <?php
 
 /** @file
- * @brief 	year-end review
+ * @brief 	progress review
  * @copyright 	2014 Chelsea School 
  * @copyright 	2005 Grasslands Regional Division #6
  * @license		This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
@@ -18,17 +18,7 @@
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100; //everybody
 
-/**
- * year_end_review.php
- *
- * Copyright (c) 2005 Grasslands Regional Division #6
- * All rights reserved
- *
- * Created: March 12, 2006
- * By: M. Nielsen
- * Modified:
- *
- */
+
 
 /*   INPUTS: $_GET['student_id'] || $_PUT['student_id']
  *
@@ -178,7 +168,7 @@ class year_end_review extends FPDF  //all this and OO too weeeeeeee
          //Arial italic 8
          $this->SetFont('Arial','I',8);
          //Page number
-         $this->Cell(0,3,'IPP - Year End Summary for ' . $student_row['first_name'] . ' ' . $student_row['last_name'] . ' (Page '.$this->PageNo().'/{nb})',0,1,'C');
+         $this->Cell(0,3,'IEP Progress Summary for ' . $student_row['first_name'] . ' ' . $student_row['last_name'] . ' (Page '.$this->PageNo().'/{nb})',0,1,'C');
 
          //output a little information on this
          $this->SetFont('Arial','i',6);
@@ -199,7 +189,7 @@ class year_end_review extends FPDF  //all this and OO too weeeeeeee
 
   $pdf->SetFont('Times','B',15);
   $pdf->SetTextColor(220,50,50); //set the colour a loverly redish
-  $pdf->Cell(0,5,'IPP - Year End Summary for ' . $student_row['first_name'] . ' ' . $student_row['last_name'],0,1,'C');
+  $pdf->Cell(0,5,'IEP Progress Summary for ' . $student_row['first_name'] . ' ' . $student_row['last_name'],0,1,'C');
   //Set colour back
   $pdf->Ln(10);
   $pdf->SetTextColor(0,0,0);  // Well, I'm back in black, yes I'm back in black! Ow!
@@ -378,7 +368,7 @@ header("Cache-Control: ");
 
 header("Content-Length: " . strlen($pdf->Output("ignored",'S')));
 header("Content-type: application/pdf");
-$filename="Year End Review";
+$filename="Progress Review";
 header("Content-disposition: $attachment filename=\"{$filename}\"");
 
 $pdf->Output();

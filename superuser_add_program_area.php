@@ -162,19 +162,20 @@ if(!$area_result) {
 
                         
                         <!-- BEGIN add area -->
-                        <h2>Add Goal Area <small>Feature Not Yet Available</small></h2>
+                        <h2>Add Goal Area <small>Scroll down for existing goal areas</small></h2>
                         <form name="addarea" enctype="multipart/form-data" action="<?php echo IPP_PATH . "superuser_add_program_area.php"; ?>" method="get">
                                <input type="hidden" name="addarea" value="1">
                                <div class="form-group">
                                <label>Goal Area</label>
                                <input class="form-control" spellcheck="true" placeholder="Enter new goal area." type="text" name="category">
-                               <button type="submit" class="btn btn-default">Add Goal Area</button>
                                </div>
+                               <button type="submit" class="btn btn-success">Add Goal Area</button>
+                               
                          </form>
                         <!-- END add area -->
 						
                         <!-- BEGIN area table -->
-                        <h2>Program Areas</h2>
+                        <h2>Program Areas <small>Delete not yet available</small></h2>
                         <form name="arealist" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "superuser_add_program_area.php"; ?>" method="get">
                       
 						<table class="table table-striped table-hover">
@@ -183,7 +184,7 @@ if(!$area_result) {
                         echo "<tr><th>Select</th><th>Goal Area</th><th>Deleted</th></tr>\n";
                         while ($area_row=mysql_fetch_array($area_result)) { //current...
                             echo "<tr>\n";
-                            echo "<td>\n\t<button type=\"btn btn-small btn-regular\">Delete</button>";
+                            echo "<td>\n\t<button class=\"btn btn-small btn-danger\">Delete</button>";
                             echo "\n\t<input type=\"text\" hidden name=\"area\" value=\"" . $area_row['name'] . "\">";
                             
                             echo "<td>" . $area_row['name'] . "</td>";

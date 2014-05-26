@@ -148,7 +148,6 @@ if (!$school_result) {
 print_html5_primer();
 ?>
 
-    <TITLE><?php echo $page_title; ?></TITLE>
 
     <script language="javascript" src="<?php echo IPP_PATH . "include/picker.js"; ?>"></script>
     <SCRIPT LANGUAGE="JavaScript">
@@ -252,24 +251,7 @@ print_html5_primer();
                         <!-- END add school -->
 
                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-              <?php navbar("main.php"); ?></td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table>
-        <center></center>
+
+        <?php print_bootstrap_js();?>
     </BODY>
 </HTML>

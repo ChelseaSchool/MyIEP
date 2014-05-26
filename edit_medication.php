@@ -167,7 +167,7 @@ if(isset($_POST['edit_medication']) && $have_write_permission) {
 
 
 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="./css/jquery-ui2.css">
 <script src="js/jquery-2.1.1.js"></script>
 <script src="js/smoothness/jquery-ui-1.10.4.custom.js"></script>
 

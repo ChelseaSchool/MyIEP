@@ -353,7 +353,7 @@ $("#filter-clear").click(function() {
 <script>
 $(document).ready (function(){
 	$(.alert).hide();
-}
+})
 
 </script>
 <script>
@@ -368,7 +368,9 @@ $(document).ready(function(){
    
 </HEAD>
 <BODY>   	
-<?php echo print_general_navbar(); ?>
+<?php 
+print_general_navbar();
+?>
 <div class="jumbotron"><div class="container">     
 
 <?php if ($system_message) echo $system_message; ?>
@@ -482,13 +484,11 @@ EOF;
         
     
 
-<hr>                      
+<hr>
+<?php print_bootstrap_js();?>                      
 <footer><?php print_complete_footer(); ?></footer>
   
  
-        <?php print_bootstrap_js() ?>
-
-        
 		 
     </BODY>
 </HTML>

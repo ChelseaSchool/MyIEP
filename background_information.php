@@ -1,7 +1,7 @@
 <?php
 
 /** @file
- * @brief 	student demographics
+ * @brief 	student background
  * @copyright 	2014 Chelsea School 
  * @copyright 	2005 Grasslands Regional Division #6
  * @license		This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
@@ -182,17 +182,10 @@ function mysql_enum_values($tableName,$fieldName)
 }
 $enum_options_type = mysql_enum_values("background_info","type");
 
+print_html5_primer();
+print_bootstrap_head();
 ?> 
-<!DOCTYPE HTML>
-<HTML lang=en>
-<HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
-    <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
+
     
     <SCRIPT LANGUAGE="JavaScript">
       function confirmChecked() {
@@ -222,34 +215,30 @@ $enum_options_type = mysql_enum_values("background_info","type");
     </SCRIPT>
 </HEAD>
     <BODY>
+    <?php 
+    print_student_navbar($student_row['first_name'] . " " . $student_row['last_name']);
+    print_jumbotron_with_page_name("Student Background", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission);
+    ?>
+    <div class="container">
         <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
+        
         <tr>
             <td class="shadow-left"></td>
             <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("student_view.php?student_id=$student_id"); ?></center>
-                    </td></tr>
+                <table class="frame" align=center border="0">
+
+                    
                     <tr>
                         <td valign="top">
                         <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+                        <?php if ($system_message) { echo "<center><table><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
 
-                        <center><table><tr><td><center><p class="header">-Background Information (<?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?>)-</p></center></td></tr></table></center>
-                        <BR>
 
                         <!-- BEGIN add info -->
+                        <h2>Add Background Information</h2>
                         <center>
                         <form name="add_background_area" enctype="multipart/form-data" action="<?php echo IPP_PATH . "background_information.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
+                        <table border="0" cellspacing="0" cellpadding ="0">
                         <tr>
                           <td colspan="3">
                           <p class="info_text">Edit and click 'Add'.</p>
@@ -281,9 +270,10 @@ $enum_options_type = mysql_enum_values("background_info","type");
                         <!-- END add info -->
 
                         <!-- BEGIN info table -->
+                        <h2>Background Information</h2>
                         <form spellcheck="true" name="infolist" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "background_information.php"; ?>" method="get">
                         <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
-                        <center><table width="80%" border="0" cellpadding="0" cellspacing="1">
+                        <center><table border="0" cellpadding="0" cellspacing="1">
                         <tr><td colspan="6">Background Information:</td></tr>
                         <?php
                         $bgcolor = "#DFDFDF";
@@ -344,7 +334,11 @@ $enum_options_type = mysql_enum_values("background_info","type");
             <td class="shadow-bottomRight"></td>
         </tr>
         </table> 
-       <?php print_complete_footer(); ?>
+        </div>
+       <?php 
+       print_complete_footer();
+       print_bootstrap_js();
+       ?>
       
     </BODY>
 </HTML>

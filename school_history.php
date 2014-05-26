@@ -45,6 +45,7 @@ require_once(IPP_PATH . 'include/user_functions.php');
 require_once(IPP_PATH . 'include/navbar.php');
 require_once(IPP_PATH . 'include/create_pdf.php');
 require_once(IPP_PATH . 'include/mail_functions.php');
+require_once 'include/supporting_functions.php';
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -401,18 +402,12 @@ if(!$school_result) {
         }
     }
 /************************ end popup chooser support funtion  ******************/
-
+print_html5_primer();
+print_bootstrap_head();
 ?> 
-<!DOCTYPE HTML>
-<HTML lang=en>
-<HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
-    <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
+
+    
+    
     
     <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
     <script language="javascript" src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script>
@@ -449,7 +444,36 @@ if(!$school_result) {
     ?>
 </HEAD>
     <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
+ <?php 
+ print_student_navbar($student_row['first_name'] . " " . $student_row['last_name']);
+ print_jumbotron_with_page_name("School History", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission);
+  ?>
+  <div class="container">
+  <div class="row">
+  
+  <div class="col-md-3">
+  
+  <ul class="nav nav-pills">
+  <li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+      <?php echo "Manage " . $student_row['first_name'] . " " . $student_row['last_name'] . "'s Schools"; ?> <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+      <li><a href="#within">Move Student within this District</a></li>
+      <li><a href="#out">Move Student out of District</a></li>
+      <li><a href="#out">Graduate Student</a></li>
+      <li><a href="#add">Add Out-of-District School to History</a></li>
+      <li><a href="#history">Browse Student's School History</a></li>
+      
+      </ul>
+  </li>
+</ul>
+
+</div>
+  
+   <div class="col-md-9">
+  
+        <table width="80%" class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
         <tr>
           <td class="shadow-topLeft"></td>
             <td class="shadow-top"></td>
@@ -458,27 +482,20 @@ if(!$school_result) {
         <tr>
             <td class="shadow-left"></td>
             <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("student_view.php?student_id=$student_id"); ?></center>
-                    </td></tr>
-                    <tr>
+                <table class="frame" width=80% align=center border="0">
+                   <tr>
                         <td valign="top">
                         <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+                        <?php if ($system_message) { echo "<center><table width=\"100%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
 
-                        <center><table><tr><td><center><p class="header">-School History-<BR>(<?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?>)</p></center></td></tr></table></center>
-                        <BR>
+                        
                         <!-- BEGIN move -->
                         <center>
                         <form name="add_history" enctype="multipart/form-data" action="<?php echo IPP_PATH . "school_history.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
+                        <table border="0" cellspacing="0" cellpadding ="0" width="100%">
                         <tr>
                           <td colspan="3">
-                          <p class="info_text">Move student within the district</p>
+                          <h2><a name="move">Move student within the district</a></h2>
                            <input type="hidden" name="move_to_school" value="1">
                            <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
                           </td>
@@ -513,10 +530,10 @@ if(!$school_result) {
                         <!-- BEGIN move out of district-->
                         <center>
                         <form name="add_history" enctype="multipart/form-data" action="<?php echo IPP_PATH . "school_history.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
+                        <table border="0" cellspacing="0" cellpadding ="0" width="100%">
                         <tr>
                           <td colspan="3">
-                          <p class="info_text">Move out of district/graduate student</p>
+                          <h2><a name="out">Move out of district/graduate student</a></h2>
                            <input type="hidden" name="move_out_of_district" value="1">
                            <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
                           </td>
@@ -542,10 +559,10 @@ if(!$school_result) {
                         <!-- BEGIN add new entry -->
                         <center>
                         <form name="add_history" enctype="multipart/form-data" action="<?php echo IPP_PATH . "school_history.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
+                        <table border="0" cellspacing="0" cellpadding ="0" width="100%">
                         <tr>
                           <td colspan="3">
-                          <p class="info_text">Add an out of district school to the history</p>
+                          <h2><a name="add">Add an out of district school to the history</a></h2>
                            <input type="hidden" name="add_school_history" value="1">
                            <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
                           </td>
@@ -605,8 +622,8 @@ if(!$school_result) {
                         <!-- BEGIN history table -->
                         <form name="schoolhistorylist" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "school_history.php"; ?>" method="get">
                         <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
-                        <center><table width="80%" border="0" cellpadding="0" cellspacing="1">
-                        <tr><td colspan="7">School History (click fields to edit):</td></tr>
+                        <center><table width="100%" border="0" cellpadding="0" cellspacing="1">
+                        <tr><td colspan="7"><h2><a name="history">School History</a> <small>(click fields to edit)</small></h2></td></tr>
                         <?php
                         $bgcolor = "#DFDFDF";
 
@@ -652,7 +669,7 @@ if(!$school_result) {
                         </tr>
                         <?php
                           if($permission_level <= $IPP_MIN_DELETE_SCHOOL_HISTORY && $have_write_permission) {
-                             echo "<tr><td colspan=\"7\" class=\"small_text\"><b>**Note:</b> Deleting the current school will move this students Program Plan to the Archives as s/he will no longer have an active school.</td></tr>";
+                             echo "<tr><td colspan=\"7\"><h3><strong>**Note:</strong> Deleting the current school will move this student's Program Plan to the Archives as s/he will no longer have an active school.</h3></td></tr>";
                           }
                         ?>
                         </table></center>
@@ -679,6 +696,8 @@ if(!$school_result) {
             <td class="shadow-bottomRight"></td>
         </tr>
         </table> 
-        <center></center>
+        <footer><?php print_complete_footer(); ?></footer>
+        </div></div></div>
+        <?php print_bootstrap_js(); ?>
     </BODY>
 </HTML>

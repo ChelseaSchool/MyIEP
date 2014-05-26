@@ -199,7 +199,7 @@ function print_datepicker_depends() {
 	$print_depends= <<<EOF
 	<!-- Example Invokation of Datepicker -->
 	<!-- input type=datepicker name="review_date" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd"  -->
-	<link rel="stylesheet" href="./css/jquery-ui2.css">
+	<link rel="stylesheet" href="./css/smoothness/jquery-ui.css">
 	<script src="js/jquery-1.10.2.js"></script>
 	<script src="js/jquery-ui-1.10.4.custom.js"></script>
 	</script>
@@ -430,47 +430,47 @@ EOF;
 function print_general_navbar() {
 	$general_nav = <<<EOF
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-<div class="container">
-<div class="navbar-header">
-<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-<span class="sr-only">Toggle navigation</span>
-<span class="icon-bar"></span>
-<span class="icon-bar"></span>
-<span class="icon-bar"></span>
-</button>
-<a class="navbar-brand" href="main.php">MyIEP</a>
-</div>
-<div class="navbar-collapse collapse">
-<ul class="nav navbar-nav">
-<li><a href="main.php">Home</a></li>
-<li><a href="sprint_feedback.php">User Feedback</a></li>
-<li><a href="index.php">Logout</a></li>
-<li><a href="about.php">About</a></li>
-<li><a href="help.php">Help</a></li>
-<li><a onclick="history.go(-1);">Back</a></li>
-    
-          <!--<ul class="nav navbar-nav navbar-right">
-            <li><a href="index.php">Logout</a></li>
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="main.php">MyIEP</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="main.php">Home</a></li>
+            <li><a href="about.php">About</a></li>
+                        <li><a href="sprint_feedback.php">Leave Feedback</a></li>
+            <li><a href="help.php">Help</a></li>
+            <li><a href="index.php">Logout</a></li></ul>
+             
+          <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Menu <b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Navigation <b class="caret"></b></a>
               <ul class="dropdown-menu">
+               
                 <li><a href="./manage_student.php">Students</a></li>
                 <li class="divider"></li>
                 <li><a href="change_ipp_password.php">Reset Password</a></li>
                 <li><a href="superuser_add_goals.php">Goals Database</a></li>
-                <li><a href="student_archive.php">Archive</a></li>
-                <li><a href="user_audit.php">Audit</a></li>
+                <li><a href="./student_archive.php">Archive</a></li>
+                <li><a href="./user_audit.php">Audit</a></li>
                 <li><a href="superuser_manage_coding.php">Manage Codes</a></li>
                 <li><a href="school_info.php">Manage Schools</a></li>
                 <li><a href="superuser_view_logs.php">View Logs</a></li>
+                <li><a href="superuser_add_program_area.php">Manage Program Areas</a></li>
+                <li><a href="superuser_view_logged_in.php">Manage Sessions</a></li>
               </ul>
             </li>
-          </ul>-->
+          </ul>
          </div>
-         <!--/.nav-collapse -->
-        
-      </div>
-    </div>
+	 </div>
+	 </div>
+    
 EOF;
 	echo $general_nav;
 }

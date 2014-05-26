@@ -227,19 +227,8 @@ if(!$testing_result) {
         $system_message= $system_message . $error_message;
         IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
 }
-
+print_html5_Primer();
 ?> 
-<!DOCTYPE HTML>
-<HTML lang=en>
-<HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
-    <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
-    
     <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
     <SCRIPT LANGUAGE="JavaScript">
       function confirmChecked() {
@@ -269,39 +258,37 @@ if(!$testing_result) {
 
 
     </SCRIPT>
+<?php print_bootstrap_head();?>
 </HEAD>
     <BODY>
+<?php 
+print_student_navbar($student_row['first_name'] . " " . $student_row['last_name']);
+print_jumbotron_with_page_name("Testing", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission);
+?>
+<div class="container">
+<?php if ($system_message) { echo "<p>" . $system_message . "</p>";} ?>
+
         <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
+        
         <tr>
             <td class="shadow-left"></td>
             <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("student_view.php?student_id=$student_id"); ?></center>
-                    </td></tr>
+                <table class="frame" align=center border="0">
+                    
+                    
                     <tr>
                         <td valign="top">
                         <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
 
-                        <center><table><tr><td><center><p class="header">-Testing to Support Code (<?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?>)-</p></center></td></tr></table></center>
-                        <BR>
+                 
 
                         <!-- BEGIN add new entry -->
+                        <h2>Add a New Entry</h2>
                         <center>
                         <form name="add_testing" enctype="multipart/form-data" action="<?php echo IPP_PATH . "testing_to_support_code.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
                         <table border="0" cellspacing="0" cellpadding ="0" width="80%">
                         <tr>
                           <td colspan="3">
-                          <p class="info_text">Add a new entry</p>
                            <input type="hidden" name="add_testing" value="1">
                            <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
                           </td>
@@ -334,11 +321,11 @@ if(!$testing_result) {
                         </center>
                         <!-- END add new entry -->
 
-                        <!-- BEGIN strength/needs table -->
+                        <!-- Begin Testing History -->
+                        <h2>Testing History</h2>
                         <form spellcheck="true" name="testing" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "testing_to_support_code.php"; ?>" method="get">
                         <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
                         <center><table width="80%" border="0" cellpadding="0" cellspacing="1">
-                        <tr><td colspan="6">Testing to Support Code:</td></tr>
                         <?php
                         $bgcolor = "#DFDFDF";
 
@@ -389,18 +376,15 @@ if(!$testing_result) {
             </td>
             <td class="shadow-right"></td>   
         </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-            <?php navbar("student_view.php?student_id=$student_id"); ?>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
+
+
         </table> 
-        <center></center>
+</div>
+
+<footer><?php print_complete_footer(); ?></footer>
+<?php 
+print_bootstrap_js();
+?>
+        
     </BODY>
 </HTML>

@@ -40,13 +40,9 @@ require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
 require_once(IPP_PATH . 'include/navbar.php');
+require_once 'include/supporting_functions.php';
 
-/** @fn header('Pragma: no-cache')
- *  @brief		PHP sets html header to refuse to be cached
- *  @detail
- *  Outputs html header to refuse cacheing - no copy of the page is to be stored on the client, which is the default.
- *  @todo		Handle headers consistently without messing things up
- */
+
 header('Pragma: no-cache'); //don't cache this page!
 
 //Bounces to login page if auth isn't valid; logs error
@@ -207,18 +203,10 @@ if(!$support_member_result) {
     IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
 }
 
-
+print_html5_primer();
+print_bootstrap_head();
 ?> 
-<!DOCTYPE HTML>
-<HTML lang=en>
-<HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
-    <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
+
     <SCRIPT LANGUAGE="JavaScript">
       function confirmChecked() {
           var szGetVars = "delete_supervisor=";
@@ -246,147 +234,94 @@ if(!$support_member_result) {
       }
     </SCRIPT>
 </HEAD>
-    <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("student_view.php?student_id=$student_id"); ?></center>
-                    </td></tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+<BODY>
+<?php 
+print_student_navbar($student_row['first_name'] . " " . $student_row['last_name']);
+print_jumbotron_with_page_name("Student Case Manager", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission);
+?>
+<div class="container">
+<?php if ($system_message) { echo "<p>" . $system_message . "</p>";} ?>
 
-                        <center><table><tr><td><center><p class="header">-Manage Supervisors (<?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?>)-</p></center></td></tr></table></center>
-                        <BR>
 
-                        <!-- BEGIN add supervisor -->
-                        <center>
-                        <form name="addsupervisor" enctype="multipart/form-data" action="<?php echo IPP_PATH . "supervisor_view.php"; ?>" method="get" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
-                        <tr>
-                          <td colspan="3">
-                          <p class="info_text">Edit and click 'Add'.</p>
-                           <input type="hidden" name="modify_supervisor" value="1">
-                           <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
-                          </td>
-                        </tr>
-                        <tr>
-                            <td valign="bottom" bgcolor="#E0E2F2">Supervisor*</td><td bgcolor="#E0E2F2">
-                            <select name="supervisor">
-                            <option>SELECT</option>
-                            <?php
-                            while ($support_member_row = mysql_fetch_array($support_member_result)) {
-                               echo "<option>" . $support_member_row['egps_username'] . "</option>\n";
-                            }
-                            ?>
-                            </select>
-                            </td>
-                            <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="2"><input type="submit" name="add" value="add"></td>
-                        </tr>
-                        <tr>
-                           <td valign="bottom" bgcolor="#E0E2F2">Position:</td><td bgcolor="#E0E2F2"><input type="text" name="position" value="" size="30"></td>
-                        </tr>
-                        <tr>
-                            <td valign="bottom" align="center" bgcolor="#E0E2F2" colspan="3"><p class="small_text">*Must be present in <?php echo $student_row['first_name'] . " " . $student_row['last_name'] ?>'s <a href="<?php echo IPP_PATH; ?>/modify_ipp_permission.php?student_id=<?php echo $student_id; ?>">support member</a> list</p></td>
-                        </tr>
-                        </table>
-                        </form>
-                        </center>
-                        <!-- END add supervisor -->
+<!-- BEGIN add supervisor -->
+<h2>Modify Case Manager <small>Edit and click 'Submit'</small></h2>
+<form name="addsupervisor" enctype="multipart/form-data" action="<?php echo IPP_PATH . "supervisor_view.php"; ?>" method="get" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+<div class="form-group">                   
+<input type="hidden" name="modify_supervisor" value="1">
+<input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
+<label for supervisor>Supervisor <small>(must be present in <?php echo $student_row['first_name'] . " " . $student_row['last_name'] ?>'s <a href="<?php echo IPP_PATH; ?>/modify_ipp_permission.php?student_id=<?php echo $student_id; ?>">support member</a> list)</small></label>
+<select class="form-control">
+<?php
+while ($support_member_row = mysql_fetch_array($support_member_result)) {
+    echo "<option>" . $support_member_row['egps_username'] . "</option>\n";
+}
+?>
+</select>
 
-                        <!-- BEGIN ipp history table -->
-                        <form name="supervisorhistorylist" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "supervisor_view.php"; ?>" method="get">
-                        <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
-                        <center><table width="80%" border="0">
 
-                        <?php
-                        $bgcolor = "#DFDFDF";
+                        
+<label for position>Position</label>
+<input class="form-control" value="advisor" autocomplete="off" spellcheck="true" placeholder="Position of Case Manager" required type="text" name="position" value="" size="30">
+                      
 
-                        //print the header row...
-                        echo "<tr><td bgcolor=\"#E0E2F2\">&nbsp;</td><td bgcolor=\"#E0E2F2\">UID</td><td align=\"center\" bgcolor=\"#E0E2F2\">Username</td><td align=\"center\" bgcolor=\"#E0E2F2\">Position</td><td align=\"center\" bgcolor=\"#E0E2F2\">Start Date</td><td align=\"center\" bgcolor=\"#E0E2F2\">End Date</td></tr>\n";
-                        while ($supervisor_row=mysql_fetch_array($supervisor_result)) { //current...
-                            echo "<tr>\n";
-                            echo "<td bgcolor=\"#E0E2F2\"><input type=\"checkbox\" name=\"" . $supervisor_row['uid'] . "\"></td>";
-                            echo "<td bgcolor=\"$bgcolor\">" . $supervisor_row['uid'] . "</td>";
-                            echo "<td bgcolor=\"$bgcolor\">" . $supervisor_row['egps_username']  ."</td>\n";
-                            echo "<td bgcolor=\"$bgcolor\">" . $supervisor_row['position'] . "</td>\n";
-                            echo "<td bgcolor=\"$bgcolor\">" . $supervisor_row['start_date'] . "</td>\n";
-                            echo "<td bgcolor=\"$bgcolor\">-Current-</td>\n";
-                            echo "</tr>\n";
-                            if($bgcolor=="#DFDFDF") $bgcolor="#CCCCCC";
-                            else $bgcolor="#DFDFDF";
-                        }
-                        while ($supervisor_row=mysql_fetch_array($supervisor_history_result)) { //previous...
-                            echo "<tr>\n";
-                            echo "<td bgcolor=\"#E0E2F2\"><input type=\"checkbox\" name=\"" . $supervisor_row['uid'] . "\"></td>";
-                            echo "<td bgcolor=\"$bgcolor\">" . $supervisor_row['uid'] . "</td>";
-                            echo "<td bgcolor=\"$bgcolor\">" . $supervisor_row['egps_username'] ."</td>\n";
-                            echo "<td bgcolor=\"$bgcolor\">" . $supervisor_row['position'] . "</td>\n";
-                            echo "<td bgcolor=\"$bgcolor\">" . $supervisor_row['start_date'] . "</td>\n";
-                            echo "<td bgcolor=\"$bgcolor\">" . $supervisor_row['end_date'] . "</td>\n";
-                            echo "</tr>\n";
-                            if($bgcolor=="#DFDFDF") $bgcolor="#CCCCCC";
-                            else $bgcolor="#DFDFDF";
-                        }
-                        ?>
-                        <tr>
-                          <td colspan="6" align="left">
-                             <table>
-                             <tr>
-                             <td nowrap>
-                                <img src="<?php echo IPP_PATH . "images/table_arrow.png"; ?>">&nbsp;With Selected:
-                             </td>
-                             <td>
-                             <?php
-                                if($have_write_permission) {
-                                    echo "<INPUT NAME=\"set_not_supervisor\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=Not Supervisor\" border=\"0\" value=\"set_not_supervisor\">";
-                                }
-                                //if we have permissions also allow delete and set all.
-                                if($permission_level <= $IPP_MIN_DELETE_SUPERVISOR_PERMISSION && $have_write_permission) {
-                                    echo "<INPUT NAME=\"delete\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=Delete\" border=\"0\" value=\"delete\">";
-                                }
-                             ?>
-                             </td>
-                             </tr>
-                             </table>
-                          </td>
-                        </tr>
-                        </table></center>
-                        </form>
-                        <!-- end IEP history table -->
+</div>                        
+<button class="btn button-lg button-default" type="submit" name="add" value="add">Submit</button>
+</form>                       
+<!-- END add supervisor -->
 
-                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-            <?php navbar("student_view.php?student_id=$student_id"); ?>
-            </td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
-        <center></center>
+<h2>Case Manager History</h2>
+<!-- BEGIN manager history table -->
+<form name="supervisorhistorylist" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "supervisor_view.php"; ?>" method="get">
+<input type="hidden" name="student_id" value="<?php echo $student_id ?>">
+<table class="table table-striped table-hover">
+<?php
+//print the header row...
+echo "<tr><th>Select</th><th>UID</th><th>Username</th><th>Position</th><th>Start Date</th><th>End Date</th></tr>\n";
+while ($supervisor_row=mysql_fetch_array($supervisor_result)) { //current...
+    echo "<tr>\n";
+    echo "<td><input type=\"checkbox\" name=\"" . $supervisor_row['uid'] . "\"></td>";
+    echo "<td>" . $supervisor_row['uid'] . "</td>";
+    echo "<td>" . $supervisor_row['egps_username']  ."</td>\n";
+    echo "<td>" . $supervisor_row['position'] . "</td>\n";
+    echo "<td>" . $supervisor_row['start_date'] . "</td>\n";
+    echo "<td>-Current-</td>\n";
+    echo "</tr>\n";
+                            
+}
+while ($supervisor_row=mysql_fetch_array($supervisor_history_result)) { //previous...
+    echo "<tr>\n";
+    echo "<td><input type=\"checkbox\" name=\"" . $supervisor_row['uid'] . "\"></td>";
+    echo "<td>" . $supervisor_row['uid'] . "</td>";
+    echo "<td>" . $supervisor_row['egps_username'] ."</td>\n";
+    echo "<td>" . $supervisor_row['position'] . "</td>\n";
+    echo "<td>" . $supervisor_row['start_date'] . "</td>\n";
+    echo "<td>" . $supervisor_row['end_date'] . "</td>\n";
+    echo "</tr>\n";
+}
+?>
+</table>                        
+ <table>
+<tr>
+<td nowrap>
+<img src="<?php echo IPP_PATH . "images/table_arrow.png"; ?>">&nbsp;With Selected:
+</td>
+<td>
+<?php
+if($have_write_permission) {
+    echo "<INPUT NAME=\"set_not_supervisor\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=Not Supervisor\" border=\"0\" value=\"set_not_supervisor\">";
+}
+//if we have permissions also allow delete and set all.
+if($permission_level <= $IPP_MIN_DELETE_SUPERVISOR_PERMISSION && $have_write_permission) {
+    echo "<INPUT NAME=\"delete\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=Delete\" border=\"0\" value=\"delete\">";
+}
+?>
+</td>
+</tr>
+</table>
+</form>
+<!-- end IEP history table -->
+
+</div>
+        <?php print_bootstrap_js();?>
     </BODY>
 </HTML>

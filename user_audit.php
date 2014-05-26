@@ -224,7 +224,7 @@ if(1==0 && isset($_POST['add_accomodation']) && $have_write_permission) {
 <label>Username</label>
 <input type="text" tabindex="1" name="username" size="40" maxsize="255" value="<?php echo $_POST['username']; ?>" onkeypress="return autocomplete(this,event,popuplist)">
                 
-<button class="btn btn-large btn-regular type="submit" tabindex="2" ="Check" value="Check">Search</button>
+<button class="btn btn-large btn-default type="submit" tabindex="2" ="Check" value="Check">Search</button>
 </div> 
 </form>
                         

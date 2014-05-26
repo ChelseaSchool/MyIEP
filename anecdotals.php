@@ -266,50 +266,48 @@ if(!$anecdotal_result) {
 	
 	<?php print_datepicker_depends(); ?>
 </HEAD>
-    <BODY>
+<BODY>
     <?php  print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']); ?>
     <?php print_jumbotron_with_page_name("Anecdotals", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission) ?> 
-     <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
-     
-                
+    <?php if ($system_message) { echo "<p>" . $system_message . "</p>";} ?>
+    <div class="container">
+    
+   
+    
+    <div class="row">
+    
+   <div class="col-md-4">
+    <h2>Print Report</h2>
+    <p><a class="btn btn-md btn-default" href="<?php echo IPP_PATH . "anecdotal_pdf.php?student_id=$student_id" ?>" target="_blank">Generate PDF</a></p>  
+   </div> 
+    <div class="col-md-4">
+               <h2>Add Report</h2>
                         <form name="add_anecdotal" enctype="multipart/form-data" action="<?php echo IPP_PATH . "anecdotals.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
-                        <tr>
-                          <td colspan="3">
-                          <p class="info_text">Add Anecdotal Report</p>
-                           <input type="hidden" name="add_anecdotal" value="1">
-                           <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
-                          </td>
-                        </tr>
-                        <tr>
-                            <td bgcolor="#E0E2F2" class="row_default">Report:</td><td bgcolor="#E0E2F2" class="row_default">
-                            <textarea spellcheck="true" name="report" tabindex="1" cols="40" rows="10" wrap="soft"><?php if(isset($_POST['report'])) echo $_POST['report']; ?></textarea>
-                            </td>
-                            <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="3" class="row_default"><input tabindex="4" type="submit" name="add" value="add"></td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">Report Date: (YYYY-MM-DD)</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <input id=datepicker type=datepicker name="date" data-provide="datepicker" data-date-format="yyyy-mm-dd" tabindex="2" value="<?php if(isset($_POST['date'])) echo $_POST['date']; else echo date("Y-m-d")?>">
-                           </td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default" colspan="2">Optional File Upload:<BR>(.doc,.pdf,.txt,.rtf)&nbsp;&nbsp;<!--/td-->
-                           <!--td bgcolor="#E0E2F2" class="row_default"-->
-                               <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
-                               <input type="file" tabindex="3" name="supporting_file" value="<?php if(isset($_FILES['supporting_file']['name'])) echo $_FILES['supporting_file']['name'] ?>">
-                           </td>
-                        </tr>
-                        </table>
+                        <div class="form-group">
+                        <input type="hidden" name="add_anecdotal" value="1">
+                        <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
+                        <label>Report</label>
+                        <textarea class="form-control" spellcheck="true" name="report" tabindex="1" rows="10" wrap="soft"><?php if(isset($_POST['report'])) echo $_POST['report']; ?></textarea>
+                        <label>Report Date (YYYY-MM-DD)</label>
+                        <input class="form-control datepicker" id=datepicker type=datepicker name="date" data-provide="datepicker" data-date-format="yyyy-mm-dd" tabindex="2" value="<?php if(isset($_POST['date'])) echo $_POST['date']; else echo date("Y-m-d")?>">
+                        <label>Optional File Upload (.doc,.pdf,.txt,.rtf)</label>
+                        <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+                        <input type="file" tabindex="3" name="supporting_file" value="<?php if(isset($_FILES['supporting_file']['name'])) echo $_FILES['supporting_file']['name'] ?>">
+                        </div>
+                        <button class="btn btn-md btn-success" tabindex="4" type="submit" name="add" value="add">Submit</button>  
+                        
                         </form>
-                        </center>
+                        
                         <!-- END add new entry -->
-                        <a href="<?php echo IPP_PATH . "anecdotal_pdf.php?student_id=$student_id" ?>" target="_blank">Generate PDF copy</a><BR></center>
+                </div>
+                <div class="col-md-4">
+                
+                        <h2>Report History</h2>
                         <!-- BEGIN annecdotals table -->
                         <form spellcheck="true" name="anecdotal" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "anecdotals.php"; ?>" method="get">
                         <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
-                        <center><table width="80%" border="0" cellpadding="0" cellspacing="1">
-                        <tr><td colspan="7">Anecdotals (click to edit):</td></tr>
+                        <table>
+                        
                         <?php
                         $bgcolor = "#DFDFDF";
 
@@ -348,6 +346,9 @@ if(!$anecdotal_result) {
                         </tr>
                         </table></center>
                         </form>
+                        </div>
+                        </div>
+                        </div>
                         
        <?php print_complete_footer(); ?>
        <!-- Bootstrap core JavaScript

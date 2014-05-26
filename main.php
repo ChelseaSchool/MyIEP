@@ -117,6 +117,7 @@ if (isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
                 <li><a href="superuser_manage_coding.php">Manage Codes</a></li>
                 <li><a href="school_info.php">Manage Schools</a></li>
                 <li><a href="superuser_view_logs.php">View Logs</a></li>
+                <li><a href="superuser_add_program_area.php">Add New Goal Area</a></li>
               </ul>
             </li>
           </ul>

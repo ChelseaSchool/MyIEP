@@ -42,7 +42,7 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/supporting_functions.php');
+require_once 'include/supporting_functions.php';
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -189,16 +189,15 @@ if(!$student_result) {
 }
 
 print_bootstrap_head();
-
 print_html5_primer(); 
 ?>
 <TITLE><?php echo $page_title; ?></TITLE>
-
+<?php print_datepicker_depends(); ?>
 </HEAD>
     <BODY>
     <?php 
-    print_student_navbar($student_id, $student_row['first_name'] . $student_row['last_name']);
-    print_jumbotron_with_page_name("Student Information", $student_row['first_name'] . $student_row['last_name'], $our_permission);
+    print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']);
+    print_jumbotron_with_page_name("Student Information", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission);
     ?>
     <div class="container">
     <?php if ($system_message) { echo "<p>" . $system_message . "</p>";}; ?>
@@ -210,12 +209,12 @@ print_html5_primer();
     
     <div class="form-group">                     
     <label>First Name</label>
-    <input class="form-control" type="text" required name="first_name" size="30" maxsize="125" value="<?php echo $student_row['first_name']; ?>">
+    <input class="form-control" type="text" autocomplete="off" required name="first_name" size="30" maxsize="125" value="<?php echo $student_row['first_name']; ?>">
     
     <label>Last Name</label>
-    <input class="form-control" type="text" required name="last_name" size="30" maxsize="125" value="<?php echo $student_row['last_name']; ?>">
+    <input class="form-control" type="text" autocomplete="off" required name="last_name" size="30" maxsize="125" value="<?php echo $student_row['last_name']; ?>">
     <label>Birthdate (YYYY-MM-DD)</label>
-    <input class="form-control" type="datepicker" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" required name="birthday" value="<?php echo $student_row['birthday']; ?>">
+    <input autocomplete="off" class="form-control datepicker" type="datepicker" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" required name="birthday" value="<?php echo $student_row['birthday']; ?>">
     <label>Current Grade</label>
     <SELECT class="form-control" name="current_grade">
                                  <OPTION value="-1" <?php if($student_row['current_grade'] == "-1") echo "selected"; ?>>District Program
@@ -236,15 +235,15 @@ print_html5_primer();
                             </SELECT>
                           
           <label>Gender</label>
-          <SELECT class="form-control" name="gender">
+          <SELECT autocomplete="off" class="form-control" name="gender">
                                 <option value="M" <?php if($student_row['gender'] == "M") echo "SELECTED"; ?>>Male</option>
                                 <option value="F" <?php if($student_row['gender'] == "F") echo "SELECTED"; ?>>Female</option>
           						<option value="O" <?php if ($student_row['gender'] == "O") echo "SELECTED"; ?>>Other</option>
           </SELECT>
           <label>Student Number</label>
-          <input class="form-control" type="text" size="30" maxsize="60" name="prov_ed_num" value="<?php echo $student_row['prov_ed_num'];?>">
+          <input autocomplete="off" class="form-control" type="text" size="30" maxsize="60" name="prov_ed_num" value="<?php echo $student_row['prov_ed_num'];?>">
           </div>
-          <button type="submit" value="submit" class="btn btn-regular btn-large">Update Student Information</button>           
+          <button type="submit" value="submit" class="btn btn-default btn-large">Update Student Information</button>           
                      
                         </form>
                         
@@ -254,6 +253,6 @@ print_html5_primer();
     </div><!-- close container -->
  	<?php 
  	print_bootstrap_js();
- 	print_datepicker_depends();?>
+ 	?>
     </BODY>
 </HTML>

@@ -26,7 +26,7 @@ $MINIMUM_AUTHORIZATION_LEVEL = 50;
 
 $system_message = "";
 
-define('IPP_PATH','./'); //replace with function
+define('IPP_PATH','./');
 
 /* eGPS required files. */
 require_once(IPP_PATH . 'etc/init.php');
@@ -34,14 +34,10 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
+require_once IPP_PATH . 'include/supporting_functions.php';
 
-/** @remark
- * Why is caching prevention commented out?
- * 
- * @todo
- * 1. justify or uncomment
- */
-//header('Pragma: no-cache'); //don't cache this page!
+
+header('Pragma: no-cache'); //don't cache this page!
 
 if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
     if(!validate( $_POST['LOGIN_NAME'] ,  $_POST['PASSWORD'] )) {
@@ -161,11 +157,6 @@ if(isset($_POST['add_student'])) {
 
 }
 
-//if(!isset($_GET['add_username'])) {
-   //we shouldn't be here without a username.
-//   echo "You've entered this page without supplying a valid user name. Fatal, quitting";
-//   exit();
-//}
 
 if(!connectUserDB()) {
         $error_message = $error_message;  //just to remember we need this
@@ -189,94 +180,59 @@ if(!$school_result) {
     $system_message=$system_message . $error_message;
     IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
 }
-
+print_html5_primer();
+print_bootstrap_head();
 ?> 
-<!DOCTYPE HTML>
-<HTML lang=en>
-<HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
-    <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
-    
-    <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
+<link rel="stylesheet" href="./css/smoothness/jquery-ui.css">
+<script src="js/jquery-2.1.1.js"></script>
+<script src="js/smoothness/jquery-ui-1.10.4.custom.js"></script>
 
+<script> 
+$(function() {
+	$( ".datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
+});
+</script>
 </HEAD>
-    <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+<BODY>
+<?php 
+print_general_navbar();
+print_lesser_jumbotron("New Student Record", $permission_level);
+?>
+<div class="container">
+<?php if ($system_message) { echo "<p>" . $system_message . "</p>";} ?> 
 
-                        <center><table><tr><td><center><p class="header">-Add Student-</p></center></td></tr></table></center>
-                        <BR>
 
-                        <center>
-                        <form name="addName" enctype="multipart/form-data" action="<?php echo IPP_PATH . "new_student.php"; ?>" method="post">
-                        <table border="0" cellpadding="0" cellspacing="0" width="80%">
-                        <tr>
-                          <td colspan="2">
-                          <p class="info_text">Fill out and click 'Add Student'.</p>
-                          <input type="hidden" name="add_student" value="1">
-                          </td>
-                        </tr>
 
-                        <tr>
-                          <td bgcolor="#E0E2F2" align="left">First Name:</td>
-                          <td bgcolor="#E0E2F2">
-                            <input type="text" name="first_name" size="30" maxsize="125" value="<?php if(isset($_POST['first_name'])) echo $_POST['first_name'];?>">
-                          </td>
-                        </tr>
-                        <tr>
-                          <td bgcolor="#E0E2F2" align="left">Last Name:</td>
-                          <td bgcolor="#E0E2F2">
-                            <input type="text" name="last_name" size="30" maxsize="125" value="<?php if(isset($_POST['last_name']))  echo $_POST['last_name']; ?>">
-                          </td>
-                        </tr>
-                        <tr>
-                          <td bgcolor="#E0E2F2" align="left">Birthday: (YYYY-MM-DD)&nbsp;</td>
-                          <td bgcolor="#E0E2F2">
-                            <input type="text" name="birthday" value="<?php if(isset($_POST['birthday'])) echo $_POST['birthday']; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.birthday, 'yyyy-m-dd', 0, 0)">
-                          </td>
-                        </tr>
-                        <tr>
-                          <td bgcolor="#E0E2F2" align="left">School:</td>
-                          <td bgcolor="#E0E2F2">
-                              <SELECT name="school_code">
-                              <?php
-                                  while($school_row=mysql_fetch_array($school_result)) {
-                                      if(isset($_POST['school_code']) && $_POST['school_code'] == $school_row['school_code']) {
-                                          echo "<option value=\"" . $school_row['school_code'] . "\" selected>" .  $school_row['school_name'] . "\n";
-                                      } else {
-                                          echo "<option value=\"" . $school_row['school_code'] . "\">" .  $school_row['school_name'] . "\n";
-                                      }
-                                  }
-                              ?>
-                              </SELECT>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td bgcolor="#E0E2F2" align="left">At School Since: (YYYY-MM-DD)&nbsp;</td>
-                          <td bgcolor="#E0E2F2">
-                            <input type="text" name="at_school_since" value="<?php if(isset($_POST['at_school_since'])) echo $_POST['at_school_since']; else echo date("Y-m-d"); ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.at_school_since, 'yyyy-m-dd', 0, 0)">
-                          </td>
-                        </tr>
-                        <tr>
-                          <td bgcolor="#E0E2F2" align="left">Current Grade:</td>
-                          <td bgcolor="#E0E2F2">
-                            <SELECT name="current_grade">
+<form name="addName" enctype="multipart/form-data" action="<?php echo IPP_PATH . "new_student.php"; ?>" method="post">
+<div class="form-group">
+<input type="hidden" name="add_student" value="1">
+<label for first_name>First Name</label>
+<input class="form-control" type="text" autocomplete="off" placeholder="First Name" required name="first_name" size="30" maxsize="125" value="<?php if(isset($_POST['first_name'])) echo $_POST['first_name'];?>">
+                          
+<label for last_name>Last Name</label>                         
+<input class="form-control" type="text" autocomplete="off" placeholder="Last Name" required name="last_name" size="30" maxsize="125" value="<?php if(isset($_POST['last_name']))  echo $_POST['last_name']; ?>">
+<label for birthday>Birthdate (YYYY-MM-DD)</label>
+
+<input class="form-control datepicker" autocomplete="off" data-provide="datepicker" required data-date-format="yyyy-mm-dd" type="datepicker" id="datepicker" name="birthday" value="<?php if(isset($_POST['birthday'])) echo $_POST['birthday']; ?>">
+
+<label for school_code>School</label>
+<SELECT required class="form-control" name="school_code">
+<?php
+while($school_row=mysql_fetch_array($school_result)) {
+    if(isset($_POST['school_code']) && $_POST['school_code'] == $school_row['school_code']) {
+        echo "<option value=\"" . $school_row['school_code'] . "\" selected>" .  $school_row['school_name'] . "\n";
+    } 
+    else {
+        echo "<option value=\"" . $school_row['school_code'] . "\">" .  $school_row['school_name'] . "\n";
+    }
+}
+?>
+</SELECT>
+<label for at_school_since>At School Since (YYYY-MM-DD)</label>
+<input autocomplete="off" placeholder="Attending school since..." class="form-control datepicker" required type="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" name="at_school_since" value="<?php if(isset($_POST['at_school_since'])) echo $_POST['at_school_since']; else echo date("Y-m-d"); ?>">
+                          
+<label for current_grade>Current Grade</label>
+<SELECT class="form-control" name="current_grade">
                                  <OPTION value="0" <?php if(isset($_POST['current_grade']) && $_POST['current_grade'] == "0") echo "selected"; ?>>K or Pre-K
                                  <OPTION value="1" <?php if(isset($_POST['current_grade']) && $_POST['current_grade'] == "1") echo "selected"; ?>>1
                                  <OPTION value="2" <?php if(isset($_POST['current_grade']) && $_POST['current_grade'] == "2") echo "selected"; ?>>2
@@ -292,55 +248,31 @@ if(!$school_result) {
                                  <OPTION value="12" <?php if(isset($_POST['current_grade']) && $_POST['current_grade'] == "12") echo "selected"; ?>>12
                                  <OPTION value="13" <?php if(isset($_POST['current_grade']) && $_POST['current_grade'] == "13") echo "selected"; ?>>13
                             </SELECT>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td bgcolor="#E0E2F2" align="left">Gender</td>
-                          <td bgcolor="#E0E2F2">
-                            <SELECT name="gender">
-                                <option value="M">Male
-                                <option value="F">Female
-                            </SELECT>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td bgcolor="#E0E2F2" align="left">Provincial Education Number:</td>
-                          <td bgcolor="#E0E2F2">
-                            <input type="text" size="30" maxsize="60" name="prov_ed_num" value="<?php if(isset($_POST['prov_ed_num'])) echo $_POST['prov_ed_num'];?>">
-                          </td>
-                        </tr>
-                        <tr>
-                            <td valign="bottom" align="center" bgcolor="#E0E2F2" colspan="2">&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td valign="bottom" align="center" bgcolor="#E0E2F2" colspan="2">&nbsp;&nbsp;<input type="submit" value="Add Student"></td>
-                        </tr>
-                        </table>
-                        <input type="hidden" name="szBackGetVars" value="<?php echo $szBackGetVars; ?>">
-                        </form>
-                        </center>
+                          
+<label for gender>Gender</label>
+<SELECT autocomplete="off" required class="form-control" name="gender">
+<option value="M">Male
+<option value="F">Female
+<option value="O">Other
+</SELECT>
+                          
+<!-- <label>Provincial Education Number</label>
+<input type="text" size="30" maxsize="60" name="prov_ed_num" value="<?php if(isset($_POST['prov_ed_num'])) echo $_POST['prov_ed_num'];?>">-->
 
-                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center"><table border="0" width="100%"><tr><td><a href="
-            <?php
-                echo IPP_PATH . "main.php?$szBackGetVars";
-            ?>"><img src="<?php echo IPP_PATH; ?>images/back-arrow-white.png" border=0></a></td><td width="60"><a href="<?php echo IPP_PATH . "main.php"; ?>"><img src="<?php echo IPP_PATH; ?>images/homebutton-white.png" border=0></a></td><td valign="bottom" align="center">Logged in as: <?php echo $_SESSION['egps_username'];?></td><td align="right"><a href="<?php echo IPP_PATH;?>"><img src="<?php echo IPP_PATH; ?>images/logout-white.png" border=0></a></td></tr></table></td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
-        <center></center>
+</div>
+
+<button class="btn btn-default btn-large" type="submit" value="Add Student">Submit</button>
+<input type="hidden" name="szBackGetVars" value="<?php echo $szBackGetVars; ?>">
+
+</form>
+                     
+</div>
+
+                        
+          
+
+
+
+<?php print_bootstrap_js();?>
     </BODY>
 </HTML>

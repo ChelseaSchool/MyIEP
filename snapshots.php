@@ -38,6 +38,7 @@ require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
 require_once(IPP_PATH . 'include/navbar.php');
 require_once(IPP_PATH . 'include/create_pdf.php');
+require_once 'include/supporting_functions.php';
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -137,18 +138,10 @@ if(!$snapshot_result) {
         $system_message= $system_message . $error_message;
         IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
 }
-
+print_html5_primer();
 ?> 
-<!DOCTYPE HTML>
-<HTML lang=en>
 <HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
-    <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
+<?php print_bootstrap_head(); ?>
     
     <!--script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script -->
     <SCRIPT LANGUAGE="JavaScript">
@@ -176,73 +169,64 @@ if(!$snapshot_result) {
       function noPermission() {
           alert("You don't have the permission level necessary"); return false;
       }
-
-
     </SCRIPT>
 </HEAD>
     <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-   
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("student_view.php?student_id=$student_id"); ?></center>
-                    </td></tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
-						
-                        <table align="center"><tr><td align="center"><h1>Snapshots: <?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?></h1></td></tr></table></center>
-                        <BR>
-
+    <?php 
+    print_student_navbar($student_row['first_name'] . " " . $student_row['last_name']);
+    print_jumbotron_with_page_name("Snapshots", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission);
+    ?>
+    <div class="container">
+    <?php if ($system_message) { echo "<p>" . $system_message . "</p>";} ?>
+    <div class="row">
+ 
+ 
+        <div class="col-md-6"> 
+                        
                         <!-- BEGIN add new entry -->
-                        <center>
+                        <h2>Add Snapshot</h2>
+                        
                         <form name="add_snapshot" enctype="multipart/form-data" action="<?php echo IPP_PATH . "snapshots.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
+                        <table border="0" cellspacing="0" cellpadding ="0">
                         <tr>
                           <td>
-                          <p class="info_text">New Snapshot</p>
                            <input type="hidden" name="take_snapshot" value="1">
                            <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
                           </td>
                         </tr>
                         <tr>
-                           <td valign="center" align="center" bgcolor="#E0E2F2" class="row_default"><center><input type="submit" name="snapshot" value="Take Snapshot"></center></td>
+                           <td valign="center" align="center" bgcolor="#E0E2F2" class="row_default"><center><button class="btn btn-md btn-success" type="submit" name="snapshot" value="Take Snapshot">Take Snapshot</button>
+                           </center></td>
                         </tr>
                         </table>
                         </form>
                         </center>
                         <!-- END add new entry -->
-
+</div>
+    <div class="col-md-6"> 
                         <!-- BEGIN snapshot table -->
+                        <h2>Snapshot History</h2>
                         <form name="snapshots" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "snapshots.php"; ?>" method="get">
                         <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
-                        <center><table width="80%" border="0" cellpadding="0" cellspacing="1">
-                        <tr><td colspan="4">Current Snapshots:</td></tr>
+                        
+                        <table class="table table-striped table-hover" border="0" cellpadding="0" cellspacing="1">
                         <?php
-                        $bgcolor = "#DFDFDF";
+                        
 
                         //print the header row...
-                        echo "<tr><td bgcolor=\"#E0E2F2\">&nbsp;</td><td bgcolor=\"#E0E2F2\">uid</td><td align=\"center\" bgcolor=\"#E0E2F2\">Snapshot Date and Time</td><td align=\"center\" bgcolor=\"#E0E2F2\">File</td></tr>\n";
+                        echo "<tr><th>Select</th><th>uid</th><th>Snapshot Date and Time</th><th>File</th></tr>\n";
                         while ($snapshot_row=mysql_fetch_array($snapshot_result)) { //current...
                             echo "<tr>\n";
-                            echo "<td bgcolor=\"#E0E2F2\"><input type=\"checkbox\" name=\"" . $snapshot_row['uid'] . "\"></td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\">" . $snapshot_row['uid'] . "</td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><center>" . $snapshot_row['date']  ."</center></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><center>"; if($snapshot_row['filename'] =="") echo "-error-"; else echo "<a href=\"" . IPP_PATH . "get_attached.php?table=snapshot&uid=" . $snapshot_row['uid'] ."&student_id=" . $student_id . "\">View <img src=\"" . IPP_PATH . "images/pdf.png" . "\" border=\"0\"></a>"; echo "</center></td>\n";
+                            echo "<td><input type=\"checkbox\" name=\"" . $snapshot_row['uid'] . "\"></td>";
+                            echo "<td>" . $snapshot_row['uid'] . "</td>";
+                            echo "<td>" . $snapshot_row['date']  ."</td>\n";
+                            echo "<td>"; if($snapshot_row['filename'] =="") echo "-error-"; else echo "<a href=\"" . IPP_PATH . "get_attached.php?table=snapshot&uid=" . $snapshot_row['uid'] ."&student_id=" . $student_id . "\">View <img src=\"" . IPP_PATH . "images/pdf.png" . "\" border=\"0\"></a>"; echo "</center></td>\n";
                             echo "</tr>\n";
-                            if($bgcolor=="#DFDFDF") $bgcolor="#CCCCCC";
-                            else $bgcolor="#DFDFDF";
+                            
                         }
                         ?>
-                        <tr>
-                          <td colspan="4" align="left">
+                        </table>
+                        
                              <table>
                              <tr>
                              <td nowrap>
@@ -250,11 +234,7 @@ if(!$snapshot_result) {
                              </td>
                              <td>
                              <?php
-                                //if($have_write_permission) {
-                                //    echo "<INPUT NAME=\"set_not_in_file\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=Not+In+File\" border=\"0\" value=\"1\">";
-                                //    echo "<INPUT NAME=\"set_in_file\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=In+File\" border=\"0\" value=\"1\">";
-                                //}
-                                //if we have permissions also allow delete and set all.
+
                                 if($permission_level <= $IPP_MIN_DELETE_MEDICAL_INFO && $have_write_permission) {
                                     echo "<INPUT NAME=\"delete\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=Delete\" border=\"0\" value=\"1\">";
                                 }
@@ -266,28 +246,12 @@ if(!$snapshot_result) {
                         </tr>
                         </table></center>
                         </form>
-                        <!-- end strength/needs table -->
+                        <!-- end snapshot table -->
 
-                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-            <?php navbar("student_view.php?student_id=$student_id"); ?>
-            </td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
- <?php print_complete_footer(); ?>
+                        </div></div>
+        </div>
+ <footer><?php print_complete_footer(); ?></footer>
+ <?php print_bootstrap_js(); ?>
+ 
     </BODY>
 </HTML>
