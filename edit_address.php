@@ -39,6 +39,7 @@ require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
 require_once(IPP_PATH . 'include/navbar.php');
+require_once 'include/supporting_functions.php';
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -199,13 +200,10 @@ mysql_data_seek($target_result,0);
 <!DOCTYPE HTML>
 <HTML lang=en>
 <HEAD>
+<?php print_bootstrap_head(); ?>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
     <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
+
     
      <SCRIPT LANGUAGE="JavaScript">
       function notYetImplemented() {
@@ -215,11 +213,7 @@ mysql_data_seek($target_result,0);
 </HEAD>
 <BODY>
         <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
+        
         <tr>
             <td class="shadow-left"></td>
             <td class="shadow-center" valign="top">
@@ -375,5 +369,6 @@ mysql_data_seek($target_result,0);
         </tr>
         </table> 
         <center></center>
+        <?php print_bootstrap_js(); ?>
     </BODY>
 </HTML>

@@ -1,6 +1,8 @@
 <?php
 /** @file
+ * 
  *  @brief	display guardian information
+ *  
  *  @todo
  *  1. Navbar
  *  2. Bootstrap
@@ -12,17 +14,7 @@
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100;    //everybody (do checks within document)
 
-/**
- * guardian_view.php -- manage student guardians
- *
- * Copyright (c) 2005 Grasslands Regional Division #6
- * All rights reserved
- *
- * Created: June 21, 2005
- * By: M. Nielsen
- * Modified:  March 06, 2006.
- *
- */
+
 
 /**
  * Path for IPP required files.
@@ -39,6 +31,7 @@ require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
 require_once(IPP_PATH . 'include/navbar.php');
+require_once 'include/supporting_functions.php';
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -174,9 +167,7 @@ if($our_permission != "WRITE" && $our_permission != "ASSIGN" && $our_permission 
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
     <TITLE><?php echo $page_title; ?></TITLE>
     <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
+        
     </style>
     
      <SCRIPT LANGUAGE="JavaScript">
@@ -210,14 +201,11 @@ if($our_permission != "WRITE" && $our_permission != "ASSIGN" && $our_permission 
       }
 
     </SCRIPT>
+<?php print_bootstrap_head(); ?>
 </HEAD>
 <BODY>
         <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
+        
         <tr>
             <td class="shadow-left"></td>
             <td class="shadow-center" valign="top">
@@ -240,13 +228,14 @@ if($our_permission != "WRITE" && $our_permission != "ASSIGN" && $our_permission 
 
                         <HR>
                         <!-- BEGIN  Current Guardian Info -->
-                        <table width="100%"><tr><td width="200"><p class="header" align="left">Current&nbsp;Guardian(s):</p></td><td align="left"><a href="<?php echo IPP_PATH . "add_guardian.php?student_id=" . $student_row['student_id'];?>" <?php if (!$have_write_permission) echo "onClick=\"return noPermission();\""; ?>><img src="<?php echo IPP_PATH . "images/smallbutton.php?title=New Guardian";?>" border="0"></a></td></tr></table>
+                        <table width="100%"><tr><td width="200"><h2>Current&nbsp;Guardian(s):</h2></td><td align="left"><a href="<?php echo IPP_PATH . "add_guardian.php?student_id=" . $student_row['student_id'];?>" <?php if (!$have_write_permission) echo "onClick=\"return noPermission();\""; ?>><img src="<?php echo IPP_PATH . "images/smallbutton.php?title=New Guardian";?>" border="0"></a></td></tr></table>
                         <BR>
                         <center>
                         <table width="80%" border="0" cellpadding="0" cellspacing="0">
                         <?php
                         while($guardian = mysql_fetch_array($guardians_result)) {
-                            echo "<tr><td colspan=\"2\" class=\"wrap_top\">" . $guardian['last_name'] . "," . $guardian['first_name'] . "&nbsp;&nbsp;<a href=\"" . IPP_PATH . "guardian_view.php?student_id=" . $student_id . "&setNotGuardian=" . $guardian['uid'] . "\"";
+                            echo "<tr><td colspan=\"2\" class=\"wrap_top\"><h3>" . $guardian['last_name'] . "," . $guardian['first_name'] . "&nbsp;&nbsp;</h3>
+                                <a href=\"" . IPP_PATH . "guardian_view.php?student_id=" . $student_id . "&setNotGuardian=" . $guardian['uid'] . "\"";
                             if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
                             else echo "onClick=\"return changeStatusNotGuardian();\"";
                             echo "><img src=\"" . IPP_PATH . "images/smallbutton.php?title=Change Status\" border=\"0\" width=\"100\" height=\"25\" ></a>\n";
@@ -333,12 +322,12 @@ if($our_permission != "WRITE" && $our_permission != "ASSIGN" && $our_permission 
                         <!-- END Guardian Info -->
 
                         <!-- BEGIN  Previous Guardian Info -->
-                        <p class="header" align="left">Previous Guardian(s):</p><BR>
+                        <h2>Previous Guardian(s):</h2>
                         <center>
                         <table width="80%" border="0" cellpadding="0" cellspacing="0">
                         <?php
                         while($guardian = mysql_fetch_array($previous_guardians_result)) {
-                            echo "<tr><td colspan=\"2\" class=\"wrap_top\">" . $guardian['last_name'] . "," . $guardian['first_name'] . "&nbsp;&nbsp;<a href=\"" . IPP_PATH . "guardian_view.php?student_id=" . $student_id . "&setGuardian=" . $guardian['uid'] . "\"";
+                            echo "<tr><td colspan=\"2\" class=\"wrap_top\"><h3>" . $guardian['last_name'] . "," . $guardian['first_name'] . "&nbsp;&nbsp;</h3><a href=\"" . IPP_PATH . "guardian_view.php?student_id=" . $student_id . "&setGuardian=" . $guardian['uid'] . "\"";
                             if($have_write_permission) echo "onclick=\"return changeStatusGuardian();\"";
                             else echo "onclick=\"return noPermission();\"";
                             echo "><img src=\"" . IPP_PATH . "images/smallbutton.php?title=Change Status\" border=\"0\" width=\"100\" height=\"25\"></a>";
@@ -448,5 +437,6 @@ if($our_permission != "WRITE" && $our_permission != "ASSIGN" && $our_permission 
         </tr>
         </table> 
         <center></center>
+        <?php print_bootstrap_js(); ?>
     </BODY>
 </HTML>
