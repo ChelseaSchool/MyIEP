@@ -33,6 +33,28 @@ header('Pragma: no-cache'); //don't cache this page!
  *  @remark but first secure against uncontrolled input
 */
 
+$userPassword = $_POST['PASSWORD'];
+$user = $_POST['LOGIN_NAME'];
+function checkHash($user='', $userPassword='') {
+   $query = "SELECT * FROM users WHERE login_name = '" . $user . ";
+   $result = mysql_query($query);
+   $row=mysql_fetch_array($system_result);
+   if(!$result) {
+      $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$query'<BR>";
+      echo FALSE;
+   }
+   if(!connectUserDB()) {
+      $error_message = $error_message; //just to remember we need this
+      echo FALSE;
+   }
+   $hash = $row['unencrypted_password'];
+   
+   $valid=validateHash($userPassword, $hash);
+   if ($valid) {
+      echo "TRUE";
+   else echo "false";
+}
+
 
 
 
@@ -83,8 +105,9 @@ if (isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
   </head>
 
   <body>
-
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	
+  
+      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" 
@@ -147,6 +170,7 @@ if (isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
             <a href="http://chelseaschool.edu">Chelsea School</a> in Hyattsville, MD.</p>
         <p>&copy; 2014 Chelsea School - <a href="http://www.gnu.org/licenses/gpl-2.0.html">GPLv2</a>.</p>
         <p><a class="btn btn-primary btn-lg" href="about.php" role="button">Learn More &raquo;</a></p>
+        <p><?php echo checkHash($user, $userPassword); ?></p>
       </div>
     </div>
     <div class="container">
