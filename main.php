@@ -1,5 +1,5 @@
 
-<? php
+<?php
 /** @file
  *  @brief  main menu
 *  @bug	right hand drop down nav isn't working
@@ -9,10 +9,11 @@
 *  3. Create nav link back to student
 *  4. Duplicate nav bar for all pages without one (or two)
 */
-//the authorization level for this page!
-$MINIMUM_AUTHORIZATION_LEVEL = 100;
 
-if(isset($system_message)) $system_message = $system_message;
+
+if (isset($system_message)) {
+	$system_message = $system_message;
+}
 else $system_message = "";
 
 define('IPP_PATH', './');
@@ -25,10 +26,12 @@ require_once(IPP_PATH . 'include/log.php');
 //require_once(IPP_PATH . 'include/navbar.php');
 require_once(IPP_PATH . 'include/supporting_functions.php');
 require_once 'include/password.php';
-require_once 'include/page_troubleshoot.php';
+//require_once 'include/page_troubleshoot.php';
 //require_once(IPP_PATH . 'include/config.inc.php');
 header('Pragma: no-cache'); //don't cache this page!
 
+//the authorization level for this page!
+$MINIMUM_AUTHORIZATION_LEVEL = 100;
 /** brief sanitize authenticate form
  *  @remark but first secure against uncontrolled input
 */
@@ -224,6 +227,6 @@ if (isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery-2.1.0.min.js"></script>
-    <script src="./js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
   </body>
 </html>
