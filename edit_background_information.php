@@ -152,18 +152,9 @@ function mysql_enum_values($tableName,$fieldName)
 }
 $enum_options_type = mysql_enum_values("background_info","type");
 
+print_html5_primer();
+print_bootstrap_head();
 ?> 
-<!DOCTYPE HTML>
-<HTML lang=en>
-<HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
-    <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
-    
     <SCRIPT LANGUAGE="JavaScript">
       function noPermission() {
           alert("You don't have the permission level necessary"); return false;
@@ -171,84 +162,46 @@ $enum_options_type = mysql_enum_values("background_info","type");
     </SCRIPT>
 </HEAD>
     <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("background_information.php?student_id=$student_id"); ?></center>
-                    </td></tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+    <?php 
+    print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']);
+    print_jumbotron_with_page_name("Edit Background Information", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission)
+    ?>
+    <div class="container"> 
+    <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
 
-                        <center><table><tr><td><center><p class="header">-Edit Background Information(<?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?>)-</p></center></td></tr></table></center>
-                        <BR>
 
-                        <!-- BEGIN edit background inf -->
-                        <center>
-                        <form name="edit_background_info" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_background_information.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
-                        <tr>
-                          <td colspan="3">
-                          <p class="info_text">Edit and click 'Update'.</p>
-                           <input type="hidden" name="edit_info" value="1">
-                           <input type="hidden" name="uid" value="<?php echo $info_row['uid'];?>">
-                          </td>
-                        </tr>
-                        <tr>
-                           <td valign="bottom" bgcolor="#E0E2F2" class="row_default">Type:</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <select name="type" tabindex="1">
-                                   <option value="">-Choose-</option>
-                                   <?php foreach($enum_options_type as $i => $value) {
-                                      echo "<option value=\"$value\"";
-                                      if($value == $info_row['type']) echo " selected";
-                                      echo ">$value</option>";
-                                   }
-                                   ?>
-                               </select>
-                           </td>
-                           <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="2" class="row_default"><input tabindex="3" type="submit" name="Update" value="Update"></td>
-                        </tr>
-                        <tr>
-                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Description:</td><td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="description" tabindex="2" cols="30" rows="5" wrap="soft"><?php echo $info_row['description'];?></textarea></td>
-                        </tr>
-                        </table>
+     <!-- BEGIN edit background info -->
+                       
+     <form name="edit_background_info" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_background_information.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+     <p>Edit and click "Submit"</p>
+     <div class="form-group">
+     <input type="hidden" name="edit_info" value="1">
+     <input type="hidden" name="uid" value="<?php echo $info_row['uid'];?>">
+                         
+     <label>Type</label>
+     <select class="form-control" name="type" tabindex="1">
+     <option value="">-Choose-</option>
+     <?php foreach($enum_options_type as $i => $value) {
+        echo "<option value=\"$value\"";
+        if ($value == $info_row['type']) echo " selected";
+           echo ">$value</option>";
+        }
+      ?>
+      </select>
+                         
+      <label>Description</label>
+      <textarea class="form-control" spellcheck="true" name="description" tabindex="2" cols="30" rows="5" wrap="soft"><?php echo $info_row['description'];?></textarea>
+       </div> 
+      <p><button class="btn btn-md btn-success" tabindex="3" type="submit" name="Update" value="Update">Submit</button></p>
+                     
                         </form>
-                        </center>
-                        <!-- END add supervisor -->
+                        
+                        <!-- END edit bg info -->
 
                         </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-            <?php navbar("background_information.php?student_id=$student_id"); ?>
-            </td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
-        <center></center>
+                        
+           
+        <footer><?php print_complete_footer(); ?></footer>
+        <?php print_bootstrap_js(); ?>
     </BODY>
 </HTML>

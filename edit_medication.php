@@ -182,7 +182,7 @@ $(function() {
  <?php print_jumbotron_with_page_name("Edit Medication", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission) ; ?>
  <div class="container">
  <?php if ($system_message) { echo $system_message ;} ?>
- <h2>Edit and click 'Add'</h2>
+ <h2>Edit and click "Submit"</h2>
 <form role="form" name="edit_medication" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_medication.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
 <div class="form-group">
 <input type="hidden" name="edit_medication" value="1">
@@ -197,13 +197,13 @@ $(function() {
 </div>
 <div class="form-group">                        
 <label>Medication Start Date (YYYY-MM-DD)</label>
-<input class="form-control datepicker" pattern="\d{4}-\d{1,2}-\d{1,2}" type="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" tabindex="3" name="start_date" value="<?php echo $medication_row['start_date']; ?>">
+<input autocomplete="off" class="form-control datepicker" pattern="\d{4}-\d{1,2}-\d{1,2}" type="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" tabindex="3" name="start_date" value="<?php echo $medication_row['start_date']; ?>">
 </div>
 <div class="form-group">                        
 <label>Medication End Date (YYYY-MM-DD)</label>
-<input class="form-control datepicker" pattern="\d{4}-\d{1,2}-\d{1,2}" type="datepicker" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" tabindex="4" name="end_date" value="<?php echo $medication_row['end_date']; ?>">
+<input autocomplete="off" class="form-control datepicker" pattern="\d{4}-\d{1,2}-\d{1,2}" type="datepicker" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" tabindex="4" name="end_date" value="<?php echo $medication_row['end_date']; ?>">
 </div>                         
-<button type="submit" class="btn btn-default" type="submit" tabindex="4" value="Edit">Edit Medication</button> 
+<button type="submit" class="btn btn-success btn-md" type="submit" tabindex="4" value="Edit">Submit</button> 
 </div></form>
                         
 <!-- END add medication -->

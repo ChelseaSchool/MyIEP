@@ -42,7 +42,6 @@ require_once(IPP_PATH . 'include/db.php');
 require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/navbar.php');
 require_once(IPP_PATH . 'include/supporting_functions.php');
 
 header('Pragma: no-cache'); //don't cache this page!
@@ -65,7 +64,7 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
 //************* SESSION active past here **************************
 
 $student_id="";
-if(isset($_GET['student_id'])) $student_id= $_GET['student_id'];
+if(isset($_GET['student_id'])) $student_id = $_GET['student_id'];
 if(isset($_POST['student_id'])) $student_id = $_POST['student_id'];
 
 if($student_id=="") {
@@ -76,7 +75,7 @@ if($student_id=="") {
 
 //check permission levels
 $permission_level = getPermissionLevel($_SESSION['egps_username']);
-if( $permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NULL) {
+if ($permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NULL) {
     $system_message = $system_message . "You do not have permission to view this page (IP: " . $_SERVER['REMOTE_ADDR'] . ")";
     IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
     require(IPP_PATH . 'security_error.php');
@@ -84,7 +83,7 @@ if( $permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NUL
 }
 
 $our_permission = getStudentPermission($student_id);
-if($our_permission == "WRITE" || $our_permission == "ASSIGN" || $our_permission == "ALL") {
+if ($our_permission == "WRITE" || $our_permission == "ASSIGN" || $our_permission == "ALL") {
     //we have write permission.
     $have_write_permission = true;
 }  else {
@@ -100,6 +99,7 @@ if(!$student_result) {
     $system_message=$system_message . $error_message;
     IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
 } else {$student_row= mysql_fetch_array($student_result);}
+
 
 //check if we are adding...
 if(isset($_POST['add_background_information']) && $have_write_permission) {
@@ -140,8 +140,8 @@ if(isset($_GET['delete_x']) && $permission_level <= $IPP_MIN_DELETE_BACKGROUND_I
 }
 
 
-//get the strengths/needs for this student...
-$background_query="SELECT * FROM background_info WHERE student_id=$student_id ORDER BY type ASC";
+//get the background info for this student...
+$background_query="SELECT * FROM background_info WHERE student_id='$student_id' ORDER BY type ASC";
 $background_result = mysql_query($background_query);
 if(!$background_result) {
         $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$background_query'<BR>";
@@ -301,7 +301,7 @@ print_bootstrap_head();
                              <td>
                              <?php
                                 //if we have permissions also allow delete and set all.
-                                if($permission_level <= $IPP_MIN_DELETE_BACKGROUND_INFORMATION_PERMISSION && $have_write_permission) {
+                                if ($permission_level <= $IPP_MIN_DELETE_BACKGROUND_INFORMATION_PERMISSION && $have_write_permission) {
                                     echo "<INPUT NAME=\"delete\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=Delete\" border=\"0\" value=\"1\">";
                                 }
                              ?>
@@ -324,7 +324,7 @@ print_bootstrap_head();
         <tr>
             <td class="shadow-left">&nbsp;</td>
             <td class="shadow-center">
-            <?php navbar("student_view.php?student_id=$student_id"); ?>
+            
             </td>
             <td class="shadow-right">&nbsp;</td>
         </tr>

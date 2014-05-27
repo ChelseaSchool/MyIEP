@@ -394,7 +394,7 @@ echo "<button NAME=\"delete\" type=\"submit\" value=\"delete\">Delete Selected</
 <div class="row">
 <div class="container">
 <!-- Begin add Accomodation -->        
-<h2>Accomodation <small>Quick Add</small></h2>
+<a name="quickadd"></a><h2>Accomodation <small>Quick Add</small></h2>
 <form name="addaccomodation" enctype="multipart/form-data" class="form-inline" action="<?php echo IPP_PATH . "accomodations.php"; ?>" method="get" role="form" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
   	<div class="form-group">
   		<input type="hidden" name="add_accomodation" value="1">

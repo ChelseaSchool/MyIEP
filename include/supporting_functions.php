@@ -326,7 +326,7 @@ function print_student_navbar($student_id, $student) {
 	<li class="dropdown">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Student Records: $student<b class="caret"></b></a>
               <ul class="dropdown-menu">
-              	<li><a href="student_view?student_id=$student_id">Student Overview</a></li>
+              	<li><a href="student_view.php?student_id=$student_id">Student Overview</a></li>
               	<li><a href="long_term_goal_view.php?student_id=$student_id">Goals</a></li>
               	<li class="divider"></li>
               	<li><a href="guardian_view.php?student_id=$student_id">Guardians</a></li>

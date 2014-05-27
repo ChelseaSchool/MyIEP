@@ -38,7 +38,7 @@ require_once(IPP_PATH . 'include/auth.php');
 require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
 require_once(IPP_PATH . 'include/navbar.php');
-require_once 'include/edit_school.php';
+require_once 'include/supporting_functions.php';
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -252,5 +252,6 @@ print_bootstrap_head();
         </tr>
         </table> 
         <center></center>
+        <?php print_bootstrap_js(); ?>
     </BODY>
 </HTML>

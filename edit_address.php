@@ -192,17 +192,14 @@ if(isset($_GET['update'])) {
 }
 
 //reset the mysql table pointer
-mysql_data_seek($target_result,0);
+mysql_data_seek($target_result, 0);
 
-
+print_html5_primer();
 ?> 
 
-<!DOCTYPE HTML>
-<HTML lang=en>
-<HEAD>
+
 <?php print_bootstrap_head(); ?>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
-    <TITLE><?php echo $page_title; ?></TITLE>
+    
 
     
      <SCRIPT LANGUAGE="JavaScript">
@@ -212,48 +209,35 @@ mysql_data_seek($target_result,0);
     </SCRIPT>
 </HEAD>
 <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("guardian_view.php?student_id=$student_id"); ?></center>
-                    </td></tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
+<?php 
+print_student_navbar($student_id, $target_row['first_name'] . " " . $target_row['last_name']);
+print_jumbotron_with_page_name("Edit Contact Information", $target_row['first_name'] . " " . $target_row['last_name'], $permission_level);
+?>       
+                    
+<div class="container">
                         <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
 
-                        <center>
-                        <table width="80%" cellspacing="0" cellpadding="0"><tr><td><center><p class="header">- Edit Address -</p></center></td></tr><tr><td><center><p class="bold_text">
+                        
+                        <h2>Edit Contact information for 
                         <?php
                             switch($_GET['target']) {
                                case "guardian":
                                    $target_row=mysql_fetch_array($target_result);
-                                   echo "Guardian: " . $target_row['guardian_last_name'] . "," . $target_row['guardian_first_name'] . "<BR>";
-                                   echo "(Guardian for " . $target_row['first_name'] . " " . $target_row['last_name'] . ")<BR>";
+                                   echo "Guardian: " . $target_row['guardian_last_name'] . ", " . $target_row['guardian_first_name'] . " <small>";
+                                   echo "(Guardian for " . $target_row['first_name'] . " " . $target_row['last_name'] . ")</small></h2>" ;
                                    while($target_row=mysql_fetch_array($target_result)) {
-                                       echo "(for " . $target_row['first_name'] . " " . $target_row['last_name'] . ")<BR>";
+                                       echo "(for " . $target_row['first_name'] . " " . $target_row['last_name'] . ") ";
                                    }
                                    //mysql pointer back to first row
                                    mysql_data_seek($target_result,0);
                                    $target_row=mysql_fetch_array($target_result);
                                break;
                             }
-                        ?></p></center></td></tr></table>
-                        </center>
+                        ?></p></td></tr></table>
+                        >
                         <BR>
-                        <center>
+                        <h3>Fill out and click "Submit" to revise contact information.</h3>
                         <form name="editAddress" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_address.php"; ?>" method="get">
-                        <table border="0" cellpadding="0" cellspacing="0" width="80%">
-                        <tr>
-                          <td colspan="2">
-                          <p class="info_text">Fill out and click 'Update'.</p>
                           <input type="hidden" name="target" value="<?php echo $_GET['target']; ?>">
                           <input type="hidden" name="guardian_id" value="<?php echo $_GET['guardian_id']; ?>">
                           <input type="hidden" name="student_id" value="<?php echo $_GET['student_id']; ?>">
@@ -261,113 +245,68 @@ mysql_data_seek($target_result,0);
                         </tr>
                         <?php
                         if($_GET['target'] == "guardian") {
-                          echo "<tr>";
-                          echo "<td bgcolor=\"#E0E2F2\" align=\"left\">Guardian First Name(s):</td>";
-                          echo "<td bgcolor=\"#E0E2F2\">";
-                          echo "<input type=\"text\" tabindex=\"1\" name=\"guardian_first_name\" size=\"30\" maxsize=\"254\" value=\"" . $target_row['guardian_first_name']  . "\">";
-                          echo "</td>";
-                          echo "</tr>";
-                          echo "<tr>";
-                          echo "<td bgcolor=\"#E0E2F2\" align=\"left\">Guardian Last Name:</td>";
-                          echo "<td bgcolor=\"#E0E2F2\">";
-                          echo "<input type=\"text\" tabindex=\"2\" name=\"guardian_last_name\" size=\"30\" maxsize=\"254\" value=\"" . $target_row['guardian_last_name']  . "\">";
-                          echo "</td>";
-                          echo "</tr>";
-                          echo "<tr>";
-                          echo "<td valign=\"bottom\" align=\"center\" bgcolor=\"#E0E2F2\" colspan=\"2\">&nbsp;</td>";
-                          echo "</tr>";
+                          echo "<div class=\"form-group\">";
+                          echo "<label for guardian_first_name>Guardian First Name(s)</label>";
+                          echo "<input class=\"form-control\" type=\"text\" autocomplete=\"off\" tabindex=\"1\" name=\"guardian_first_name\" size=\"30\" maxsize=\"254\" value=\"" . $target_row['guardian_first_name']  . "\">";
+
+                          echo "<label>Guardian Last Name</label>";
+
+                          echo "<input class=\"form-control\" type=\"text\" tabindex=\"2\" name=\"guardian_last_name\" size=\"30\" maxsize=\"254\" value=\"" . $target_row['guardian_last_name']  . "\">";
+                    
                         }
                         ?>
-                        <tr>
-                          <td bgcolor="#E0E2F2" align="left">Address 1 (P.O. Box):</td>
-                          <td bgcolor="#E0E2F2">
-                            <input type="text" tabindex="3" name="po_box" size="30" maxsize="125" value="<?php if(isset($target_row['po_box'])) echo $target_row['po_box']; else if(isset($_GET['po_box'])) echo $_GET['po_box'];?>">
-                          </td>
-                        </tr>
-                        <tr>
-                          <td bgcolor="#E0E2F2" align="left">Street:</td>
-                          <td bgcolor="#E0E2F2">
-                            <input type="text" tabindex="4" name="street" size="30" maxsize="125" value="<?php if(isset($target_row['street'])) echo $target_row['street']; else if(isset($_GET['street'])) echo $_GET['street']; ?>">
-                          </td>
-                        </tr>
-                        <tr>
-                          <td bgcolor="#E0E2F2" align="left">City:</td>
-                          <td bgcolor="#E0E2F2">
-                            <input type="text" tabindex="5" name="city" size="30" maxsize="125" value="<?php if(isset($target_row['city'])) echo $target_row['city']; else if(isset($_GET['city'])) echo $_GET['city']; ?>">
-                          </td>
-                        </tr>
-                        <tr>
-                          <td bgcolor="#E0E2F2" align="left">Province:</td>
-                          <td bgcolor="#E0E2F2">
-                            <input type="text" tabindex="6" name="province" size="30" maxsize="125" value="<?php if(isset($target_row['province'])) echo $target_row['province']; else if(isset($_GET['province'])) echo $_GET['province']; ?>">
-                          </td>
-                        </tr>
-                        <tr>
-                          <td bgcolor="#E0E2F2" align="left">Country:</td>
-                          <td bgcolor="#E0E2F2">
-                            <input type="text" tabindex="7" name="country" size="30" maxsize="125" value="<?php if(isset($target_row['country'])) echo $target_row['country']; else if(isset($_GET['country'])) echo $_GET['country']; ?>">
-                          </td>
-                        </tr>
-                        <tr>
-                          <td bgcolor="#E0E2F2" align="left">Postal Code:</td>
-                          <td bgcolor="#E0E2F2">
-                            <input type="text" tabindex="8" name="postal_code" size="30" maxsize="125" value="<?php if(isset($target_row['postal_code'])) echo $target_row['postal_code']; else if(isset($_GET['postal_code'])) echo $_GET['postal_code']; ?>">
-                          </td>
-                        </tr>
-                        <tr>
-                            <td valign="bottom" align="center" bgcolor="#E0E2F2" colspan="2">&nbsp;</td>
-                        </tr>
-                        <tr>
-                          <td bgcolor="#E0E2F2" align="left">Home Phone:</td>
-                          <td bgcolor="#E0E2F2">
-                            <input type="text" tabindex="9" name="home_ph" size="30" maxsize="125" value="<?php if(isset($target_row['home_ph'])) echo $target_row['home_ph']; else if(isset($_GET['home_ph'])) echo $_GET['home_ph']; ?>">
-                          </td>
-                        </tr>
-                        <tr>
-                          <td bgcolor="#E0E2F2" align="left">Business Phone:</td>
-                          <td bgcolor="#E0E2F2">
-                            <input type="text" tabindex="10" name="business_ph" size="30" maxsize="125" value="<?php if(isset($target_row['business_ph'])) echo $target_row['business_ph']; else if(isset($_GET['business_ph'])) echo $_GET['business_ph']; ?>">
-                          </td>
-                        </tr>
-                        <tr>
-                          <td bgcolor="#E0E2F2" align="left">Cell Phone:</td>
-                          <td bgcolor="#E0E2F2">
-                            <input type="text" tabindex="11" name="cell_ph" size="30" maxsize="125" value="<?php if(isset($target_row['cell_ph'])) echo $target_row['cell_ph']; else if(isset($_GET['cell_ph'])) echo $_GET['cell_ph']; ?>">
-                          </td>
-                        </tr>
-                        <tr>
-                          <td bgcolor="#E0E2F2" align="left">Email Address:</td>
-                          <td bgcolor="#E0E2F2">
-                            <input type="text" tabindex="12" name="email_address" size="30" maxsize="125" value="<?php if(isset($target_row['email_address'])) echo $target_row['email_address']; else if(isset($_GET['email_address'])) echo $_GET['email_address']; ?>">
-                          </td>
-                        </tr>
-                        <tr>
-                            <td valign="bottom" align="center" bgcolor="#E0E2F2" colspan="2">&nbsp;&nbsp;<input tabindex="13" name="update" type="submit" value="Update"></td>
-                        </tr>
-                        </table>
+                        
+                          <label for po_box>Address 1 (P.O. Box)</label>
+                            <input class="form-control" type="text" tabindex="3" name="po_box" size="30" maxsize="125" value="<?php if(isset($target_row['po_box'])) echo $target_row['po_box']; else if(isset($_GET['po_box'])) echo $_GET['po_box'];?>">
+                          
+                          <label>Street</label>
+                            <input class="form-control" type="text" tabindex="4" name="street" size="30" maxsize="125" value="<?php if(isset($target_row['street'])) echo $target_row['street']; else if(isset($_GET['street'])) echo $_GET['street']; ?>">
+                       
+                         <label>City</label></td>
+                        
+                            <input class="form-control" type="text" tabindex="5" name="city" size="30" maxsize="125" value="<?php if(isset($target_row['city'])) echo $target_row['city']; else if(isset($_GET['city'])) echo $_GET['city']; ?>">
+                          
+                        <label>Province or Burrough</label>
+                         <input class="form-control" type="text" tabindex="6" name="province" size="30" maxsize="125" value="<?php if(isset($target_row['province'])) echo $target_row['province']; else if(isset($_GET['province'])) echo $_GET['province']; ?>">
+                          
+                         <label>Country</label>
+                          
+                            <input type="text" class="form-control" tabindex="7" name="country" size="30" maxsize="125" value="<?php if(isset($target_row['country'])) echo $target_row['country']; else if(isset($_GET['country'])) echo $_GET['country']; ?>">
+                          
+                          <label>Postal Code</label>
+                          
+                            <input class="form-control" type="text" tabindex="8" name="postal_code" size="30" maxsize="125" value="<?php if(isset($target_row['postal_code'])) echo $target_row['postal_code']; else if(isset($_GET['postal_code'])) echo $_GET['postal_code']; ?>">
+                          
+                            
+                       <label>Home Phone</label>
+                        
+                            <input class="form-control" type="text" tabindex="9" name="home_ph" size="30" maxsize="125" value="<?php if(isset($target_row['home_ph'])) echo $target_row['home_ph']; else if(isset($_GET['home_ph'])) echo $_GET['home_ph']; ?>">
+                          
+                          <label>Business Phone</label>
+                         
+                            <input class="form-control" type="text" tabindex="10" name="business_ph" size="30" maxsize="125" value="<?php if(isset($target_row['business_ph'])) echo $target_row['business_ph']; else if(isset($_GET['business_ph'])) echo $_GET['business_ph']; ?>">
+                          
+                          <label>Cell Phone</label>
+                          
+                            <input class="form-control" type="text" tabindex="11" name="cell_ph" size="30" maxsize="125" value="<?php if(isset($target_row['cell_ph'])) echo $target_row['cell_ph']; else if(isset($_GET['cell_ph'])) echo $_GET['cell_ph']; ?>">
+                          
+                          <label>Email Address</label>
+                   
+                            <input class="form-control" type="text" tabindex="12" name="email_address" size="30" maxsize="125" value="<?php if(isset($target_row['email_address'])) echo $target_row['email_address']; else if(isset($_GET['email_address'])) echo $_GET['email_address']; ?>">
+                            </div>
+                            <p><button class="btn btn-md btn-success" tabindex="13" name="update" type="submit" value="Update">Submit</button></p>
+                        
                         </form>
-                        </center>
 
                         </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-            <?php navbar("guardian_view.php?student_id=$student_id"); ?>
-            </td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
+                       
+         
+            
+              
+       
+           
+           
+            
         <center></center>
         <?php print_bootstrap_js(); ?>
     </BODY>
