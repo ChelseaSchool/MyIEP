@@ -24,32 +24,37 @@ $MINIMUM_AUTHORIZATION_LEVEL = 100;    //everybody (do checks within document)
  * Path for IPP required files.
  */
 
-if(isset($system_message)) $system_message = $system_message; else $system_message="";
+if (isset($system_message)) {
+    $system_message = $system_message; 
+} else {
+    $system_message="";
+}
 
-define('IPP_PATH','./');
+define('IPP_PATH', './');
 
 /* eGPS required files. */
-require_once(IPP_PATH . 'etc/init.php');
-require_once(IPP_PATH . 'include/db.php');
-require_once(IPP_PATH . 'include/auth.php');
-require_once(IPP_PATH . 'include/log.php');
-require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/navbar.php');
+require_once IPP_PATH . 'etc/init.php';
+require_once IPP_PATH . 'include/db.php';
+require_once IPP_PATH . 'include/auth.php';
+require_once IPP_PATH . 'include/log.php';
+require_once IPP_PATH . 'include/user_functions.php';
+require_once IPP_PATH . 'include/navbar.php';
+require_once IPP_PATH . 'include/supporting_functions.php';
 
 header('Pragma: no-cache'); //don't cache this page!
 
-if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
-    if(!validate( $_POST['LOGIN_NAME'] ,  $_POST['PASSWORD'] )) {
+if (isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
+    if (!validate($_POST['LOGIN_NAME'], $_POST['PASSWORD'])) {
         $system_message = $system_message . $error_message;
-        IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
-        require(IPP_PATH . 'index.php');
+        IPP_LOG($system_message, $_SESSION['egps_username'], 'ERROR');
+        include IPP_PATH . 'index.php';
         exit();
     }
 } else {
-    if(!validate()) {
+    if (!validate()) {
         $system_message = $system_message . $error_message;
-        IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
-        require(IPP_PATH . 'index.php');
+        IPP_LOG($system_message, $_SESSION['egps_username'], 'ERROR');
+        include IPP_PATH . 'index.php';
         exit();
     }
 }
@@ -57,10 +62,10 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
 
 //check permission levels
 $permission_level = getPermissionLevel($_SESSION['egps_username']);
-if( $permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NULL) {
+if ($permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == null) {
     $system_message = $system_message . "You do not have permission to view this page (IP: " . $_SERVER['REMOTE_ADDR'] . ")";
-    IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
-    require(IPP_PATH . 'security_error.php');
+    IPP_LOG($system_message, $_SESSION['egps_username'], 'ERROR');
+    include IPP_PATH . 'security_error.php';
     exit();
 }
 
@@ -131,50 +136,35 @@ if(isset($_GET['add_guardian'])) {
          }
   }
 }
-
+print_html5_primer();
+print_bootstrap_head();
 ?> 
-
-<!DOCTYPE HTML>
-<HTML lang=en>
-<HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
-    <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
-    
-     <SCRIPT LANGUAGE="JavaScript">
+<SCRIPT LANGUAGE="JavaScript">
       function notYetImplemented() {
           alert("Functionality not yet implemented"); return false;
       }
-    </SCRIPT>
+</SCRIPT>
 </HEAD>
 <BODY>
+<?php
+print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']);
+print_jumbotron_with_page_name("Add Guardian", $student_row['first_name'] . " " . $student_row['last_name'], $current_student_permission)
+?>
         <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
+
         <tr>
             <td class="shadow-left"></td>
             <td class="shadow-center" valign="top">
                 <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("guardian_view.php?student_id=$student_id"); ?></center>
-                    </td></tr>
+                    
+                    
                     <tr>
                         <td valign="top">
                         <div id="main">
                         <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
 
                         <center>
-                        <table width="80%" cellspacing="0" cellpadding="0"><tr><td><center><p class="header">- IPP Add Guardian-</p></center></td></tr><tr><td><center><p class="bold_text"> <?php echo $student_row['first_name'] . " " . $student_row['last_name'] .  ", Permission: " . $current_student_permission;?></p></center></td></tr></table>
+                        
                         </center>
                         <BR>
                         <center>
@@ -191,13 +181,13 @@ if(isset($_GET['add_guardian'])) {
                         <tr>
                           <td bgcolor="#E0E2F2" align="left">First Name:</td>
                           <td bgcolor="#E0E2F2">
-                            <input type="text" tabindex="1" name="first_name" size="30" maxsize="125" value="<?php if(isset($user_row['first_name'])) echo $user_row['first_name']; else if(isset($_POST['first_name'])) echo $_POST['first_name'];?>">
+                            <input type="text" tabindex="1" name="first_name" size="30" maxsize="125" value="<?php if (isset($user_row['first_name'])) echo $user_row['first_name']; else if(isset($_POST['first_name'])) echo $_POST['first_name'];?>">
                           </td>
                         </tr>
                         <tr>
                           <td bgcolor="#E0E2F2" align="left">Last Name:</td>
                           <td bgcolor="#E0E2F2">
-                            <input type="text" name="last_name" tabindex="2" size="30" maxsize="125" value="<?php if(isset($user_row['last_name'])) echo $user_row['last_name']; else if(isset($_POST['last_name'])) echo $_POST['last_name']; ?>">
+                            <input type="text" name="last_name" tabindex="2" size="30" maxsize="125" value="<?php if (isset($user_row['last_name'])) echo $user_row['last_name']; else if(isset($_POST['last_name'])) echo $_POST['last_name']; ?>">
                           </td>
                         </tr>
                         <tr>
@@ -231,5 +221,6 @@ if(isset($_GET['add_guardian'])) {
         </tr>
         </table> 
        <?php print_complete_footer(); ?>
+       <?php print_bootstrap_js(); ?>
     </BODY>
 </HTML>

@@ -24,16 +24,17 @@
 
 if(!defined('IPP_PATH')) define('IPP_PATH','./');
 //check if we are running install wizard
-if(!is_file(IPP_PATH . "etc/init.php")){
-require_once(IPP_PATH . 'install/index.php');
-exit();
+if(!is_file(IPP_PATH . "etc/init.php"))
+{
+    include_once IPP_PATH . 'install/index.php';
+    exit();
 }
 /* eGPS required files. */
-require_once(IPP_PATH . 'etc/init.php');
-include_once(IPP_PATH . 'include/db.php');
-include_once(IPP_PATH . 'include/auth.php');
-include_once(IPP_PATH . 'include/supporting_functions.php');
-require_once(IPP_PATH . 'include/config.inc.php');
+require_once IPP_PATH . 'etc/init.php';
+require_once IPP_PATH . 'include/db.php';
+require_once IPP_PATH . 'include/auth.php';
+require_once IPP_PATH . 'include/supporting_functions.php';
+require_once IPP_PATH . 'include/config.inc.php';
 logout();
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -60,13 +61,6 @@ if(isset($LOGIN_NAME)) $LOGIN_NAME = $LOGIN_NAME; else $LOGIN_NAME="";
 
     <link href="./css/jumbotron.css" rel="stylesheet">
 
-   
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
     
     
 

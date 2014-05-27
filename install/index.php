@@ -1,12 +1,24 @@
 <?php
 /** @file
+ * 
  *  @brief 		install wizard
+ *  
  *  @todo
- *  1. Rebrand, theme, copyright
+ *  * Rebrand, theme
+ *  * add check for magic quotes
+ *  * Return PHP version, perhaps check for compatibility
+ *
+ *  @author    M Nielson
+ *  
+ *  @copyright 2007 Grassland Regional #6
+ *  
+ *  @copyright 2014 Chelsea School
+ *  
+ *  @license   GPv2 <http://www.gnu.org/licenses/gpl-2.0.html>
  */
 //check if we have an init.php file already...security problem
-if(is_file("../etc/init.php")) {
-   die("To run the install, " . realpath("../etc/init.php") . " must not already exist!");
+if (is_file("../etc/init.php")) {
+    die("To run the install, " . realpath("../etc/init.php") . " must not already exist!");
 }
 
 
@@ -91,51 +103,53 @@ header('Pragma: no-cache'); //don't cache this page!
                           } else {
                            echo "<li>pspell Libraries are loaded (PASS)";
                           }
-             if(!@include_once("Mail.php")) {
-               echo "<li>Pear Mail Class is not loaded (Not Recommended)";
-                          } else {
-                           echo "<li>Pear Mail Class is loaded (Recommended)";
-                          }
-                          if(!@include_once("Mail/mime.php")) {
-                           echo "<li>Pear Mail/Mime Class is not loaded (Not Recommended)";
-                          } else {
-                           echo "<li>Pear Mail/Mime Class is loaded (Recommended)";
-                          }
-                          if(!@include_once("Net/SMTP.php")) {
-                           echo "<li>Pear Net/SMTP Class is not loaded (Not Recommended)";
-                          } else {
-                           echo "<li>Pear Net/SMTP Class is loaded (Recommended)";
-                          }
+if (!@include_once 'Mail.php') {
+    echo "<li>Pear Mail Class is not loaded (Not Recommended)";
+} else {
+    echo "<li>Pear Mail Class is loaded (Recommended)";
+}
+if (!@include_once 'Mail/mime.php') {
+    echo "<li>Pear Mail/Mime Class is not loaded (Not Recommended)";
+} else {
+    echo "<li>Pear Mail/Mime Class is loaded (Recommended)";
+}
+if (!@include_once 'Net/SMTP.php') {
+    echo "<li>Pear Net/SMTP Class is not loaded (Not Recommended)";
+} else {
+    echo "<li>Pear Net/SMTP Class is loaded (Recommended)";
+}
 
-                        ?>
-                        </ul></td></tr></table></center>
-                        <?php 
-   echo "<form enctype=\"multipart/form-data\" action=\"./install/permissions.php" . "\" method=\"post\">";
-   echo " <center><input class=\"sbutton\" type=\"submit\" value=\"Next\"";
-   if($fail) echo " DISABLED";
-   echo "></center>";
-   echo "</form>";
+?>
+</ul></td></tr></table></center>
+<?php 
+echo "<form enctype=\"multipart/form-data\" action=\"./install/permissions.php" . "\" method=\"post\">";
+echo " <center><input class=\"sbutton\" type=\"submit\" value=\"Next\"";
+if ($fail) {
+    echo " DISABLED"; 
+}
+echo "></center>";
+echo "</form>";
 
                         
-                        ?>
-                        </div>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">&nbsp;</td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
-        <center>System Copyright &copy; 2005 Grasslands Regional Division #6.</center>
+?>
+</div>
+</td>
+</tr>
+</table>
+</td>
+<td class="shadow-right"></td>   
+</tr>
+<tr>
+<td class="shadow-left">&nbsp;</td>
+<td class="shadow-center">&nbsp;</td>
+<td class="shadow-right">&nbsp;</td>
+</tr>
+<tr>
+<td class="shadow-bottomLeft"></td>
+<td class="shadow-bottom"></td>
+<td class="shadow-bottomRight"></td>
+</tr>
+</table> 
+<center>Copyright &copy; 2014 Chelsea School</center>
     </BODY>
 </HTML>
