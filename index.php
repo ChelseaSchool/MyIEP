@@ -79,12 +79,12 @@ if(isset($LOGIN_NAME)) $LOGIN_NAME = $LOGIN_NAME; else $LOGIN_NAME="";
           <a class="navbar-brand" href="#">MyIEP</a>
         </div>
         <div class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" role="form" action="<?php echo IPP_PATH . 'main.php'; ?>" method="post">
+          <form class="navbar-form navbar-right" role="form" action="test.php" method="post">
             <div class="form-group">
               <input name="LOGIN_NAME" autofocus required autocomplete="off" type="text" placeholder="User Name" name="LOGIN_NAME" value="<?php echo $LOGIN_NAME;?>" class="form-control" value="<?php echo $LOGIN_NAME;?>">
             </div>
             <div class="form-group">
-              <input name=PASSWORD required autocomplete="off" type="password" placeholder="Password" class="form-control" name="PASSWORD" value="" placeholder="Password">
+              <input required autocomplete="off" type="password" placeholder="Password" class="form-control" name="PASSWORD" value="" placeholder="Password">
             </div>
             <button type="submit" class="btn btn-success">Sign in</button>
             

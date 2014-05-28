@@ -1,5 +1,5 @@
 
-<? php
+<?php
 /** @file
  *  @brief  main menu
 *  @bug	right hand drop down nav isn't working
@@ -10,7 +10,7 @@
 *  4. Duplicate nav bar for all pages without one (or two)
 */
 //the authorization level for this page!
-$MINIMUM_AUTHORIZATION_LEVEL = 100;
+//$MINIMUM_AUTHORIZATION_LEVEL = 100;
 
 if(isset($system_message)) $system_message = $system_message;
 else $system_message = "";
@@ -25,41 +25,42 @@ require_once(IPP_PATH . 'include/log.php');
 //require_once(IPP_PATH . 'include/navbar.php');
 require_once(IPP_PATH . 'include/supporting_functions.php');
 require_once 'include/password.php';
-require_once 'include/page_troubleshoot.php';
+//require_once 'include/page_troubleshoot.php';
 //require_once(IPP_PATH . 'include/config.inc.php');
 header('Pragma: no-cache'); //don't cache this page!
 
-/** brief sanitize authenticate form
- *  @remark but first secure against uncontrolled input
-*/
 
 $userPassword = $_POST['PASSWORD'];
 $user = $_POST['LOGIN_NAME'];
+
 function checkHash($user='', $userPassword='') {
-   $query = "SELECT * FROM users WHERE login_name = '" . $user . ";
+   $query = "SELECT * FROM users WHERE login_name = '" . $user . "'";
    $result = mysql_query($query);
-   $row=mysql_fetch_array($system_result);
-   if(!$result) {
-      $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$query'<BR>";
-      echo FALSE;
+   $row=mysql_fetch_array($result);
+   if (!$result) {
+      return FALSE;
    }
    if(!connectUserDB()) {
       $error_message = $error_message; //just to remember we need this
-      echo FALSE;
+      return FALSE;
    }
    $hash = $row['unencrypted_password'];
    
+   
    $valid=validateHash($userPassword, $hash);
    if ($valid) {
-      echo "TRUE";
-   else echo "false";
+      echo "The hash is valid.";
+   }
+   else {
+   	echo "The hash is invalid.";
+   }
 }
 
 
 
 
 
-
+/*
 if (isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
     if (!validate( $_POST['LOGIN_NAME'] ,  $_POST['PASSWORD'] )) {
         $system_message = $system_message . $error_message;
@@ -79,7 +80,7 @@ if (isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
         exit();
     }
 }
-
+*/
 ?>
 
 

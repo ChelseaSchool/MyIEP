@@ -450,13 +450,13 @@ You should have received a copy of the GNU General Public License along with thi
          }
     }
     
-function GenerateHash($password="") {
+function generateHash($password="") {
     require_once 'password.php';
     $hash = password_hash($password, PASSWORD_BCRYPT);
     return $hash;
 }
 
-function ValidateHash($password="", $hash="") {
+function validateHash($password="", $hash="") {
     require_once 'password.php';
     $verify=password_verify($password, $hash);
     return $verify;
@@ -475,13 +475,9 @@ function ValidateHash($password="", $hash="") {
         //start session...
         //session_cache_limiter('private'); //IE6 sucks
         session_cache_limiter('nocache');
-        if(session_id() == "") session_start();
+        if (session_id() == "") session_start();
     
-        //we must double login for IPP
-        //if(!isset($_SESSION['IPP_double_login'])) return FALSE;
-    
-        //check if we already have registered session info
-        //for login and passwd.
+         
         if(!isset($_SESSION['IPP_double_login'])) {
             if(!register($szLogin,$szPassword)) {
                 $error_message = $error_message;
@@ -491,7 +487,7 @@ function ValidateHash($password="", $hash="") {
     
         //connect DB:
     
-        if(!connectIPPDB()) {
+        if (!connectIPPDB()) {
             $error_message = $error_message; //just to remember we need this
             return FALSE;
         }
@@ -504,7 +500,7 @@ function ValidateHash($password="", $hash="") {
             return FALSE;
         }
     
-        if(mysql_num_rows($result) <= 0 ) {
+        if (mysql_num_rows($result) <= 0 ) {
             $error_message = "Session has expired<BR>";
             logout();
             return FALSE;
@@ -512,7 +508,7 @@ function ValidateHash($password="", $hash="") {
     
         //check if we have a valid login/password combination.
     
-        if(!connectUserDB()) {
+        if (!connectUserDB()) {
             $error_message = $error_message; //just to remember we need this
             return FALSE;
         }
