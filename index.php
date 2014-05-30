@@ -12,7 +12,7 @@
  You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * @authors		Rik Goldman, Sabre Goldman, Jason Banks, Alex, James, Paul, Bryan, TJ, Jonathan, Micah, Stephen, Joseph
  * @author		M. Nielson
- * @todo		
+ * @todo
  * 1. Double check security
  * 2. Use filters for input
  * 3. test sql injections
@@ -24,8 +24,7 @@
 
 if(!defined('IPP_PATH')) define('IPP_PATH','./');
 //check if we are running install wizard
-if(!is_file(IPP_PATH . "etc/init.php"))
-{
+if (!is_file(IPP_PATH . "etc/init.php")) {
     include_once IPP_PATH . 'install/index.php';
     exit();
 }
@@ -41,7 +40,7 @@ header('Pragma: no-cache'); //don't cache this page!
 if(isset($MESSAGE)) $MESSAGE = $MESSAGE; else $MESSAGE="";
 if(isset($LOGIN_NAME)) $LOGIN_NAME = $LOGIN_NAME; else $LOGIN_NAME="";
 
-?> 
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -52,8 +51,8 @@ if(isset($LOGIN_NAME)) $LOGIN_NAME = $LOGIN_NAME; else $LOGIN_NAME="";
     <meta name="author" content="Rik Goldman" >
     <link rel="shortcut icon" href="./assets/ico/favicon.ico">
     <TITLE><?php echo $page_title; ?></TITLE>
-    
-    
+
+
         <!-- Bootstrap core CSS -->
     <link href="./css/bootstrap.min.css" rel="stylesheet">
 
@@ -61,12 +60,12 @@ if(isset($LOGIN_NAME)) $LOGIN_NAME = $LOGIN_NAME; else $LOGIN_NAME="";
 
     <link href="./css/jumbotron.css" rel="stylesheet">
 
-    
-    
+
+
 
 </HEAD>
 <BODY>
-<!-- Jumbo Stock Nav --> 
+<!-- Jumbo Stock Nav -->
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -87,16 +86,16 @@ if(isset($LOGIN_NAME)) $LOGIN_NAME = $LOGIN_NAME; else $LOGIN_NAME="";
               <input name=PASSWORD required autocomplete="off" type="password" placeholder="Password" class="form-control" name="PASSWORD" value="" placeholder="Password">
             </div>
             <button type="submit" class="btn btn-success">Sign in</button>
-            
+
           </form>
         </div><!--/.navbar-collapse -->
       </div>
-    </div>    
-    
-       
-        
+    </div>
+
+
+
  <!-- End Navbar -->
- 
+
 <div class="jumbotron">
 <div class="container">
 
@@ -124,11 +123,11 @@ if(isset($LOGIN_NAME)) $LOGIN_NAME = $LOGIN_NAME; else $LOGIN_NAME="";
 <ul>
 <li>jQuery Date Picker</li>
 <li>User Interface/User Experience Improvements</li>
-	<ul>
-	<li>Main Menu</li>
-	<li>Goal View</li>
-	<li>Edit Objectives</li>
-	</ul>
+    <ul>
+    <li>Main Menu</li>
+    <li>Goal View</li>
+    <li>Edit Objectives</li>
+    </ul>
 </ul>
 </div>
 <!-- Middle column -->
@@ -206,12 +205,11 @@ Hyattsville, Maryland 20782</address>
 </div>
 </div>
 <hr>
-<?php print_complete_footer(); ?>  
+<?php print_complete_footer(); ?>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery-2.1.0.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>     
+    <script src="js/bootstrap.min.js"></script>
 </BODY>
 </HTML>
-
