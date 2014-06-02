@@ -1,37 +1,41 @@
 <?php
 /** @file
+ * 
  *  @brief  Contains functions allowing system to send mail
- *  @todo
- *  1. Refactor - right now this file contains a single function. Move to other included file containing collections of functions.
  *  
  */
 
-// functions allowing system to send mail
-if (! defined ( 'IPP_PATH' ))
-	define ( 'IPP_PATH', '../' );
+// Functions allowing system to send mail.
+if (!defined('IPP_PATH')) {
+	define('IPP_PATH', '../');
+}
 
-require_once (IPP_PATH . 'etc/init.php'); // make sure we have this. Todo: shouldn't there be a test and definition of what to do if test fails?
-require_once (IPP_PATH . 'include/log.php');
+require_once IPP_PATH . 'etc/init.php'; // make sure we have this. Todo: shouldn't there be a test and definition of what to do if test fails?
+require_once IPP_PATH . 'include/log.php';
 
-// make sure we aren't accessing this file directly...todo: check function syntax on 11
-if (realpath ( $_SERVER ["SCRIPT_FILENAME"] ) == realpath ( __FILE__ )) {
+// make sure we aren't accessing this file directly...
+if (realpath($_SERVER ["SCRIPT_FILENAME"]) == realpath(__FILE__)) {
 	$system_message = $system_message . "You do not have permission to view this page (IP: " . $_SERVER ['REMOTE_ADDR'] . ")";
-	IPP_LOG ( $system_message, $_SESSION ['egps_username'], 'ERROR' );
-	require (IPP_PATH . 'security_error.php');
-	exit ();
+	IPP_LOG($system_message, $_SESSION ['egps_username'], 'ERROR');
+	include IPP_PATH . 'security_error.php';
+	exit();
 }
 
 /**
  * @fn		mail_notification($recipients="",$message="-unknown message-")
+ *
  * @brief	sends email to one recipient, if proper dependencies are installed
  * 
- * @param string $recipients        	
- * @param string $message        	
+ * @param string $recipients  
+ *       	
+ * @param string $message   
+ *      	
  * @return void number Requires:
  *         1. Pear/Main
  *         2. Net/SMTP
  */
-function mail_notification($recipients = "", $message = "-unknown message-") {
+function mail_notification($recipients = "", $message = "-unknown message-")
+{
 	// Recipients currently only one!(separated by , ) todo: how do we implement ability for more than one mail recipient?
 	global $system_message, $enable_email_notification, $mail_host, $append_to_username, $email_reply_address, $IPP_ORGANIZATION;
 	
@@ -79,9 +83,8 @@ function mail_notification($recipients = "", $message = "-unknown message-") {
 	$params ["password"] = "password"; // Password of the above
 	                                  
 	// Create the mail object using the Mail::factory method
-	$mail_object = & Mail::factory ( "smtp", $params ); // todo - establish an understanding of this method and compare to contemporary best practive
-	
-	$mail_object->send ( $recipients, $hdrs, $body ); // Send the email using the Mail PEAR Class
+	$mail_object = & Mail::factory("smtp", $params); 
+		$mail_object->send($recipients, $hdrs, $body); // Send the email using the Mail PEAR Class
 		                                               // echo "send to: $recipients,<BR>headers: $hdrs,<BR>body: $body<BR>"; todo: note this html output is disabled; there is no confirmation in this code
 }
-?>
+
