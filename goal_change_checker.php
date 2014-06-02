@@ -13,15 +13,15 @@ header('Pragma: no-cache'); //don't cache this page!
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100; //everybody check within
 
-if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
-    if(!validate( $_POST['LOGIN_NAME'] ,  $_POST['PASSWORD'] )) {
+if (isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
+    if (!validate( $_POST['LOGIN_NAME'] ,  $_POST['PASSWORD'] )) {
         $system_message = $system_message . $error_message;
         IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
         require(IPP_PATH . 'index.php');
         exit();
     }
 } else {
-    if(!validate()) {
+    if (!validate()) {
         $system_message = $system_message . $error_message;
         IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
         require(IPP_PATH . 'index.php');
@@ -32,17 +32,17 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
 
 //check permission levels
 $permission_level = getPermissionLevel($_SESSION['egps_username']);
-if( $permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NULL) {
+if ($permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NULL) {
     $system_message = $system_message . "You do not have permission to view this page (IP: " . $_SERVER['REMOTE_ADDR'] . ")";
     IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
     require(IPP_PATH . 'security_error.php');
     exit();
 }
 $our_permission = getStudentPermission($student_id);
-if($our_permission == "WRITE" || $our_permission == "ASSIGN" || $our_permission == "ALL") {
+if ($our_permission == "WRITE" || $our_permission == "ASSIGN" || $our_permission == "ALL") {
     //we have write permission.
     $have_write_permission = true;
-}  else {
+} else {
     $have_write_permission = false;
 }
 $student_first_name = $_POST['student_first_name'];
@@ -54,18 +54,17 @@ $area = $_POST['goal_area'];
 $goal_id = $_POST['lto'];
 $sql = "UPDATE long_term_goal SET review_date = '$review_date', goal='$goal', area='$area' WHERE goal_id = '$goal_id'";
 $result = mysql_query($sql);
-if(!$result) {
+if (!$result) {
     $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: {$sql}<BR>";
     $system_message=$system_message . $error_message;
     IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
-}
-else {
+} else {
     $status = "Your revision has been recorded successfully.";
 }
-if($student_id) {
+if ($student_id) {
     $student_query = "SELECT * FROM student WHERE student_id = " . mysql_real_escape_string($student_id);
     $student_result = mysql_query($student_query);
-    if(!$student_result) {
+    if (!$student_result) {
         $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$student_query'<BR>";
         $system_message=$system_message . $error_message;
         IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
@@ -92,7 +91,7 @@ print_html5_primer();
 <h2><small>Review Date</small> <?php echo $review_date; ?></h2>
 
 <a class="btn btn-md btn-default" href="<?php echo "add_objectives.php?student_id=" . $student_id . "&lto=" . $goal_id; ?>">Back</a>&nbsp;<a class="btn btn-md btn-success" href="<?php echo "long_term_goal_view.php?student_id=" . $student_id ; ?>">Return to Goals and Objectives</a>
-<?php 
+<?php
 if ($error_message) {
     echo $error_message;
 }
