@@ -35,15 +35,15 @@ require_once(IPP_PATH . 'include/supporting_functions.php');
 
 header('Pragma: no-cache'); //don't cache this page!
 
-if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
-    if(!validate( $_POST['LOGIN_NAME'] ,  $_POST['PASSWORD'] )) {
+if (isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
+    if (!validate( $_POST['LOGIN_NAME'] ,  $_POST['PASSWORD'] )) {
         $system_message = $system_message . $error_message;
         IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
         require(IPP_PATH . 'login.php');
         exit();
     }
 } else {
-    if(!validate()) {
+    if (!validate()) {
         $system_message = $system_message . $error_message;
         IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
         require(IPP_PATH . 'login.php');
@@ -56,7 +56,7 @@ $student_id="";
 if(isset($_GET['student_id'])) $student_id= $_GET['student_id'];
 if(isset($_POST['student_id'])) $student_id = $_POST['student_id'];
 
-if($student_id=="") {
+if ($student_id=="") {
    //we shouldn't be here without a student id.
    echo "You've entered this page without supplying a valid student id. Fatal, quitting";
    exit();
@@ -65,7 +65,7 @@ $goal_area="";
 if(isset($_GET['goal_area'])) $goal_area= $_GET['goal_area'];
 if(isset($_POST['goal_area'])) $goal_area = $_POST['goal_area'];
 
-if($student_id=="") {
+if ($student_id=="") {
    //we shouldn't be here without a student id.
    echo "You've entered this page without supplying a valid student id. Fatal, quitting";
    exit();
@@ -74,14 +74,14 @@ if($student_id=="") {
 
 //check permission levels
 $permission_level = getPermissionLevel($_SESSION['egps_username']);
-if( $permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NULL) {
+if ($permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NULL) {
     $system_message = $system_message . "You do not have permission to view this page (IP: " . $_SERVER['REMOTE_ADDR'] . ")";
     IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
     require(IPP_PATH . 'security_error.php');
     exit();
 }
 
-if(!isset($_GET['student_id']) || $_GET['student_id'] == "") {
+if (!isset($_GET['student_id']) || $_GET['student_id'] == "") {
     //ack
     echo "You've come to this page without a valid student ID<BR>To what end I wonder...<BR>";
     exit();
@@ -91,7 +91,7 @@ if(!isset($_GET['student_id']) || $_GET['student_id'] == "") {
 
 //check permission levels
 $permission_level = getPermissionLevel($_SESSION['egps_username']);
-if( $permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NULL) {
+if ($permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NULL) {
     $system_message = $system_message . "You do not have permission to view this page (IP: " . $_SERVER['REMOTE_ADDR'] . ")";
     IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
     require(IPP_PATH . 'security_error.php');
@@ -99,10 +99,10 @@ if( $permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NUL
 }
 
 $our_permission = getStudentPermission($student_id);
-if($our_permission == "WRITE" || $our_permission == "ASSIGN" || $our_permission == "ALL") {
+if ($our_permission == "WRITE" || $our_permission == "ASSIGN" || $our_permission == "ALL") {
     //we have write permission.
     $have_write_permission = true;
-}  else {
+} else {
     $have_write_permission = false;
 }
 
@@ -110,7 +110,7 @@ if($our_permission == "WRITE" || $our_permission == "ASSIGN" || $our_permission 
 
 $student_query = "SELECT * FROM student WHERE student_id = " . mysql_real_escape_string($student_id);
 $student_result = mysql_query($student_query);
-if(!$student_result) {
+if (!$student_result) {
     $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$student_query'<BR>";
     $system_message=$system_message . $error_message;
     IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
@@ -119,7 +119,7 @@ if(!$student_result) {
 /** Legacy Procedure
 $goal_category_name_query= "SELECT * FROM typical_long_term_goal_category where goal_area = " . mysql_real_escape_string($goal_area) . " limit 1";
 $goal_category_name_result=mysql_query($goal_category_name_query);
-if(!$goal_category_name_result) {
+if (!$goal_category_name_result) {
     $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$goal_category_name_query'<BR>";
     $system_message=$system_message . $error_message;
     IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
@@ -130,7 +130,7 @@ if(!$goal_category_name_result) {
     function createJavaScript($dataSource,$arrayName='rows')
     {
       // validate variable name
-      if(!is_string($arrayName)){
+      if (!is_string($arrayName)) {
         $system_message = $system_message . "Error in popup chooser support function name supplied not a valid string  (" . __FILE__ . ":" . __LINE__ . ")";
         return FALSE;
       }
@@ -139,13 +139,13 @@ if(!$goal_category_name_result) {
       $javascript='<!--Begin popup array--><script>var '.$arrayName.'=[];';
 
     // check if $dataSource is a file or a result set
-      if(is_file($dataSource)){
+      if (is_file($dataSource)) {
 
         // read data from file
         $row=file($dataSource);
 
         // build JavaScript array
-        for($i=0;$i<count($row);$i++){
+        for ($i=0;$i<count($row);$i++) {
           $javascript.=$arrayName.'['.$i.']="'.trim($row[$i]).'";';
         }
       }
@@ -154,12 +154,12 @@ if(!$goal_category_name_result) {
       else{
 
         // check if we have a zero resultant set
-        if(!$numRows=mysql_num_rows($dataSource)){
+        if (!$numRows=mysql_num_rows($dataSource)) {
           //zero result set (create empty array)
           $javascript.='</script><!--End popup array-->'."\n";
           return $javascript;
         }
-        for($i=0;$i<$numRows;$i++){
+        for ($i=0;$i<$numRows;$i++) {
           // build JavaScript array from result set
           $javascript.=$arrayName.'['.$i.']="';
           $tempOutput='';
@@ -181,11 +181,11 @@ if(!$goal_category_name_result) {
     {
         global $system_message;
 
-        //while($catlist=mysql_fetch_array($catlist_result)) {
-        if(isset($_GET['goal_area']) && !$_GET['goal_area']=="") {
+        //while ($catlist=mysql_fetch_array($catlist_result)) {
+        if (isset($_GET['goal_area']) && !$_GET['goal_area']=="") {
            $objlist_query="SELECT typical_long_term_goal.goal FROM typical_long_term_goal WHERE cid=" . mysql_real_escape_string($_GET['goal_area']) . " AND typical_long_term_goal.is_deleted='N'";
            $objlist_result = mysql_query($objlist_query);
-           if(!$objlist_result) {
+           if (!$objlist_result) {
              $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$objlist_query'<BR>";
              $system_message= $system_message . $error_message;
              IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
@@ -203,7 +203,7 @@ if(!$goal_category_name_result) {
 
 $area_query = "SELECT * FROM `typical_long_term_goal_category` WHERE `is_deleted` = \"N\" ORDER BY `typical_long_term_goal_category`.`name` ASC";
 $area_result = mysql_query($area_query);
-if(!$area_result) {
+if (!$area_result) {
         $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$area_query'<BR>";
         $system_message=$system_message . $error_message;
         IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
