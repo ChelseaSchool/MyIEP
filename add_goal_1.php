@@ -1,8 +1,8 @@
 <?php
 
 /** @file
- * @brief  purpose is unclear	
- * @copyright 	2014 Chelsea School 
+ * @brief  purpose is unclear
+ * @copyright 	2014 Chelsea School
  * @copyright 	2005 Grasslands Regional Division #6
  * @license		This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
     the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
@@ -13,8 +13,8 @@
  * @author		M. Nielson
  * @todo		Filter input
  */
- 
- 
+
+
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100;    //everybody (do checks within document)
 
@@ -142,7 +142,7 @@ if(!$goal_category_name_result) {
 
     // check if $dataSource is a file or a result set
       if(is_file($dataSource)){
-       
+
         // read data from file
         $row=file($dataSource);
 
@@ -209,17 +209,17 @@ if(!$area_result) {
         $system_message=$system_message . $error_message;
         IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
 }
-   
-    
-    
-    
-?> 
+
+
+
+
+?>
 
 <?php print_html5_primer(); ?>
     <TITLE><?php echo $page_title; ?></TITLE>
     <?php print_bootstrap_head(); ?>
-    
-    
+
+
      <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
      <script language="javascript" src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script>
      <?php
@@ -238,7 +238,7 @@ if(!$area_result) {
       function noSelection() {
           alert("You must choose a goal category to enable the chooser"); return false;
       }
-      
+
     </SCRIPT>
 <?php print_datepicker_depends(); ?>
 </HEAD>
@@ -247,12 +247,12 @@ if(!$area_result) {
 <?php print_jumbotron_with_page_name("Add Long Term Goal", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission); ?>
 <div class="container">
 <?php if ($system_message) { echo $system_message ;} ?>
-    
-        
+
+
                         <h2>New Goal</h2>
-                        
+
                         <!-- BEGIN add new entry -->
-                        
+
                         <form spellcheck="true" name="add_long_term_goal" enctype="multipart/form-data" action="<?php echo IPP_PATH . "add_objectives.php"; ?>" method="post">
                         <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
                         <input type="hidden" name="add_goal" value="1">
@@ -260,38 +260,38 @@ if(!$area_result) {
                            <label>Goal Area</label>
                            <select required class="form-control" name="goal_area" placeholder="Choose Goal Area">
 
-<?php   
+<?php
 
 $area_result_row = mysql_fetch_array($area_result);
 while ($area_result_row=mysql_fetch_array($area_result)) {
         echo "<option>" . $area_result_row['name'] . "</option>\n";
 }
 ?>
-</select> 
-                          
-                       
+</select>
+
+
                            <label>Goal</label>
                            <textarea spellcheck="true" required placeholder="<?php echo $student_row['first_name'] . " " . $student_row['last_name'] . " will..."?>" class="form-control" name="goal_description" tabindex="1" cols="23" rows="3" wrap="soft"></textarea>
-                        
+
                            <label>Review Date (YYYY-MM-DD)</label>
                            <input required class="form-control datepicker" type="datepicker" tabindex="2" size="30" name="review_date" id="datepicker" data-provide="datepicker" data-date-format="yy-mm-dd">
-                         
+
                          </div>
                          <button class="pull-right btn btn-lg btn-success" type="submit" tabindex="3" name="Next" value="Next">Continue</button>
-                         
-                       
+
+
                         </form>
-                        
+
                         <!-- END add new entry -->
 
 
-        
-  
-                       
-        
+
+
+
+
     <footer><?php print_complete_footer(); ?></footer>
-</div>   
+</div>
     <?php print_bootstrap_js(); ?>
-    
+
     </BODY>
 </HTML>
