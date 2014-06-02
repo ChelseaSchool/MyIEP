@@ -272,18 +272,16 @@ while ($area_result_row=mysql_fetch_array($area_result)) {
 </select>
 
 
-                           <label>Goal</label>
-                           <textarea spellcheck="true" required placeholder="<?php echo $student_row['first_name'] . " " . $student_row['last_name'] . " will..."?>" class="form-control" name="goal_description" tabindex="1" cols="23" rows="3" wrap="soft"></textarea>
+<label>Goal</label>
+<textarea spellcheck="true" required placeholder="<?php echo $student_row['first_name'] . " " . $student_row['last_name'] . " will..."?>" class="form-control" name="goal_description" tabindex="1" cols="23" rows="3" wrap="soft"></textarea>
 
-                           <label>Review Date (YYYY-MM-DD)</label>
-                           <input required class="form-control datepicker" type="datepicker" tabindex="2" size="30" name="review_date" id="datepicker" data-provide="datepicker" data-date-format="yy-mm-dd">
+<label>Review Date (YYYY-MM-DD)</label>
+<input required class="form-control datepicker" type="datepicker" tabindex="2" size="30" name="review_date" id="datepicker" data-provide="datepicker" data-date-format="yy-mm-dd">
+</div>
+<button class="pull-right btn btn-lg btn-success" type="submit" tabindex="3" name="Next" value="Next">Continue</button>
+</form>
 
-                         </div>
-                         <button class="pull-right btn btn-lg btn-success" type="submit" tabindex="3" name="Next" value="Next">Continue</button>
-
-                        </form>
-
-                        <!-- END add new entry -->
+<!-- END add new entry -->
 
     <footer><?php print_complete_footer(); ?></footer>
 </div>
