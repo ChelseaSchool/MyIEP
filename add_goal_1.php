@@ -205,9 +205,9 @@ if(!$goal_category_name_result) {
 $area_query = "SELECT * FROM `typical_long_term_goal_category` WHERE `is_deleted` = \"N\" ORDER BY `typical_long_term_goal_category`.`name` ASC";
 $area_result = mysql_query($area_query);
 if(!$area_result) {
-    	$error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$area_query'<BR>";
-    	$system_message=$system_message . $error_message;
-    	IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
+        $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$area_query'<BR>";
+        $system_message=$system_message . $error_message;
+        IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
 }
    
     
@@ -264,7 +264,7 @@ if(!$area_result) {
 
 $area_result_row = mysql_fetch_array($area_result);
 while ($area_result_row=mysql_fetch_array($area_result)) {
-    	echo "<option>" . $area_result_row['name'] . "</option>\n";
+        echo "<option>" . $area_result_row['name'] . "</option>\n";
 }
 ?>
 </select> 
@@ -285,7 +285,7 @@ while ($area_result_row=mysql_fetch_array($area_result)) {
                         <!-- END add new entry -->
 
 
-   		
+        
   
                        
         
