@@ -19,8 +19,6 @@ You should have received a copy of the GNU General Public License along with thi
 * 6. Clean session effectively on logout function
 */
 
-
-
     if(!defined('IPP_PATH')) define('IPP_PATH','../');
     if(!isset($is_local_student)) $is_local_student=FALSE;
 
@@ -38,12 +36,13 @@ You should have received a copy of the GNU General Public License along with thi
 * @param string $szPassword
 * @return boolean
 */
-    function register($szLogin='',$szPassword='') {
+    function register($szLogin='',$szPassword='')
+    {
         global $mysql_user_append_to_login,$error_message, $mysql_user_select_login, $mysql_user_select_password, $mysql_user_table, $mysql_user_append_to_login,$IPP_TIMEOUT;
 
         $error_message = "";
 
-         if(!connectUserDB()) {
+         if (!connectUserDB()) {
              $error_message = $error_message; //just to remember we need this
              return FALSE;
          }
@@ -53,13 +52,13 @@ You should have received a copy of the GNU General Public License along with thi
 
          $query = "SELECT * FROM $mysql_user_table WHERE (" . $mysql_user_select_login . "='" . $szLogin . $mysql_user_append_to_login . "' or " . $mysql_user_select_login . "='" . $szLogin . "') and " . $mysql_user_select_password . "='" . $szPassword . "' AND aliased_name IS NULL";
          $result = mysql_query($query);
-         if(!$result) {
+         if (!$result) {
              $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$query'<BR>";
              return FALSE;
          }
 
          //check if we gotten no result (no user with that password)
-         if(mysql_num_rows($result) <= 0 ) {
+         if (mysql_num_rows($result) <= 0 ) {
             $error_message = "Login failed: Unknown username and password<BR>";
             return FALSE;
          }
@@ -69,14 +68,14 @@ You should have received a copy of the GNU General Public License along with thi
          $_SESSION['password'] = $szPassword;
          $_SESSION['IPP_double_login'] = TRUE;
 
-         if(!connectIPPDB()) {
+         if (!connectIPPDB()) {
              $error_message = $error_message; //just to remember we need this
              return FALSE;
          }
          //setup logged_in table...
          $query = "INSERT INTO logged_in (ipp_username,session_id,last_ip,time) VALUES ('$szLogin','" . session_id(). "','" . $_SERVER['REMOTE_ADDR'] . "', (NOW()+ INTERVAL " . $IPP_TIMEOUT . " MINUTE))";
          $result = mysql_query($query);
-         if(!$result) {
+         if (!$result) {
             $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$query'<BR>";
             return FALSE;
          }
@@ -84,7 +83,7 @@ You should have received a copy of the GNU General Public License along with thi
          //record last ip and last active time into support_member table.
          $query = "UPDATE support_member SET last_ip='" . $_SERVER['REMOTE_ADDR'] . "', last_active=now() WHERE egps_username='$szLogin'";
          $result = mysql_query($query);
-         if(!$result) {
+         if (!$result) {
             $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$query'<BR>";
             return FALSE;
          }
@@ -93,7 +92,7 @@ You should have received a copy of the GNU General Public License along with thi
          //for system cleanup.
          $query = "DELETE from logged_in WHERE (time - NOW()) < 0";
          $result = mysql_query($query);
-         if(!$result) {
+         if (!$result) {
             $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$query'<BR>";
             return FALSE;
          }
@@ -110,25 +109,25 @@ You should have received a copy of the GNU General Public License along with thi
 * 1. Add are you sure alert and ask for confirmation for logout
 */
 
-    function logout() {
-    
-    	$session_id=session_id();
-    	if(!connectIPPDB()) {
-    		$error_message = $error_message; //just to remember we need this
-    		return FALSE;
-    	}
-    	$query = "DELETE FROM logged_in WHERE session_id='$session_id'";
-    	$result = mysql_query($query);
-    	if(!$result) {
-    		$error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$query'<BR>";
-    		return FALSE;
-    	}
-    	if(!session_id()) session_start();
-    	unset($_SESSION['egps_username']);
-    	unset($_SESSION['password']);
-    	unset($_SESSION['IPP_double_login']);
-    	$_SESSION = array(); // Destroy the variables.
-    	session_destroy();
+    function logout()
+    {
+        $session_id=session_id();
+        if (!connectIPPDB()) {
+            $error_message = $error_message; //just to remember we need this
+            return FALSE;
+        }
+        $query = "DELETE FROM logged_in WHERE session_id='$session_id'";
+        $result = mysql_query($query);
+        if (!$result) {
+            $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$query'<BR>";
+            return FALSE;
+        }
+        if(!session_id()) session_start();
+        unset($_SESSION['egps_username']);
+        unset($_SESSION['password']);
+        unset($_SESSION['IPP_double_login']);
+        $_SESSION = array(); // Destroy the variables.
+        session_destroy();
     }
 
 /** @fn validate($szLogin='',$szPassword='')
@@ -138,7 +137,8 @@ You should have received a copy of the GNU General Public License along with thi
 * @return boolean
 */
 
-    function validate($szLogin='',$szPassword='') {
+    function validate($szLogin='',$szPassword='')
+    {
          //check username and password against user database
          //returns TRUE if successful or FALSE on fail.
          //if FALSE returns $error_message
@@ -156,8 +156,8 @@ You should have received a copy of the GNU General Public License along with thi
 
          //check if we already have registered session info
          //for login and passwd.
-         if(!isset($_SESSION['IPP_double_login'])) {
-             if(!register($szLogin,$szPassword)) {
+         if (!isset($_SESSION['IPP_double_login'])) {
+             if (!register($szLogin,$szPassword)) {
                  $error_message = $error_message;
                  return FALSE;
              }
@@ -165,7 +165,7 @@ You should have received a copy of the GNU General Public License along with thi
 
          //connect DB:
 
-         if(!connectIPPDB()) {
+         if (!connectIPPDB()) {
              $error_message = $error_message; //just to remember we need this
              return FALSE;
          }
@@ -173,12 +173,12 @@ You should have received a copy of the GNU General Public License along with thi
          //check session logged in...
          $query = "SELECT * FROM logged_in WHERE ipp_username = '" . $_SESSION['egps_username'] . "' AND last_ip = '" . $_SERVER["REMOTE_ADDR"] . "' AND (time - NOW()) > 0";
          $result = mysql_query($query);
-         if(!$result) {
+         if (!$result) {
             $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$query'<BR>";
             return FALSE;
          }
 
-         if(mysql_num_rows($result) <= 0 ) {
+         if (mysql_num_rows($result) <= 0 ) {
             $error_message = "Session has expired<BR>";
             logout();
             return FALSE;
@@ -186,25 +186,25 @@ You should have received a copy of the GNU General Public License along with thi
 
          //check if we have a valid login/password combination.
 
-         if(!connectUserDB()) {
+         if (!connectUserDB()) {
              $error_message = $error_message; //just to remember we need this
              return FALSE;
          }
 
          $query = "SELECT * FROM $mysql_user_table WHERE (" . $mysql_user_select_login . "='" . $_SESSION['egps_username'] . $mysql_user_append_to_login . "' or " . $mysql_user_select_login . "='" . $_SESSION['egps_username'] . "') and " . $mysql_user_select_password . "='" . $_SESSION['password'] . "' AND aliased_name IS NULL";
          $result = mysql_query($query);
-         if(!$result) {
+         if (!$result) {
              $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$query'<BR>";
              return FALSE;
          }
 
          //check if we got no result (no user with that password)
-         if(mysql_num_rows($result) <= 0 ) {
+         if (mysql_num_rows($result) <= 0 ) {
             $error_message = "Login failed: Unknown username and password<BR>";
             return FALSE;
          }
 
-         if(!connectIPPDB()) {
+         if (!connectIPPDB()) {
              $error_message = $error_message; //just to remember we need this
              return FALSE;
          }
@@ -212,7 +212,7 @@ You should have received a copy of the GNU General Public License along with thi
          //update the timeout.
          $query = "UPDATE logged_in SET TIME=(NOW()+ INTERVAL " . $IPP_TIMEOUT . " MINUTE) where session_id='" . session_id() . "'";
          $result = mysql_query($query);
-         if(!$result) {
+         if (!$result) {
              $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$query'<BR>";
              return FALSE;
          }
@@ -227,23 +227,24 @@ You should have received a copy of the GNU General Public License along with thi
 * @param string $szUsername
 * @return NULL or row from database
 */
-    function getPermissionLevel($szUsername='') {
+    function getPermissionLevel($szUsername='')
+    {
          //returns permission level or NULL on fail.
          global $error_message;
 
          $error_message = "";
-         if(!connectIPPDB()) {
+         if (!connectIPPDB()) {
              $error_message = $error_message; //just to remember we need this
              return NULL;
          }
          //select the lowest username (just in case)...
          $query = "SELECT permission_level FROM support_member WHERE egps_username='$szUsername' ORDER BY permission_level ASC";
          $result = mysql_query($query);
-         if(!$result) {
+         if (!$result) {
              $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$query'<BR>";
              return NULL;
          }
-         if(mysql_num_rows($result) <= 0) {
+         if (mysql_num_rows($result) <= 0) {
              $error_message = $error_message . "You are not an authorized support member(" . __FILE__ . ":" . __LINE__ . ")<BR>" ;
              return NULL;
          }
@@ -253,22 +254,25 @@ You should have received a copy of the GNU General Public License along with thi
     }
 
     // plugin authorization check...a leeetle bit of OO...
-    class service {
-
+    class service
+    {
           var $SERVICENAME;
           var $LOCATION;
 
           //constructor;
-          function service($SERVICENAME='',$LOCATION='') {
+          function service($SERVICENAME='',$LOCATION='')
+          {
               $this->SERVICENAME = $SERVICENAME;
               $this->LOCATION = $LOCATION;
           }
 
-          function getLocation() {
+          function getLocation()
+          {
               return $this->LOCATION;
           }
 
-          function getTitle() {
+          function getTitle()
+          {
               return $this->SERVICENAME;
           }
 
@@ -281,8 +285,8 @@ You should have received a copy of the GNU General Public License along with thi
 * @bug
 *
 */
-    function get_services($PERMISSION_LEVEL=100) {
-
+    function get_services($PERMISSION_LEVEL=100)
+    {
         global $error_message;
 
         $error_message = "";
@@ -290,7 +294,7 @@ You should have received a copy of the GNU General Public License along with thi
         //Special case we are the school-based IPP administrator
         //get our school code
          $error_message = "";
-         if(!connectIPPDB()) {
+         if (!connectIPPDB()) {
              $error_message = $error_message; //just to remember we need this
              return NULL;
          }
@@ -298,7 +302,7 @@ You should have received a copy of the GNU General Public License along with thi
          $is_local_ipp_administrator = FALSE;
          $system_query = "SELECT * from support_member WHERE egps_username='" . $_SESSION['egps_username'] . "'";
          $system_result = mysql_query($system_query);
-         if(!$system_result) {
+         if (!$system_result) {
              $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$system_query'<BR>";
              return "ERROR";
          } else {
@@ -312,11 +316,11 @@ You should have received a copy of the GNU General Public License along with thi
         if($PERMISSION_LEVEL==NULL) return NULL;
 
         //special case for 'manage ipp users'...
-        if($PERMISSION_LEVEL == 0 || $is_local_ipp_administrator) {
+        if ($PERMISSION_LEVEL == 0 || $is_local_ipp_administrator) {
            array_push($retval,new service("Manage Users",IPP_PATH . "superuser_manage_users.php"));
         }
 
-        switch($PERMISSION_LEVEL) {
+        switch ($PERMISSION_LEVEL) {
             case 0: // super administrator level
                 //array_push($retval,new service("Manage IPP Users",IPP_PATH . "superuser_manage_users.php"));
                 array_push($retval,new service("View Logs",IPP_PATH . "superuser_view_logs.php"));
@@ -359,7 +363,8 @@ You should have received a copy of the GNU General Public License along with thi
 * 1. Rename function because it is a confusing name
 * 2. It can start with get_. Separate words with underscores. Perhaps get_access_to_student_record().
 */
-    function getStudentPermission($student_id='') {
+    function getStudentPermission($student_id='')
+    {
         //returns NONE,ERROR,READ,WRITE(READ,WRITE),ASSIGN(READ,WRITE,ASSIGN),ALL(READ,WRITE,ASSIGN,DELETE),
         //or support_list['permission'] or NONE for no permissions.
         global $error_message, $mysql_user_select_login, $mysql_user_select_password, $mysql_user_table, $mysql_user_append_to_login;
@@ -370,21 +375,21 @@ You should have received a copy of the GNU General Public License along with thi
          if($permission_level == NULL) return "ERROR";
 
          //find the currently logged in persons school code...
-         if(!connectUserDB()) {
+         if (!connectUserDB()) {
              $error_message = $error_message; //just to remember we need this
              return "ERROR";
          }
 
          $query = "SELECT * FROM $mysql_user_table WHERE (" . $mysql_user_select_login . "='" . $_SESSION['egps_username'] . $mysql_user_append_to_login . "' or " . $mysql_user_select_login . "='" . $_SESSION['egps_username'] . "') and " . $mysql_user_select_password . "='" . $_SESSION['password'] . "' AND aliased_name IS NULL";
          $result = mysql_query($query);
-         if(!$result) {
+         if (!$result) {
              $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$query'<BR>";
              return "ERROR";
          }
          $user_row=mysql_fetch_array($result);
          $school_code=$user_row['school_code'];
 
-         if(!connectIPPDB()) {
+         if (!connectIPPDB()) {
              $error_message = $error_message; //just to remember we need this
              return "ERROR";
          }
@@ -398,13 +403,13 @@ You should have received a copy of the GNU General Public License along with thi
          //Special case we are the school-based IPP administrator
          //get our school code
          $error_message = "";
-         if(!connectIPPDB()) {
+         if (!connectIPPDB()) {
              $error_message = $error_message; //just to remember we need this
              return NULL;
          }
          $system_query = "SELECT * from support_member WHERE egps_username='" . $_SESSION['egps_username'] . "'";
          $system_result = mysql_query($system_query);
-         if(!$system_result) {
+         if (!$system_result) {
              $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$system_query'<BR>";
              return "ERROR";
          } else {
@@ -412,7 +417,7 @@ You should have received a copy of the GNU General Public License along with thi
             if($is_local_student && $system_row['is_local_ipp_administrator'] == 'Y') return "ASSIGN";
          }
          //base our permission on the level we're assigned.
-         switch($permission_level) {
+         switch ($permission_level) {
              case 0: //Super Admin
              case 10: //Administrator
                 return "ALL";
@@ -427,8 +432,8 @@ You should have received a copy of the GNU General Public License along with thi
                 //as this user has no inherent permissions...
                 $support_query="SELECT * FROM support_list WHERE egps_username='" . $_SESSION['egps_username'] . "' AND student_id=$student_id";
                 $support_result=mysql_query($support_query);
-                //if(mysql_num_rows($support_result) <= 0) {
-                    switch($permission_level) {
+                //if (mysql_num_rows($support_result) <= 0) {
+                    switch ($permission_level) {
                         case 30:
                         case 40: //changed as per s. chomistek (2006-03-23)
                            if($is_local_student) return "ASSIGN";
@@ -449,106 +454,104 @@ You should have received a copy of the GNU General Public License along with thi
                 //}
          }
     }
-    
-function GenerateHash($password="") {
+
+function GenerateHash($password="")
+{
     require_once 'password.php';
     $hash = password_hash($password, PASSWORD_BCRYPT);
     return $hash;
 }
 
-function ValidateHash($password="", $hash="") {
+function ValidateHash($password="", $hash="")
+{
     require_once 'password.php';
     $verify=password_verify($password, $hash);
     return $verify;
 }
 
-
-
-    function new_validate($szLogin='',$szPassword='') {
+    function new_validate($szLogin='',$szPassword='')
+    {
         //check username and password against user database
         //returns TRUE if successful or FALSE on fail.
         //if FALSE returns $error_message
         //session_start must be called prior to this function.
         global $error_message, $mysql_user_select_login, $mysql_user_select_password, $mysql_user_table, $mysql_user_append_to_login,$IPP_TIMEOUT;
-    
+
         $error_message = "";
         //start session...
         //session_cache_limiter('private'); //IE6 sucks
         session_cache_limiter('nocache');
         if(session_id() == "") session_start();
-    
+
         //we must double login for IPP
         //if(!isset($_SESSION['IPP_double_login'])) return FALSE;
-    
+
         //check if we already have registered session info
         //for login and passwd.
-        if(!isset($_SESSION['IPP_double_login'])) {
-            if(!register($szLogin,$szPassword)) {
+        if (!isset($_SESSION['IPP_double_login'])) {
+            if (!register($szLogin,$szPassword)) {
                 $error_message = $error_message;
                 return FALSE;
             }
         }
-    
+
         //connect DB:
-    
-        if(!connectIPPDB()) {
+
+        if (!connectIPPDB()) {
             $error_message = $error_message; //just to remember we need this
             return FALSE;
         }
-    
+
         //check session logged in...
         $query = "SELECT * FROM logged_in WHERE ipp_username = '" . $_SESSION['egps_username'] . "' AND last_ip = '" . $_SERVER["REMOTE_ADDR"] . "' AND (time - NOW()) > 0";
         $result = mysql_query($query);
-        if(!$result) {
+        if (!$result) {
             $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$query'<BR>";
             return FALSE;
         }
-    
-        if(mysql_num_rows($result) <= 0 ) {
+
+        if (mysql_num_rows($result) <= 0 ) {
             $error_message = "Session has expired<BR>";
             logout();
             return FALSE;
         }
-    
+
         //check if we have a valid login/password combination.
-    
-        if(!connectUserDB()) {
+
+        if (!connectUserDB()) {
             $error_message = $error_message; //just to remember we need this
             return FALSE;
         }
-    
+
         $query = "SELECT * FROM $mysql_user_table WHERE (" . $mysql_user_select_login . "='" . $_SESSION['egps_username'] . $mysql_user_append_to_login . "' or " . $mysql_user_select_login . "='" . $_SESSION['egps_username'] . "') and " . $mysql_user_select_password . "='" . $_SESSION['password'] . "' AND aliased_name IS NULL";
         $result = mysql_query($query);
-        if(!$result) {
+        if (!$result) {
             $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$query'<BR>";
             return FALSE;
         }
-    
+
         //check if we got no result (no user with that password)
-        if(mysql_num_rows($result) <= 0 ) {
+        if (mysql_num_rows($result) <= 0 ) {
             $error_message = "Login failed: Unknown username and password<BR>";
             return FALSE;
         }
-    
-        if(!connectIPPDB()) {
+
+        if (!connectIPPDB()) {
             $error_message = $error_message; //just to remember we need this
             return FALSE;
         }
-    
+
         //update the timeout.
         $query = "UPDATE logged_in SET TIME=(NOW()+ INTERVAL " . $IPP_TIMEOUT . " MINUTE) where session_id='" . session_id() . "'";
         $result = mysql_query($query);
-        if(!$result) {
+        if (!$result) {
             $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$query'<BR>";
             return FALSE;
         }
-    
+
         //******* authorized from now on! *******
         return TRUE;
-    
-    }
-    
 
- 	
- 
+    }
+
 ?>
