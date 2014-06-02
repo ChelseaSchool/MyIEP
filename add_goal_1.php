@@ -14,11 +14,8 @@
  * @todo		Filter input
  */
 
-
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100;    //everybody (do checks within document)
-
-
 
 /**
  * Path for IPP required files.
@@ -130,7 +127,8 @@ if(!$goal_category_name_result) {
 */
 
 /*************************** popup chooser support function ******************/
-    function createJavaScript($dataSource,$arrayName='rows'){
+    function createJavaScript($dataSource,$arrayName='rows')
+    {
       // validate variable name
       if(!is_string($arrayName)){
         $system_message = $system_message . "Error in popup chooser support function name supplied not a valid string  (" . __FILE__ . ":" . __LINE__ . ")";
@@ -179,7 +177,8 @@ if(!$goal_category_name_result) {
       return $javascript;
     }
 
-    function echoJSServicesArray() {
+    function echoJSServicesArray()
+    {
         global $system_message;
 
         //while($catlist=mysql_fetch_array($catlist_result)) {
@@ -227,15 +226,18 @@ if(!$area_result) {
        echoJSServicesArray();
      ?>
      <SCRIPT LANGUAGE="JavaScript">
-      function notYetImplemented() {
+      function notYetImplemented()
+      {
           alert("Functionality not yet implemented"); return false;
       }
 
-      function noPermission() {
+      function noPermission()
+      {
           alert("You don't have the permission level necessary"); return false;
       }
 
-      function noSelection() {
+      function noSelection()
+      {
           alert("You must choose a goal category to enable the chooser"); return false;
       }
 
@@ -279,15 +281,9 @@ while ($area_result_row=mysql_fetch_array($area_result)) {
                          </div>
                          <button class="pull-right btn btn-lg btn-success" type="submit" tabindex="3" name="Next" value="Next">Continue</button>
 
-
                         </form>
 
                         <!-- END add new entry -->
-
-
-
-
-
 
     <footer><?php print_complete_footer(); ?></footer>
 </div>
