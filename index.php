@@ -85,7 +85,7 @@ if(isset($LOGIN_NAME)) $LOGIN_NAME = $LOGIN_NAME; else $LOGIN_NAME="";
             <div class="form-group">
               <input name=PASSWORD required autocomplete="off" type="password" placeholder="Password" class="form-control" name="PASSWORD" value="" placeholder="Password">
             </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
+            <button type="submit" name="sign-in" value="sign-in" class="btn btn-success">Sign in</button>
 
           </form>
         </div><!--/.navbar-collapse -->
