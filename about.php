@@ -4,7 +4,7 @@
  * @brief 	About the application and developers; link to Chelsea School
  * @authors		Rik Goldman <rgoldman@chelseaschool.edu, Sabre Goldman, Jason Banks, Alex, James, Paul, Bryan, TJ, Jonathan, Micah, Stephen, Joseph, Sean
  * @author		M. Nielson
- * @copyright 	2014 Chelsea School 
+ * @copyright 	2014 Chelsea School
  * @copyright 	2005 Grasslands Regional Division #6
  * @license This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
     the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
@@ -21,16 +21,12 @@
  * 3. Move css out of style folder and into css folder (standard)
  */
 
-
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100;    //anybody
-
-
 
 /**
  * Path for IPP required files.
  */
-
 
 define('IPP_PATH', './');
 require_once 'etc/init.php';
@@ -39,7 +35,7 @@ require_once 'include/supporting_functions.php';
 header('Pragma: no-cache'); //don't cache this page!
 
 
-?> 
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -88,12 +84,12 @@ header('Pragma: no-cache'); //don't cache this page!
                         <li><a href="sprint_feedback.php">Leave Feedback</a></li>
             <li><a href="help.php">Help</a></li>
             <li><a href="index.php">Logout</a></li></ul>
-             
+
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Navigation <b class="caret"></b></a>
               <ul class="dropdown-menu">
-               
+
                 <li><a href="./manage_student.php">Students</a></li>
                 <li class="divider"></li>
                 <li><a href="change_ipp_password.php">Reset Password</a></li>
@@ -103,7 +99,7 @@ header('Pragma: no-cache'); //don't cache this page!
                 <li><a href="superuser_manage_coding.php">Manage Codes</a></li>
                 <li><a href="school_info.php">Manage Schools</a></li>
                 <li><a href="superuser_view_logs.php">View Logs</a></li>
-              
+
               </ul>
             </li>
           </ul>
@@ -140,18 +136,18 @@ header('Pragma: no-cache'); //don't cache this page!
 <h1>What's New</h1>
 <h3>Bug Fixes</h3>
 <ul>
-<li>Backslashes accumulated in progress reports</li>
-<li>Strengths &amp; Weaknesses narratives truncated</li>
+   <li>Backslashes accumulated in progress reports</li>
+   <li>Strengths &amp; Weaknesses narratives truncated</li>
 </ul>
 <h3>Features</h3>
 <ul>
 <li>jQuery Date Picker</li>
 <li>User Interface/User Experience Improvements</li>
-	<ul>
-	<li>Main Menu</li>
-	<li>Goal View</li>
-	<li>Edit Objectives</li>
-	</ul>
+    <ul>
+    <li>Main Menu</li>
+    <li>Goal View</li>
+    <li>Edit Objectives</li>
+    </ul>
 </ul>
 </div>
 <!-- Middle column -->
@@ -232,7 +228,7 @@ Hyattsville, Maryland 20782</address>
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery-2.1.0.min.js"></script>
-    <script src="./js/bootstrap.min.js"></script> 
+    <script src="./js/bootstrap.min.js"></script>
 <hr>
     <?php print_complete_footer(); ?>
 </BODY>
