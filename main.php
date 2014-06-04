@@ -35,8 +35,11 @@ $MINIMUM_AUTHORIZATION_LEVEL = 100;
  *  @remark but first secure against uncontrolled input
 */
 
+$login_name=mysql_real_escape_string($_POST['LOGIN_NAME']);
+$pword=mysql_real_escape_string($_POST['PASSWORD']);
+
 if (isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
-    if (!validate( $_POST['LOGIN_NAME'] ,  $_POST['PASSWORD'] )) {
+    if (!validate( $login_name,  $pword)) {
         $system_message = $system_message . $error_message;
         if (isset($_SESSION['egps_username']))
             IPP_LOG($system_message, $_SESSION['egps_username'], 'ERROR');
