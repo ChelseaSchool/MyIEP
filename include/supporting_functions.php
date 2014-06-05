@@ -71,6 +71,7 @@ if(!defined('IPP_PATH')) define('IPP_PATH','../');
  * @detail 		Strips tags, then sanitizes html entities, and then strips slashes. Finally, uses mysql_real_escape_string() to prepare for MySQL use.
  *
  * @warning 	Not for arrays. Must construct stripslashes_deep() for arrays.
+ * @warning		Missing a parameter in htmlentities. Do not use.
  * @todo		
  * 1. Test and implement (not done yet)
  * 2. find system to use on all db input: perhaps when UPDATE query is used.
