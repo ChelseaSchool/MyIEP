@@ -19,8 +19,7 @@ session_start();
 session_id();
 $sess_name = "Credential Reset";
 session_name($sess_name);
-//ini_set('session.gc.maxlifetime', 60*6*24);
-//$_SESSION['string'] = implode(": " , $_POST[]);
+
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -44,13 +43,16 @@ if (!isset($_POST)) {
 }
 
 if (isset($_POST)) {
-	$user = $_POST['uname'];
-	$email = $_POST['email1'];
-	$submission = $_POST['date'];
-	$client_address = $_POST['client_address'];
-	$browser = $_POST['user_agent'];
+	$user = mysql_real_escape_string($_POST['uname']);
+	$email = mysql_real_escape_string($_POST['email1']);
+	$submission = mysql_real_escape_string($_POST['date']);
+	$client_address = mysql_real_escape_string($_POST['client_address']);
+	$browser = mysql_real_escape_string($_POST['user_agent']);
 }
-
+$_SESSION['user_agent']=$browser;
+$_SESSION['client_ip']=$client_address;
+$_SESSION['user']=$user;
+$_SESSION['email']=$email;
 
 
 

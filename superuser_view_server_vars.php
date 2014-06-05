@@ -192,7 +192,7 @@ $szBackGetVars = substr($szBackGetVars, 0, -1);
     <?php print_general_navbar(); ?>
     <?php print_lesser_jumbotron("Server Characteristics", $permission_level); ?>
     <div class="container">
-    <table class="table table-striped table-hover"
+    <table class="table table-striped table-hover">
     <tr><th>Key</th><th>Value</th><tr>
     <?php
     

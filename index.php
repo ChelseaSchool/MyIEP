@@ -124,9 +124,11 @@ if(isset($LOGIN_NAME)) $LOGIN_NAME = $LOGIN_NAME; else $LOGIN_NAME="";
 <li>jQuery Date Picker</li>
 <li>User Interface/User Experience Improvements</li>
     <ul>
-        <li>Main Menu</li>
-        <li>Goal View</li>
-        <li>Edit Objectives</li>
+
+    <li>Main Menu</li>
+    <li>Goal View</li>
+    <li>Edit Objectives</li>
+
     </ul>
 </ul>
 </div>

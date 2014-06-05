@@ -12,9 +12,8 @@
 
 
 if (isset($system_message)) {
-	$system_message = $system_message;
-}
-else $system_message = "";
+    $system_message = $system_message;
+} else $system_message = "";
 
 define('IPP_PATH', './');
 
@@ -36,24 +35,22 @@ $MINIMUM_AUTHORIZATION_LEVEL = 100;
  *  @remark but first secure against uncontrolled input
 */
 
-
-
-
-
+$login_name=mysql_real_escape_string($_POST['LOGIN_NAME']);
+$pword=mysql_real_escape_string($_POST['PASSWORD']);
 
 if (isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
-    if (!validate( $_POST['LOGIN_NAME'] ,  $_POST['PASSWORD'] )) {
+    if (!validate( $login_name,  $pword)) {
         $system_message = $system_message . $error_message;
-        if (isset($_SESSION['egps_username'])) 
+        if (isset($_SESSION['egps_username']))
             IPP_LOG($system_message, $_SESSION['egps_username'], 'ERROR');
         else IPP_LOG($system_message, 'no session', 'ERROR');
         require(IPP_PATH . 'index.php');
         exit();
     }
 } else {
-    if(!validate()) {
+    if (!validate()) {
         $system_message = $system_message . $error_message;
-        if (isset($_SESSION['egps_username'])) 
+        if (isset($_SESSION['egps_username']))
             IPP_LOG($system_message, $_SESSION['egps_username'], 'ERROR');
         else IPP_LOG($system_message, "no session", 'ERROR');
         require(IPP_PATH . 'index.php');
@@ -62,9 +59,6 @@ if (isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
 }
 
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -90,7 +84,7 @@ if (isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle" 
+          <button type="button" class="navbar-toggle"
             data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
@@ -103,14 +97,14 @@ if (isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
             <li><a href="about.php">About</a></li>
-			<li><a href="sprint_feedback.php">Leave Feedback</a></li>
+            <li><a href="sprint_feedback.php">Leave Feedback</a></li>
             <li><a href="help.php">Help</a></li>
             <li><a href="index.php">Logout</a></li>
             </ul>
-             
+
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" 
+              <a href="#" class="dropdown-toggle"
                 data-toggle="dropdown">Navigation <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="./manage_student.php">Students</a></li>
@@ -146,7 +140,7 @@ if (isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
     <div class="jumbotron">
       <div class="container">
         <h1>Welcome to MyIEP</h1>
-        <p>MyIEP is a Web-based IEP Management system under active development by students at 
+        <p>MyIEP is a Web-based IEP Management system under active development by students at
             <a href="http://chelseaschool.edu">Chelsea School</a> in Hyattsville, MD.</p>
         <p>&copy; 2014 Chelsea School - <a href="http://www.gnu.org/licenses/gpl-2.0.html">GPLv2</a>.</p>
         <p><a class="btn btn-primary btn-lg" href="about.php" role="button">Learn More &raquo;</a></p>
@@ -154,16 +148,16 @@ if (isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
     </div>
     <div class="container">
     <?php if ($system_message) {
-    	echo "<p>" . $system_message . "</p>";} 
+        echo "<p>" . $system_message . "</p>";}
     ?>
       <div class="alert alert-block alert-info"><a href="#" class="close" data-dismiss="alert">&times;</a>
-      <strong>Note</strong>: Access to the following sections is restricted. 
+      <strong>Note</strong>: Access to the following sections is restricted.
         All areas are displayed here; as you explore keep in mind that you won't be able to access some areas.
          Please do contact support if you're blocked from a necessary area.
       </div>
-      
+
       <p></p>
-    
+
       <div class="row">
         <div class="col-md-4">
           <h2>Students</h2>
@@ -198,7 +192,7 @@ if (isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
           <p><a class="btn btn-default" href="./superuser_manage_coding.php" role="button">Manage Codes &raquo;</a></p>
         </div>
       </div>
-      
+
  <div class="row">
         <div class="col-md-4">
           <h2>Schools</h2>
@@ -215,13 +209,11 @@ if (isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
           <p>Configure MyIEP user accounts and access control; create new accounts.</p>
           <p><a class="btn btn-default" href="./superuser_manage_users.php" role="button">Manage Accounts &raquo;</a></p>
         </div>
-      </div>     
+      </div>
       <hr>
 </div> <!-- /container -->
-      
-     
-  <?php echo print_footer(); ?>  
 
+  <?php echo print_footer(); ?>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
