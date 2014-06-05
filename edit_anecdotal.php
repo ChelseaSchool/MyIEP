@@ -143,39 +143,8 @@ if (isset($_POST['edit_anecdotal_report']) && $have_write_permission) {
 }
 print_html5_primer();
 print_bootstrap_head();
+print_datepicker_depends(); 
 ?>
-
-    <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
-    <SCRIPT LANGUAGE="JavaScript">
-      function confirmChecked()
-      {
-          var szGetVars = "strengthneedslist=";
-          var szConfirmMessage = "Are you sure you want to modify/delete the following:\n";
-          var count = 0;
-          form=document.strengthneedslist;
-          for (var x=0; x<form.elements.length; x++) {
-              if (form.elements[x].type=="checkbox") {
-                  if (form.elements[x].checked) {
-                     szGetVars = szGetVars + form.elements[x].name + "|";
-                     szConfirmMessage = szConfirmMessage + "ID #" + form.elements[x].name + ",";
-                     count++;
-                  }
-              }
-          }
-          if (!count) { alert("Nothing Selected"); return false; }
-          if(confirm(szConfirmMessage))
-
-              return true;
-          else
-              return false;
-      }
-
-      function noPermission()
-      {
-          alert("You don't have the permission level necessary"); return false;
-      }
-    </SCRIPT>
-    <?php print_datepicker_depends(); ?>
 </HEAD>
     <BODY>
 <?php
@@ -194,7 +163,7 @@ if ($system_message) {
 <label>Report</label>
 <textarea class="form-control" spellcheck="true" name="report" tabindex="1" cols="40" rows="10" wrap="soft"><?php echo $anecdotal_row['report']; ?></textarea>
 <label>Date (YYYY-MM-DD)</label>
-<input class="form-control" autocomplete="off" id="datepicker" type="datepicker" tabindex="2" name="date" value="<?php echo $anecdotal_row['date']; ?>">
+<input class="form-control" autocomplete="off" id="datepicker" type="datepicker" tabindex="2" name="date" data-date-format="yyyy-mm-dd" value="<?php echo $anecdotal_row['date']; ?>">
 </div>
 <button class="btn btn-success btn-md" type="submit" tabindex="3" name="Edit" value="Edit">Submit</button>
 </form>
