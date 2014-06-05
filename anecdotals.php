@@ -35,14 +35,14 @@ $system_message = "";
 define('IPP_PATH','./');
 
 /* eGPS required files. */
-require_once(IPP_PATH . 'etc/init.php');
-require_once(IPP_PATH . 'include/db.php');
-require_once(IPP_PATH . 'include/auth.php');
-require_once(IPP_PATH . 'include/log.php');
-require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/navbar.php');
-require_once(IPP_PATH . 'include/supporting_functions.php');
-require_once(IPP_PATH . 'include/config.inc.php');
+require_once IPP_PATH . 'etc/init.php';
+require_once IPP_PATH . 'include/db.php';
+require_once IPP_PATH . 'include/auth.php';
+require_once IPP_PATH . 'include/log.php';
+require_once IPP_PATH . 'include/user_functions.php';
+require_once IPP_PATH . 'include/navbar.php';
+require_once IPP_PATH . 'include/supporting_functions.php';
+require_once IPP_PATH . 'include/config.inc.php';
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -276,53 +276,33 @@ if(!$anecdotal_result) {
     
     <div class="row">
     
-   <div class="col-md-4">
+   <div class="col-md-2">
     <h2>Print Report</h2>
-    <p><a class="btn btn-md btn-default" href="<?php echo IPP_PATH . "anecdotal_pdf.php?student_id=$student_id" ?>" target="_blank">Generate PDF</a></p>  
+    <p><a class="btn btn-md btn-success" href="<?php echo IPP_PATH . "anecdotal_pdf.php?student_id=$student_id" ?>" target="_blank">Generate PDF</a></p>  
    </div> 
-    <div class="col-md-4">
-               <h2>Add Report</h2>
-                        <form name="add_anecdotal" enctype="multipart/form-data" action="<?php echo IPP_PATH . "anecdotals.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        <div class="form-group">
-                        <input type="hidden" name="add_anecdotal" value="1">
-                        <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
-                        <label>Report</label>
-                        <textarea class="form-control" spellcheck="true" name="report" tabindex="1" rows="10" wrap="soft"><?php if(isset($_POST['report'])) echo $_POST['report']; ?></textarea>
-                        <label>Report Date (YYYY-MM-DD)</label>
-                        <input class="form-control datepicker" id=datepicker type=datepicker name="date" data-provide="datepicker" data-date-format="yyyy-mm-dd" tabindex="2" value="<?php if(isset($_POST['date'])) echo $_POST['date']; else echo date("Y-m-d")?>">
-                        <label>Optional File Upload (.doc,.pdf,.txt,.rtf)</label>
-                        <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
-                        <input type="file" tabindex="3" name="supporting_file" value="<?php if(isset($_FILES['supporting_file']['name'])) echo $_FILES['supporting_file']['name'] ?>">
-                        </div>
-                        <button class="btn btn-md btn-success" tabindex="4" type="submit" name="add" value="add">Submit</button>  
-                        
-                        </form>
-                        
-                        <!-- END add new entry -->
-                </div>
-                <div class="col-md-4">
+   
+                    <div class="col-md-5">
                 
                         <h2>Report History</h2>
                         <!-- BEGIN annecdotals table -->
                         <form spellcheck="true" name="anecdotal" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "anecdotals.php"; ?>" method="get">
                         <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
-                        <table>
+                        <table class="table table-striped table-hover">
                         
                         <?php
-                        $bgcolor = "#DFDFDF";
+                        
 
                         //print the header row...
-                        echo "<tr><td bgcolor=\"#E0E2F2\">&nbsp;</td><td bgcolor=\"#E0E2F2\">uid</td><td align=\"center\" bgcolor=\"#E0E2F2\">Report</td><td align=\"center\" bgcolor=\"#E0E2F2\">Date</td><td align=\"center\" bgcolor=\"#E0E2F2\">File</td></tr>\n";
+                        echo "<tr><th>&nbsp;</th><th>uid</th><th>Report</th><th>Date</th><th>File</th></tr>\n";
                         while ($anecdotal_row=mysql_fetch_array($anecdotal_result)) { //current...
                             echo "<tr>\n";
-                            echo "<td bgcolor=\"#E0E2F2\"><input type=\"checkbox\" name=\"" . $anecdotal_row['uid'] . "\"></td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\">" . $anecdotal_row['uid'] . "</td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_anecdotal.php?uid=" . $anecdotal_row['uid'] . "\" class=\"editable_text\">" . mysql_real_escape_string($anecdotal_row['report'])  ."</td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_anecdotal.php?uid=" . $anecdotal_row['uid'] . "\" class=\"editable_text\">" . $anecdotal_row['date']  ."</td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><center>"; if($anecdotal_row['filename'] =="") echo "-none-"; else echo "<a href=\"" . IPP_PATH . "get_attached.php?table=anecdotal&uid=" . $anecdotal_row['uid'] ."&student_id=" . $student_id ."\">Download</a>"; echo "</center></td>\n";
+                            echo "<td><input type=\"checkbox\" name=\"" . $anecdotal_row['uid'] . "\"></td>";
+                            echo "<td>" . $anecdotal_row['uid'] . "</td>";
+                            echo "<td><a href=\"" . IPP_PATH . "edit_anecdotal.php?uid=" . $anecdotal_row['uid'] . "\" class=\"editable_text\">" . mysql_real_escape_string($anecdotal_row['report'])  ."</td>\n";
+                            echo "<td><a href=\"" . IPP_PATH . "edit_anecdotal.php?uid=" . $anecdotal_row['uid'] . "\" class=\"editable_text\">" . $anecdotal_row['date']  ."</td>\n";
+                            echo "<td><center>"; if($anecdotal_row['filename'] =="") echo "-none-"; else echo "<a href=\"" . IPP_PATH . "get_attached.php?table=anecdotal&uid=" . $anecdotal_row['uid'] ."&student_id=" . $student_id ."\">Download</a>"; echo "</center></td>\n";
                             echo "</tr>\n";
-                            if($bgcolor=="#DFDFDF") $bgcolor="#CCCCCC";
-                            else $bgcolor="#DFDFDF";
+                            
                         }
                         ?>
                         <tr>
@@ -347,6 +327,28 @@ if(!$anecdotal_result) {
                         </table></center>
                         </form>
                         </div>
+    
+    <div class="col-md-5">
+               <h2>Add Anecdotal Report</h2>
+                        <form name="add_anecdotal" enctype="multipart/form-data" action="<?php echo IPP_PATH . "anecdotals.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+                        <div class="form-group">
+                        <input type="hidden" name="add_anecdotal" value="1">
+                        <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
+                        <label>Report</label>
+                        <textarea class="form-control" spellcheck="true" name="report" tabindex="1" rows="10" wrap="soft"><?php if(isset($_POST['report'])) echo $_POST['report']; ?></textarea>
+                        <label>Report Date (YYYY-MM-DD)</label>
+                        <input class="form-control datepicker" id="datepicker" type="datepicker" name="date" data-provide="datepicker" data-date-format="yyyy-mm-dd" tabindex="2" value="<?php if(isset($_POST['date'])) echo $_POST['date']; else echo date("Y-m-d")?>">
+                        <label>Optional File Upload (.doc,.pdf,.txt,.rtf)</label>
+                        <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+                        <input type="file" tabindex="3" name="supporting_file" value="<?php if(isset($_FILES['supporting_file']['name'])) echo $_FILES['supporting_file']['name'] ?>">
+                        </div>
+                        <button class="btn btn-md btn-success" tabindex="4" type="submit" name="add" value="add">Submit</button>  
+                        
+                        </form>
+                        
+                        <!-- END add new entry -->
+                </div>
+
                         </div>
                         </div>
                         
@@ -355,7 +357,7 @@ if(!$anecdotal_result) {
  ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="js/jquery-2.1.0.min.js"></script>
-<script src="./js/bootstrap.min.js"></script>   
-<script src="./js/jquery-ui-1.10.4.custom.min.js"></script>
+<script src="js/bootstrap.min.js"></script>   
+<script src="js/jquery-ui-1.10.4.custom.min.js"></script>
     </BODY>
 </HTML>
