@@ -2,21 +2,28 @@
 /** @file
  * @brief 	login page
  *
- * Login form and about MyIEP summary.
+ * Index page and loging page - perhaps should be separated. Login form and about MyIEP summary.
+ * 
  * @copyright 	2014 Chelsea School
+ * 
  * @copyright 	2005 Grasslands Regional Division #6
+ * 
  * @license		This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
  You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * 
  * @authors		Rik Goldman, Sabre Goldman, Jason Banks, Alex, James, Paul, Bryan, TJ, Jonathan, Micah, Stephen, Joseph
+ * 
  * @author		M. Nielson
+ * 
  * @todo
  * 1. Double check security
  * 2. Use filters for input
  * 3. test sql injections
  * 4. add alert for failed login attempt
+ * 
  */
 
 //ini_set('display_errors',1);
@@ -124,11 +131,9 @@ if(isset($LOGIN_NAME)) $LOGIN_NAME = $LOGIN_NAME; else $LOGIN_NAME="";
 <li>jQuery Date Picker</li>
 <li>User Interface/User Experience Improvements</li>
     <ul>
-
     <li>Main Menu</li>
     <li>Goal View</li>
     <li>Edit Objectives</li>
-
     </ul>
 </ul>
 </div>
