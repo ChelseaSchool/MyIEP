@@ -144,7 +144,6 @@ You should have received a copy of the GNU General Public License along with thi
          //if FALSE returns $error_message
          //session_start must be called prior to this function.
          global $error_message, $mysql_user_select_login, $mysql_user_select_password, $mysql_user_table, $mysql_user_append_to_login,$IPP_TIMEOUT;
-
          $error_message = "";
          //start session...
          //session_cache_limiter('private'); //IE6 sucks
