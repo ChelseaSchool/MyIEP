@@ -26,8 +26,8 @@
  * 
  */
 
-ini_set('display_errors',1);
-error_reporting(E_ALL);
+//ini_set('display_errors',1);
+//error_reporting(E_ALL);
 
 if (!defined('IPP_PATH')) {
     define('IPP_PATH', './');
@@ -108,7 +108,17 @@ if(isset($LOGIN_NAME)) $LOGIN_NAME = $LOGIN_NAME; else $LOGIN_NAME="";
 <div class="jumbotron">
 <div class="container">
 <?php if ($system_message) {
-        echo "<p>" . $system_message . "</p>";} ?>
+        echo "<div class=\"alert alert-block alert-danger\"><a href=\"#\" 
+         class=\"close\" 
+         data-dismiss=\"alert\">
+         &times;</a>
+      <strong>" .
+       $system_message . 
+       "</strong> You may contact an administrator or try resetting your credentials using 
+         the Reset Password button below.
+      </div>";
+} 
+      ?>
 
  <h1>About MyIEP</h1>
         <p>MyIEP (Version <?php echo $IPP_CURRENT_VERSION; ?>) was originally developed as IEP-IPP through the coordinated efforts of many people at Grasslands Public Schools.</p>

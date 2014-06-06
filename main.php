@@ -35,11 +35,11 @@ $MINIMUM_AUTHORIZATION_LEVEL = 100;
  *  @remark but first secure against uncontrolled input
 */
 
-$login_name=mysql_real_escape_string($_POST['LOGIN_NAME']);
-$pword=mysql_real_escape_string($_POST['PASSWORD']);
+//$login_name=mysql_real_escape_string($_POST['LOGIN_NAME']);
+//$pword=mysql_real_escape_string($_POST['PASSWORD']);
 
 if (isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
-    if (!validate( $login_name,  $pword)) {
+    if (!validate($_POST['LOGIN_NAME'], $_POST['PASSWORD'])) {
         $system_message = $system_message . $error_message;
         if (isset($_SESSION['egps_username']))
             IPP_LOG($system_message, $_SESSION['egps_username'], 'ERROR');
@@ -150,6 +150,7 @@ if (isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
     <?php if ($system_message) {
         echo "<p>" . $system_message . "</p>";}
     ?>
+    
       <div class="alert alert-block alert-info"><a href="#" class="close" data-dismiss="alert">&times;</a>
       <strong>Note</strong>: Access to the following sections is restricted.
         All areas are displayed here; as you explore keep in mind that you won't be able to access some areas.

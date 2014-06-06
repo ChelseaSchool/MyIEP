@@ -145,29 +145,31 @@ You should have received a copy of the GNU General Public License along with thi
          //session_start must be called prior to this function.
          global $error_message, $mysql_user_select_login, $mysql_user_select_password, $mysql_user_table, $mysql_user_append_to_login,$IPP_TIMEOUT;
          $error_message = "";
+         
+         //connect DB:
+         
+         if (!connectIPPDB()) {
+             $error_message = $error_message; //just to remember we need this
+             return FALSE;
+         }
          //start session...
          //session_cache_limiter('private'); //IE6 sucks
          session_cache_limiter('nocache');
          if(session_id() == "") session_start();
-
+         
          //we must double login for IPP
          //if(!isset($_SESSION['IPP_double_login'])) return FALSE;
 
          //check if we already have registered session info
          //for login and passwd.
-         if (!isset($_SESSION['IPP_double_login'])) {
-             if (!register($szLogin,$szPassword)) {
-                 $error_message = $error_message;
-                 return FALSE;
-             }
-         }
+        if (!isset($_SESSION['IPP_double_login'])) {
+            if (!register(mysql_real_escape_string($szLogin) ,mysql_real_escape_string($szPassword))) {
+                $error_message = $error_message;
+                return FALSE;
+            }
+        }
 
-         //connect DB:
-
-         if (!connectIPPDB()) {
-             $error_message = $error_message; //just to remember we need this
-             return FALSE;
-         }
+         
 
          //check session logged in...
          $query = "SELECT * FROM logged_in WHERE ipp_username = '" . $_SESSION['egps_username'] . "' AND last_ip = '" . $_SERVER["REMOTE_ADDR"] . "' AND (time - NOW()) > 0";
