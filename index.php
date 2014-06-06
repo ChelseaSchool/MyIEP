@@ -26,10 +26,12 @@
  * 
  */
 
-//ini_set('display_errors',1);
-//error_reporting(E_ALL);
+ini_set('display_errors',1);
+error_reporting(E_ALL);
 
-if(!defined('IPP_PATH')) define('IPP_PATH','./');
+if (!defined('IPP_PATH')) {
+    define('IPP_PATH', './');
+}
 //check if we are running install wizard
 if (!is_file(IPP_PATH . "etc/init.php")) {
     include_once IPP_PATH . 'install/index.php';
@@ -105,7 +107,8 @@ if(isset($LOGIN_NAME)) $LOGIN_NAME = $LOGIN_NAME; else $LOGIN_NAME="";
 
 <div class="jumbotron">
 <div class="container">
-
+<?php if ($system_message) {
+        echo "<p>" . $system_message . "</p>";} ?>
 
  <h1>About MyIEP</h1>
         <p>MyIEP (Version <?php echo $IPP_CURRENT_VERSION; ?>) was originally developed as IEP-IPP through the coordinated efforts of many people at Grasslands Public Schools.</p>
