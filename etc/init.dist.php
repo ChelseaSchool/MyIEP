@@ -18,6 +18,9 @@
     $page_title = "MyIEP Special Education Program Management";
     $IPP_PAGE_ROOT = "http://192.168.0.103"; //the root page.
 
+    $support_contact="";
+    $support_email = "";
+    $support_web = "";
     //path to large logo for branding see the braning documentation to
     //customize these. Typically upload a new image to images folder with
     //a different name (this will allow you to just untar/gz any upgrades

@@ -162,7 +162,7 @@ function msieversion()
 <h1>What's New</h1>
 <h3>Bug Fixes</h3>
 <ul>
-   <li>Backslashes accumulatin in progress reports for student objectives is resolved.</li>
+   <li>Backslashes accumulating in progress reports for student objectives is resolved.</li>
    <li>Strengths &amp; Weaknesses narratives were truncated when pasted from certain word processors. We believe this is resolved for the most common characters.</li>
 </ul>
 <h3>New Features</h3>
@@ -188,7 +188,7 @@ function msieversion()
 <p><a class="btn btn-default" href="https://github.com/ChelseaSchool/MyIEP" role="button">MyIEP Source Code on Github &raquo;</a></p>
 <h3>Legacy Code</h3>
 <p>M. Nielson</p>
-<p><a class="btn btn-default" href="http://www.iep-ipp.com/" role="button">Nielson's Legacy Source Code (IEP-IPP)</a></p>
+<p><a class="btn btn-default" href="http://www.iep-ipp.com/" role="button">Nielson's Legacy Source Code (IEP-IPP) &raquo;</a></p>
 </div>
 <!-- Right column -->
 <div class="col-md-4">
@@ -203,7 +203,7 @@ Hyattsville, Maryland 20782</address>
 <p><a class="btn btn-default" href="http://chelseaschool.edu" role="button">Chelsea School &raquo;</a></p>
 
 <h3>Legacy Code</h3>
-<p>&copy; 2004 <a href="http://www.grasslands.ab.ca/Schools.php" target="_blank">Grasslands Regional Public Schools #6</a></p>
+<p>&copy; 2004 <a href="http://www.grasslands.ab.ca/Schools.php" target="_blank">Grasslands Regional Public Schools #6 &raquo;</a></p>
 </div>
 </div>
 <!-- End Row -->
@@ -221,7 +221,7 @@ Hyattsville, Maryland 20782</address>
  <address><p><strong>The Free Software Foundation, Inc.</strong></p>
  <p>59 Temple Place, Suite 330, Boston, <abbr title="Massachussetes">MA</abbr>  02111-1307</p>
  <p>USA</p></address>
- <p><a href="https://www.gnu.org/philosophy/free-sw.html" target="_blank" type="button" class="btn btn-default">Read "What is Free Software"</a>&nbsp;<a class="btn btn-default" href="http://www.gnu.org/licenses/gpl-2.0.html" role="button">GPLv2 License &raquo;</a></p>
+ <p><a href="https://www.gnu.org/philosophy/free-sw.html" target="_blank" type="button" class="btn btn-default">Read "What is Free Software" &raquo;</a>&nbsp;<a class="btn btn-default" href="http://www.gnu.org/licenses/gpl-2.0.html" role="button">GPLv2 License &raquo;</a></p>
 </div>
 <!-- Middle Column, Second Row -->
 <div class="col-md-4">
@@ -247,14 +247,16 @@ Hyattsville, Maryland 20782</address>
 <li>Developed using Scrum Framework (an <a href="http://agilemanifesto.org/" title="Agile Manifesto">Agile</a> methodology)</li>
 <li>HTML5 &amp; CSS3</li>
 <li>Vagrant &amp; Virtualbox Development Environment</li>
-<li>Source Code Management (SCM) with Git and Github</li>
+<li>Source Code Management (SCM) with Git and <a href="http://github.com">Github</a></li>
 <li>Apache web-server administration</li>
 <li>Data processing with PHP</li>
 <li>Data storage with MySQL</li>
 <li>Active web pages with jQuery and JavaScript</li>
-<li>Responsive design (in progress) with Bootstrap</li>
+
+
+<li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Responsive web design (RWD) is a web design approach aimed at crafting sites to provide an optimal viewing experience—easy reading and navigation with a minimum of resizing, panning, and scrolling—across a wide range of devices (from mobile phones to desktop computer monitors).">Responsive design</a> (in progress) with <a href="http://getbootstrap.com">Bootstrap 3</a></li>
 </ul>
-<p><a href="http://agilemanifesto.org/principles.html" title="Agile Principles" class="btn btn-default" role="button">Our Shared Development Values</a></p>
+<p><a href="http://agilemanifesto.org/principles.html" title="Agile Principles" class="btn btn-default" role="button">Our Shared Development Values &raquo;</a></p>
 
 </div>
 </div>

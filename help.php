@@ -132,21 +132,15 @@ header('Pragma: no-cache'); //don't cache this page!
 
 <!-- Middle column -->
 <div class="col-md-4">
-<h1>Legacy Documentation</h1>
-<p>Thorough documentation for IEP-IPP, the software upon which MyIEP is based, is available in PDF format - except the installation guide, which is in MS Word format.</p>
-<P>There are three reference guides available:
-<ol><li>Installation</li>
-<li>(School) Administrator's Guide</li>
-<li>End-User Documentation</li>
-</ol>
- <select onchange="window.open(this.options[this.selectedIndex].value,'_top')" name="docs" title="Get the Docs" class="selectpicker" data-style="btn-inverse">
-<option value="">Get Docs</option>
-<option value="http://iep-ipp.sourceforge.net/documents/v1User.pdf">End-User Documentation</option>
-<option value="http://iep-ipp.sourceforge.net/documents/v1Admin.pdf">Administrator's Guide</option>
-<option value="http://iep-ipp.sourceforge.net/documents/v1.0%20Installation.doc">Installation Guide</option>
-</select>
-</div> <!-- End Middle Column -->
+<h1>Support is Available</h1>
 
+<h3>Direct Support Contacts</h3>
+<p><?php echo $support_contact; ?></p>
+<h3>Contact Support by Email</h3>
+<?php echo $support_email; ?></p>
+<h3>Seek Support via the Web</h3>
+<?php echo "<a href='$support_web'>" . $support_web . "</a>"; ?>
+</div>
 <!-- Right column -->
 <div class="col-md-4">
 <h1>Copyright</h1>
@@ -210,7 +204,29 @@ Hyattsville, Maryland 20782</address>
 <li>Responsive design (in progress) with <a href="http://getbootstrap.com">Bootstrap</a></li>
 </ul>
 </div>
-</div>  
+</div>
+
+<div class="row">
+<div class="col-md-4">
+
+<h1>Legacy Documentation</h1>
+<p>Thorough documentation for IEP-IPP, the software upon which MyIEP is based, is available in PDF format - except the installation guide, which is in MS Word format.</p>
+<P>There are three reference guides available:
+<ol><li>Installation</li>
+<li>(School) Administrator's Guide</li>
+<li>End-User Documentation</li>
+</ol>
+ <select onchange="window.open(this.options[this.selectedIndex].value,'_top')" name="docs" title="Get the Docs" class="selectpicker" data-style="btn-inverse">
+<option value="">Get Docs</option>
+<option value="http://iep-ipp.sourceforge.net/documents/v1User.pdf">End-User Documentation</option>
+<option value="http://iep-ipp.sourceforge.net/documents/v1Admin.pdf">Administrator's Guide</option>
+<option value="http://iep-ipp.sourceforge.net/documents/v1.0%20Installation.doc">Installation Guide</option>
+</select>
+
+
+</div>
+
+</div>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
