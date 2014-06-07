@@ -49,6 +49,7 @@ header('Pragma: no-cache'); //don't cache this page!
 if(isset($MESSAGE)) $MESSAGE = $MESSAGE; else $MESSAGE="";
 if(isset($LOGIN_NAME)) $LOGIN_NAME = $LOGIN_NAME; else $LOGIN_NAME="";
 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,7 +61,19 @@ if(isset($LOGIN_NAME)) $LOGIN_NAME = $LOGIN_NAME; else $LOGIN_NAME="";
     <meta name="author" content="Rik Goldman" >
     <link rel="shortcut icon" href="./assets/ico/favicon.ico">
     <TITLE><?php echo $page_title; ?></TITLE>
+<SCRIPT LANGUAGE="JavaSCRIPT">
+function msieversion()
+{
+    var ua = window.navigator.userAgent
+    var msie = ua.indexOf ( "MSIE " )
 
+    if ( msie > 0 )      // If Internet Explorer, return version number
+        return parseInt (ua.substring (msie+5, ua.indexOf (".", msie )))
+        else                 // If another browser, return 0
+        return 0
+
+}
+</SCRIPT>
 
         <!-- Bootstrap core CSS -->
     <link href="./css/bootstrap.min.css" rel="stylesheet">
@@ -108,6 +121,18 @@ if(isset($LOGIN_NAME)) $LOGIN_NAME = $LOGIN_NAME; else $LOGIN_NAME="";
 
 <div class="jumbotron">
 <div class="container">
+<noscript><div class="alert alert-block alert-danger"><a href="#" 
+         class="close" 
+         data-dismiss="alert">
+         &times;</a>
+         <p>JavaScript is required to make use of MyIEP. It looks like JavaScript is disabled in your browser. Please enable JavaScript to continue.</p>
+         </div></noscript>
+<!-- Detect IE -->
+<SCRIPT LANGUAGE="javascript">
+   if ( msieversion() >= 1 )
+
+      document.write ( "<div class=&quot; well alert alert-block alert-danger&quot;><a href=# class=&quot;close&quot; data-dismiss=&quot;alert&quot;>&times;</a><p>Internet Explorer is your detected browser. Please note that MyIEP is <strong>not</strong> designed with support for Internet Explorer.</p></div>" );
+   </SCRIPT>
 <?php if ($system_message) {
         echo "<div class=\"alert alert-block alert-danger\"><a href=\"#\" 
          class=\"close\" 
