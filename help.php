@@ -123,6 +123,7 @@ header('Pragma: no-cache'); //don't cache this page!
 </ul>
 <h2>JavaScript</h2>
 <p>JavaScript must be permitted to run in your browser for <em>MyIEP</em> to function.</p>
+<a href="http://www.heart.org/HEARTORG/form/enablescript.html" title="How to Enable JavaScript" class="btn btn-default">Learn How to Enable JavaScript &raquo;</a>
 
 
 </div>

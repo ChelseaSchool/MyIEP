@@ -266,7 +266,7 @@ Hyattsville, Maryland 20782</address>
         </div>
     </div>
   </div>
-</div
+</div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
