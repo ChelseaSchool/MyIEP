@@ -318,7 +318,7 @@ function print_student_navbar($student_id, $student) {
 </div>
 <div class="navbar-collapse collapse">
 <ul class="nav navbar-nav">
-<li><a href="main.php">Home</a></li>
+<li><a href="main.php"><span class="glyphicon glyphicon-home"></span></a></li>
 <li><a href="sprint_feedback.php">User Feedback</a></li>
 <li><a href="index.php">Logout</a></li>
 <li><a href="about.php">About</a></li>
@@ -443,7 +443,7 @@ function print_general_navbar() {
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="main.php">Home</a></li>
+            <li><a href="main.php"><span class="glyphicon glyphicon-home"></span></a></li>
             <li><a href="about.php">About</a></li>
                         <li><a href="sprint_feedback.php">Leave Feedback</a></li>
             <li><a href="help.php">Help</a></li>
