@@ -95,11 +95,11 @@ if (isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="about.php">About</a></li>
-            <li><a href="sprint_feedback.php">Leave Feedback</a></li>
-            <li><a href="help.php">Help</a></li>
-            <li><a href="index.php">Logout</a></li>
+            <li class="active"><a href="#" title="Return to Home"><span class="glyphicon glyphicon-home"></span></a></li>
+            <li><a href="about.php" title="About MyIEP"><span class="glyphicon glyphicon-info-sign"></span></a></li>
+            <li><a href="sprint_feedback.php" title="Help out by leaving feedback"><span class="glyphicon glyphicon-envelope"></span></a></li>
+            <li><a href="help.php" title="Some Help Here"><span class="glyphicon glyphicon-question-sign"></span></a></li>
+            <li><a href="index.php" title="Log Out of MyIEP"><span class="glyphicon glyphicon-off"></span></a></li>
             </ul>
 
           <ul class="nav navbar-nav navbar-right">

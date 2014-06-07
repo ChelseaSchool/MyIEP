@@ -90,44 +90,45 @@ if (isset ($_POST['contents'])) {
 
 <body>
 
-	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target=".navbar-collapse">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="main.php">MyIEP</a>
-			</div>
-			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<li><a href="main.php">Home</a></li>
-					<li><a href="about.php">About</a></li>
-            		<li class="active"><a href="sprint_feedback.php">Leave Feedback</a></li>
-					<li><a href="help.php">Help</a></li>
-					<li><a href="index.php">Logout</a></li>
-				</ul>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="main.php">MyIEP</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="main.php" title="Return Home"><span class="glyphicon glyphicon-home"></span></a></li>
+            <li><a href=about.php title="About MyIEP"><span class="glyphicon glyphicon-info-sign"></span></a></li>
+                        <li class="active"><a href="sprint_feedback.php"  title="Leave User Feedback"><span class="glyphicon glyphicon-envelope"></span></a></li>
+            <li><a href="help.php" title="Some Help Here"><span class="glyphicon glyphicon-question-sign"></span></a></li>
+            <li><a href="index.php" title="Logout of MyIEP"><span class="glyphicon glyphicon-off"></span></a></li></ul>
 
-				<ul class="nav navbar-nav navbar-right">
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown">Navigation <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="./manage_student.php">Students</a></li>
-							<li class="divider"></li>
-							<li><a href="change_ipp_password.php">Reset Password</a></li>
-							<li><a href="superuser_add_goals.php">Goals Database</a></li>
-							<li><a href="student_archive.php">Archive</a></li>
-							<li><a href="user_audit.php">Audit</a></li>
-							<li><a href="superuser_manage_coding.php">Manage Codes</a></li>
-							<li><a href="school_info.php">Manage Schools</a></li>
-							<li><a href="superuser_view_logs.php">View Logs</a></li>
-						</ul></li>
-				</ul>
-			</div>
-			<!--/.nav-collapse -->
-			<!--<div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Navigation <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+
+                <li><a href="./manage_student.php">Students</a></li>
+                <li class="divider"></li>
+                <li><a href="change_ipp_password.php">Reset Password</a></li>
+                <li><a href="superuser_add_goals.php">Goals Database</a></li>
+                <li><a href="./student_archive.php">Archive</a></li>
+                <li><a href="./user_audit.php">Audit</a></li>
+                <li><a href="superuser_manage_coding.php">Manage Codes</a></li>
+                <li><a href="school_info.php">Manage Schools</a></li>
+                <li><a href="superuser_view_logs.php">View Logs</a></li>
+
+              </ul>
+            </li>
+          </ul>
+         </div><!--/.nav-collapse -->
+        <!--<div class="navbar-collapse collapse">
           <form class="navbar-form navbar-right" role="form" nctype="multipart/form-data" action="jumbotron.php" method="post">
             <div class="form-group">
               <input type="text" placeholder="User Name" class="form-control" value="<?php echo $LOGIN_NAME;?>">
@@ -138,9 +139,8 @@ if (isset ($_POST['contents'])) {
             <button type="submit" value="submit" class="btn btn-success">Sign in</button>
           </form>
         </div><!--/.navbar-collapse -->
-		</div>
-	</div>
-
+      </div>
+    </div>
 	<!-- Main jumbotron for a primary marketing message or call to action -->
 	<div class="jumbotron">
 		<div class="container">
@@ -164,7 +164,7 @@ if (isset ($_POST['contents'])) {
 <label>Message</label>
 <textarea required class="form-control" rows="10" name="contents" spellcheck="true"></textarea>
 </div>
-<button class="btn btn-large btn-standard" type="submit">Submit</button>
+<button class="btn btn-large btn-success" type="submit">Submit</button>
 </form>
 </div> <!-- /container -->
 

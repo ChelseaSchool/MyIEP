@@ -318,12 +318,13 @@ function print_student_navbar($student_id, $student) {
 </div>
 <div class="navbar-collapse collapse">
 <ul class="nav navbar-nav">
-<li><a href="main.php"><span class="glyphicon glyphicon-home"></span></a></li>
-<li><a href="sprint_feedback.php">User Feedback</a></li>
-<li><a href="index.php">Logout</a></li>
-<li><a href="about.php">About</a></li>
-<li><a href="help.php">Help</a></li>
-<li><a onclick="history.go(-1);">Back</a></li>
+<li><a href="main.php" title="Return Home"><span class="glyphicon glyphicon-home"></span></a></li>
+<li><a onclick="history.go(-1);" title="Back a Page"><span class="glyphicon glyphicon-circle-arrow-left"></span></a></li>
+<li><a href="sprint_feedback.php" title="Leave User Feedback"><span class="glyphicon glyphicon-envelope"></span></a></li>
+<li><a href="index.php" title="Logout of MyIEP"><span class="glyphicon glyphicon-off"></span></a></li>
+<li><a href="about.php" title="About MyIEP"><span class="glyphicon glyphicon-info-sign"></span></a></li>
+<li><a href="help.php" title="Some Help Here"><span class="glyphicon glyphicon-question-sign"></span></a></li>
+
 	<li class="dropdown">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Student Records: $student<b class="caret"></b></a>
               <ul class="dropdown-menu">
@@ -385,7 +386,7 @@ EOF;
  
 
 function print_bootstrap_datepicker_depends() {
-$dependencies = <<<EOF
+    $dependencies = <<<EOF
 <!-- Example Invokation of Datepicker -->
 	<!-- input type=datepicker name="review_date" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd"  -->
 	<!-- Bootstrap Datepicker CSS -->
@@ -443,11 +444,11 @@ function print_general_navbar() {
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="main.php"><span class="glyphicon glyphicon-home"></span></a></li>
-            <li><a href="about.php">About</a></li>
-                        <li><a href="sprint_feedback.php">Leave Feedback</a></li>
-            <li><a href="help.php">Help</a></li>
-            <li><a href="index.php">Logout</a></li></ul>
+            <li><a href="main.php" title="Return to Home"><span class="glyphicon glyphicon-home"></span></a></li>
+            <li><a href="about.php" title="About MyIEP"><span class="glyphicon glyphicon-info-sign"></span></a></li>
+                        <li><a href="sprint_feedback.php" title="Leave feedback for developers"><span class="glyphicon glyphicon-envelope"></span></a></li>
+            <li><a href="help.php" title="Some help here"><span class="glyphicon glyphicon-question-sign"></span></a></li>
+            <li><a href="index.php" title="Logout of MyIEP"><span class="glyphicon glyphicon-off"></span></a></li></ul>
              
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">

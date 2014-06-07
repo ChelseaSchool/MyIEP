@@ -369,11 +369,11 @@ function toggle () //toggles objective details
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="main.php">Home</a></li>
-            <li><a href="index.php">Logout</a></li>
-            <li><a href="about.php">About</a></li>
-            <li><a href="help.php">Help</a></li>
-            <li><a onclick="history.go(-1);">Back</a></li>
+            <li><a href="main.php" title="Return to Home"><span class="glyphicon glyphicon-home"></span></a></li>
+            <li><a href="index.php" title="Logout of MyIEP"><span class="glyphicon glyphicon-off"></span></a></li>
+            <li><a href="about.php" title="About MyIEP"><span class="glyphicon glyphicon-info-sign"></span></a></li>
+            <li><a href="help.php" title="Some Help Here"><span class="glyphicon glyphicon-question-sign"></span></a></li>
+            <li><a onclick="history.go(-1);" title="Back a Page"><span class="glyphicon glyphicon-circle-arrow-left"></span></a></li>
             <li><a href=<?php echo "ipp_pdf.php?student_id=" . $student_row['student_id'] . "&file=ipp.pdf"; ?>>Get PDF</li></a>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Records: <?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?><b class="caret"></b></a>
