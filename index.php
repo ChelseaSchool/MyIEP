@@ -133,7 +133,7 @@ function msieversion()
 
       document.write ( "<div class=&quot; well alert alert-block alert-danger&quot;><a href=# class=&quot;close&quot; data-dismiss=&quot;alert&quot;>&times;</a><p>Internet Explorer is your detected browser. Please note that MyIEP is <strong>not</strong> designed with support for Internet Explorer.</p></div>" );
    </SCRIPT>
-<?php if ($system_message) {
+<?php if (isset($system_message)) {
         echo "<div class=\"alert alert-block alert-danger\"><a href=\"#\" 
          class=\"close\" 
          data-dismiss=\"alert\">
