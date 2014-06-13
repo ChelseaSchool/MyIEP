@@ -370,7 +370,7 @@ if(!$medical_result) {
 <label>Priority Entry</label>
 <input type="checkbox" tabindex="4" name="is_priority" <?php if(isset($_POST['is_priority']) && $_POST['is_priority']) echo "checked";?>>
 </p>
-<button type="submit" name="add" value="add" class="btn btn-default">Add Entry</button>                       
+<button type="submit" name="add" value="add" class="btn btn-success">Add Entry</button>                       
 </form>
                        
  <!-- END add new entry -->

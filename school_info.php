@@ -246,7 +246,7 @@ print_html5_primer();
                            <label>School Color</label>
                            <INPUT TYPE="color" NAME="school_colour" MAXLENGTH="7" tabindex="4" SIZE="7" value="<?php if(isset($_POST['school_colour']))echo $_POST['school_colour']; ?>">
                            </p> 
-                          <button class="btn btn-default" type="submit" tabindex="5" value="add" value="add">Add School</button>
+                          <button class="btn btn-success" type="submit" tabindex="5" value="add" value="add">Add School</button>
                         </form>
                         <!-- END add school -->
 

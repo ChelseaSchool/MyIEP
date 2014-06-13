@@ -271,19 +271,19 @@ if(!$anecdotal_result) {
     <?php print_jumbotron_with_page_name("Anecdotals", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission) ?> 
     <?php if ($system_message) { echo "<p>" . $system_message . "</p>";} ?>
     <div class="container">
-    
+ <div class="alert alert-info alert-dismissable">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <strong>Scroll Down</strong> for all Anecdotal options.
+</div>
+ 
    
     
     <div class="row">
-    
-   <div class="col-md-2">
-    <h2>Print Report</h2>
+    <h2>Print Report<a name="print"></a></h2>
     <p><a class="btn btn-md btn-success" href="<?php echo IPP_PATH . "anecdotal_pdf.php?student_id=$student_id" ?>" target="_blank">Generate PDF</a></p>  
    </div> 
-   
-                    <div class="col-md-5">
-                
-                        <h2>Report History</h2>
+   <div row="row">
+   						<h2>Report History<a name="report"></a></h2>
                         <!-- BEGIN annecdotals table -->
                         <form spellcheck="true" name="anecdotal" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "anecdotals.php"; ?>" method="get">
                         <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
@@ -328,8 +328,8 @@ if(!$anecdotal_result) {
                         </form>
                         </div>
     
-    <div class="col-md-5">
-               <h2>Add Anecdotal Report</h2>
+    <div class="row">
+               <h2>Add Anecdotal Report<a name="add"></a></h2>
                         <form name="add_anecdotal" enctype="multipart/form-data" action="<?php echo IPP_PATH . "anecdotals.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
                         <div class="form-group">
                         <input type="hidden" name="add_anecdotal" value="1">

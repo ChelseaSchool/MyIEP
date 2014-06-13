@@ -1,2 +1,9 @@
 etc/init.php
 ref/
+build/
+cache.properties
+deployment.xml
+deployment.properties
+phpcs-checkstyle.tmp
+phpcs-full.tmp
+

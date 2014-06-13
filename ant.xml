@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="MyIEP" default="build">
- <target name="build" depends="prepare,lint,phploc,pdepend,phpmd-ci,phpcpd"/>
+ <target name="build" depends="prepare,lint,phpcs,phpmd,phploc,pdepend,phpmd-ci,phpcpd"/>
 
- <target name="build-parallel" depends="prepare,lint,tools-parallel"/>
+ <target name="build-parallel" depends="prepare,lint,phpcs,tools-parallel"/>
 
  <target name="tools-parallel" description="Run tools in parallel">
   <parallel threadCount="2">
    <sequential>
     <antcall target="pdepend"/>
     <antcall target="phpmd-ci"/>
+   <antcall target="phpcs" />
    </sequential>
    <antcall target="phpcpd"/>
    <antcall target="phploc"/>
@@ -35,7 +36,7 @@
 
    <fileset dir="${basedir}/">
     <include name="include/*.php"/>
-    <modified/>
+    <modified />
    </fileset>
  </apply>
  </target>
@@ -68,19 +69,22 @@
  <target name="phpmd-ci" description="Perform project mess detection using PHPMD creating a log file for the continuous integration server">
   <exec executable="phpmd">
    <arg path="${basedir}/"/>
-   <arg value="xml"/>
+   <arg value="text"/>
    <arg value="codesize,unusedcode,naming,controversial,design"/>
    <arg value="--reportfile"/>
-   <arg value="${basedir}/build/logs/pmd.xml"/>
+   <arg value="${basedir}/build/logs/pmd.txt"/>
   </exec>
  </target>
 
  <target name="phpcs" description="Find coding standard violations using PHP_CodeSniffer and print human readable output. Intended for usage on the command line before committing.">
   <exec executable="phpcs">
-   <arg value="--standard=PEAR"/>
+   <arg value="-pnl" />
+   <arg value="--report=full" />
+   <arg value="--standard=pear"/>
+	<arg value="--tab-width=4" />
    <arg path="${basedir}/"/>
-   <arg value="--reportfile" />
-   <arg value="${basedir}/build/logs/phpcs.xml" />
+   <arg value="--report-file=${basedir}/build/logs/phpcs.txt" />
+   <arg value="./" />
   </exec>
  </target>
 
