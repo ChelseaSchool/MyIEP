@@ -146,12 +146,14 @@ function msieversion()
 
       document.write ( "<div class=&quot; well alert alert-block alert-danger&quot;><a href=# class=&quot;close&quot; data-dismiss=&quot;alert&quot;>&times;</a><p>Internet Explorer is your detected browser. Please note that MyIEP is <strong>not</strong> designed with support for Internet Explorer.</p></div>" );
    </SCRIPT>
+<<<<<<< HEAD
 <?php
 
 if ($system_message) {
     echo "<div class=\"alert alert-block alert-danger\"><a href=\"#\" 
-         class=\"close\" 
-         data-dismiss=\"alert\">
+
+<?php if (isset($system_message)) {
+        echo "<div class=\"alert alert-block alert-danger\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\">
          &times;</a>
       <strong>" . $system_message . "</strong> You may contact an administrator or try resetting your credentials using 
          the Reset Password button below.
