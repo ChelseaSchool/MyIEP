@@ -98,7 +98,7 @@ if (isset($_POST['delete_x'])) {
         $system_message = $system_message . $error_message; // just to remember we need this
         IPP_LOG($system_message, $_SESSION['egps_username'], 'ERROR');
     }
-    
+
     $delete_query = "DELETE FROM student WHERE ";
     foreach ($_POST as $key => $value) {
         if (preg_match('/^(\d)*$/', $key))
@@ -158,22 +158,23 @@ function getStudents()
         $system_message = $system_message . $error_message; // just to remember we need this
         IPP_LOG($system_message, $_SESSION['egps_username'], 'ERROR');
     }
-    
+
     // do a subquery to find our school code...easier than messing with the ugly
     // query below...
     $school_code_query = "SELECT school_code FROM support_member WHERE egps_username='" . mysql_real_escape_string($_SESSION['egps_username']) . "'";
     $school_code_result = mysql_query($school_code_query);
     if (! $school_code_result) {
         $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$school_code_query'<BR>";
+
         return NULL;
     }
     $school_code_row = mysql_fetch_array($school_code_result);
     $school_code = $school_code_row['school_code'];
-    
+
     // $student_query = "SELECT student.student_id,last_name,first_name,school_history.school_code,school.* FROM student LEFT JOIN school_history ON student.student_id=school_history.student_id LEFT JOIN school ON school_history.school_code=school.school_code WHERE end_date IS NULL ";
     $student_query = "SELECT DISTINCT student.student_id,last_name,first_name,school_history.school_code,school.* FROM student LEFT JOIN support_list ON student.student_id = support_list.student_id LEFT JOIN school_history ON student.student_id=school_history.student_id LEFT JOIN school ON school_history.school_code=school.school_code WHERE ((support_list.egps_username='" . mysql_real_escape_string($_SESSION['egps_username']) . "' AND school_history.end_date IS NULL AND support_list.student_id IS NOT NULL) OR (";
     // prior to march 18/06: $student_query = "SELECT DISTINCT student.student_id,last_name,first_name,school_history.school_code,school.* FROM student LEFT JOIN support_list ON student.student_id = support_list.student_id LEFT JOIN school_history ON student.student_id=school_history.student_id LEFT JOIN school ON school_history.school_code=school.school_code WHERE (support_list.egps_username='" . mysql_real_escape_string($_SESSION['egps_username']) . "' AND support_list.student_id IS NOT NULL) OR (";
-    
+
     if (! ($IPP_MIN_VIEW_LIST_ALL_STUDENTS >= $permission_level)) { // $IPP_MIN_VIEW_LIST_ALL_LOCAL_STUDENTS >= $permission_level) {
         $student_query = $student_query . "school_history.school_code='$school_code' AND "; // prior to 2006-03-21: $student_query = $student_query . "school_history.school_code='$school_code' AND ";
         if ($IPP_MIN_VIEW_LIST_ALL_LOCAL_STUDENTS < $permission_level) {
@@ -209,23 +210,26 @@ function getStudents()
     $student_result_limit = mysql_query($student_query_limit);
     if (! $student_result_limit) {
         $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$student_query_limit'<BR>";
+
         return NULL;
     }
-    
+
     // $system_message = $system_message . "debug: " . $student_query_limit . "<BR>";
-    
+
     // find the totals...
     $student_result_total = mysql_query($student_query);
     if (! $student_result_total) {
         $error_message = "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$student_query'<BR>";
+
         return NULL;
     }
     $szTotalStudents = mysql_num_rows($student_result_total);
+
     return $student_result_limit;
 }
 
 $sqlStudents = getStudents(); // $szTotalStudents contains total number of stdnts.
-                              
+
 // get totals...
 
 if (! $sqlStudents) {
@@ -259,37 +263,36 @@ function print_jquery_autocomplete()
 {
     echo <<< EOF
 <script>
-$(function() {
+$(function () {
     var person;
     $('#tags').autocomplete({
         source: available_names,
         open: function () {
              $('ul.ui-autocomplete')
-             .addClass('opened') 
+             .addClass('opened')
              $('#students').hide()
-		},
-        close: function () 
-        { 
-		  
+        },
+        close: function () {
+
           $('ul.ui-autocomplete')
            .removeClass('opened'),
-		  $('#students').show()
-		  
-		  
-		   person = $('#tags').val(),
-		   show_name(person)
-			},
+          $('#students').show()
+
+
+           person = $('#tags').val(),
+           show_name(person)
+            },
         autofocus: true,
         minlength: 1,
-        
-        //change: function( event, ui ) 
+
+        //change: function( event, ui )
         //{
-		
-         
-     
-		
-		})
-	 
+
+
+
+
+        })
+
     });
    </script>
 EOF;
@@ -309,32 +312,36 @@ EOF;
 
 
 <SCRIPT>
-      function deleteChecked() {
+      function deleteChecked()
+      {
           var szGetVars = "delete_users=";
           var szConfirmMessage = "Are you sure you want to delete or duplicate:\n";
           var count = 0;
           form=document.studentlist;
-          for(var x=0; x<form.elements.length; x++) {
-              if(form.elements[x].type=="checkbox") {
-                  if(form.elements[x].checked) {
+          for (var x=0; x<form.elements.length; x++) {
+              if (form.elements[x].type=="checkbox") {
+                  if (form.elements[x].checked) {
                      szGetVars = szGetVars + form.elements[x].id + "|";
                      szConfirmMessage = szConfirmMessage + form.elements[x].value + " (ID #" + form.elements[x].name + ")\n";
                      count++;
                   }
               }
           }
-          if(!count) { alert("Nothing Selected"); return false; }
+          if (!count) { alert("Nothing Selected"); return false; }
           if(confirm(szConfirmMessage))
+
               return true;
           else
               return false;
       }
 
-      function notYetImplemented() {
+      function notYetImplemented()
+      {
           alert("Functionality not yet implemented"); return false;
       }
 
-      function noPermission() {
+      function noPermission()
+      {
           alert("You don't have the permissions"); return false;
       }
     </SCRIPT>
@@ -344,185 +351,174 @@ EOF;
 <script src="js/jquery-2.1.0.min.js"></script>
 <script src="js/jquery.autocomplete.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css"
-	href="css/jquery.autocomplete.min.css">
+    href="css/jquery.autocomplete.min.css">
 <script src="js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-<script>   
-function show_name(person) {
-	if (person != null)
-	{
-		$("tr.student").hide();
-		$(document.getElementById(person)).show();
-	
-	}
-	else $("#students").show();
+<script>
+function show_name(person)
+{
+    if (person != null) {
+        $("tr.student").hide();
+        $(document.getElementById(person)).show();
+
+    } else $("#students").show();
 }
 </script>
 
 <script>
-$(document).ready (function(){
-$("#filter-clear").click(function() {
-	$( "#tags" ).val("");
-	$( "tr.student" ).show();
+$(document).ready (function () {
+$("#filter-clear").click(function () {
+    $( "#tags" ).val("");
+    $( "tr.student" ).show();
 });
 });
 
 
 </script>
 <script>
-$(document).ready (function(){
-	$(.alert).hide();
+$(document).ready (function () {
+    $(.alert).hide();
 })
 
 </script>
 <script>
-$(document).ready(function(){
-	$("#filter-tip").popover();
+$(document).ready(function () {
+    $("#filter-tip").popover();
 });
 </script>
 <?php print_jquery_autocomplete(); ?>
 
-<?php $sqlStudents=getStudents(); ?>  
+<?php $sqlStudents=getStudents(); ?>
 
-   
+
 </HEAD>
-<BODY>   	
+<BODY>
 <?php
 print_general_navbar();
 ?>
 <div class="jumbotron">
-		<div class="container">     
+        <div class="container">
 
 <?php if ($system_message) echo $system_message; ?>
 
 <h1>Manage Students</h1>
-			<h2>
-				Logged in as: <small><?php echo $_SESSION['egps_username']; ?></small>
-			</h2>
-			<!-- Button trigger modal -->
-			<button class="btn btn-primary btn-lg" data-toggle="modal"
-				data-target="#filter_options">Manage Filters &raquo;</button>
-			<a class="btn btn-primary btn-lg" href="./new_student.php">New
-				Student &raquo;</a>
+            <h2>
+                Logged in as: <small><?php echo $_SESSION['egps_username']; ?></small>
+            </h2>
+            <!-- Button trigger modal -->
+            <button class="btn btn-primary btn-lg" data-toggle="modal"
+                data-target="#filter_options">Manage Filters &raquo;</button>
+            <a class="btn btn-primary btn-lg" href="./new_student.php">New
+                Student &raquo;</a>
 <?php if ($system_message) { echo "<h3>System Message <small>" . $system_message . "</small></h3>";} ?>
 
 </div>
-		<!-- close container -->
+        <!-- close container -->
 
-	</div>
-	<!-- Close Jumbotron -->
-
-
-	<div class="container">
+    </div>
+    <!-- Close Jumbotron -->
 
 
-		<!-- Modal-->
-		<div class="modal fade" id="filter_options" tabindex="-1"
-			role="dialog" aria-labelledby="options" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-hidden="true">&times;</button>
-						<h4 class="Filters" id="Filters">Manage Filters</h4>
-					</div>
-					<!-- Modal Header end -->
-					<div class="modal-body">
-
-						<button role="button" class="btn btn-default btn-med"
-							id="filter-clear">Clear Student Filter &raquo;</button>
-						<!-- <button role="button" class="btn btn-default btn-med" id="toggle" alt="Show Only Students I have Access To">Show Only Students to Whom I have Access &raquo;</button>-->
-
-					</div>
-					<!-- end modal body -->
-					<div class="modal-footer"></div>
-					<!-- end modal footer -->
-				</div>
-				<!-- end modal content -->
-			</div>
-			<!-- end modal dialog -->
-		</div>
-		<!-- end modal fade -->
-
-		<div class="alert alert-block alert-info">
-			<a href="#" class="close" data-dismiss="alert">&times;</a><strong>Release
-				Note</strong>: All students are shown by default. Use the search box
-			to filter students by name. Use the "Manage Filters" button above to
-			manipulate the filters (clear, etc.).
-		</div>
+    <div class="container">
 
 
-		<!--  form for autocomplete first and last names-->
+        <!-- Modal-->
+        <div class="modal fade" id="filter_options" tabindex="-1"
+            role="dialog" aria-labelledby="options" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">&times;</button>
+                        <h4 class="Filters" id="Filters">Manage Filters</h4>
+                    </div>
+                    <!-- Modal Header end -->
+                    <div class="modal-body">
+
+                        <button role="button" class="btn btn-default btn-med"
+                            id="filter-clear">Clear Student Filter &raquo;</button>
+                        <!-- <button role="button" class="btn btn-default btn-med" id="toggle" alt="Show Only Students I have Access To">Show Only Students to Whom I have Access &raquo;</button>-->
+
+                    </div>
+                    <!-- end modal body -->
+                    <div class="modal-footer"></div>
+                    <!-- end modal footer -->
+                </div>
+                <!-- end modal content -->
+            </div>
+            <!-- end modal dialog -->
+        </div>
+        <!-- end modal fade -->
+
+        <div class="alert alert-block alert-info">
+            <a href="#" class="close" data-dismiss="alert">&times;</a><strong>Release
+                Note</strong>: All students are shown by default. Use the search box
+            to filter students by name. Use the "Manage Filters" button above to
+            manipulate the filters (clear, etc.).
+        </div>
+
+
+        <!--  form for autocomplete first and last names-->
 
 
 
-		<div class="row">
-			<div class="input-group">
-				<span class="input-group-addon"> <span id="filter-tip"
-					data-toggle="popover" data-placement="top" data-title="Filter Info"
-					data-content="Type part of a student's name to filter the results on this page; see the black bar at the bottom of the page to work with filters. (To dismiss this message, click the magnifying glass icon again.)"
-					class="glyphicon glyphicon-search"> </span>
-				</span> <input id="tags" class="form-control"
-					placeholder="Search for student by name...">
-			</div>
-			<p>&nbsp;</p>
-		</div>
-			<div class="row">
+        <div class="row">
+            <div class="input-group">
+                <span class="input-group-addon"> <span id="filter-tip"
+                    data-toggle="popover" data-placement="top" data-title="Filter Info"
+                    data-content="Type part of a student's name to filter the results on this page; see the black bar at the bottom of the page to work with filters. (To dismiss this message, click the magnifying glass icon again.)"
+                    class="glyphicon glyphicon-search"> </span>
+                </span> <input id="tags" class="form-control"
+                    placeholder="Search for student by name...">
+            </div>
+            <p>&nbsp;</p>
+        </div>
+            <div class="row">
 
-				<table id="students" class="table table-hover table-striped">
-					<!-- <form name="studentlist" onSubmit="return deleteChecked()" enctype="multipart/form-data" action="<?php //echo IPP_PATH . "manage_student.php"; ?>" method="post">-->
-					<tr>
-						<th>Select</th>
-						<th>UID</th>
-						<th>Student Name</th>
-						<th><abbr title="Individual Education Plan">IEP</abbr> (<abbr
-							title="Portable Document Format">PDF</abbr>)</th>
-						<th>School</th>
-						<th>Permission</th>
-					</tr>
+                <table id="students" class="table table-hover table-striped">
+                    <!-- <form name="studentlist" onSubmit="return deleteChecked()" enctype="multipart/form-data" action="<?php //echo IPP_PATH . "manage_student.php"; ?>" method="post">-->
+                    <tr>
+                        <th>Select</th>
+                        <th>UID</th>
+                        <th>Student Name</th>
+                        <th><abbr title="Individual Education Plan">IEP</abbr> (<abbr
+                            title="Portable Document Format">PDF</abbr>)</th>
+                        <th>School</th>
+                        <th>Permission</th>
+                    </tr>
 
-					<!-- loop -->
-	<?php
+                    <!-- loop -->
+    <?php
 while ($student_row = mysql_fetch_array($sqlStudents)) {
     $current_student_permission = getStudentPermission($student_row['student_id']);
     $tablerow = <<<EOF
                              <tr class="$current_student_permission student" id="{$student_row['first_name']} {$student_row['last_name']}">
-                            	<td><input id="{$student_row['student_id']}" type="checkbox"></td>
+                                <td><input id="{$student_row['student_id']}" type="checkbox"></td>
                                 <td>{$student_row['student_id']}</td>
-                            	<td><a href="student_view.php?student_id={$student_row['student_id']}">{$student_row['first_name']} &nbsp;{$student_row['last_name']}</a></td>
-                            	<td width="20%"><center><a href="ipp_pdf.php?student_id={$student_row['student_id']}" target="_blank">IEP (PDF)<img alt="IEP (PDF)" src="images/pdf-icon.png" height="20%" width="20%"></a></center></td>
-                            	<td>{$student_row['school_name']}</td>
-                            	<td>$current_student_permission</td>
+                                <td><a href="student_view.php?student_id={$student_row['student_id']}">{$student_row['first_name']} &nbsp;{$student_row['last_name']}</a></td>
+                                <td width="20%"><center><a href="ipp_pdf.php?student_id={$student_row['student_id']}" target="_blank">IEP (PDF)<img alt="IEP (PDF)" src="images/pdf-icon.png" height="20%" width="20%"></a></center></td>
+                                <td>{$student_row['school_name']}</td>
+                                <td>$current_student_permission</td>
                             </tr></div>
 EOF;
-    
+
     echo $tablerow;
 }
 ?>
 
-  
-  
-  
+
+
+
                            <?php
                         /*
-                         * if($current_student_permission == "READ" || $current_student_permission != "WRITE" || $current_student_permission != "ALL") echo "<a href=\"". IPP_PATH . "ipp_pdf.php?student_id=" . $student_row['student_id'] . "\" class=\"default\" target=\"_blank\""; if($current_student_permission == "NONE" || $current_student_permission == "ERROR") { echo "onClick=\"return noPermission();\" "; echo "<img src=\"". IPP_PATH . "images/pdf.png\" align=\"top\" border=\"0\"></a>"; } echo "</td>"; //end pdf column //school name column echo "<td>" . $student_row['school_name'] . "</td>"; //permission echo "<td>" . $current_student_permission . "</td>"; echo "</tr>";//close row
+                         * if ($current_student_permission == "READ" || $current_student_permission != "WRITE" || $current_student_permission != "ALL") echo "<a href=\"". IPP_PATH . "ipp_pdf.php?student_id=" . $student_row['student_id'] . "\" class=\"default\" target=\"_blank\""; if ($current_student_permission == "NONE" || $current_student_permission == "ERROR") { echo "onClick=\"return noPermission();\" "; echo "<img src=\"". IPP_PATH . "images/pdf.png\" align=\"top\" border=\"0\"></a>"; } echo "</td>"; //end pdf column //school name column echo "<td>" . $student_row['school_name'] . "</td>"; //permission echo "<td>" . $current_student_permission . "</td>"; echo "</tr>";//close row
                          */
                         ?>
 </table>
-			</div>
+            </div>
 
-
-
-
-
-
-
-
-
-
-
-			<hr>
-<?php print_bootstrap_js();?>                      
+            <hr>
+<?php print_bootstrap_js();?>
 <footer><?php print_complete_footer(); ?></footer>
 
 </BODY>

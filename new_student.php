@@ -8,13 +8,9 @@
  * 3. spellcheck?
  * 4. Bootstrap
  */
- 
- 
 
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 50;
-
-
 
 /** @remark   INPUTS: $_GET['add_username'] must be a username...
  *
@@ -36,18 +32,17 @@ require_once(IPP_PATH . 'include/log.php');
 require_once(IPP_PATH . 'include/user_functions.php');
 require_once IPP_PATH . 'include/supporting_functions.php';
 
-
 header('Pragma: no-cache'); //don't cache this page!
 
-if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
-    if(!validate( $_POST['LOGIN_NAME'] ,  $_POST['PASSWORD'] )) {
+if (isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
+    if (!validate( $_POST['LOGIN_NAME'] ,  $_POST['PASSWORD'] )) {
         $system_message = $system_message . $error_message;
         IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
         require(IPP_PATH . 'index.php');
         exit();
     }
 } else {
-    if(!validate()) {
+    if (!validate()) {
         $system_message = $system_message . $error_message;
         IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
         require(IPP_PATH . 'index.php');
@@ -58,7 +53,7 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
 
 //check permission levels
 $permission_level = getPermissionLevel($_SESSION['egps_username']);
-if( $permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NULL) {
+if ($permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NULL) {
     $system_message = $system_message . "You do not have permission to view this page (IP: " . $_SERVER['REMOTE_ADDR'] . ")";
     IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
     require(IPP_PATH . 'security_error.php');
@@ -69,10 +64,11 @@ if( $permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NUL
 
 //set the get/put variables for the back button and exit fx...
 $szBackGetVars="";
-if(isset($_GET['szBackGetVars']))$szBackGetVars = $_GET['szBackGetVars']; 
+if(isset($_GET['szBackGetVars']))$szBackGetVars = $_GET['szBackGetVars'];
 if(isset($_POST['szBackGetVars']))$szBackGetVars = $_POST['szBackGetVars'];
 
-function parse_submission() {
+function parse_submission()
+{
     if(!$_POST['first_name']) return "You must supply a first name<BR>";
     if(!$_POST['last_name']) return "You must supply a last name<BR>";
     //check that date is the correct pattern...
@@ -83,28 +79,26 @@ function parse_submission() {
     //if(!$_POST['ab_ed_code']) return "You must supply an Alberta Education Coding Value<BR>";
 
     //check duplicate prov ed number...
-    if(!connectIPPDB()) {
+    if (!connectIPPDB()) {
           $error_message = $error_message;  //just to remember we need this
           $system_message = $error_message;
           IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
      }
-     if($_POST['prov_ed_num'] != "") {
+     if ($_POST['prov_ed_num'] != "") {
        $duplicate_query = "SELECT * FROM student WHERE prov_ed_num='" . mysql_real_escape_string($_POST['prov_ed_num']) ."'";
        $duplicate_result= mysql_query($duplicate_query);
-       if(mysql_num_rows($duplicate_result) > 0) {$duplicate_row = mysql_fetch_array($duplicate_result);return "Duplicate Provincial Education Number (name:" . $duplicate_row['first_name'] . " " . $duplicate_row['last_name'] ."),<BR>This student probably already exists in the database<BR>";}
+       if (mysql_num_rows($duplicate_result) > 0) {$duplicate_row = mysql_fetch_array($duplicate_result);return "Duplicate Provincial Education Number (name:" . $duplicate_row['first_name'] . " " . $duplicate_row['last_name'] ."),<BR>This student probably already exists in the database<BR>";}
      }
      //$duplicate_query = "SELECT * FROM student WHERE ab_ed_code='" . mysql_real_escape_string($_POST['ab_ed_code']) ."'";
      //$duplicate_result= mysql_query($duplicate_query);
-     //if(mysql_num_rows($duplicate_result) > 0) {$duplicate_row = mysql_fetch_array($duplicate_result);return "Duplicate Alberta Education Code Number (name:" . $duplicate_row['first_name'] . " " . $duplicate_row['last_name'] ."),<BR>This student probably already exists in the database<BR>"; }
-    
-
+     //if (mysql_num_rows($duplicate_result) > 0) {$duplicate_row = mysql_fetch_array($duplicate_result);return "Duplicate Alberta Education Code Number (name:" . $duplicate_row['first_name'] . " " . $duplicate_row['last_name'] ."),<BR>This student probably already exists in the database<BR>"; }
     return NULL;
 }
 
 //check if we are adding a student...
-if(isset($_POST['add_student'])) {
+if (isset($_POST['add_student'])) {
 
-     if(!connectIPPDB()) {
+     if (!connectIPPDB()) {
           $error_message = $error_message;  //just to remember we need this
           $system_message = $error_message;
           IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
@@ -112,12 +106,12 @@ if(isset($_POST['add_student'])) {
 
      //do some error checking on data submission...
      $retval = parse_submission();
-     if($retval != NULL) {
+     if ($retval != NULL) {
          $system_message = $system_message . $retval;
      } else {
        $add_query="INSERT INTO student (first_name,last_name,birthday,prov_ed_num,current_grade,gender) values ('" . mysql_real_escape_string($_POST['first_name']) . "','" .  mysql_real_escape_string($_POST['last_name']) ."','" . mysql_real_escape_string($_POST['birthday']) . "','" .  mysql_real_escape_string($_POST['prov_ed_num']) . "','" . mysql_real_escape_string($_POST['current_grade']) . "','" . mysql_real_escape_string($_POST['gender']) . "')";
        $add_result=mysql_query($add_query);
-       if(!$add_result) {
+       if (!$add_result) {
            $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$add_query'<BR>";
            $system_message=$system_message . $error_message;
            IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
@@ -126,7 +120,7 @@ if(isset($_POST['add_student'])) {
            $school_history_query="SELECT * FROM school WHERE school_code='" . mysql_real_escape_string($_POST['school_code']) . "'";
            $school_history_result=mysql_query($school_history_query);
            $school_history_row="";
-           if(!$school_history_result) {
+           if (!$school_history_result) {
                $error_message = $error_message . "You might need to enter or change some of the school history information for this student. The system  wasunable to automatically determine this information because the database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$add_query'<BR>";
                $system_message=$system_message . $error_message;
                IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
@@ -154,19 +148,16 @@ if(isset($_POST['add_student'])) {
        }
      }
 
-
 }
 
-
-if(!connectUserDB()) {
+if (!connectUserDB()) {
         $error_message = $error_message;  //just to remember we need this
         $system_message = $error_message;
         IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
 }
 
-
 //find all of the available schools..
-if(!connectIPPDB()) {
+if (!connectIPPDB()) {
    $error_message = $error_message;  //just to remember we need this
    $system_message = $error_message;
    IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
@@ -175,41 +166,39 @@ if(!connectIPPDB()) {
 $school_query="SELECT * FROM school WHERE 1=1";
 $school_result=mysql_query($school_query);
 
-if(!$school_result) {
+if (!$school_result) {
     $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$school_query'<BR>";
     $system_message=$system_message . $error_message;
     IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
 }
 print_html5_primer();
 print_bootstrap_head();
-?> 
+?>
 <link rel="stylesheet" href="./css/smoothness/jquery-ui.css">
 <script src="js/jquery-2.1.1.js"></script>
 <script src="js/smoothness/jquery-ui-1.10.4.custom.js"></script>
 
-<script> 
-$(function() {
-	$( ".datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
+<script>
+$(function () {
+    $( ".datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
 });
 </script>
 </HEAD>
 <BODY>
-<?php 
+<?php
 print_general_navbar();
 print_lesser_jumbotron("New Student Record", $permission_level);
 ?>
 <div class="container">
-<?php if ($system_message) { echo "<p>" . $system_message . "</p>";} ?> 
-
-
+<?php if ($system_message) { echo "<p>" . $system_message . "</p>";} ?>
 
 <form name="addName" enctype="multipart/form-data" action="<?php echo IPP_PATH . "new_student.php"; ?>" method="post">
 <div class="form-group">
 <input type="hidden" name="add_student" value="1">
 <label for first_name>First Name</label>
 <input class="form-control" type="text" autocomplete="off" placeholder="First Name" required name="first_name" size="30" maxsize="125" value="<?php if(isset($_POST['first_name'])) echo $_POST['first_name'];?>">
-                          
-<label for last_name>Last Name</label>                         
+
+<label for last_name>Last Name</label>
 <input class="form-control" type="text" autocomplete="off" placeholder="Last Name" required name="last_name" size="30" maxsize="125" value="<?php if(isset($_POST['last_name']))  echo $_POST['last_name']; ?>">
 <label for birthday>Birthdate (YYYY-MM-DD)</label>
 
@@ -218,11 +207,10 @@ print_lesser_jumbotron("New Student Record", $permission_level);
 <label for school_code>School</label>
 <SELECT required class="form-control" name="school_code">
 <?php
-while($school_row=mysql_fetch_array($school_result)) {
-    if(isset($_POST['school_code']) && $_POST['school_code'] == $school_row['school_code']) {
+while ($school_row=mysql_fetch_array($school_result)) {
+    if (isset($_POST['school_code']) && $_POST['school_code'] == $school_row['school_code']) {
         echo "<option value=\"" . $school_row['school_code'] . "\" selected>" .  $school_row['school_name'] . "\n";
-    } 
-    else {
+    } else {
         echo "<option value=\"" . $school_row['school_code'] . "\">" .  $school_row['school_name'] . "\n";
     }
 }
@@ -230,7 +218,7 @@ while($school_row=mysql_fetch_array($school_result)) {
 </SELECT>
 <label for at_school_since>At School Since (YYYY-MM-DD)</label>
 <input autocomplete="off" placeholder="Attending school since..." class="form-control datepicker" required type="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" name="at_school_since" value="<?php if(isset($_POST['at_school_since'])) echo $_POST['at_school_since']; else echo date("Y-m-d"); ?>">
-                          
+
 <label for current_grade>Current Grade</label>
 <SELECT class="form-control" name="current_grade">
                                  <OPTION value="0" <?php if(isset($_POST['current_grade']) && $_POST['current_grade'] == "0") echo "selected"; ?>>K or Pre-K
@@ -248,14 +236,14 @@ while($school_row=mysql_fetch_array($school_result)) {
                                  <OPTION value="12" <?php if(isset($_POST['current_grade']) && $_POST['current_grade'] == "12") echo "selected"; ?>>12
                                  <OPTION value="13" <?php if(isset($_POST['current_grade']) && $_POST['current_grade'] == "13") echo "selected"; ?>>13
                             </SELECT>
-                          
+
 <label for gender>Gender</label>
 <SELECT autocomplete="off" required class="form-control" name="gender">
 <option value="M">Male
 <option value="F">Female
 <option value="O">Other
 </SELECT>
-                          
+
 <!-- <label>Provincial Education Number</label>
 <input type="text" size="30" maxsize="60" name="prov_ed_num" value="<?php if(isset($_POST['prov_ed_num'])) echo $_POST['prov_ed_num'];?>">-->
 
@@ -265,13 +253,8 @@ while($school_row=mysql_fetch_array($school_result)) {
 <input type="hidden" name="szBackGetVars" value="<?php echo $szBackGetVars; ?>">
 
 </form>
-                     
+
 </div>
-
-                        
-          
-
-
 
 <?php print_bootstrap_js();?>
     </BODY>
