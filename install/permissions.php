@@ -94,7 +94,12 @@ body {
 				&copy; 2014 Chelsea School - <a
 					href="http://www.gnu.org/licenses/gpl-2.0.html" target="_blank">GPLv2</a>.
 			</p>
-
+							<!-- Progress Bar -->
+			<div class="progress progress-striped">
+				<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="33"
+					aria-valuemin="0" aria-valuemax="100" style="width: 33%;"><span class="sr-only">33% Complete</span></div>
+			</div>
+			</div>
 		</div>
 	</div>
 	<div class="container">

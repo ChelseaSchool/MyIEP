@@ -17,13 +17,9 @@
  *  @license   GPv2 <http://www.gnu.org/licenses/gpl-2.0.html>
  */
 // check if we have an init.php file already...security problem
-/**
- * diabled for sanity check
- *
- * if (is_file("../etc/init.php")) {
- * die("To run the install, " . realpath("../etc/init.php") . " must not already exist!");
- * }
- */
+if (is_file("../etc/init.php")) {
+    die("To run the install, " . realpath("../etc/init.php") . " must not already exist!");
+}
 
 // the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100;
@@ -100,7 +96,12 @@ body {
 				&copy; 2014 Chelsea School - <a
 					href="http://www.gnu.org/licenses/gpl-2.0.html" target="_blank">GPLv2</a>.
 			</p>
-
+			<!-- Progress Bar -->
+			<!-- Progress Bar -->
+			<div class="progress progress-striped">
+				<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="5"
+					aria-valuemin="0" aria-valuemax="100" style="width: 5%;"><span class="sr-only">5% Complete</span></div>
+			</div>
 		</div>
 	</div>
 	<div class="container">
