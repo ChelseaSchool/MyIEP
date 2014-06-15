@@ -12,6 +12,7 @@
  * @author		M. Nielson
  * @todo		
  * 1. Filter input/escape output
+ * #. fix plain submit button
  * 2. Priority UI overhaul
  * 3. fix permission in jumbotron: should display $our_permission
  */ 
@@ -35,16 +36,14 @@ $system_message = "";
 define('IPP_PATH','./');
 
 /* eGPS required files. */
-require_once(IPP_PATH . 'etc/init.php');
-require_once(IPP_PATH . 'include/db.php');
-require_once(IPP_PATH . 'include/auth.php');
-require_once(IPP_PATH . 'include/log.php');
-require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/supporting_functions.php'); //added second sprint
-require_once(IPP_PATH . 'include/config.inc.php'); //added second sprint
+require_once IPP_PATH . 'etc/init.php';
+require_once IPP_PATH . 'include/db.php';
+require_once IPP_PATH . 'include/auth.php';
+require_once IPP_PATH . 'include/log.php';
+require_once IPP_PATH . 'include/user_functions.php';
+require_once IPP_PATH . 'include/supporting_functions.php';
 
-
-no_cash(); //experiment for second sprint
+no_cash();
 
 if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
     if(!validate( $_POST['LOGIN_NAME'] ,  $_POST['PASSWORD'] )) {
