@@ -13,9 +13,9 @@
  * @author		M. Nielson
  * @todo		
  * 1. Filter input, escape output
- * 2. bootstrap
- * 3. spellcheck as necessary
- * 4. navbars (student context)
+ * 2. still needs legacy UI removed
+ * 3. and bootstrap ui set up.
+ * 4. <a name>s need shortened - headings look like broken links
  */ 
  
  
@@ -37,15 +37,15 @@ $MINIMUM_AUTHORIZATION_LEVEL = 100; //everybody
 define('IPP_PATH','./');
 
 /* eGPS required files. */
-require_once(IPP_PATH . 'etc/init.php');
-require_once(IPP_PATH . 'include/db.php');
-require_once(IPP_PATH . 'include/auth.php');
-require_once(IPP_PATH . 'include/log.php');
-require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/navbar.php');
-require_once(IPP_PATH . 'include/create_pdf.php');
-require_once(IPP_PATH . 'include/mail_functions.php');
-require_once 'include/supporting_functions.php';
+require_once IPP_PATH . 'etc/init.php';
+require_once IPP_PATH . 'include/db.php';
+require_once IPP_PATH . 'include/auth.php';
+require_once IPP_PATH . 'include/log.php';
+require_once IPP_PATH . 'include/user_functions.php';
+require_once IPP_PATH . 'include/navbar.php';
+require_once IPP_PATH . 'include/create_pdf.php';
+require_once IPP_PATH . 'include/mail_functions.php';
+require_once IPP_PATH . 'include/supporting_functions.php';
 
 header('Pragma: no-cache'); //don't cache this page!
 

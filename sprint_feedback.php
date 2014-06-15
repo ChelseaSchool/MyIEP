@@ -1,11 +1,13 @@
 <?php
 /** @file 
  *  @brief  Provide user feedback opportunity during development
- *  
+ *  @todo
+ *  #. docblock comments
+ *  #. clean up leftovers
  */
 
-//ini_set('display_errors', 1);
-//error_reporting(E_ALL);
+
+
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100;
 
@@ -15,16 +17,16 @@ else $system_message = "";
 define('IPP_PATH','./');
 
 /* eGPS required files. */
-require_once 'include/mail_functions.php';
-require_once(IPP_PATH . 'etc/init.php');
-require_once(IPP_PATH . 'include/db.php');
-require_once(IPP_PATH . 'include/auth.php');
-if ((int)phpversion() < 5) { require_once(IPP_PATH . 'include/fileutils.php'); } //only for pre v5
-require_once(IPP_PATH . 'include/log.php');
-require_once(IPP_PATH . 'include/supporting_functions.php');
-//require_once(IPP_PATH . 'include/config.inc.php');
+require_once IPP_PATH . 'include/mail_functions.php';
+require_once IPP_PATH . 'etc/init.php';
+require_once IPP_PATH . 'include/db.php';
+require_once IPP_PATH . 'include/auth.php';
+if ((int)phpversion() < 5) {
+    require_once IPP_PATH . 'include/fileutils.php';
+} //only for pre v5
+require_once IPP_PATH . 'include/log.php');
+require_once IPP_PATH . 'include/supporting_functions.php';
 header('Pragma: no-cache'); //don't cache this page!
-//require_once 'include/page_troubleshoot.php';
 
 if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
     if(!validate( $_POST['LOGIN_NAME'] ,  $_POST['PASSWORD'] )) {
@@ -52,9 +54,7 @@ $headers="from: rgoldman@chelseaschool.edu";
 if (isset ($_POST['contents'])) {
 	
 	$feedback = implode("; ", $_POST);
-	//mail_notification("rgoldman@chelseaschool.edu", $feedback);
 	
-	//mail("rgoldman@chelseaschool.edu", "MyIEP Sprint Feedback", $feedback, $headers);
 	
 	IPP_Log($feedback, $_SESSION['egps_username'], $level='INFORMATIONAL');
 

@@ -4,9 +4,10 @@
  *  @author rik goldman <rgoldman@chelseaschool.edu>
  *  @copyright 2014 Chelsea School
  *  @license GPLv2
- *  
+ *  @todo
+ *  #. make $webapp external, perhaps in init.php
  */ 
-require_once 'include/supporting_functions.php';
+require_once IPP_PATH . 'include/supporting_functions.php';
 //require_once 'Mail.php';
 //remove_credential_reset_lock(); //security override - delete for production
 

@@ -13,10 +13,8 @@
  * @author		M. Nielson
  * @todo
  * 1. filter input, escape output
- * 2. confirm this page's role
- * 3. bootstrap and nav
- * 4. spellcheck?
- * 5. Can we draw from information here to customize the application?
+ * 2. do something about legacy JS buttons
+ * 3. note that edit school is broken
  */
 
 //the authorization level for this page!
@@ -37,12 +35,12 @@ $system_message = "";
 define('IPP_PATH','./');
 
 /* eGPS required files. */
-require_once(IPP_PATH . 'etc/init.php');
-require_once(IPP_PATH . 'include/db.php');
-require_once(IPP_PATH . 'include/auth.php');
-require_once(IPP_PATH . 'include/log.php');
-require_once(IPP_PATH . 'include/user_functions.php');
-require_once 'include/supporting_functions.php';
+require_once IPP_PATH . 'etc/init.php';
+require_once IPP_PATH . 'include/db.php';
+require_once IPP_PATH . 'include/auth.php';
+require_once IPP_PATH . 'include/log.php';
+require_once IPP_PATH . 'include/user_functions.php';
+require_once IPP_PATH . 'include/supporting_functions.php';
 
 header('Pragma: no-cache'); //don't cache this page!
 

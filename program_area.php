@@ -13,9 +13,12 @@
  * @author		M. Nielson
  * @todo		
  * 1. filter input
- * 2. review and confirm this page's function
- * 3. context sensible nav
- * 4. Bootstrap
+ * 2. escape output
+ * 3. docblock documentation
+ * 4. beautify?
+ * 5. eliminate legacy UI
+ * 6. Bootstrap theme
+ * 7. This page is unavailable from front end. But we can't find a use for it.
  */  
  
 //the authorization level for this page!
@@ -36,12 +39,12 @@ $system_message = "";
 define('IPP_PATH','./');
 
 /* eGPS required files. */
-require_once(IPP_PATH . 'etc/init.php');
-require_once(IPP_PATH . 'include/db.php');
-require_once(IPP_PATH . 'include/auth.php');
-require_once(IPP_PATH . 'include/log.php');
-require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/navbar.php');
+require_once IPP_PATH . 'etc/init.php';
+require_once IPP_PATH . 'include/db.php';
+require_once IPP_PATH . 'include/auth.php';
+require_once IPP_PATH . 'include/log.php';
+require_once IPP_PATH . 'include/user_functions.php';
+require_once IPP_PATH . 'include/navbar.php';
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -99,14 +102,7 @@ if(!$student_result) {
     IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
 } else {$student_row= mysql_fetch_array($student_result);}
 
-//get the list of areas...
-//$area_query = "SELECT * FROM area_type WHERE 1=1";
-//$area_result=mysql_query($area_query);
-//if(!$area_result) {
-//    $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$area_query'<BR>";
-//    $system_message=$system_message . $error_message;
-//    IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
-//}
+
 
 if(isset($_GET['add_area']) && $have_write_permission) {
 
