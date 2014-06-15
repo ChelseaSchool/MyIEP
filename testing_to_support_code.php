@@ -262,7 +262,7 @@ print_html5_Primer();
 </HEAD>
     <BODY>
 <?php 
-print_student_navbar($student_row['first_name'] . " " . $student_row['last_name']);
+print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']);
 print_jumbotron_with_page_name("Testing", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission);
 ?>
 <div class="container">
