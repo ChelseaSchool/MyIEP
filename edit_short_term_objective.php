@@ -192,7 +192,7 @@ if(!$student_result) {
 				
 		<ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Navigation <b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="./manage_student.php">Students</a></li>
                 <li class="divider"></li>
