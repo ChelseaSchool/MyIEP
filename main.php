@@ -171,9 +171,10 @@ if (isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
           <p><a class="btn btn-default" href="change_ipp_password.php" role="button">Change Password &raquo;</a></p>
        </div>
         <div class="col-md-4">
-          <h2>Goals Database</h2>
-          <p>Enter goals or objectives into Goals and Objectives bank.</p>
-          <p><a class="btn btn-default" href="./superuser_add_goals.php" role="button">Update Goal Bank &raquo;</a></p>
+          
+          <h2 style="color: grey">Goals Database</h2>
+          <p style="color: grey">Enter goals or objectives into Goals and Objectives bank.</p>
+          <p><a class="btn btn-default" disabled href="./superuser_add_goals.php" role="button">Update Goal Bank &raquo;</a></p>
         </div>
       </div>
 <div class="row">

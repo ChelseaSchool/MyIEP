@@ -255,7 +255,7 @@ if(!$transition_result) {
                            <label>Date: (YYYY-MM-DD)</label>
 							<input id="datepicker" class="form-control datepicker" type="datepicker" name="date" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="<?php if(isset($_POST['date'])) echo $_POST['date']; ?>"></p>						 
 
-                           <input type="submit" tabindex="3" name="add" value="add"></td>
+                           <button class="btn btn-success" autocomplete="off" type="submit" tabindex="3" name="add" value="add">Add Transition Plan</button>
                          </div>
                         </form>
                     

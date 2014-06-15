@@ -173,7 +173,7 @@ print_html5_primer();
 </HEAD>
     <BODY>
     <?php 
-    print_student_navbar($student_row['first_name'] . " " . $student_row['last_name']);
+    print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']);
     print_jumbotron_with_page_name("Snapshots", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission);
     ?>
     <div class="container">
