@@ -26,13 +26,13 @@
  * 
  */
 
-// ini_set('display_errors',1);
-// error_reporting(E_ALL);
+//ini_set('display_errors',1);
+//error_reporting(E_ALL);
 if (! defined('IPP_PATH')) {
     define('IPP_PATH', './');
 }
 // check if we are running install wizard
-if (! is_file(IPP_PATH . "etc/init.php")) {
+if (! is_file("./etc/init.php")) {
     include_once IPP_PATH . 'install/index.php';
     exit();
 }
@@ -41,7 +41,7 @@ require_once IPP_PATH . 'etc/init.php';
 require_once IPP_PATH . 'include/db.php';
 require_once IPP_PATH . 'include/auth.php';
 require_once IPP_PATH . 'include/supporting_functions.php';
-require_once IPP_PATH . 'include/config.inc.php';
+
 logout();
 header('Pragma: no-cache'); // don't cache this page!
 

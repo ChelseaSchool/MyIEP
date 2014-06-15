@@ -20,11 +20,13 @@
 if (is_file("../etc/init.php")) {
     die("To run the install, " . realpath("../etc/init.php") . " must not already exist!");
 }
-
+if (! defined('IPP_PATH')) {
+    define('IPP_PATH', './');
+}
 // the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100;
 
-require_once '../include/supporting_functions.php';
+require_once IPP_PATH . 'include/supporting_functions.php';
 
 /*
  * Don't Cache this Page
@@ -43,7 +45,7 @@ header ( 'Pragma: no-cache' );
 <meta name="author" content="Rik Goldman">
 <TITLE>MyIEP Installation</TITLE>
 <!-- Bootstrap core CSS -->
-<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="<?php echo IPP_PATH . "css/bootstrap.css"; ?>" rel="stylesheet">
 
 <!-- Custom styles for this template -->
 <link href="../css/jumbotron.css" rel="stylesheet">
@@ -152,7 +154,7 @@ if (get_magic_quotes_gpc ()) {
 }
 ?>
 </ul>
-<form enctype="multipart/form-data" action="../install/permissions.php" method="post">
+<form enctype="multipart/form-data" action="<?php echo IPP_PATH . "install/permissions.php";?>" method="post">
 
 <?php
     if ($fail) {
@@ -172,8 +174,8 @@ if (get_magic_quotes_gpc ()) {
 
 	</div>
 
-	<script src="js/jquery-2.1.1.js" type="text/javascript"></script>
-	<script src="js/bootstrap.min.js" type="text/javascript"></script>
-	<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="<?php IPP_PATH . "js/jquery-2.1.1.js"; ?>" type="text/javascript"></script>
+	<script src="<?php IPP_PATH . "js/bootstrap.min.js"; ?>" type="text/javascript"></script>
+	<script type="text/javascript" src="<?php IPP_PATH . "js/jquery-ui-1.10.4.custom.min.js"; ?>"></script>
 </BODY>
 </HTML>
