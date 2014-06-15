@@ -12,9 +12,7 @@
  * @author		M. Nielson
  * @todo		
  * 1. Filter input
- * 2. Charset should be UTF-8; check HTML and database and form
- * 3. Use correct escape string
- * 4. Priority UI Overhaul
+ * 2. Fix plain submit button -- bootstrap btn-success class
  * @remark last edit 
  */ 
  
@@ -36,13 +34,12 @@ $system_message = "";
 define('IPP_PATH','./');
 
 /* eGPS required files. */
-require_once(IPP_PATH . 'etc/init.php');
-require_once(IPP_PATH . 'include/db.php');
-require_once(IPP_PATH . 'include/auth.php');
-require_once(IPP_PATH . 'include/log.php');
-require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/supporting_functions.php');
-//require_once(IPP_PATH . 'include/config.inc.php');
+require_once IPP_PATH . 'etc/init.php';
+require_once IPP_PATH . 'include/db.php';
+require_once IPP_PATH . 'include/auth.php';
+require_once IPP_PATH . 'include/log.php';
+require_once IPP_PATH . 'include/user_functions.php';
+require_once IPP_PATH . 'include/supporting_functions.php';
 
 
 header('Pragma: no-cache'); //don't cache this page!
