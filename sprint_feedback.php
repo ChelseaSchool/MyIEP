@@ -111,13 +111,13 @@ if (isset ($_POST['contents'])) {
 
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Navigation <b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration <b class="caret"></b></a>
               <ul class="dropdown-menu">
 
                 <li><a href="./manage_student.php">Students</a></li>
                 <li class="divider"></li>
                 <li><a href="change_ipp_password.php">Reset Password</a></li>
-                <li><a href="superuser_add_goals.php">Goals Database</a></li>
+                <!-- <li><a href="superuser_add_goals.php">Goals Database</a></li>-->
                 <li><a href="./student_archive.php">Archive</a></li>
                 <li><a href="./user_audit.php">Audit</a></li>
                 <li><a href="superuser_manage_coding.php">Manage Codes</a></li>
