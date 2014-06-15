@@ -19,10 +19,12 @@
  * @author		M. Nielson
  *
  * @todo
- * 1. Double check security
- * 2. Use filters for input
- * 3. test sql injections
- * 4. add alert for failed login attempt
+ * #. add alert for failed login attempt
+ * #. link to support url
+ * #. limit failed login attempts
+ * #. session security
+ * #. limit password resets
+ * #. docblock style comments
  *
  */
 

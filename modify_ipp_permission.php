@@ -12,11 +12,10 @@
  * @authors		Rik Goldman, Sabre Goldman, Jason Banks, Alex, James, Paul, Bryan, TJ, Jonathan, Micah, Stephen, Joseph
  * @author		M. Nielson
  * @todo		
- * 1. Filter input
- * 2. escape output
- * 3. spellcheck
- * 4. autocomplete if necessary
- * 5. bootstrap, navbar that's student specific
+ * #. Filter input
+ * #. escape output
+ * #. docblock commenting
+ * #. make more accessible from front end
  */  
  
 //the authorization level for this page!
@@ -33,12 +32,12 @@ if(isset($system_message)) $system_message = $system_message; else $system_messa
 define('IPP_PATH','./');
 
 /* eGPS required files. */
-require_once(IPP_PATH . 'etc/init.php');
-require_once(IPP_PATH . 'include/db.php');
-require_once(IPP_PATH . 'include/auth.php');
-require_once(IPP_PATH . 'include/log.php');
-require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/navbar.php');
+require_once IPP_PATH . 'etc/init.php';
+require_once IPP_PATH . 'include/db.php';
+require_once IPP_PATH . 'include/auth.php';
+require_once IPP_PATH . 'include/log.php';
+require_once IPP_PATH . 'include/user_functions.php';
+require_once IPP_PATH . 'include/navbar.php';
 
 header('Pragma: no-cache'); //don't cache this page!
 

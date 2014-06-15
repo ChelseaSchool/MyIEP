@@ -4,10 +4,7 @@
  *  @brief  main menu
 *  @bug	right hand drop down nav isn't working
 *  @todo
-*  1. Make input fields wider, perhaps
-*  2. figure out which datepicker stuff can go
-*  3. Create nav link back to student
-*  4. Duplicate nav bar for all pages without one (or two)
+*  #. docblock documentation
 */
 
 
@@ -18,25 +15,19 @@ if (isset($system_message)) {
 define('IPP_PATH', './');
 
 /* eGPS required files. */
-require_once(IPP_PATH . 'etc/init.php');
-require_once(IPP_PATH . 'include/db.php');
-require_once(IPP_PATH . 'include/auth.php');
-require_once(IPP_PATH . 'include/log.php');
-//require_once(IPP_PATH . 'include/navbar.php');
-require_once(IPP_PATH . 'include/supporting_functions.php');
-require_once 'include/password.php';
+require_once IPP_PATH . 'etc/init.php';
+require_once IPP_PATH . 'include/db.php';
+require_once IPP_PATH . 'include/auth.php';
+require_once IPP_PATH . 'include/log.php';
+require_once IPP_PATH . 'include/supporting_functions.php';
+require_once IPP_PATH . 'include/password.php';
 //require_once 'include/page_troubleshoot.php';
-//require_once(IPP_PATH . 'include/config.inc.php');
+
 header('Pragma: no-cache'); //don't cache this page!
 
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100;
-/** brief sanitize authenticate form
- *  @remark but first secure against uncontrolled input
-*/
 
-//$login_name=mysql_real_escape_string($_POST['LOGIN_NAME']);
-//$pword=mysql_real_escape_string($_POST['PASSWORD']);
 
 if (isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
     if (!validate($_POST['LOGIN_NAME'], $_POST['PASSWORD'])) {

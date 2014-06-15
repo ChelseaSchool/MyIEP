@@ -1,15 +1,19 @@
 <?php
-/*
- * ! @file @brief 	View goals and access page to edit progress @copyright 	2014 Chelsea School @copyright 	2005 Grasslands Regional Division #6 @license		This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA @authors		Rik Goldman, Sabre Goldman, Jason Banks, Alex, James, Paul, Bryan, TJ, Jonathan, Micah, Stephen, Joseph, Sean @author		M. Nielson @todo 1. Filter input 2. Make sure the duplicate in include/ can be safely removed 3. Re-enable buttons when other pages are ready 5. Split is deprecated (line 521) 6. JQuery to reveal only specified areas (Done) 7. Use PHP to generate checklist in Modal 8. Use PHP to generate JavaScript/jQuery for Filter @remark Have switched to filtering out all objectives/goals. Now filtering is on demand.
+/**
+ * @file 
+ * @brief 	View goals and access page to edit progress @copyright 	2014 Chelsea School @copyright 	2005 Grasslands Regional Division #6 @license		This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA @authors		Rik Goldman, Sabre Goldman, Jason Banks, Alex, James, Paul, Bryan, TJ, Jonathan, Micah, Stephen, Joseph, Sean @author		M. Nielson @todo 1. Filter input 2. Make sure the duplicate in include/ can be safely removed 3. Re-enable buttons when other pages are ready 5. Split is deprecated (line 521) 6. JQuery to reveal only specified areas (Done) 7. Use PHP to generate checklist in Modal 8. Use PHP to generate JavaScript/jQuery for Filter @remark Have switched to filtering out all objectives/goals. Now filtering is on demand.
  */
 
 /**
  * @var $MINIMUM_AUTHORIZATION_LEVEL = 100
  * @brief The authorization level for this page (everybody)
  *
- * @todo 1. change to lowercase throughout the code (standardization and consistency (all caps is reserved for constants, globals)
- *       2. Should probably be recase as parameter for a function
- *       @bugs none
+ * @todo 
+ * 1. change to lowercase throughout the code (standardization and consistency (all caps is reserved for constants, globals)
+ * 2. Should probably be recase as parameter for a function
+ * 
+ * @bugs
+ * #. Filter of goal categories is hinky but consistently so
  */
 $MINIMUM_AUTHORIZATION_LEVEL = 100;
 
@@ -29,13 +33,13 @@ else
 define('IPP_PATH', './');
 
 // * @remark required files
-require_once (IPP_PATH . 'etc/init.php');
-require_once (IPP_PATH . 'include/db.php');
-require_once (IPP_PATH . 'include/auth.php');
-require_once (IPP_PATH . 'include/log.php');
-require_once (IPP_PATH . 'include/user_functions.php');
-require_once (IPP_PATH . 'include/supporting_functions.php');
-require_once (IPP_PATH . 'include/config.inc.php');
+require_once IPP_PATH . 'etc/init.php';
+require_once IPP_PATH . 'include/db.php';
+require_once IPP_PATH . 'include/auth.php';
+require_once IPP_PATH . 'include/log.php';
+require_once IPP_PATH . 'include/user_functions.php';
+require_once IPP_PATH . 'include/supporting_functions.php';
+
 
 header('Pragma: no-cache'); // don't cache this page!
 

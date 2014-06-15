@@ -3,7 +3,7 @@
 /** @file
  * @brief Not sure of how this works yet
  * @todo
- * 1. Get sure of what this does
+ * 1. Docblock comments
  * @remarks
  * 1. there's no html here - this is included in another page somewhere
  * 2. in the lead comments, file name doesn't match description. Update.
@@ -29,11 +29,11 @@ $system_message = $system_message;
 define('IPP_PATH','./');
 
 /* eGPS required files. */
-require_once(IPP_PATH . 'etc/init.php');
-require_once(IPP_PATH . 'include/db.php');
-require_once(IPP_PATH . 'include/auth.php');
-require_once(IPP_PATH . 'include/fileutils.php');
-require_once(IPP_PATH . 'include/log.php');
+require_once IPP_PATH . 'etc/init.php';
+require_once IPP_PATH . 'include/db.php';
+require_once IPP_PATH . 'include/auth.php';
+require_once IPP_PATH . 'include/fileutils.php';
+require_once IPP_PATH . 'include/log.php';
 
 if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
     if(!validate( $_POST['LOGIN_NAME'] ,  $_POST['PASSWORD'] )) {

@@ -8,6 +8,9 @@
  * 4. Special handling again for IE
  * 5. errors don't seem to go to log
  * 6. Array $http_get_vars (all caps) should be checked into
+ * 
+ * @todo
+ * 1. Docblock comments
  */ 
 
 $f=$HTTP_GET_VARS['f'];

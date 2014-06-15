@@ -3,8 +3,9 @@
 /** @file
  * @brief 	display medical information
  * @todo
- * * Datepicker
- * @remark Replaced checkSpelling() with HTML spellcheck="TRUE"
+ * #. docblock documentation
+ * @remark 
+ * #. Replaced checkSpelling() with HTML spellcheck="TRUE"
  */
  
 //the authorization level for this page!
@@ -25,12 +26,12 @@ $system_message = "";
 define('IPP_PATH','./');
 
 /* eGPS required files. */
-require_once(IPP_PATH . 'etc/init.php');
-require_once(IPP_PATH . 'include/db.php');
-require_once(IPP_PATH . 'include/auth.php');
-require_once(IPP_PATH . 'include/log.php');
-require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/supporting_functions.php');
+require_once IPP_PATH . 'etc/init.php';
+require_once IPP_PATH . 'include/db.php';
+require_once IPP_PATH . 'include/auth.php';
+require_once IPP_PATH . 'include/log.php';
+require_once IPP_PATH . 'include/user_functions.php';
+require_once IPP_PATH . 'include/supporting_functions.php';
 
 header('Pragma: no-cache'); //don't cache this page!
 

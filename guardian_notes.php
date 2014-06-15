@@ -1,6 +1,6 @@
 <?php
 /** @file
- * @brief 	add notes by or about guardian
+ * @brief 	add notes about guardian contact and other annotations
  * @copyright 	2014 Chelsea School 
  * @copyright 	2005 Grasslands Regional Division #6
  * @license		This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
@@ -12,27 +12,15 @@
  * @author		M. Nielson
  * @todo		
  * 1. Filter input
- * 2. Confirm filename is accurate
- * 3. Bootstrap
- * 4. Filter and escape
- * 5. navbar for student
+ * 2. docblocks
+ * #. complete bootstrap ui - stripped of legacy, but still in tables
+ * 
  */ 
  
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100;    //everybody (do checks within document)
 
-/**
- * guardian_notes.php -- add/edit/delete guardian information
- * INPUTS: guardian_id,student_id as _GET.
- *
- * Copyright (c) 2005 Grasslands Regional Division #6
- * All rights reserved
- *
- * Created: July 14, 2005
- * By: M. Nielsen
- * Modified:  July 21,2005
- *
- */
+
 
 /**
  * Path for IPP required files.
@@ -43,12 +31,12 @@ if(isset($system_message)) $system_message = $system_message; else $system_messa
 define('IPP_PATH','./');
 
 /* eGPS required files. */
-require_once(IPP_PATH . 'etc/init.php');
-require_once(IPP_PATH . 'include/db.php');
-require_once(IPP_PATH . 'include/auth.php');
-require_once(IPP_PATH . 'include/log.php');
-require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/navbar.php');
+require_once IPP_PATH . 'etc/init.php';
+require_once IPP_PATH . 'include/db.php';
+require_once IPP_PATH . 'include/auth.php';
+require_once IPP_PATH . 'include/log.php';
+require_once IPP_PATH . 'include/user_functions.php';
+require_once IPP_PATH . 'include/navbar.php';
 
 header('Pragma: no-cache'); //don't cache this page!
 

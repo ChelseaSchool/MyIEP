@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * @todo
+ * 1. Delete this file
+ */
 require_once 'include/mail_functions.php';
 require_once (IPP_PATH . 'etc/init.php');
 require_once (IPP_PATH . 'include/db.php');

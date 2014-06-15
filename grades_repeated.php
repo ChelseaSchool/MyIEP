@@ -13,23 +13,15 @@
  * @todo		
  * 1. Filter input
  * 2. Bootstrap theme
- * 3. Student specific navbar
+ * 3. Possibly remove this page
+ * @remark
+ * 1. Not accessible from front end
  */ 
  
 //the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100; //everybody
 
-/**
- * grades_repeatd.php -- list of grades failed and repeated.
- *
- * Copyright (c) 2005 Grasslands Regional Division #6
- * All rights reserved
- *
- * Created: July 28, 2005
- * By: M. Nielsen
- * Modified:
- *
- */
+
 
 /*   INPUTS: $_GET['student_id']
  *
@@ -44,12 +36,12 @@ $system_message = "";
 define('IPP_PATH','./');
 
 /* eGPS required files. */
-require_once(IPP_PATH . 'etc/init.php');
-require_once(IPP_PATH . 'include/db.php');
-require_once(IPP_PATH . 'include/auth.php');
-require_once(IPP_PATH . 'include/log.php');
-require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/navbar.php');
+require_once IPP_PATH . 'etc/init.php';
+require_once IPP_PATH . 'include/db.php';
+require_once IPP_PATH . 'include/auth.php';
+require_once IPP_PATH . 'include/log.php';
+require_once IPP_PATH . 'include/user_functions.php';
+require_once IPP_PATH . 'include/navbar.php';
 
 header('Pragma: no-cache'); //don't cache this page!
 
