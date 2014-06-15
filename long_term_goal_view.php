@@ -333,7 +333,7 @@ function toggle () //toggles objective details
 
 </HEAD>
 <BODY>
-<<<<<<< HEAD
+
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
@@ -358,52 +358,52 @@ function toggle () //toggles objective details
                     <li><a onclick="history.go(-1);" title="Back a Page"><span
                             class="glyphicon glyphicon-circle-arrow-left"></span></a></li>
                     <li><a
-                        href="&lt;?php echo &quot;ipp_pdf.php?student_id=&quot; . $student_row['student_id'] . &quot;&amp;file=ipp.pdf&quot;; ?&gt;">Get
+                        href="<?php echo "ipp_pdf.php?student_id=" . $student_row['student_id'] . "&amp;file=ipp.pdf"; ?>">Get
                             PDF</a></li>
                     <li class="dropdown"><a href="#" class="dropdown-toggle"
                         data-toggle="dropdown">Records: <?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?><b
                             class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a
-                                href="&lt;?php echo IPP_PATH . &quot;long_term_goal_view.php?student_id=&quot; . $student_row['student_id']; ?&gt;">Goals</a></li>
+                                href="<?php echo IPP_PATH . "long_term_goal_view.php?student_id=" . $student_row['student_id']; ?>">Goals</a></li>
                             <li class="divider"></li>
                             <li><a
-                                href="&lt;?php echo IPP_PATH . &quot;guardian_view.php?student_id=&quot; . $student_row['student_id'];?&gt;">Guardians</a></li>
+                                href="<?php echo IPP_PATH . "guardian_view.php?student_id=" . $student_row['student_id'];?>">Guardians</a></li>
                             <li><a
-                                href="&lt;?php echo IPP_PATH . &quot;strength_need_view.php?student_id=&quot; . $student_row['student_id'];?&gt;">Strengths
+                                href="<?php echo IPP_PATH . "strength_need_view.php?student_id=" . $student_row['student_id'];?>">Strengths
                                     &amp; Needs</a></li>
                             <li><a
-                                href="&lt;?php echo IPP_PATH . &quot;coordination_of_services.php?student_id=&quot; . $student_row['student_id'];?&gt;">Coordination
+                                href="<?php echo IPP_PATH . "coordination_of_services.php?student_id=" . $student_row['student_id'];?>">Coordination
                                     of Services</a></li>
                             <li><a
-                                href="&lt;?php echo IPP_PATH . &quot;achieve_level.php?student_id=&quot; . $student_row['student_id'];?&gt;">Achievement
+                                href="<?php echo IPP_PATH . "achieve_level.php?student_id=" . $student_row['student_id'];?>">Achievement
                                     Level</a></li>
                             <li><a
-                                href="&lt;?php echo IPP_PATH . &quot;medical_info.php?student_id=&quot; . $student_row['student_id'];?&gt;">Medical
+                                href="<?php echo IPP_PATH . "medical_info.php?student_id=" . $student_row['student_id'];?>">Medical
                                     Information</a></li>
                             <li><a
-                                href="&lt;?php echo IPP_PATH . &quot;medication_view.php?student_id=&quot; . $student_row['student_id'];?&gt;">Medication</a></li>
+                                href="<?php echo IPP_PATH . "medication_view.php?student_id=" . $student_row['student_id'];?>">Medication</a></li>
                             <li><a
-                                href="&lt;?php echo IPP_PATH . &quot;testing_to_support_code.php?student_id=&quot; . $student_row['student_id'];?&gt;">Support
+                                href="<?php echo IPP_PATH . "testing_to_support_code.php?student_id=" . $student_row['student_id'];?>">Support
                                     Testing</a></li>
                             <li><a
-                                href="&lt;?php echo IPP_PATH . &quot;background_information.php?student_id=&quot; . $student_row['student_id'];?&gt;">Background
+                                href="<?php echo IPP_PATH . "background_information.php?student_id=" . $student_row['student_id'];?>">Background
                                     Information</a></li>
                             <li><a
-                                href="&lt;?php echo IPP_PATH . &quot;year_end_review.php?student_id=&quot; . $student_row['student_id'];?&gt;">Year-End
+                                href="<?php echo IPP_PATH . "year_end_review.php?student_id=" . $student_row['student_id'];?>">Year-End
                                     Review</a></li>
                             <li><a
-                                href="&lt;?php echo IPP_PATH . &quot;anecdotals.php?student_id=&quot; . $student_row['student_id'];?&gt;">Anecdotals</a></li>
+                                href="<?php echo IPP_PATH . "anecdotals.php?student_id=" . $student_row['student_id'];?>">Anecdotals</a></li>
                             <li><a
-                                href="&lt;?php echo IPP_PATH . &quot;assistive_technology.php?student_id=&quot; . $student_row['student_id'];?&gt;">Assistive
+                                href="<?php echo IPP_PATH . "assistive_technology.php?student_id=" . $student_row['student_id'];?>">Assistive
                                     Techology</a></li>
                             <li><a
-                                href="&lt;?php echo IPP_PATH . &quot;transition_plan.php?student_id=&quot; . $student_row['student_id'];?&gt;">Transition
+                                href="<?php echo IPP_PATH . "transition_plan.php?student_id=" . $student_row['student_id'];?>">Transition
                                     Plan</a></li>
                             <li><a
-                                href="&lt;?php echo IPP_PATH . &quot;accomodations.php?student_id=&quot; . $student_row['student_id'];?&gt;">Accomodations</a></li>
+                                href="<?php echo IPP_PATH . "accomodations.php?student_id=" . $student_row['student_id'];?>">Accomodations</a></li>
                             <li><a
-                                href="&lt;?php echo IPP_PATH . &quot;snapshots.php?student_id=&quot; . $student_row['student_id'];?&gt;">Snapshots</a></li>
+                                href="<?php echo IPP_PATH . "snapshots.php?student_id=" . $student_row['student_id'];?>">Snapshots</a></li>
                         </ul></li>
                 </ul>
 
@@ -444,7 +444,7 @@ function toggle () //toggles objective details
             <button class="btn btn-primary btn-lg" data-toggle="modal"
                 data-target="#filter_options">Show Filters &raquo;</button>
             <a class="btn btn-primary btn-lg"
-                href="&lt;?php echo IPP_PATH . &quot;add_goal_1.php?student_id=&quot; . $student_row['student_id'] ;?&gt;">Add
+                href="<?php echo IPP_PATH . "add_goal_1.php?student_id=" . $student_row['student_id'] ;?>">Add
                 New Goal &raquo;</a>
 
             <!-- Modal-->
@@ -500,177 +500,7 @@ function toggle () //toggles objective details
 
 
         <?php
-=======
-	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target=".navbar-collapse">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="main.php">MyIEP</a>
-			</div>
-			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<li><a href="main.php" title="Return to Home"><span
-							class="glyphicon glyphicon-home"></span></a></li>
-					<li><a href="index.php" title="Logout of MyIEP"><span
-							class="glyphicon glyphicon-off"></span></a></li>
-					<li><a href="about.php" title="About MyIEP"><span
-							class="glyphicon glyphicon-info-sign"></span></a></li>
-					<li><a href="help.php" title="Some Help Here"><span
-							class="glyphicon glyphicon-question-sign"></span></a></li>
-					<li><a onclick="history.go(-1);" title="Back a Page"><span
-							class="glyphicon glyphicon-circle-arrow-left"></span></a></li>
-					<li><a
-						href="&lt;?php echo &quot;ipp_pdf.php?student_id=&quot; . $student_row['student_id'] . &quot;&amp;file=ipp.pdf&quot;; ?&gt;">Get
-							PDF</a></li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown">Records: <?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?><b
-							class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a
-								href="&lt;?php echo IPP_PATH . &quot;long_term_goal_view.php?student_id=&quot; . $student_row['student_id']; ?&gt;">Goals</a></li>
-							<li class="divider"></li>
-							<li><a
-								href="&lt;?php echo IPP_PATH . &quot;guardian_view.php?student_id=&quot; . $student_row['student_id'];?&gt;">Guardians</a></li>
-							<li><a
-								href="&lt;?php echo IPP_PATH . &quot;strength_need_view.php?student_id=&quot; . $student_row['student_id'];?&gt;">Strengths
-									&amp; Needs</a></li>
-							<li><a
-								href="&lt;?php echo IPP_PATH . &quot;coordination_of_services.php?student_id=&quot; . $student_row['student_id'];?&gt;">Coordination
-									of Services</a></li>
-							<li><a
-								href="&lt;?php echo IPP_PATH . &quot;achieve_level.php?student_id=&quot; . $student_row['student_id'];?&gt;">Achievement
-									Level</a></li>
-							<li><a
-								href="&lt;?php echo IPP_PATH . &quot;medical_info.php?student_id=&quot; . $student_row['student_id'];?&gt;">Medical
-									Information</a></li>
-							<li><a
-								href="&lt;?php echo IPP_PATH . &quot;medication_view.php?student_id=&quot; . $student_row['student_id'];?&gt;">Medication</a></li>
-							<li><a
-								href="&lt;?php echo IPP_PATH . &quot;testing_to_support_code.php?student_id=&quot; . $student_row['student_id'];?&gt;">Support
-									Testing</a></li>
-							<li><a
-								href="&lt;?php echo IPP_PATH . &quot;background_information.php?student_id=&quot; . $student_row['student_id'];?&gt;">Background
-									Information</a></li>
-							<li><a
-								href="&lt;?php echo IPP_PATH . &quot;year_end_review.php?student_id=&quot; . $student_row['student_id'];?&gt;">Year-End
-									Review</a></li>
-							<li><a
-								href="&lt;?php echo IPP_PATH . &quot;anecdotals.php?student_id=&quot; . $student_row['student_id'];?&gt;">Anecdotals</a></li>
-							<li><a
-								href="&lt;?php echo IPP_PATH . &quot;assistive_technology.php?student_id=&quot; . $student_row['student_id'];?&gt;">Assistive
-									Techology</a></li>
-							<li><a
-								href="&lt;?php echo IPP_PATH . &quot;transition_plan.php?student_id=&quot; . $student_row['student_id'];?&gt;">Transition
-									Plan</a></li>
-							<li><a
-								href="&lt;?php echo IPP_PATH . &quot;accomodations.php?student_id=&quot; . $student_row['student_id'];?&gt;">Accomodations</a></li>
-							<li><a
-								href="&lt;?php echo IPP_PATH . &quot;snapshots.php?student_id=&quot; . $student_row['student_id'];?&gt;">Snapshots</a></li>
-						</ul></li>
-				</ul>
 
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="index.php">Logout</a></li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown">Menu <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="./manage_student.php">Students</a></li>
-							<li class="divider"></li>
-							<li><a href="change_ipp_password.php">Reset Password</a></li>
-							<li><a href="superuser_add_goals.php">Goals Database</a></li>
-							<li><a href="./student_archive.php">Archive</a></li>
-							<li><a href="./user_audit.php">Audit</a></li>
-							<li><a href="superuser_manage_coding.php">Manage Codes</a></li>
-							<li><a href="school_info.php">Manage Schools</a></li>
-							<li><a href="superuser_view_logs.php">View Logs</a></li>
-						</ul></li>
-				</ul>
-			</div>
-
-		</div>
-	</div>
-
-
-	<div class="jumbotron">
-		<div class="container">
-
-
-
-			<h1>
-				Goals: <small><?php echo $student_row['first_name'] . " " . $student_row['last_name']?>
-				</small>
-			</h1>
-			<h2>
-				Logged in as: <small><?php echo $_SESSION['egps_username']; ?>
-					(Permission: <?php echo $our_permission; ?>)</small>
-			</h2>
-			<?php if ($system_message) echo $system_message; ?>
-			<!-- Button trigger modal -->
-			<button class="btn btn-primary btn-lg" data-toggle="modal"
-				data-target="#filter_options">Show Filters &raquo;</button>
-			<a class="btn btn-primary btn-lg"
-				href="&lt;?php echo IPP_PATH . &quot;add_goal_1.php?student_id=&quot; . $student_row['student_id'] ;?&gt;">Add
-				New Goal &raquo;</a>
-
-			<!-- Modal-->
-			<div class="modal fade" id="filter_options" tabindex="-1"
-				role="dialog" aria-labelledby="options" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal"
-								aria-hidden="true">&times;</button>
-							<h4 class="Filters" id="Filters">Show only these Areas:</h4>
-						</div>
-						<!-- Modal Header end -->
-						<div class="modal-body">
-							<small><?php print_goal_area_checklist(); ?></small>
-							<hr>
-							<!-- Toggle displayed objectives' details -->
-							<label><input type="checkbox" id="toggle_detail"
-								onclick="toggle ()" checked value="">Hide Objective Details</label>
-
-
-						</div>
-						<!-- end modal body -->
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default"
-								data-dismiss="modal">Close</button>
-
-						</div>
-						<!-- end modal footer -->
-					</div>
-					<!-- end modal content -->
-				</div>
-				<!-- end modal dialog -->
-			</div>
-			<!-- end modal fade -->
-
-		</div>
-		<!-- close container -->
-
-	</div>
-	<!-- Close Jumbotron -->
-
-
-	<div class="container">
-
-		<!--  jQuery Alert to guide users through filters -->
-		<div class="alert alert-block alert-info">
-			<a href="#" class="close" data-dismiss="alert">&times;</a> <strong>Release
-				Note</strong>: Objective details, such as progress, are hidden by
-			default. Click "Show Filter" button above to activate or manipulate
-			filters.
-		</div>
-
-
-		<?php
->>>>>>> parent of f183b89... updated navigation to read administration, hid goals database throughly
 // check if we have no goals...we need to end this table in this case.
 if (mysql_num_rows($long_goal_result) == 0) {
     echo "<p>There are no goals to view</p>\n";

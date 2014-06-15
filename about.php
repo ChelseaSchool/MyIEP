@@ -66,7 +66,7 @@ header('Pragma: no-cache'); // don't cache this page!
 
 <body>
 
-<<<<<<< HEAD
+
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
@@ -94,7 +94,7 @@ header('Pragma: no-cache'); // don't cache this page!
 
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown"><a href="#" class="dropdown-toggle"
-                        data-toggle="dropdown">Navigation <b class="caret"></b></a>
+                        data-toggle="dropdown">Administration <b class="caret"></b></a>
                         <ul class="dropdown-menu">
 
                             <li><a href="./manage_student.php">Students</a></li>
@@ -112,53 +112,7 @@ header('Pragma: no-cache'); // don't cache this page!
             </div>
             <!--/.nav-collapse -->
             <!--<div class="navbar-collapse collapse">
-=======
-	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target=".navbar-collapse">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="main.php">MyIEP</a>
-			</div>
-			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<li><a href="main.php" title="Return Home"><span
-							class="glyphicon glyphicon-home"></span></a></li>
-					<li class="active"><a href="about.php" title="About MyIEP"><span
-							class="glyphicon glyphicon-info-sign"></span></a></li>
-					<li><a href="sprint_feedback.php" title="Leave User Feedback"><span
-							class="glyphicon glyphicon-envelope"></span></a></li>
-					<li><a href="help.php" title="Some Help Here"><span
-							class="glyphicon glyphicon-question-sign"></span></a></li>
-					<li><a href="index.php" title="Logout of MyIEP"><span
-							class="glyphicon glyphicon-off"></span></a></li>
-				</ul>
 
-				<ul class="nav navbar-nav navbar-right">
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown">Navigation <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-
-							<li><a href="./manage_student.php">Students</a></li>
-							<li class="divider"></li>
-							<li><a href="change_ipp_password.php">Reset Password</a></li>
-							<li><a href="superuser_add_goals.php">Goals Database</a></li>
-							<li><a href="./student_archive.php">Archive</a></li>
-							<li><a href="./user_audit.php">Audit</a></li>
-							<li><a href="superuser_manage_coding.php">Manage Codes</a></li>
-							<li><a href="school_info.php">Manage Schools</a></li>
-							<li><a href="superuser_view_logs.php">View Logs</a></li>
-
-						</ul></li>
-				</ul>
-			</div>
-			<!--/.nav-collapse -->
-			<!--<div class="navbar-collapse collapse">
->>>>>>> parent of f183b89... updated navigation to read administration, hid goals database throughly
           <form class="navbar-form navbar-right" role="form" nctype="multipart/form-data" action="jumbotron.php" method="post">
             <div class="form-group">
               <input type="text" placeholder="User Name" class="form-control" value="<?php echo $LOGIN_NAME;?>">
