@@ -320,7 +320,7 @@ if(isset($_POST['edit_accomodation']) && $have_write_permission)
                 <li><a href="./manage_student.php">Students</a></li>
                 <li class="divider"></li>
                 <li><a href="change_ipp_password.php">Reset Password</a></li>
-                <li><a href="superuser_add_goals.php">Goals Database</a></li>
+                <!-- <li><a href="superuser_add_goals.php">Goals Database</a></li>-->
                 <li><a href="./student_archive.php">Archive</a></li>
                 <li><a href="./user_audit.php">Audit</a></li>
                 <li><a href="superuser_manage_coding.php">Manage Codes</a></li>
