@@ -149,15 +149,13 @@ function msieversion()
 
 <?php
 
-if ($system_message) {
-    echo "<div class=\"alert alert-block alert-danger\"><a href=\"#\" 
 
-<?php if (isset($system_message)) {
-        echo "<div class=\"alert alert-block alert-danger\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\">
-         &times;</a>
-      <strong>" . $system_message . "</strong> You may contact an administrator or try resetting your credentials using 
-         the Reset Password button below.
-      </div>";
+
+if (isset($system_message)) {
+        echo "<div class=\"alert alert-block alert-danger\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>
+            <strong>" . $system_message . "</strong> You may contact an administrator or try resetting your credentials using 
+            the Reset Password button below.
+            </div>";
 }
 ?>
 
