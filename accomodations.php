@@ -1,46 +1,40 @@
 <?php
 
-/*! @file
- *  @brief 	manage and edit student accomodations
- * @copyright 	2014 Chelsea School 
- * @copyright 	2005 Grasslands Regional Division #6
- * @license		This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
-    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-    You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * @authors		Rik Goldman, Sabre Goldman, Jason Banks, Alex, James, Paul, Bryan, TJ, Jonathan, Micah, Stephen, Joseph, Sean
- * @author		M. Nielson
- * @todo		
- * 1. Filter input
- * 2. Replace form buttons
- * 3. Refactor javascript
- * 4. Delete function works;
- * 5. Look into "End" script and "Continue" script
- * @remark
- * 1. Almost finished with UI
- * 
- */
+    /** A list of accomodations for the specified student.
+     *
+     *  Provides ability to add accomodations and edit accomodations for the student and the IEP.
+     * @author      Rik Goldman <rgoldman@chelseaschool.edu 
+     * @version     14.6
+     * @package     accommodations.php
+     * @copyright   2014 Chelsea School
+     * @license     http://www.gnu.org/licenses/gpl-2.0.html GPLv2
+     * @since       June 16, 2014
+     * @todo        Filter input
+     * @todo        Replace form buttons
+     * @todo        Refactor javascript
+ ````* @todo        Delete function works;
+     * @todo        Look into "End" script and "Continue" script
+     * @category    View
+     */ 
+
  
  
-
-$MINIMUM_AUTHORIZATION_LEVEL = 100; //everybody
-
-
-
-/*   INPUTS: $_GET['student_id']
- *
+/**
+ * Everyone welcome, sort them out later.
  */
+$MINIMUM_AUTHORIZATION_LEVEL = 100;
 
 
-
+/**
+ * Clears value to protect from outside influence.
+ */
 $system_message = "";
 
-
- 
 define('IPP_PATH','./');
 
-/* eGPS required files. */
+/**
+ * Required scripts, functions, code.
+ */
 require_once IPP_PATH . 'etc/init.php';
 require_once IPP_PATH . 'include/db.php';
 require_once IPP_PATH . 'include/auth.php';
@@ -48,9 +42,11 @@ require_once IPP_PATH . 'include/log.php';
 require_once IPP_PATH . 'include/user_functions.php';
 require_once IPP_PATH . 'include/navbar.php';
 require_once IPP_PATH . 'include/supporting_functions.php';
-//require_once(IPP_PATH . 'include/print_html_functions.php');
-//require_once(IPP_PATH . 'include/config.inc.php');
-header('Pragma: no-cache'); //don't cache this page!
+
+/**
+ * Don't cache this page!
+ */
+header('Pragma: no-cache'); 
 
 if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
     if(!validate( $_POST['LOGIN_NAME'] ,  $_POST['PASSWORD'] )) {
@@ -262,7 +258,7 @@ if(!$accomodation_result) {
     */
 /************************ end popup chooser support funtion  ******************/
 
-?> 
+?>
 <!DOCTYPE HTML>
 <HTML lang=en>
 <HEAD>
@@ -273,9 +269,13 @@ if(!$accomodation_result) {
 
 <!-- Custom styles for this template -->
 <link href="./css/jumbotron.css" rel="stylesheet">
-<style type="text/css">body { padding-bottom: 70px; }</style>
-    
-   
+<style type="text/css">
+body {
+	padding-bottom: 70px;
+}
+</style>
+
+
 <script src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script>
 <script src="<?php echo IPP_PATH . "include/autocomplete.js"; ?>"></script>
     <?php
@@ -316,33 +316,46 @@ if(!$accomodation_result) {
 <BODY>
 <?php print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name'])?>
 
-<div class="jumbotron"><div class="container">     
+<div class="jumbotron">
+		<div class="container">     
 
 <?php if ($system_message) echo "<p>" . $system_message . "</p>"; ?>
 
-<h1>Accomodations: <small><?php echo $student_row['first_name'] . " " . $student_row['last_name'] ?> </small></h1>
-<h2>Logged in as: <small><?php echo $_SESSION['egps_username']; ?> (Permission: <?php echo $our_permission; ?>)</small></h2>
-<p>Click <a href="#quickadd">here</a> or scroll down to quickly add accomodations.</p>
+<h1>
+				Accomodations: <small><?php echo $student_row['first_name'] . " " . $student_row['last_name'] ?> </small>
+			</h1>
+			<h2>
+				Logged in as: <small><?php echo $_SESSION['egps_username']; ?> (Permission: <?php echo $our_permission; ?>)</small>
+			</h2>
+			<p>
+				Click <a href="#quickadd">here</a> or scroll down to quickly add
+				accomodations.
+			</p>
 
-</div> <!-- close container -->
+		</div>
+		<!-- close container -->
 
-</div> <!-- Close Jumbotron -->    
-    
-
-
-<div class="row">
-&nbsp;
-</div>
-
-<div class="row">
-<div class="container">
-<h2>Student Accomodations <small>unsorted/unfiltered</small></h2>
-<!-- BEGIN accomodation history table -->
-<form name="accomodationhistory" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "accomodations.php"; ?>" method="get">
-<input type="hidden" name="student_id" value="<?php echo $student_id ?>">
+	</div>
+	<!-- Close Jumbotron -->
 
 
-<table class="table table-striped table-hover">
+
+	<div class="row">&nbsp;</div>
+
+	<div class="row">
+		<div class="container">
+			<h2>
+				Student Accomodations <small>unsorted/unfiltered</small>
+			</h2>
+			<!-- BEGIN accomodation history table -->
+			<form name="accomodationhistory" onSubmit="return confirmChecked();"
+				enctype="multipart/form-data"
+				action="<?php echo IPP_PATH . "accomodations.php"; ?>" method="get">
+				<input type="hidden" name="student_id"
+					value="<?php echo $student_id ?>">
+
+
+				<table class="table table-striped table-hover">
 
                         <?php
                         
@@ -366,8 +379,10 @@ if(!$accomodation_result) {
                         ?>
                        
 </table>
-                            
-<p><img hidden src="<?php echo IPP_PATH . "images/table_arrow.png"; ?>">
+
+				<p>
+					<img hidden
+						src="<?php echo IPP_PATH . "images/table_arrow.png"; ?>">
                              
 <?php
 /* todo
@@ -387,38 +402,52 @@ echo "<INPUT NAME=\"delete\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbu
 echo "<button NAME=\"delete\" type=\"submit\" value=\"delete\">Delete Selected</button>";
 }*/ 
 ?>
-</p></form>
-<!-- end accomodation history table -->
-</div>
+</p>
+			</form>
+			<!-- end accomodation history table -->
+		</div>
 
-<div class="row">
-<div class="container">
-<!-- Begin add Accomodation -->        
-<a name="quickadd"></a><h2>Accomodation <small>Quick Add</small></h2>
-<form name="addaccomodation" enctype="multipart/form-data" class="form-inline" action="<?php echo IPP_PATH . "accomodations.php"; ?>" method="get" role="form" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-  	<div class="form-group">
-  		<input type="hidden" name="add_accomodation" value="1">
-  		<input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
-	</div>
-   <a name="quickadd"></a><label>Add Accomodation</label>
-  <div class="form-group">
-    <label class="sr-only" for="Accommodation">Accomodation</label>
- 
-   
-<input type="text" required tabindex="1" class="form-control" name="accomodation" class="form-control" id="Accomodation" placeholder="Accomodation" value="<?php if(isset($_GET['accomodation'])) echo $_GET['accomodation']; ?>">
-    
-  </div>
-  <div class="form-group">
-    <label class="sr-only" for="Subject">Subject</label>
-   <input class="form-control" required type="text" tabindex="2" name="subject" class="form-control" id="Subject" placeholder="Subject or Area">
-  </div>
-  <button type="submit" tabindex="3" name="add" value="add" class="btn btn-default">Submit</button>
-</form>
-<!-- END add accomodation -->         
-</div></div>   
+		<div class="row">
+			<div class="container">
+				<!-- Begin add Accomodation -->
+				<a name="quickadd"></a>
+				<h2>
+					Accomodation <small>Quick Add</small>
+				</h2>
+				<form name="addaccomodation" enctype="multipart/form-data"
+					class="form-inline"
+					action="<?php echo IPP_PATH . "accomodations.php"; ?>" method="get"
+					role="form"
+					<?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+					<div class="form-group">
+						<input type="hidden" name="add_accomodation" value="1"> <input
+							type="hidden" name="student_id"
+							value="<?php echo $student_id; ?>">
+					</div>
+					<a name="quickadd"></a><label>Add Accomodation</label>
+					<div class="form-group">
+						<label class="sr-only" for="Accommodation">Accomodation</label> <input
+							type="text" required tabindex="1" class="form-control"
+							name="accomodation" class="form-control" id="Accomodation"
+							placeholder="Accomodation"
+							value="<?php if(isset($_GET['accomodation'])) echo $_GET['accomodation']; ?>">
 
-<div class="row" align="center">                        
-<p>&nbsp;</p>                      
+					</div>
+					<div class="form-group">
+						<label class="sr-only" for="Subject">Subject</label> <input
+							class="form-control" required type="text" tabindex="2"
+							name="subject" class="form-control" id="Subject"
+							placeholder="Subject or Area">
+					</div>
+					<button type="submit" tabindex="3" name="add" value="add"
+						class="btn btn-default">Submit</button>
+				</form>
+				<!-- END add accomodation -->
+			</div>
+		</div>
+
+		<div class="row" align="center">
+			<p>&nbsp;</p>                      
                   
         
 
@@ -429,5 +458,6 @@ echo "<button NAME=\"delete\" type=\"submit\" value=\"delete\">Delete Selected</
     <?php print_complete_footer(); ?>    
     <?php print_bootstrap_js(); ?>
     </div>
-    </BODY>
+
+</BODY>
 </HTML>
