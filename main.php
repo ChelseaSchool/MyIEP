@@ -1,34 +1,46 @@
 
 <?php
 /** @file
- *  @brief  main menu
-*  @bug	right hand drop down nav isn't working
-*  @todo
-*  #. docblock documentation
+ * Main menu
+ * 
+*  @bug	 right hand drop down nav isn't working
+*  @todo docblock documentation
 */
 
-
+/**
+ * Set $system_message or clear the value for security
+ */
 if (isset($system_message)) {
     $system_message = $system_message;
 } else $system_message = "";
 
 define('IPP_PATH', './');
 
-/* eGPS required files. */
+/**
+ * MyIEP required files.
+ * 
+ */
 require_once IPP_PATH . 'etc/init.php';
 require_once IPP_PATH . 'include/db.php';
 require_once IPP_PATH . 'include/auth.php';
 require_once IPP_PATH . 'include/log.php';
 require_once IPP_PATH . 'include/supporting_functions.php';
 require_once IPP_PATH . 'include/password.php';
-//require_once 'include/page_troubleshoot.php';
+
 
 header('Pragma: no-cache'); //don't cache this page!
 
-//the authorization level for this page!
+/**
+ * 
+ * The authorization level for this page!
+ */
 $MINIMUM_AUTHORIZATION_LEVEL = 100;
 
-
+/**
+ * Login conditionally
+ * 
+ * Logs in by checking whether validates
+ */
 if (isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
     if (!validate($_POST['LOGIN_NAME'], $_POST['PASSWORD'])) {
         $system_message = $system_message . $error_message;

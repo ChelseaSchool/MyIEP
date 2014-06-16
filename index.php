@@ -1,52 +1,62 @@
 <?php
-/** @file
- * @brief 	login page
+/** 
+ * login page and index
  *
  * Index page and loging page - perhaps should be separated. Login form and about MyIEP summary.
- *
+ * 
  * @copyright 	2014 Chelsea School
  *
  * @copyright 	2005 Grasslands Regional Division #6
  *
- * @license		This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
- This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * @license		http://www.gnu.org/licenses/gpl-2.0.html GPLv2
  *
- * @authors		Rik Goldman, Sabre Goldman, Jason Banks, Alex, James, Paul, Bryan, TJ, Jonathan, Micah, Stephen, Joseph
+ * @author		Rik Goldman <rgoldman@chelseaschool.edu>
  *
  * @author		M. Nielson
  *
- * @todo
- * #. add alert for failed login attempt
- * #. link to support url
- * #. limit failed login attempts
- * #. session security
- * #. limit password resets
- * #. docblock style comments
- *
+ * @todo add alert for failed login attempt
+ * @todo link to support url
+ * @todo limit failed login attempts
+ * @todo session security
+ * @todo limit password resets
+ * @todo docblock style comments
+ * @package index.php
  */
 
-//ini_set('display_errors',1);
-//error_reporting(E_ALL);
+/**
+ *  Define IPP_PATH if not defined
+ */
 if (! defined('IPP_PATH')) {
     define('IPP_PATH', './');
 }
-// check if we are running install wizard
+/**
+ * check if we are running install wizard
+ */ 
 if (! is_file("./etc/init.php")) {
     include_once IPP_PATH . 'install/index.php';
     exit();
 }
-/* eGPS required files. */
+/**
+ *  eGPS required files.
+ */
 require_once IPP_PATH . 'etc/init.php';
 require_once IPP_PATH . 'include/db.php';
 require_once IPP_PATH . 'include/auth.php';
 require_once IPP_PATH . 'include/supporting_functions.php';
 
+/**
+ * Logout if you end up on index page.
+ */
 logout();
-header('Pragma: no-cache'); // don't cache this page!
 
+/**
+ * Don't Cache this page.
+ */
+header('Pragma: no-cache'); 
+
+/**
+ * Conditionally clear values
+ */
 if (isset($MESSAGE))
     $MESSAGE = $MESSAGE;
 else

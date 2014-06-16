@@ -1,13 +1,13 @@
 <?php
 
 /** @file
- * @brief 	find and manage a specific IEP
- * @todo
- * #. Fix spaces for indents
- * 
+ * find and manage a specific IEP
+ * @todo. Fix spaces for indents
  */
 
-// the authorization level for this page!
+/**
+ * The authorization level for this page!
+ */
 $MINIMUM_AUTHORIZATION_LEVEL = 100; // all, decide in the page
 
 /**
@@ -29,7 +29,11 @@ else
 
 define('IPP_PATH', './');
 
-/* eGPS required files. */
+/**
+ * MyIEP required files. 
+ * 
+ */
+
 require_once IPP_PATH . 'etc/init.php';
 require_once IPP_PATH . 'include/db.php';
 require_once IPP_PATH . 'include/auth.php';

@@ -1,14 +1,15 @@
 <?php
 
 /** @file
- * @brief 	display medical information
- * @todo
- * #. docblock documentation
- * @remark 
- * #. Replaced checkSpelling() with HTML spellcheck="TRUE"
+ * display medical information
+ * @todo docblock documentation
+ * @remark Replaced checkSpelling() with HTML spellcheck="TRUE"
  */
  
-//the authorization level for this page!
+/**
+ * 
+ * The authorization level for this page!
+ */
 $MINIMUM_AUTHORIZATION_LEVEL = 100; //everybody
 
 
