@@ -231,6 +231,12 @@ body {
 			<h2>
 				Installation: <small>MySQL Settings</small>
 			</h2>
+			<!-- Progress Bar -->
+			<h3>Progress</h3>
+			<div class="progress progress-striped">
+			      <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="66"
+					aria-valuemin="0" aria-valuemax="66" style="width: 66%;"><span class="sr-only">66% Complete</span></div>
+			</div>
 			<p>MyIEP is a free and open, web-based IEP management system.</p>
 			<p>
 				&copy; 2014 Chelsea School - <a
@@ -238,10 +244,7 @@ body {
                 <?php if ($system_message) { echo "<p>" . $system_message . "</p>";} ?>
 			
 			</p>
-			<div class="progress progress-striped">
-				<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="66"
-					aria-valuemin="0" aria-valuemax="100" style="width: 66%;"><span class="sr-only">66% Complete</span></div>
-			</div>
+			
 			</div>
 		</div>
 	</div>

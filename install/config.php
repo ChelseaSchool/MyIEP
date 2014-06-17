@@ -113,12 +113,7 @@ body {
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="config.php" title="Configure Variables">Configure</a></li>
-					<li><a onclick="history.go(-1);" title="Back a Page"><span
-							class="glyphicon glyphicon-circle-arrow-left"></span></a></li>
-					<li><a href="sprint_feedback.php" title="Leave User Feedback"><span
-							class="glyphicon glyphicon-envelope"></span></a></li>
-					<li><a href="index.php" title="Logout of MyIEP"><span
-							class="glyphicon glyphicon-off"></span></a></li>
+					
 					<li><a href="about.php" title="About MyIEP"><span
 							class="glyphicon glyphicon-info-sign"></span></a></li>
 					<li><a href="help.php" title="Some Help Here"><span

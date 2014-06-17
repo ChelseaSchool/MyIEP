@@ -67,12 +67,7 @@ body {
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="permissions.php"
 						title="Permission Check">Permission Check</a></li>
-					<li><a onclick="history.go(-1);" title="Back a Page"><span
-							class="glyphicon glyphicon-circle-arrow-left"></span></a></li>
-					<li><a href="sprint_feedback.php" title="Leave User Feedback"><span
-							class="glyphicon glyphicon-envelope"></span></a></li>
-					<li><a href="index.php" title="Logout of MyIEP"><span
-							class="glyphicon glyphicon-off"></span></a></li>
+					
 					<li><a href="about.php" title="About MyIEP"><span
 							class="glyphicon glyphicon-info-sign"></span></a></li>
 					<li><a href="help.php" title="Some Help Here"><span
@@ -89,16 +84,18 @@ body {
 			<h2>
 				Installation: <small>Install Permissions</small>
 			</h2>
+			<!-- Progress Bar -->
+			<h3>Progress</h3>
+			<div class="progress progress-striped">
+			      <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="33"
+					aria-valuemin="0" aria-valuemax="100" style="width: 33%;"><span class="sr-only">33% Complete</span></div>
+			</div>
 			<p>MyIEP is a free and open, web-based IEP management system.</p>
 			<p>
 				&copy; 2014 Chelsea School - <a
 					href="http://www.gnu.org/licenses/gpl-2.0.html" target="_blank">GPLv2</a>.
 			</p>
-							<!-- Progress Bar -->
-			<div class="progress progress-striped">
-				<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="33"
-					aria-valuemin="0" aria-valuemax="100" style="width: 33%;"><span class="sr-only">33% Complete</span></div>
-			</div>
+			
 			</div>
 		</div>
 	</div>
