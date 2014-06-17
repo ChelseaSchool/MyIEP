@@ -238,8 +238,8 @@ if (! $long_goal_result) {
  * @todo
  *
  * @param $area_result 1.
- *            Make it work
- *            2. Adjust query so it only show non-deleted areas
+ *            
+ * 
  */
 function print_goal_area_checklist()
 {
@@ -251,7 +251,7 @@ function print_goal_area_checklist()
         IPP_LOG($system_message, $_SESSION['egps_username'], 'ERROR');
     }
     while ($area_row = mysql_fetch_array($area_result)) {
-        echo "<label><input class=\"area\" id=\"{$area_row['name']}\" checked type=\"checkbox\">" . $area_row['name'] . "</label><br>\n";
+        echo "<input class=\"area\" id=\"{$area_row['name']}\" checked type=\"checkbox\">" . $area_row['name'] . "<br>\n";
     } // closes loop
 } // closes function
 

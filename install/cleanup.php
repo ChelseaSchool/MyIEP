@@ -88,11 +88,11 @@ body {
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="cleanup.php" title="Cleaning Up">Clean Up</a></li>
-					
+					<!-- For later sprint
 					<li><a href="about.php" title="About MyIEP"><span
 							class="glyphicon glyphicon-info-sign"></span></a></li>
 					<li><a href="help.php" title="Some Help Here"><span
-							class="glyphicon glyphicon-question-sign"></span></a></li>
+							class="glyphicon glyphicon-question-sign"></span></a></li>-->
 				</ul>
 			</div>
 			<!--/.navbar-collapse -->

@@ -71,11 +71,11 @@ body {
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="index.php" title="Depency Check">Check
 							Dependencies</a></li>
-					
+					<!-- For later sprint
 					<li><a href="about.php" title="About MyIEP"><span
 							class="glyphicon glyphicon-info-sign"></span></a></li>
 					<li><a href="help.php" title="Some Help Here"><span
-							class="glyphicon glyphicon-question-sign"></span></a></li>
+							class="glyphicon glyphicon-question-sign"></span></a></li>-->
 				</ul>
 			</div>
 			<!--/.navbar-collapse -->
@@ -165,7 +165,7 @@ if (get_magic_quotes_gpc ()) {
     } else {
         echo ">Continue</button>";
     }
-    ?></button>
+    ?>
 		</form>
 
     

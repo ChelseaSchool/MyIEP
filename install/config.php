@@ -113,11 +113,11 @@ body {
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="config.php" title="Configure Variables">Configure</a></li>
-					
-					<li><a href="about.php" title="About MyIEP"><span
+					<!-- FOr later sprint
+					<li><a title="Not yet enabled" href="about.php" title="About MyIEP"><span
 							class="glyphicon glyphicon-info-sign"></span></a></li>
 					<li><a href="help.php" title="Some Help Here"><span
-							class="glyphicon glyphicon-question-sign"></span></a></li>
+							class="glyphicon glyphicon-question-sign"></span></a></li>-->
 				</ul>
 			</div>
 			<!--/.navbar-collapse -->
