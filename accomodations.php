@@ -1,21 +1,21 @@
 <?php
 
-    /** A list of accomodations for the specified student.
-     *
-     *  Provides ability to add accomodations and edit accomodations for the student and the IEP.
-     * @author      Rik Goldman <rgoldman@chelseaschool.edu 
-     * @version     14.6
-     * @package     accommodations.php
-     * @copyright   2014 Chelsea School
-     * @license     http://www.gnu.org/licenses/gpl-2.0.html GPLv2
-     * @since       June 16, 2014
-     * @todo        Filter input
-     * @todo        Replace form buttons
-     * @todo        Refactor javascript
- ````* @todo        Delete function works;
-     * @todo        Look into "End" script and "Continue" script
-     * @category    View
-     */ 
+/** A list of accomodations for the specified student.
+ *
+ *  Provides ability to add accomodations and edit accomodations for the student and the IEP.
+ * @author      Rik Goldman <rgoldman@chelseaschool.edu 
+ * @version     14.6
+ * @package     accommodations.php
+ * @copyright   2014 Chelsea School
+ * @license     http://www.gnu.org/licenses/gpl-2.0.html GPLv2
+ * @since       June 16, 2014
+ * @todo        Filter input
+ * @todo        Replace form buttons
+ * @todo        Refactor javascript
+ * @todo        Delete function works;
+ * @todo        Look into "End" script and "Continue" script
+ * @category    View
+ */ 
 
  
  
