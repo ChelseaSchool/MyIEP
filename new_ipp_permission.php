@@ -30,7 +30,8 @@ require_once IPP_PATH . 'include/auth.php';
 require_once IPP_PATH . 'include/log.php';
 require_once IPP_PATH . 'include/user_functions.php';
 require_once IPP_PATH . 'include/mail_functions.php';
-require_once IPP_PATH . 'include/navbar.php');
+require_once IPP_PATH . 'include/navbar.php';
+require_once IPP_PATH . 'include/supporting_functions.php';
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -232,11 +233,8 @@ function echoJSServicesArray() {
 <HEAD>
 <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
 <TITLE><?php echo $page_title; ?></TITLE>
-<style type="text/css" media="screen">
-<!--
-@import "<?php echo IPP_PATH;?>layout/greenborders.css";
--->
-</style>
+
+
 
 <script language="javascript"
 	src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script>
@@ -250,20 +248,11 @@ echoJSServicesArray();
 <BODY>
 	<table class="shadow" border="0" cellspacing="0" cellpadding="0"
 		align="center">
-		<tr>
-			<td class="shadow-topLeft"></td>
-			<td class="shadow-top"></td>
-			<td class="shadow-topRight"></td>
-		</tr>
+		
 		<tr>
 			<td class="shadow-left"></td>
 			<td class="shadow-center" valign="top">
 				<table class="frame" width=620px align=center border="0">
-					<tr align="Center">
-						<td><center>
-								<img src="<?php echo $page_logo_path; ?>">
-							</center></td>
-					</tr>
 					<tr>
 						<td>
 							<center>
