@@ -11,7 +11,8 @@
  * @authors		Rik Goldman, Sabre Goldman, Jason Banks, Alex, James, Paul, Bryan, TJ, Jonathan, Micah, Stephen, Joseph
  * @author		M. Nielson
  * @todo
- * #. UI Overhaul
+ * 1. page is broken after banner
+ * 2. ui/ux overhaul
  */ 
  
 //the authorization level for this page!
@@ -37,7 +38,8 @@ require_once IPP_PATH . 'include/db.php';
 require_once IPP_PATH . 'include/auth.php';
 require_once IPP_PATH . 'include/log.php';
 require_once IPP_PATH . 'include/user_functions.php';
-
+require_once IPP_PATH . 'include/supporting_functions.php';
+require_once IPP_PATH . 'include/navbar.php';
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -208,19 +210,9 @@ if(isset($_POST['edit_testing']) && $have_write_permission) {
   }
 }
 
-
+print_html5_primer();
+print_bootstrap_head();
 ?> 
-<!DOCTYPE HTML>
-<HTML lang=en>
-<HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
-    <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
-    
     <script language="javascript" src="<?php echo IPP_PATH . "include/popcalendar.js"; ?>"></script>
     <SCRIPT LANGUAGE="JavaScript">
       function confirmChecked() {
@@ -250,90 +242,49 @@ if(isset($_POST['edit_testing']) && $have_write_permission) {
 
 
     </SCRIPT>
-</HEAD>
+<?php print_datepicker_depends(); ?>
+    </HEAD>
     <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("testing_to_support_code.php?student_id=$student_id"); ?></center>
-                    </td></tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
-
-                        <center><table><tr><td><center><p class="header">-Edit Testing to Support Code<BR>(<?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?>)-</p></center></td></tr></table></center>
-                        <BR>
-
-                        <!-- BEGIN add new entry -->
-                        <center>
+    <?php
+    print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']);
+    print_jumbotron_with_page_name("Edit Testing", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission);
+    ?>
+    <div class="container">
+       <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+        <!-- BEGIN add new entry -->
+                        <h2>Edit Testing Entry</h2>
                         <form name="add_testing" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_testing_to_support_code.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
-                        <tr>
-                          <td colspan="3">
-                          <p class="info_text">Edit entry</p>
+                        
+                        
                            <input type="hidden" name="edit_testing" value="1">
                            <input type="hidden" name="uid" value="<?php echo $uid; ?>">
-                          </td>
-                        </tr>
-                        <tr>
-                            <td valign="center" bgcolor="#E0E2F2" class="row_default">Test Description:</td><td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="description" tabindex="1" cols="30" rows="5" wrap="soft"><?php echo $testing_row['test_description']; ?></textarea></td>
-                            <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="5" class="row_default"><input type="submit" tabindex="7" name="Update" value="Update"></td>
-                        </tr>
-                        <tr>
-                            <td valign="center" bgcolor="#E0E2F2" class="row_default">Administered By:</td><td bgcolor="#E0E2F2" class="row_default"><input type="text" tabindex="2" name="administered_by" value="<?php echo $testing_row['administered_by']; ?>" size="30" maxsize="254"></td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">Date: (YYYY-MM-DD)</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="text" tabindex="3" name="date" value="<?php echo $testing_row['date']; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.date, 'yyyy-m-dd', 0, 0)">
-                           </td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">Optional File Upload:<BR>(.doc,.pdf,.txt,.rtf)</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
-                               <input type="file" tabindex="4" name="supporting_file" value="<?php echo $_FILES['supporting_file']['name'] ?>">
-                           </td>
-                        </tr>
-                        <tr>
-                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Results and Recommendations:</td><td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="recommendations" tabindex="6" cols="30" rows="5" wrap="soft"><?php echo $testing_row['recommendations']; ?></textarea></td>
-                        </tr>
-                        </table>
+                          <div class="form-group">
+                            <label>Test Description</label>
+                            <textarea required class="form-control" spellcheck="true" name="description" tabindex="1" cols="30" rows="5" wrap="soft"><?php echo $testing_row['test_description']; ?></textarea></td>
+                            
+                        
+                            <label>Test Administrator</label>
+                            <input class="form-control" type="text" tabindex="2" name="administered_by" value="<?php echo $testing_row['administered_by']; ?>" size="30" maxsize="254"></td>
+                       
+                           <label>Date (YYYY-MM-DD)</label>
+                           <input required autocomplete="off" class="form-control" type="datepicker" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" tabindex="3" name="date" value="<?php echo $testing_row['date']; ?>">
+                          
+                           <label>Optional File Upload (.doc,.pdf,.txt,.rtf)</label>
+                           <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+                           <input type="file" tabindex="4" name="supporting_file" value="<?php echo $_FILES['supporting_file']['name'] ?>">
+                           
+                       
+                           <label>Results and Recommendations</label>
+                           <textarea required class="form-control" spellcheck="true" name="recommendations" tabindex="6" cols="30" rows="5" wrap="soft"><?php echo $testing_row['recommendations']; ?></textarea></td>
+                        </div>
+                        <p><button class="btn btn-success" type="submit" tabindex="7" name="Update" value="Update">Update</button></p>
                         </form>
-                        </center>
+                        
                         <!-- END add new entry -->
 
                         </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-            <?php navbar("testing_to_support_code.php?student_id=$student_id"); ?></td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
-        <center></center>
+                       
+    <footer><?php print_complete_footer(); ?></footer>
+    <?php print_bootstrap_js();?>
     </BODY>
 </HTML>

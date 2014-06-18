@@ -34,13 +34,13 @@ $system_message = "";
 define('IPP_PATH','./');
 
 /* eGPS required files. */
-require_once(IPP_PATH . 'etc/init.php');
-require_once(IPP_PATH . 'include/db.php');
-require_once(IPP_PATH . 'include/auth.php');
-require_once(IPP_PATH . 'include/log.php');
-require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/navbar.php');
-require_once(IPP_PATH . 'include/supporting_functions.php');
+require_once IPP_PATH . 'etc/init.php';
+require_once IPP_PATH . 'include/db.php';
+require_once IPP_PATH . 'include/auth.php';
+require_once IPP_PATH . 'include/log.php';
+require_once IPP_PATH . 'include/user_functions.php';
+require_once IPP_PATH . 'include/navbar.php';
+require_once IPP_PATH . 'include/supporting_functions.php';
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -258,7 +258,10 @@ print_html5_Primer();
 
 
     </SCRIPT>
-<?php print_bootstrap_head();?>
+<?php 
+print_bootstrap_head();
+print_datepicker_depends();
+?>
 </HEAD>
     <BODY>
 <?php 
@@ -268,87 +271,36 @@ print_jumbotron_with_page_name("Testing", $student_row['first_name'] . " " . $st
 <div class="container">
 <?php if ($system_message) { echo "<p>" . $system_message . "</p>";} ?>
 
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" align=center border="0">
-                    
-                    
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-
-                 
-
-                        <!-- BEGIN add new entry -->
-                        <h2>Add a New Entry</h2>
-                        <center>
-                        <form name="add_testing" enctype="multipart/form-data" action="<?php echo IPP_PATH . "testing_to_support_code.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
-                        <tr>
-                          <td colspan="3">
-                           <input type="hidden" name="add_testing" value="1">
-                           <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
-                          </td>
-                        </tr>
-                        <tr>
-                            <td valign="center" bgcolor="#E0E2F2" class="row_default">Test Description:</td><td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="description" tabindex="1" cols="30" rows="3" wrap="soft"><?php if(isset($_POST['description'])) echo $_POST['description']; ?></textarea></td>
-                            <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="5" class="row_default"><input type="submit" tabindex="6" name="add" value="add"></td>
-                        </tr>
-                        <tr>
-                            <td valign="center" bgcolor="#E0E2F2" class="row_default">Administered By:</td><td bgcolor="#E0E2F2" class="row_default"><input type="text" tabindex="2" name="administered_by" value="<?php if(isset($_POST['administered_by'])) echo $_POST['administered_by']; ?>" size="30" maxsize="254"></td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">Date: (YYYY-MM-DD)</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="text" tabindex="3" name="date" value="<?php if(isset($_POST['date'])) echo $_POST['date']; ?>">&nbsp;<img src="<?php echo IPP_PATH . "images/calendaricon.gif"; ?>" height="17" width="17" border=0 onClick="popUpCalendar(this, document.all.date, 'yyyy-m-dd', 0, 0)">
-                           </td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">Optional File Upload:<BR>(.doc,.pdf,.txt,.rtf)</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
-                               <input type="file" tabindex="4" name="supporting_file" value="<?php if(isset($_FILES['supporting_file']['name'])) echo $_FILES['supporting_file']['name'] ?>">
-                           </td>
-                        </tr>
-                        <tr>
-                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Results and Recommendations:</td><td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="recommendations" tabindex="5" cols="30" rows="3" wrap="soft"><?php if(isset($_POST['recommendations'])) echo $_POST['recommendations']; ?></textarea></td>
-                        </tr>
-                        </table>
-                        </form>
-                        </center>
-                        <!-- END add new entry -->
-
                         <!-- Begin Testing History -->
                         <h2>Testing History</h2>
                         <form spellcheck="true" name="testing" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "testing_to_support_code.php"; ?>" method="get">
                         <input type="hidden" name="student_id" value="<?php echo $student_id ?>">
-                        <center><table width="80%" border="0" cellpadding="0" cellspacing="1">
+                        <table class="table table-striped table-hover">
                         <?php
-                        $bgcolor = "#DFDFDF";
-
                         //print the header row...
-                        echo "<tr><td bgcolor=\"#E0E2F2\">&nbsp;</td><td bgcolor=\"#E0E2F2\">uid</td><td align=\"center\" bgcolor=\"#E0E2F2\">Test Description</td><td align=\"center\" bgcolor=\"#E0E2F2\">Administered By</td><td align=\"center\" bgcolor=\"#E0E2F2\">Recommendations</td><td align=\"center\" bgcolor=\"#E0E2F2\">Date</td><td align=\"center\" bgcolor=\"#E0E2F2\">File</td></tr>\n";
+                        echo "<tr><th>Select</th><th>uid</th><th>Test Description</th><th>Administered By</th><th>Recommendations</th><th>Date</th><th>File</th></tr>\n";
+                        
                         while ($testing_row=mysql_fetch_array($testing_result)) { //current...
                             echo "<tr>\n";
-                            echo "<td bgcolor=\"#E0E2F2\"><input type=\"checkbox\" name=\"" . $testing_row['uid'] . "\"></td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\">" . $testing_row['uid'] . "</td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_testing_to_support_code.php?uid=" . $testing_row['uid'] . "\" class=\"editable_text\">" . mysql_real_escape_string($testing_row['test_description'])  ."</a></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_testing_to_support_code.php?uid=" . $testing_row['uid'] . "\" class=\"editable_text\">" . $testing_row['administered_by']  ."</a></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_testing_to_support_code.php?uid=" . $testing_row['uid'] . "\" class=\"editable_text\">" . mysql_real_escape_string($testing_row['recommendations'])  ."</a></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_testing_to_support_code.php?uid=" . $testing_row['uid'] . "\" class=\"editable_text\">" . $testing_row['date'] . "</a></td>\n";
-                            //echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><center>"; if($coord_row['report_in_file'] =="") echo "-none"; else echo "<a href=\"javascript: openDoc('" . IPP_PATH . "get_attached.php?table=coordination_of_services&uid=" . $coord_row['uid'] ."&student_id=" . $student_id ."','_doc')"  . "\">File</a>"; echo "</center></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><center>"; if($testing_row['filename'] =="") echo "-none-"; else echo "<a href=\"" . IPP_PATH . "get_attached.php?table=testing_to_support_code&uid=" . $testing_row['uid'] ."&student_id=" . $student_id ."\">Download</a>"; echo "</center></td>\n";
-                            echo "</tr>\n";
-                            if($bgcolor=="#DFDFDF") $bgcolor="#CCCCCC";
-                            else $bgcolor="#DFDFDF";
+                            echo "<td><input type=\"checkbox\" name=\"" . $testing_row['uid'] . "\"></td>";
+                            echo "<td>" . $testing_row['uid'] . "</td>";
+                            echo "<td><a href=\"" . IPP_PATH . "edit_testing_to_support_code.php?uid=" . $testing_row['uid'] . "\" class=\"editable_text\">" . mysql_real_escape_string($testing_row['test_description'])  ."</a></td>\n";
+                            echo "<td><a href=\"" . IPP_PATH . "edit_testing_to_support_code.php?uid=" . $testing_row['uid'] . "\" class=\"editable_text\">" . $testing_row['administered_by']  ."</a></td>\n";
+                            echo "<td><a href=\"" . IPP_PATH . "edit_testing_to_support_code.php?uid=" . $testing_row['uid'] . "\" class=\"editable_text\">" . mysql_real_escape_string($testing_row['recommendations'])  ."</a></td>\n";
+                            echo "<td><a href=\"" . IPP_PATH . "edit_testing_to_support_code.php?uid=" . $testing_row['uid'] . "\" class=\"editable_text\">" . $testing_row['date'] . "</a></td>\n";
+                            echo "<td>"; 
+                            if($testing_row['filename'] =="") {
+                                echo "-none-";
+                            }
+                            else {
+                                echo "<a href=\"" . IPP_PATH . "get_attached.php?table=testing_to_support_code&uid=" . $testing_row['uid'] ."&student_id=" . $student_id ."\">Download</a>"; echo "</center></td>\n";
+                                echo "</tr>\n";
+                            }
+                            
                         }
                         ?>
-                        <tr>
-                          <td colspan="6" align="left">
-                             <table>
+                        </table>
+                        <table>
                              <tr>
                              <td nowrap>
                                 <img src="<?php echo IPP_PATH . "images/table_arrow.png"; ?>">&nbsp;With Selected:
@@ -365,20 +317,47 @@ print_jumbotron_with_page_name("Testing", $student_row['first_name'] . " " . $st
                              </table>
                           </td>
                         </tr>
-                        </table></center>
+                        </table>
                         </form>
-                        <!-- end strength/needs table -->
+                        <!-- end testing table -->
 
+
+                        <!-- BEGIN add new entry -->
+                        <h2>Add a New Entry</h2>
+                        
+                        <form name="add_testing" enctype="multipart/form-data" action="<?php echo IPP_PATH . "testing_to_support_code.php"; ?>" method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+                        
+                           <input type="hidden" name="add_testing" value="1">
+                           <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
+                         
+                           <div class="form-group">
+                           
+                           <label>Test Description</label>
+                           <textarea required class="form-control" spellcheck="true" name="description" tabindex="1" cols="30" rows="3" wrap="soft"><?php if(isset($_POST['description'])) echo $_POST['description']; ?></textarea>
+                           
+                        
+                            <label>Test Administrator</label>
+                            <input required class="form-control" type="text" tabindex="2" name="administered_by" value="<?php if(isset($_POST['administered_by'])) echo $_POST['administered_by']; ?>">
+                        
+                           <label>Date: (YYYY-MM-DD)</label>
+                        
+                           <input required class="form-control" type="datepicker" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" autocomplete="off" tabindex="3" name="date" value="<?php if(isset($_POST['date'])) echo $_POST['date']; ?>">
+                        
+                           <label for supporting_file>Optional File Upload (.doc,.pdf,.txt,.rtf)</label>
+                           <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+                           <input type="file" tabindex="4" name="supporting_file" value="<?php if(isset($_FILES['supporting_file']['name'])) echo $_FILES['supporting_file']['name'] ?>">
+                        
+                           <label>Results and Recommendations</label>
+                           <textarea class="form-control" spellcheck="true" name="recommendations" tabindex="5" cols="30" rows="3" wrap="soft"><?php if(isset($_POST['recommendations'])) echo $_POST['recommendations']; ?></textarea></td>
                         </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
+                           <button class="btn btn-success" type="submit" tabindex="6" name="add" value="add">Submit</button>
+                        </form>
+                        
+                        <!-- END add new entry -->
 
 
-        </table> 
+
+                         
 </div>
 
 <footer><?php print_complete_footer(); ?></footer>
