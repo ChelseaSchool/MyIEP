@@ -12,7 +12,8 @@
  
  
 //the authorization level for this page!
-$MINIMUM_AUTHORIZATION_LEVEL = 100;    //everybody (do checks within document)
+//everybody (do checks within document)
+$MINIMUM_AUTHORIZATION_LEVEL = 100;    
 
 
 
@@ -158,17 +159,12 @@ if($our_permission != "WRITE" && $our_permission != "ASSIGN" && $our_permission 
     $have_write_permission = true;
 }
 
-
+print_html5_primer();
 ?> 
 
-<!DOCTYPE HTML>
-<HTML lang=en>
-<HEAD>
-    <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
-    <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        
-    </style>
+
+
+    
     
      <SCRIPT LANGUAGE="JavaScript">
       function notYetImplemented() {
@@ -204,38 +200,25 @@ if($our_permission != "WRITE" && $our_permission != "ASSIGN" && $our_permission 
 <?php print_bootstrap_head(); ?>
 </HEAD>
 <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    <tr><td>
-                    <center><?php navbar("student_view.php?student_id=$student_id"); ?></center>
-                    </td></tr>
-                    </tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+<?php 
+print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']);
+print_jumbotron_with_page_name("View Guardians", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission);
 
-                        <center><table width="80%" cellspacing="0" cellpadding="0"><tr><td><center><p class="header">- IPP Guardian View-</p></center></td></tr><tr><td><center><p class="bold_text"> <?php echo $student_row['first_name'] . " " . $student_row['last_name'] .  ", Permission: " . $our_permission;?></p></center></td></tr></table></center>
-                        <BR>
+if ($system_message) { echo "<p>" . $system_message . "</p>";}
 
-                        <?php $colour0="#DFDFDF"; $colour1="#CCCCCC"; ?>
+?>
+<div class="container">
+       
+<!-- BEGIN  Current Guardian Info -->
+<h2>Guardian Information</h2>
+<a href="<?php echo IPP_PATH . "add_guardian.php?student_id=" . $student_row['student_id'];?>" <?php if (!$have_write_permission) echo "onClick=\"return noPermission();\""; ?>><img src="<?php echo IPP_PATH . "images/smallbutton.php?title=New Guardian";?>" border="0"></a>
+                       
 
-                        <HR>
-                        <!-- BEGIN  Current Guardian Info -->
-                        <table width="100%"><tr><td width="200"><h2>Current&nbsp;Guardian(s):</h2></td><td align="left"><a href="<?php echo IPP_PATH . "add_guardian.php?student_id=" . $student_row['student_id'];?>" <?php if (!$have_write_permission) echo "onClick=\"return noPermission();\""; ?>><img src="<?php echo IPP_PATH . "images/smallbutton.php?title=New Guardian";?>" border="0"></a></td></tr></table>
-                        <BR>
-                        <center>
-                        <table width="80%" border="0" cellpadding="0" cellspacing="0">
-                        <?php
+<?php
                         while($guardian = mysql_fetch_array($guardians_result)) {
-                            echo "<tr><td colspan=\"2\" class=\"wrap_top\"><h3>" . $guardian['last_name'] . "," . $guardian['first_name'] . "&nbsp;&nbsp;</h3>
-                                <a href=\"" . IPP_PATH . "guardian_view.php?student_id=" . $student_id . "&setNotGuardian=" . $guardian['uid'] . "\"";
+                            echo "<div class=\"row\">\n";
+                            echo "<h3>" . $guardian['last_name'] . "," . $guardian['first_name'] . "</h3>
+                                <p><a href=\"" . IPP_PATH . "guardian_view.php?student_id=" . $student_id . "&setNotGuardian=" . $guardian['uid'] . "\"";
                             if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
                             else echo "onClick=\"return changeStatusNotGuardian();\"";
                             echo "><img src=\"" . IPP_PATH . "images/smallbutton.php?title=Change Status\" border=\"0\" width=\"100\" height=\"25\" ></a>\n";
@@ -247,13 +230,20 @@ if($our_permission != "WRITE" && $our_permission != "ASSIGN" && $our_permission 
 
                             echo "&nbsp;&nbsp;<a href=\"" . IPP_PATH . "edit_address.php?student_id=" . $student_id . "&target=guardian&guardian_id=" . $guardian['guardian_id'] . "\"";
                             if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
-                            echo "><img src=\"" . IPP_PATH . "images/smallbutton.php?title=Edit Name\" border=\"0\" width=\"100\" height=\"25\">";
-
-                            //begin address
-                            //width = 100% in first column is workaround for IE6 issue...
-                            echo "<tr><td class=\"wrap_left\" bgcolor=\"$colour0\" width=\"100%\">Address:</td><td class=\"wrap_right\" width=\"100\">&nbsp;</td></tr>\n";
-                            echo "<tr><td class=\"wrap_left\" bgcolor=\"$colour0\"><center>\n";
-                            if($guardian['po_box']) echo $guardian['po_box'] . "<BR>";
+                            echo "><img src=\"" . IPP_PATH . "images/smallbutton.php?title=Edit Contact Info\" border=\"0\" width=\"100\" height=\"25\"></a>";
+                            
+                            //edit notes button
+                            echo "&nbsp;&nbsp;<a href=\"" . IPP_PATH . "guardian_notes.php?guardian_id=" . $guardian['guardian_id'] . "&student_id=" . $student_row['student_id'] . "\"";
+                            if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
+                            echo "><img src=\"" . IPP_PATH . "images/smallbutton.php?title=Edit Notes\" border=\"0\" width=\"100\" height=\"25\"></p></a>";
+                            
+                            
+                            //begin address information
+                            
+                            echo "<div class=\"col-md-4\">\n";
+                            echo "<h4>Address</h4>";
+                            echo "<p><address>\n";
+                            if($guardian['po_box']) echo $guardian['po_box'] . "<br>\n";
                             echo $guardian['street'] . "<BR>\n";
                             $cpc = "";
                             if($guardian['city']) $cpc=$cpc . $guardian['city'] . " ";
@@ -263,25 +253,21 @@ if($our_permission != "WRITE" && $our_permission != "ASSIGN" && $our_permission 
                             $cpc = str_replace(" ",",",$cpc);
                             echo $cpc . "<BR>\n";
                             echo $guardian['postal_code'] . "<BR><BR>\n";
-                            echo "</center></td>";
-                            echo "<td class=\"wrap_right\" width=\"100\"><a href=\"" . IPP_PATH . "edit_address.php?student_id=" . $_GET['student_id'] . "&target=guardian&guardian_id=" . $guardian['guardian_id'] . "\"";
-                            if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
-                            echo "><img src=\"" . IPP_PATH . "images/smallbutton.php?title=Edit Contact\" border=\"0\" width=\"100\" height=\"25\"></td>";
-                            echo "</tr>\n";
-                            echo "<tr><td class=\"wrap_left\" bgcolor=\"$colour0\">Contact:</td><td class=\"wrap_right\" width=\"100\">&nbsp;</td></tr>\n";
-                            echo "<tr><td class=\"wrap_left\" bgcolor=\"$colour0\"><center>\n";
+                            echo "</address></p></div>";
+                            echo "<div class=\"col-md-4\">\n";
+                            echo "<h4>Contact Details</h4>\n";
+                            
                             if($guardian['home_ph'] != "") echo "Ph: " . $guardian['home_ph'] . "<BR>\n";
                             if($guardian['business_ph'] != "")echo "Business: " . $guardian['business_ph'] . "<BR>\n";
                             if($guardian['cell_ph'] != "")echo "Cell Ph: " . $guardian['cell_ph'] . "<BR>\n";
                             if($guardian['email_address'] != "")echo "Email: " . $guardian['email_address'] . "<BR>\n";
                             echo "&nbsp;"; //just in case we have a blank
-                            echo "</center></td>";
-                            echo "<td class=\"wrap_right\" width=\"100\">&nbsp;</td>";
-                            echo "</tr>\n";
-                            echo "<tr><td class=\"wrap_left\" bgcolor=\"$colour0\">Notes:</td><td class=\"wrap_right\" width=\"100\">&nbsp;</td></tr>\n";
-                            echo "<tr>\n";
-                            echo "<td bgcolor=\"$colour0\" class=\"wrap_bottom_left\">\n";
+                            echo "</div>";
+                            
                             //guardian notes
+                            echo "<div class=\"col-md-4\">
+                                <h4>Notes</h4>\n";
+
                             $guardian_note_query = "SELECT * FROM guardian_note WHERE guardian_id=" . $guardian['guardian_id'] . " ORDER BY priority_note,date ASC";
                             $guardian_note_result = mysql_query($guardian_note_query);
                             //check for error
@@ -297,24 +283,22 @@ if($our_permission != "WRITE" && $our_permission != "ASSIGN" && $our_permission 
                                    //yes so output non-breaking space
                                    echo "&nbsp;";
                                }
+                               echo "<table class=\"table table-striped table-hover\">\n";
                                while ($guardian_note_row = mysql_fetch_array($guardian_note_result)) {
-                                   echo "<hr>\n";
-                                   echo "<table width=\"100%\"><tr>\n";
+                                   
                                    if($guardian_note_row['priority_note'] == 'Y')
-                                       echo "<td width=\"32\"><img src=\"" . IPP_PATH . "images/caution.gif\" border=\"0\" width=\"32\" height=\"32\"></td>"; //priority flag.
+                                       echo "<tr><td><img src=\"" . IPP_PATH . "images/caution.gif\" border=\"0\" width=\"32\" height=\"32\"></td>"; //priority flag.
                                    else
-                                       echo "<td width=\"32\">&nbsp;</td>"; //no priority flag.
-                                   echo "<td class=\"wrap_none\">" . $guardian_note_row['note'] ."</td>";
-                                   echo "</tr></table>\n";
+                                       echo "<td>&nbsp;</td>"; //no priority flag.
+                                   echo "<td>" . $guardian_note_row['note'] ."</td></tr>";
                                }
+                                   echo "</table>\n";
+                               
                             }
                             //end guardian notes
-                            echo "</td>\n";
-                            echo "<td class=\"wrap_bottom_right\" width=\"100\"><a href=\"" . IPP_PATH . "guardian_notes.php?guardian_id=" . $guardian['guardian_id'] . "&student_id=" . $student_row['student_id'] . "\"";
-                            if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
-                            echo "><img src=\"" . IPP_PATH . "images/smallbutton.php?title=Notes\" border=\"0\" width=\"100\" height=\"25\"></td>";
-                            echo "</tr>\n";
-                            echo "<tr><td>&nbsp;</td><td width=\"100\">&nbsp;</td></tr>";
+                            echo "</div></div>";
+                            
+                            
                         }
                         ?>
                         </table>
@@ -339,7 +323,7 @@ if($our_permission != "WRITE" && $our_permission != "ASSIGN" && $our_permission 
 
                             echo "&nbsp;&nbsp;<a href=\"" . IPP_PATH . "edit_address.php?student_id=" . $student_id . "&target=guardian&guardian_id=" . $guardian['guardian_id'] . "\"";
                             if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
-                            echo "><img src=\"" . IPP_PATH . "images/smallbutton.php?title=Edit Name\" border=\"0\" width=\"100\" height=\"25\">";
+                            echo "><img src=\"" . IPP_PATH . "images/smallbutton.php?title=Edit Contact Info\" border=\"0\" width=\"100\" height=\"25\">";
 
 
                             //begin lost guardianship date
@@ -416,27 +400,9 @@ if($our_permission != "WRITE" && $our_permission != "ASSIGN" && $our_permission 
                         </center>
                         <!-- END Previous Guardian Info -->
 
-                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-            <?php navbar("student_view.php?student_id=$student_id"); ?>
-            </td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
-        <center></center>
-        <?php print_bootstrap_js(); ?>
+                       
+</div>
+<footer><?php print_complete_footer(); ?>
+</footer>        <?php print_bootstrap_js(); ?>
     </BODY>
 </HTML>
