@@ -3,14 +3,12 @@
  * @brief 	add or edit address information
  * @copyright 	2014 Chelsea School 
  * @copyright 	2005 Grasslands Regional Division #6
- * @license		This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
-    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-    You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * @license		http://www.gnu.org/licenses/gpl-2.0.html GPLv2
  * @authors		Rik Goldman, Sabre Goldman, Jason Banks, Alex, James, Paul, Bryan, TJ, Jonathan, Micah, Stephen, Joseph, Sean
  * @author		M. Nielson
- * @todo		Filter input
+ * @todo		
+ * 1. Filter input
+ * 2. Nielson left unfinished functionality in comments
  */  
  
 //the authorization level for this page!
@@ -211,7 +209,7 @@ print_bootstrap_head();
 <BODY>
 <?php 
 print_student_navbar($student_id, $target_row['first_name'] . " " . $target_row['last_name']);
-print_jumbotron_with_page_name("Edit Contact Information", $target_row['first_name'] . " " . $target_row['last_name'], $permission_level);
+print_jumbotron_with_page_name("Edit Contact Information", $target_row['first_name'] . " " . $target_row['last_name'], $our_permission);
 ?>       
                     
 <div class="container">
