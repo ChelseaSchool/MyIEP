@@ -151,9 +151,12 @@ if (! $fail) {
 <?php
 echo "<form enctype=\"multipart/form-data\" action=\"./database.php" . "\" method=\"post\">";
 echo " <button class=\"btn btn-success pull-right\" type=\"submit\" value=\"Next\"";
-if ($fail)
-    echo " disabled></button>";
-echo ">Next</button>";
+if ($fail) {
+    echo " disabled>Stop</button>";
+}
+else {
+	echo ">Next</button>";
+}
 echo "</form>";
 
 ?>

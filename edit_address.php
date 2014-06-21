@@ -38,7 +38,6 @@ require_once IPP_PATH . 'include/db.php';
 require_once IPP_PATH . 'include/auth.php';
 require_once IPP_PATH . 'include/log.php';
 require_once IPP_PATH . 'include/user_functions.php';
-require_once IPP_PATH . 'include/navbar.php';
 require_once IPP_PATH . 'include/supporting_functions.php';
 
 header('Pragma: no-cache'); //don't cache this page!
@@ -195,10 +194,11 @@ if(isset($_GET['update'])) {
 mysql_data_seek($target_result, 0);
 
 print_html5_primer();
+print_bootstrap_head();
 ?> 
 
 
-<?php print_bootstrap_head(); ?>
+
     
 
     
@@ -218,7 +218,7 @@ print_jumbotron_with_page_name("Edit Contact Information", $target_row['first_na
                         <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
 
                         
-                        <h2>Edit Contact information for 
+                        <h2>
                         <?php
                             switch($_GET['target']) {
                                case "guardian":
@@ -233,10 +233,11 @@ print_jumbotron_with_page_name("Edit Contact Information", $target_row['first_na
                                    $target_row=mysql_fetch_array($target_result);
                                break;
                             }
-                        ?></p></td></tr></table>
-                        >
-                        <BR>
-                        <h3>Fill out and click "Submit" to revise contact information.</h3>
+                        ?>
+                        </h2>
+                        
+                        
+                        <h4>Fill out and click "Submit" to revise contact information.</h4>
                         <form name="editAddress" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_address.php"; ?>" method="get">
                           <input type="hidden" name="target" value="<?php echo $_GET['target']; ?>">
                           <input type="hidden" name="guardian_id" value="<?php echo $_GET['guardian_id']; ?>">
@@ -247,11 +248,11 @@ print_jumbotron_with_page_name("Edit Contact Information", $target_row['first_na
                         if($_GET['target'] == "guardian") {
                           echo "<div class=\"form-group\">";
                           echo "<label for guardian_first_name>Guardian First Name(s)</label>";
-                          echo "<input class=\"form-control\" type=\"text\" autocomplete=\"off\" tabindex=\"1\" name=\"guardian_first_name\" size=\"30\" maxsize=\"254\" value=\"" . $target_row['guardian_first_name']  . "\">";
+                          echo "<input required class=\"form-control\" type=\"text\" autocomplete=\"off\" tabindex=\"1\" name=\"guardian_first_name\" value=\"" . $target_row['guardian_first_name']  . "\">";
 
                           echo "<label>Guardian Last Name</label>";
 
-                          echo "<input class=\"form-control\" type=\"text\" tabindex=\"2\" name=\"guardian_last_name\" size=\"30\" maxsize=\"254\" value=\"" . $target_row['guardian_last_name']  . "\">";
+                          echo "<input required class=\"form-control\" type=\"text\" tabindex=\"2\" name=\"guardian_last_name\" value=\"" . $target_row['guardian_last_name']  . "\">";
                     
                         }
                         ?>
@@ -280,19 +281,19 @@ print_jumbotron_with_page_name("Edit Contact Information", $target_row['first_na
                             
                        <label>Home Phone</label>
                         
-                            <input class="form-control" type="text" tabindex="9" name="home_ph" size="30" maxsize="125" value="<?php if(isset($target_row['home_ph'])) echo $target_row['home_ph']; else if(isset($_GET['home_ph'])) echo $_GET['home_ph']; ?>">
+                            <input class="form-control" type="tel" tabindex="9" name="home_ph" size="30" maxsize="125" value="<?php if(isset($target_row['home_ph'])) echo $target_row['home_ph']; else if(isset($_GET['home_ph'])) echo $_GET['home_ph']; ?>">
                           
                           <label>Business Phone</label>
                          
-                            <input class="form-control" type="text" tabindex="10" name="business_ph" size="30" maxsize="125" value="<?php if(isset($target_row['business_ph'])) echo $target_row['business_ph']; else if(isset($_GET['business_ph'])) echo $_GET['business_ph']; ?>">
+                            <input class="form-control" type="tel" tabindex="10" name="business_ph" size="30" maxsize="125" value="<?php if(isset($target_row['business_ph'])) echo $target_row['business_ph']; else if(isset($_GET['business_ph'])) echo $_GET['business_ph']; ?>">
                           
                           <label>Cell Phone</label>
                           
-                            <input class="form-control" type="text" tabindex="11" name="cell_ph" size="30" maxsize="125" value="<?php if(isset($target_row['cell_ph'])) echo $target_row['cell_ph']; else if(isset($_GET['cell_ph'])) echo $_GET['cell_ph']; ?>">
+                            <input class="form-control" type="tel" tabindex="11" name="cell_ph" size="30" maxsize="125" value="<?php if(isset($target_row['cell_ph'])) echo $target_row['cell_ph']; else if(isset($_GET['cell_ph'])) echo $_GET['cell_ph']; ?>">
                           
                           <label>Email Address</label>
                    
-                            <input class="form-control" type="text" tabindex="12" name="email_address" size="30" maxsize="125" value="<?php if(isset($target_row['email_address'])) echo $target_row['email_address']; else if(isset($_GET['email_address'])) echo $_GET['email_address']; ?>">
+                            <input class="form-control" type="email" tabindex="12" name="email_address" size="30" maxsize="125" value="<?php if(isset($target_row['email_address'])) echo $target_row['email_address']; else if(isset($_GET['email_address'])) echo $_GET['email_address']; ?>">
                             </div>
                             <p><button class="btn btn-md btn-success" tabindex="13" name="update" type="submit" value="Update">Submit</button></p>
                         
@@ -307,7 +308,6 @@ print_jumbotron_with_page_name("Edit Contact Information", $target_row['first_na
            
            
             
-        <center></center>
-        <?php print_bootstrap_js(); ?>
+        <footer><?php print_bootstrap_js(); ?></footer>
     </BODY>
 </HTML>

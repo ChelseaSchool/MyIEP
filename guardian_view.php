@@ -216,7 +216,7 @@ if ($system_message) { echo "<p>" . $system_message . "</p>";}
 
 <?php
                         while($guardian = mysql_fetch_array($guardians_result)) {
-                            echo "<div class=\"row\">\n";
+                            echo "<div class=\"row\"><div class=\"container\">\n";
                             echo "<h3>" . $guardian['last_name'] . "," . $guardian['first_name'] . "</h3>
                                 <p><a href=\"" . IPP_PATH . "guardian_view.php?student_id=" . $student_id . "&setNotGuardian=" . $guardian['uid'] . "\"";
                             if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
@@ -240,7 +240,7 @@ if ($system_message) { echo "<p>" . $system_message . "</p>";}
                             
                             //begin address information
                             
-                            echo "<div class=\"col-md-4\">\n";
+                            echo "<div class=\"col-md-6\">\n";
                             echo "<h4>Address</h4>";
                             echo "<p><address>\n";
                             if($guardian['po_box']) echo $guardian['po_box'] . "<br>\n";
@@ -253,8 +253,10 @@ if ($system_message) { echo "<p>" . $system_message . "</p>";}
                             $cpc = str_replace(" ",",",$cpc);
                             echo $cpc . "<BR>\n";
                             echo $guardian['postal_code'] . "<BR><BR>\n";
-                            echo "</address></p></div>";
-                            echo "<div class=\"col-md-4\">\n";
+                            echo "</address></p>\n";
+        					echo "<p>&nbsp;</p>\n</div>";
+                            //begin contact info
+                            echo "<div class=\"col-md-6\">\n";
                             echo "<h4>Contact Details</h4>\n";
                             
                             if($guardian['home_ph'] != "") echo "Ph: " . $guardian['home_ph'] . "<BR>\n";
@@ -262,11 +264,11 @@ if ($system_message) { echo "<p>" . $system_message . "</p>";}
                             if($guardian['cell_ph'] != "")echo "Cell Ph: " . $guardian['cell_ph'] . "<BR>\n";
                             if($guardian['email_address'] != "")echo "Email: " . $guardian['email_address'] . "<BR>\n";
                             echo "&nbsp;"; //just in case we have a blank
-                            echo "</div>";
+                            echo "</div></div>";
                             
                             //guardian notes
-                            echo "<div class=\"col-md-4\">
-                                <h4>Notes</h4>\n";
+                            echo "<div class=\"row\"><div class=\"container\">\n";
+                            echo "<h4>Notes</h4>\n";
 
                             $guardian_note_query = "SELECT * FROM guardian_note WHERE guardian_id=" . $guardian['guardian_id'] . " ORDER BY priority_note,date ASC";
                             $guardian_note_result = mysql_query($guardian_note_query);
@@ -297,21 +299,26 @@ if ($system_message) { echo "<p>" . $system_message . "</p>";}
                             }
                             //end guardian notes
                             echo "</div></div>";
+    						
                             
                             
                         }
                         ?>
                         </table>
-                        </center>
-                        <!-- END Guardian Info -->
+                        
+                        <!-- END Current Guardian Info -->
 
                         <!-- BEGIN  Previous Guardian Info -->
-                        <h2>Previous Guardian(s):</h2>
-                        <center>
-                        <table width="80%" border="0" cellpadding="0" cellspacing="0">
+                        <div class="container">
+                        <h2>Previous Guardian(s)</h2>
+                        
+                        
                         <?php
+                        //loop through guardians marked as previous
                         while($guardian = mysql_fetch_array($previous_guardians_result)) {
-                            echo "<tr><td colspan=\"2\" class=\"wrap_top\"><h3>" . $guardian['last_name'] . "," . $guardian['first_name'] . "&nbsp;&nbsp;</h3><a href=\"" . IPP_PATH . "guardian_view.php?student_id=" . $student_id . "&setGuardian=" . $guardian['uid'] . "\"";
+                            echo "<div class=\"row\"><div class=\"container\">";
+							echo "<h3>" . $guardian['last_name'] . "," . $guardian['first_name'] . "</h3>\n";
+							echo "<a href=\"" . IPP_PATH . "guardian_view.php?student_id=" . $student_id . "&setGuardian=" . $guardian['uid'] . "\"";
                             if($have_write_permission) echo "onclick=\"return changeStatusGuardian();\"";
                             else echo "onclick=\"return noPermission();\"";
                             echo "><img src=\"" . IPP_PATH . "images/smallbutton.php?title=Change Status\" border=\"0\" width=\"100\" height=\"25\"></a>";
@@ -323,15 +330,17 @@ if ($system_message) { echo "<p>" . $system_message . "</p>";}
 
                             echo "&nbsp;&nbsp;<a href=\"" . IPP_PATH . "edit_address.php?student_id=" . $student_id . "&target=guardian&guardian_id=" . $guardian['guardian_id'] . "\"";
                             if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
-                            echo "><img src=\"" . IPP_PATH . "images/smallbutton.php?title=Edit Contact Info\" border=\"0\" width=\"100\" height=\"25\">";
+                            echo "><img src=\"" . IPP_PATH . "images/smallbutton.php?title=Edit Contact Info\" border=\"0\" width=\"100\" height=\"25\"></a>";
+							
+                            echo "&nbsp;&nbsp;<a href=\"" . IPP_PATH . "guardian_notes.php?guardian_id=" . $guardian['guardian_id'] . "&student_id=" . $student_row['student_id'] ."\"";
+                            if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
+                            echo "><img src=\"" . IPP_PATH . "images/smallbutton.php?title=Edit Notes\" border=\"0\" width=\"100\" height=\"25\"></a>";
 
-
-                            //begin lost guardianship date
-                            //width=100% first column is workaround for IE6 issue.
-                            echo "<tr><td class=\"wrap_left\" bgcolor=\"$colour0\" width=\"100%\">Guardianship Terminated:<BR><BR><CENTER>" . $guardian['to_date'] . "</CENTER></td><td class=\"wrap_right\" width=\"100\">&nbsp;</td></tr>\n";
+          					echo "<p>&nbsp;</p>";
+                            echo "<div class=\"alert alert-warning\"><strong>Guardianship Terminated</strong>: &nbsp;" . $guardian['to_date'] . "</div>\n";
                             //begin address
-                            echo "<tr><td class=\"wrap_left\" bgcolor=\"$colour0\">Address:</td><td class=\"wrap_right\" width=\"100\">&nbsp;</td></tr>\n";
-                            echo "<tr><td class=\"wrap_left\" bgcolor=\"$colour0\"><center>\n";
+                            echo "<div class=\"col-md-6\">";
+                            echo "<h4>Address</h4>\n<address>";
                             if($guardian['po_box']) echo "P.O. Box " . $guardian['po_box'] . "<BR>";
                             echo $guardian['street'] . "<BR>\n";
                             $cpc = "";
@@ -341,26 +350,28 @@ if ($system_message) { echo "<p>" . $system_message . "</p>";}
                             //add the commas...
                             $cpc = str_replace(" ",",",$cpc);
                             echo $cpc . "<BR>\n";
-                            echo $guardian['postal_code'] . "<BR><BR>\n";
-                            echo "</center></td>";
-                            echo "<td class=\"wrap_right\" width=\"100\"><a href=\"" . IPP_PATH . "edit_address.php?student_id=" . $_GET['student_id'] . "&target=guardian&guardian_id=" . $guardian['guardian_id'] . "\"";
-                            if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
-                            echo "><img src=\"" . IPP_PATH . "images/smallbutton.php?title=Edit Contact\" border=\"0\" width=\"100\" height=\"25\"></td>";
-                            echo "</tr>\n";
-                            echo "<tr><td class=\"wrap_left\" bgcolor=\"$colour0\">Contact:</td><td class=\"wrap_right\" width=\"100\">&nbsp;</td></tr>\n";
-                            echo "<tr><td class=\"wrap_left\" bgcolor=\"$colour0\"><center>\n";
+                            echo $guardian['postal_code'];
+                            echo "</address></div>";
+                           
+                            
+                            //More contact info, right column
+                            echo "<div class=\"col-md-6\">";
+                            echo "<h4>Contact Information</h4>\n";
+
                             if($guardian['home_ph'] != "") echo "Ph: " . $guardian['home_ph'] . "<BR>\n";
                             if($guardian['business_ph'] != "")echo "Business: " . $guardian['business_ph'] . "<BR>\n";
                             if($guardian['cell_ph'] != "")echo "Cell Ph: " . $guardian['cell_ph'] . "<BR>\n";
                             if($guardian['email_address'] != "")echo "Email: " . $guardian['email_address'] . "<BR>\n";
-                            echo "&nbsp;"; //just in case we have a blank
-                            echo "</center></td>";
-                            echo "<td class=\"wrap_right\" width=\"100\">&nbsp;</td>";
-                            echo "</tr>\n";
-                            echo "<tr><td class=\"wrap_left\" bgcolor=\"$colour0\">Notes:</td><td class=\"wrap_right\" width=\"100\">&nbsp;</td></tr>\n";
-                            echo "<tr>\n";
-                            echo "<td bgcolor=\"$colour0\" class=\"wrap_bottom_left\">\n";
-                            //guardian notes
+                            echo "</div></div>";
+                           
+                           
+                            
+                            /** guardian notes
+                             * 
+                             *  @TODO	align (left) with rest of guardian content
+                             */
+                            echo "<div class=\"row\"><div class=\"container\">";
+                            echo "<h4>Notes</h4>\n";
                             $guardian_note_query = "SELECT * FROM guardian_note WHERE guardian_id=" . $guardian['guardian_id'] . " ORDER BY date ASC,priority_note DESC";
                             $guardian_note_result = mysql_query($guardian_note_query);
                             //check for error
@@ -376,28 +387,25 @@ if ($system_message) { echo "<p>" . $system_message . "</p>";}
                                    //yes so output non-breaking space
                                    echo "&nbsp;";
                                }
+                               echo "<table class=\"table table-hover table-striped\">";
                                while ($guardian_note_row = mysql_fetch_array($guardian_note_result)) {
-                                   echo "<hr>\n";
-                                   echo "<table width=\"100%\"><tr>\n";
+                                   
+                                   
                                    if($guardian_note_row['priority_note'] == 'Y')
                                        echo "<td width=\"32\"><img src=\"" . IPP_PATH . "images/caution.gif\" border=\"0\" width=\"32\" height=\"32\"></td>"; //priority flag.
                                    else
-                                       echo "<td width=\"32\">&nbsp;</td>"; //no priority flag.
-                                   echo "<td class=\"wrap_none\">" . $guardian_note_row['note'] ."</td>";
-                                   echo "</tr></table>\n";
+                                       echo "<td>&nbsp;</td>"; //no priority flag.
+                                   echo "<td>" . $guardian_note_row['note'] ."</td>";
+                                   echo "</tr>\n";
                                }
                             }
                             //end guardian notes
-                            echo "</td>\n";
-                            echo "<td class=\"wrap_bottom_right\" width=\"100\"><a href=\"" . IPP_PATH . "guardian_notes.php?guardian_id=" . $guardian['guardian_id'] . "&student_id=" . $student_row['student_id'] ."\"";
-                            if (!$have_write_permission) echo "onClick=\"return noPermission();\"";
-                            echo "><img src=\"" . IPP_PATH . "images/smallbutton.php?title=Notes\" border=\"0\" width=\"100\" height=\"25\"></td>";
-                            echo "</tr>\n";
-                            echo "<tr><td>&nbsp;</td><td width=\"100\">&nbsp;</td></tr>";
+                            echo "</table>\n";
+                            
+                            
                         }
                         ?>
-                        </table>
-                        </center>
+                        
                         <!-- END Previous Guardian Info -->
 
                        

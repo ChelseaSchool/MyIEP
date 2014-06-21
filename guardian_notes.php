@@ -13,7 +13,7 @@
  * @todo		
  * 1. Filter input
  * 2. docblocks
- * #. complete bootstrap ui - stripped of legacy, but still in tables
+ * 3. complete bootstrap ui - stripped of legacy, but still in tables
  * 
  */ 
  
@@ -158,11 +158,7 @@ mysql_data_seek($guardian_result,0);
 <HEAD>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
     <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
+    
     
      <SCRIPT LANGUAGE="JavaScript">
       function deleteChecked() {
@@ -189,11 +185,7 @@ mysql_data_seek($guardian_result,0);
 </HEAD>
 <BODY>
         <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
+        
         <tr>
             <td class="shadow-left"></td>
             <td class="shadow-center" valign="top">
