@@ -24,7 +24,7 @@ require_once IPP_PATH . 'include/auth.php';
 if ((int)phpversion() < 5) {
     require_once IPP_PATH . 'include/fileutils.php';
 } //only for pre v5
-require_once IPP_PATH . 'include/log.php');
+require_once IPP_PATH . 'include/log.php';
 require_once IPP_PATH . 'include/supporting_functions.php';
 header('Pragma: no-cache'); //don't cache this page!
 
