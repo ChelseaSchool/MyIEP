@@ -125,7 +125,7 @@ if (isset($_POST['delete_x'])) {
 // wonder how php handles dangling else...
 if (! isset($_GET['iLimit']))
 if (! isset($_POST['iLimit']))
- $iLimit = 50;
+ $iLimit = 300;
 else
  $iLimit = $_POST['iLimit'];
 else
