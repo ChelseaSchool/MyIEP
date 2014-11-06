@@ -39,27 +39,28 @@ require_once 'include/supporting_functions.php';
 //require_once 'include/page_troubleshoot.php';
 
 
+
+
+$connection=mysql_connect("localhost", $mysql_data_username, $mysql_data_password);
+mysql_select_db($mysql_data_database);
+
+
 if (!isset($_POST)) {
-	die();
+    die();
 }
 
 if (isset($_POST)) {
-	$user = mysql_real_escape_string($_POST['uname']);
-	$email = mysql_real_escape_string($_POST['email1']);
-	$submission = mysql_real_escape_string($_POST['date']);
-	$client_address = mysql_real_escape_string($_POST['client_address']);
-	$browser = mysql_real_escape_string($_POST['user_agent']);
+    $user = mysql_real_escape_string($_POST['uname']);
+    $email = mysql_real_escape_string($_POST['email1']);
+    $submission = mysql_real_escape_string($_POST['date']);
+    $client_address = mysql_real_escape_string($_POST['client_address']);
+    $browser = mysql_real_escape_string($_POST['user_agent']);
 }
 $_SESSION['user_agent']=$browser;
 $_SESSION['client_ip']=$client_address;
 $_SESSION['user']=$user;
 $_SESSION['email']=$email;
 
-
-
-
-$connection=mysql_connect("localhost", $mysql_data_username, $mysql_data_password);
-mysql_select_db($mysql_data_database);
 $query = "SELECT * FROM support_member WHERE egps_username = '$user' AND email = '$email'";
 $result = mysql_query($query);
 if (!$result) die("No result");
