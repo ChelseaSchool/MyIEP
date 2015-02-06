@@ -12,7 +12,7 @@
  
  
 //the authorization level for this page!
-$MINIMUM_AUTHORIZATION_LEVEL = 60; //TA
+$MINIMUM_AUTHORIZATION_LEVEL = 60; //TA (teaching assistant)
 
 
 
@@ -20,17 +20,19 @@ $MINIMUM_AUTHORIZATION_LEVEL = 60; //TA
  *
  */
 
+
+//blank the variable so no bad guys can change the value
+$system_message = "";
+// we have to come back to this
+$IPP_CODINGS = array("No Code", "Code 40","Code 50","Code 80", "ESL");   //no code is special case
+
 /**
  * Path for IPP required files.
  */
-
-$system_message = "";
-
-$IPP_CODINGS = array("No Code", "Code 40","Code 50","Code 80", "ESL");   //no code is special case
-
+ 
 define('IPP_PATH','./');
 
-/* eGPS required files. */
+/* MyIEP required files. */
 require_once IPP_PATH . 'etc/init.php';
 require_once IPP_PATH . 'include/db.php';
 require_once IPP_PATH . 'include/auth.php';
@@ -38,8 +40,13 @@ require_once IPP_PATH . 'include/log.php';
 require_once IPP_PATH . 'include/user_functions.php';
 require_once IPP_PATH . 'include/navbar.php';
 
-header('Pragma: no-cache'); //don't cache this page!
+ //don't cache this page!
+header('Pragma: no-cache');
 
+/**
+ * If you're not logged in, redirect to index & exit this page'
+ * 
+ */
 if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
     if(!validate( $_POST['LOGIN_NAME'] ,  $_POST['PASSWORD'] )) {
         $system_message = $system_message . $error_message;
@@ -57,10 +64,15 @@ if(isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
 }
 //************* SESSION active past here **************************
 
+// clear student id because - security 
 $student_id="";
+//get student from either GET or POST arrays
 if(isset($_GET['student_id'])) $student_id= $_GET['student_id'];
 if(isset($_POST['student_id'])) $student_id = $_POST['student_id'];
 
+/**
+ * If we got a here without a student id, exit the page
+ */
 if($student_id=="") {
    //we shouldn't be here without a username.
    echo "You've entered this page without supplying a valid user name. Fatal, quitting";
