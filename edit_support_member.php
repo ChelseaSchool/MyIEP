@@ -20,11 +20,13 @@ $MINIMUM_AUTHORIZATION_LEVEL = 100; //everybody
  *
  */
 
+
+
+$system_message = "";
+
 /**
  * Path for IPP required files.
  */
-
-$system_message = "";
 
 define('IPP_PATH','./');
 
@@ -36,6 +38,8 @@ require_once IPP_PATH . 'include/log.php';
 require_once IPP_PATH . 'include/user_functions.php';
 require_once IPP_PATH . 'include/navbar.php';
 require_once IPP_PATH . 'include/mail_functions.php';
+require_once IPP_PATH . 'include/supporting_functions.php';
+
 
 header('Pragma: no-cache'); //don't cache this page!
 
@@ -216,18 +220,9 @@ if(!$support_result) {
 <!DOCTYPE HTML>
 <HTML lang=en>
 <HEAD>
+    <?php print_bootstrap_head(); ?>
     <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
     <TITLE><?php echo $page_title; ?></TITLE>
-    <style type="text/css" media="screen">
-        <!--
-            @import "<?php echo IPP_PATH;?>layout/greenborders.css";
-        -->
-    </style>
-    <!-- All code Copyright &copy; 2005 Grasslands Regional Division #6.
-         -Concept and Design by Grasslands IPP Design Group 2005
-         -Programming and Database Design by M. Nielsen, Grasslands
-         -CSS and layout images are courtesy A. Clapton.
-     -->
     <script language="javascript" src="<?php echo IPP_PATH . "include/popupchooser.js"; ?>"></script>
     <script language="javascript" src="<?php echo IPP_PATH . "include/autocomplete.js"; ?>"></script>
      <?php
@@ -262,94 +257,46 @@ if(!$support_result) {
     </SCRIPT>
 </HEAD>
     <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
-        <tr>
-          <td class="shadow-topLeft"></td>
-            <td class="shadow-top"></td>
-            <td class="shadow-topRight"></td>
-        </tr>
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("modify_ipp_permission.php?student_id=$student_id"); ?></center>
-                    </td></tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
-
-                        <center><table><tr><td><center><p class="header">-Edit Permissions(<?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?>)-</p></center></td></tr></table></center>
-                        <BR>
-
-                        <!-- BEGIN add supervisor -->
-                        <center>
-                        <form name="edit_support_member" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_support_member.php"; ?>" method="get" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
-                        <tr>
-                          <td colspan="3">
-                          <p class="info_text">Edit and click 'Modify'.</p>
+        <?php print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']); ?>
+        <?php print_jumbotron_with_page_name("Edit Support Member", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission); ?>
+        <div class="container">
+        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+        
+        <!-- BEGIN add supervisor -->
+                        
+        <form name="edit_support_member" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_support_member.php"; ?>" method="get" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+        <h3>Edit <small>Click "Modify" to Submit</small></h3>
                            <input type="hidden" name="modify" value="1">
                            <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
                            <input type="hidden" name="username" value="<?php echo $_GET['username']; ?>">
-                          </td>
-                        </tr>
-                        <tr>
-                            <td valign="bottom" bgcolor="#E0E2F2" class="row_default">Username:</td><td bgcolor="#E0E2F2" class="row_default"><?php echo $_GET['username']; ?></td>
-                            <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="4" class="row_default"><input type="submit" name="modify" value="modify"></td>
-                        </tr>
-                        <tr>
-                           <td valign="bottom" bgcolor="#E0E2F2" class="row_default">IPP Permission:</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <select name="permission">
-                                   <option value="">-Choose-</option>
-                                   <option value="READ" <?php if($support_row['permission'] == 'READ') echo "SELECTED"; ?>>Read (Read Only)</option>
-                                   <option value="WRITE" <?php if($support_row['permission'] == 'WRITE') echo "SELECTED"; ?>>Write (Read and Write)</option>
-                                   <option value="ASSIGN" <?php if($support_row['permission'] == 'ASSIGN') echo "SELECTED"; ?>>Assign (Read,Write,Assign others permissions)</option>
-                                   <option value="ALL" <?php if($support_row['permission'] == 'ALL') echo "SELECTED"; ?>>All (Unlimited permission)</option>
-                               </select>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td valign="center" bgcolor="#E0E2F2" class="row_default">Support Area:</td><td bgcolor="#E0E2F2" class="row_default"><input type="text" size="40" name="support_area" onkeypress="return autocomplete(this,event,popuplist)" value="<?php echo $support_row['support_area'];?>">&nbsp;<img align="top" src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" width="17" border=0 onClick="popUpChooser(this,document.all.support_area);" ></td>
-                        </tr>
-                        <tr>
-                            <td bgcolor="#E0E2F2" class="row_default">
-                              Send email notification
-                            </td>
-                            <td bgcolor="#E0E2F2">
-                             <input type="checkbox" <?php if(!isset($_POST['ACTION']) || (isset($_POST['ACTION']) && isset($_POST['mail_notification']))) echo "checked"; ?> name="mail_notification">
-                            </td>
-                        </tr>
-                        </table>
-                        </form>
-                        </center>
-                        <!-- END add supervisor -->
-
-                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-            <?php navbar("modify_ipp_permission.php?student_id=$student_id"); ?>
-            </td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
-        <center></center>
+        
+        <h4>Modify User: <small><?php echo $_GET['username']; ?></small></h4>
+        <div class="form-group">
+        <label for="permission">Set Access Permissions to <?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?></label>
+        <select class="form-control" name="permission">
+            <option value="">-Choose-</option>
+            <option value="READ" <?php if($support_row['permission'] == 'READ') echo "SELECTED"; ?>>Read (Read Only)</option>
+            <option value="WRITE" <?php if($support_row['permission'] == 'WRITE') echo "SELECTED"; ?>>Write (Read and Write)</option>
+            <option value="ASSIGN" <?php if($support_row['permission'] == 'ASSIGN') echo "SELECTED"; ?>>Assign (Read,Write,Assign others permissions)</option>
+            <option value="ALL" <?php if($support_row['permission'] == 'ALL') echo "SELECTED"; ?>>All (Unlimited permission)</option>
+        </select>
+        </div>
+        
+        <p><label for="support_area">Support Area</label></p>
+        
+        <p><input type="text" size="40" name="support_area" onkeypress="return autocomplete(this,event,popuplist)" value="<?php echo $support_row['support_area'];?>">&nbsp;<img align="top" src="<?php echo IPP_PATH . "images/choosericon.png"; ?>" height="17" width="17" border=0 onClick="popUpChooser(this,document.all.support_area);"></p>
+        <div class="form-group">
+        <label for="mail_notification">Send email notification</label>
+        <p><input type="checkbox" <?php if(!isset($_POST['ACTION']) || (isset($_POST['ACTION']) && isset($_POST['mail_notification']))) echo "checked"; ?> name="mail_notification"></p>
+        </div>
+        <p><input class="btn btn-success" type="submit" name="modify" value="Modify"></p>
+        
+        
+        
+                
+        
+<?php print_complete_footer(); ?>
+<?php print_bootstrap_js(); ?>
     </BODY>
+    
 </HTML>
