@@ -28,12 +28,13 @@ $MINIMUM_AUTHORIZATION_LEVEL = 100; //everybody
  *
 */
 
-/**
- * Path for IPP required files.
- */
+
 
 $system_message = "";
 
+/**
+ * Path for IPP required files.
+ */
 define('IPP_PATH','./');
 
 /* eGPS required files. */
@@ -221,141 +222,94 @@ print_bootstrap_head();
 	print_jumbotron_with_page_name("Student Background", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission);
 	?>
 	<div class="container">
-		<table class="shadow" border="0" cellspacing="0" cellpadding="0"
-			align="center">
-
-			<tr>
-				<td class="shadow-left"></td>
-				<td class="shadow-center" valign="top">
-					<table class="frame" align=center border="0">
-
-
-						<tr>
-							<td valign="top">
-								<div id="main">
-									<?php if ($system_message) { 
-									 echo "<center><table><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";
-} ?>
-
-
-									<!-- BEGIN add info -->
-									<h2>Add Background Information</h2>
-									<center>
-										<form name="add_background_area" enctype="multipart/form-data"
-											action="<?php echo IPP_PATH . "background_information.php"; ?>"
-											method="post"
-											<?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
-											<table border="0" cellspacing="0" cellpadding="0">
-												<tr>
-													<td colspan="3">
-														<p class="info_text">Edit and click 'Add'.</p> <input
-														type="hidden" name="add_background_information" value="1">
-														<input type="hidden" name="student_id"
-														value="<?php echo $student_id; ?>">
-													</td>
-												</tr>
-												<tr>
-													<td valign="bottom" bgcolor="#E0E2F2" class="row_default">Type:</td>
-													<td bgcolor="#E0E2F2" class="row_default"><select
-														name="type" tabindex="1">
-															<option value="">-Choose-</option>
-															<?php foreach($enum_options_type as $i => $value) {
-															 echo "<option value=\"$value\"";
-															 if(isset($_POST['type']) && $value == $_POST['type']) echo " selected";
-															 echo ">$value</option>";
-															}
-															?>
-													</select>
-													</td>
-													<td valign="center" align="center" bgcolor="#E0E2F2"
-														rowspan="2" class="row_default"><input type="submit"
-														tabindex="3" name="add" value="add"></td>
-												</tr>
-												<tr>
-													<td valign="center" bgcolor="#E0E2F2" class="row_default">Description:</td>
-													<td bgcolor="#E0E2F2" class="row_default"><textarea
-															spellcheck="true" name="description" tabindex="2"
-															cols="30" rows="5" wrap="soft">
-															<?php if(isset($_POST['description'])) echo $_POST['description']; ?>
-														</textarea></td>
-												</tr>
-											</table>
-										</form>
-									</center>
-									<!-- END add info -->
-
-									<!-- BEGIN info table -->
-									<h2>Background Information</h2>
-									<form spellcheck="true" name="infolist"
-										onSubmit="return confirmChecked();"
-										enctype="multipart/form-data"
-										action="<?php echo IPP_PATH . "background_information.php"; ?>"
-										method="get">
-										<input type="hidden" name="student_id"
-											value="<?php echo $student_id ?>">
-										<center>
-											<table border="0" cellpadding="0" cellspacing="1">
-												<tr>
-													<td colspan="6">Background Information:</td>
-												</tr>
-												<?php
-												$bgcolor = "#DFDFDF";
-
-												//print the header row...
-												echo "<tr><td bgcolor=\"#E0E2F2\">&nbsp;</td><td bgcolor=\"#E0E2F2\">UID</td><td align=\"center\" bgcolor=\"#E0E2F2\">Type</td><td align=\"center\" bgcolor=\"#E0E2F2\">Description (click to edit)</td></tr>\n";
-												while ($background_info_row=mysql_fetch_array($background_result)) { //current...
-                            echo "<tr>\n";
-                            echo "<td bgcolor=\"#E0E2F2\"><input type=\"checkbox\" name=\"" . $background_info_row['uid'] . "\"></td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\">" . $background_info_row['uid'] . "</td>";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_background_information.php?uid=" . $background_info_row['uid'] . "\" class=\"editable_text\">" . $background_info_row['type']  ."</a></td>\n";
-                            echo "<td bgcolor=\"$bgcolor\" class=\"row_default\"><a href=\"" . IPP_PATH . "edit_background_information.php?uid=" . $background_info_row['uid'] . "\" class=\"editable_text\">" . mysql_real_escape_string($background_info_row['description']) . "</a></td>\n";
-                            echo "</tr>\n";
-                            if($bgcolor=="#DFDFDF") $bgcolor="#CCCCCC";
-                            else $bgcolor="#DFDFDF";
-                        }
-                        ?>
-												<tr>
-													<td colspan="5" align="left">
-														<table>
-															<tr>
-																<td nowrap><img
-																	src="<?php echo IPP_PATH . "images/table_arrow.png"; ?>">&nbsp;With
-																	Selected:</td>
-																<td><?php
-																//if we have permissions also allow delete and set all.
-																if ($permission_level <= $IPP_MIN_DELETE_BACKGROUND_INFORMATION_PERMISSION && $have_write_permission) {
-                                    echo "<INPUT NAME=\"delete\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=Delete\" border=\"0\" value=\"1\">";
-                                }
+		
+		<?php if ($system_message) { 
+			echo "<p>" . $system_message . "</p>";
+		}
+		?>
+		
+		<!-- BEGIN info table -->
+		<h2>Background Information <small>Scroll down to add background information</small></h2>
+		<form spellcheck="true" name="infolist" onSubmit="return confirmChecked();" enctype="multipart/form-data" action="<?php echo IPP_PATH . "background_information.php"; ?>" method="get">
+		<input type="hidden" name="student_id" value="<?php echo $student_id ?>">
+		
+		
+		<table class="table table-hover table-striped">										
+		<?php 
+		$bgcolor = "#DFDFDF";
+		//print the header row...
+		echo "<tr><th>&nbsp;</th><th>UID</th><th>Type</th><th>Description (click to edit)</th></tr>\n";
+		  while ($background_info_row=mysql_fetch_array($background_result)) { //current...
+            echo "<tr>\n";
+            echo "<td><input type=\"checkbox\" name=\"" . $background_info_row['uid'] . "\"></td>";
+            echo "<td>" . $background_info_row['uid'] . "</td>";
+            echo "<td><a href=\"" . IPP_PATH . "edit_background_information.php?uid=" . $background_info_row['uid'] . "\" class=\"editable_text\">" . $background_info_row['type']  ."</a></td>\n";
+            echo "<td><a href=\"" . IPP_PATH . "edit_background_information.php?uid=" . $background_info_row['uid'] . "\" class=\"editable_text\">" . mysql_real_escape_string($background_info_row['description']) . "</a></td>\n";
+            echo "</tr>\n";
+        if($bgcolor=="#DFDFDF") $bgcolor="#CCCCCC";
+        else $bgcolor="#DFDFDF";
+        }
+        ?>
+		<tr><td colspan="5" align="left"><table>
+										<tr>
+										<td nowrap><img src="<?php echo IPP_PATH . "images/table_arrow.png"; ?>">&nbsp;With Selected:</td>
+										<td><?php
+											//if we have permissions also allow delete and set all.
+											if ($permission_level <= $IPP_MIN_DELETE_BACKGROUND_INFORMATION_PERMISSION && $have_write_permission) {
+                                            echo "<INPUT NAME=\"delete\" TYPE=\"image\" SRC=\"" . IPP_PATH . "images/smallbutton.php?title=Delete\" border=\"0\" value=\"1\">";
+                                            }
                                 ?>
-																</td>
-															</tr>
-														</table>
-													</td>
-												</tr>
-											</table>
-										</center>
-									</form>
-									<!-- end info table -->
+										</td>
+										</tr>
+										</table>
+										</td>
+										</tr>
+								</table>
+								</form>
+									<!-- end info table -->		
+		
+		
+		
+		
+		
+		
+		
+		<!-- BEGIN add info -->
+		<h2>Add Background Information</h2>
+		
+		<form name="add_background_area" enctype="multipart/form-data" action="<?php echo IPP_PATH . "background_information.php"; ?>"	method="post" <?php if(!$have_write_permission) echo "onSubmit=\"return noPermission();\"" ?>>
+		
+		<input type="hidden" name="add_background_information" value="1">
+		<input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
+		
+		<div class="form-group">
+		<label for="type">Edit and click 'Add'.</label> 
+		
+		<select name="type">
+			<option value="">-Choose-</option>
+			<?php 
+			foreach($enum_options_type as $i => $value) {
+			     echo "<option value=\"$value\"";
+				 if(isset($_POST['type']) && $value == $_POST['type']) echo " selected";
+				 echo ">$value</option>";
+			}
+			?>
+		</select>
+		</div>
+		<div class="form-group">
+		<label for="description">Description</label>
+		<textarea class="form-control" spellcheck="true" name="description" rows="5" wrap="soft"><?php if(isset($_POST['description'])) echo $_POST['description']; ?></textarea>
+		</div>
+		<input class="btn btn-primary" type="submit" tabindex="3" name="add" value="Submit">
+		
+		</form>
+		
+		
+					
 
-								</div>
-							</td>
-						</tr>
-					</table>
-					</center>
-				</td>
-				<td class="shadow-right"></td>
-			</tr>
-			<tr>
-				<td class="shadow-left">&nbsp;</td>
-				<td class="shadow-center"></td>
-				<td class="shadow-right">&nbsp;</td>
-			</tr>
-			<tr>
-				<td class="shadow-bottomLeft"></td>
-				<td class="shadow-bottom"></td>
-				<td class="shadow-bottomRight"></td>
-			</tr>
-		</table>
+
+
+								
 	</div>
 	<?php 
 	print_complete_footer();

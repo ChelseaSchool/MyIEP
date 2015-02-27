@@ -293,7 +293,7 @@ print_jumbotron_with_page_name("Edit Contact Information", $target_row['first_na
                    
                             <input class="form-control" type="email" tabindex="12" name="email_address" size="30" maxsize="125" value="<?php if(isset($target_row['email_address'])) echo $target_row['email_address']; else if(isset($_GET['email_address'])) echo $_GET['email_address']; ?>">
                             </div>
-                            <p><button class="btn btn-md btn-success" tabindex="13" name="update" type="submit" value="Update">Submit</button></p>
+                            <p><button class="btn btn-primary" tabindex="13" name="update" type="submit" value="Update">Submit</button></p>
                         
                         </form>
 

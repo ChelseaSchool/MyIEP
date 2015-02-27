@@ -36,7 +36,6 @@ require_once IPP_PATH . 'include/db.php';
 require_once IPP_PATH . 'include/auth.php';
 require_once IPP_PATH . 'include/log.php';
 require_once IPP_PATH . 'include/user_functions.php';
-require_once IPP_PATH . 'include/navbar.php';
 require_once IPP_PATH . 'include/mail_functions.php';
 require_once IPP_PATH . 'include/supporting_functions.php';
 
@@ -258,7 +257,7 @@ if(!$support_result) {
 </HEAD>
     <BODY>
         <?php print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']); ?>
-        <?php print_jumbotron_with_page_name("Edit Support Member", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission); ?>
+        <?php print_jumbotron_with_page_name("Edit Support Member for", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission); ?>
         <div class="container">
         <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
         
@@ -289,7 +288,7 @@ if(!$support_result) {
         <label for="mail_notification">Send email notification</label>
         <p><input type="checkbox" <?php if(!isset($_POST['ACTION']) || (isset($_POST['ACTION']) && isset($_POST['mail_notification']))) echo "checked"; ?> name="mail_notification"></p>
         </div>
-        <p><input class="btn btn-success" type="submit" name="modify" value="Modify"></p>
+        <p><input class="btn btn-primary" type="submit" name="modify" value="Modify"></p>
         
         
         

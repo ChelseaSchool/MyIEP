@@ -368,7 +368,7 @@ print_student_navbar($student_id, $student_row['first_name'] . " " . $student_ro
     </table>
     </center>
     </td>
-    <td class="shadow-right"></td>
+    <td></td>
     </tr>
     </table>
     
@@ -392,7 +392,7 @@ print_student_navbar($student_id, $student_row['first_name'] . " " . $student_ro
         <p>
         <p><input type="text" name="username" length="30"></p>
         <p>(Wildcards: '%'=match any '_'=match single)</p>
-        <p><input type="submit" value="Search"></p>
+        <p><input class="btn btn-primary" type="submit" value="Search"></p>
         </form>
                         
         <!-- END NEW MEMBER ADD -->

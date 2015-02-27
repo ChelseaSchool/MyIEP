@@ -4,7 +4,6 @@
  *  @brief	display guardian information
  *  
  *  @todo
- *  #. Bootsrap UI
  *  #. Docblock commenting
  *  
  * 
@@ -14,15 +13,17 @@
 // everybody (do checks within document)
 $MINIMUM_AUTHORIZATION_LEVEL = 100;
 
-/**
- * Path for IPP required files.
- */
+
 
 if (isset ( $system_message ))
     $system_message = $system_message;
 else
     $system_message = "";
 
+
+/**
+ * Path for IPP required files.
+ */
 define ( 'IPP_PATH', './' );
 
 /* eGPS required files. */
@@ -31,7 +32,6 @@ require_once IPP_PATH . 'include/db.php';
 require_once IPP_PATH . 'include/auth.php';
 require_once IPP_PATH . 'include/log.php';
 require_once IPP_PATH . 'include/user_functions.php';
-require_once IPP_PATH . 'include/navbar.php';
 require_once IPP_PATH . 'include/supporting_functions.php';
 
 header ( 'Pragma: no-cache' ); // don't cache this page!
@@ -196,33 +196,40 @@ print_html5_primer ();
       }
 
     </SCRIPT>
+    
 <?php print_bootstrap_head(); ?>
 </HEAD>
 <BODY>
 <?php
 print_student_navbar ( $student_id, $student_row ['first_name'] . " " . $student_row ['last_name'] );
-print_jumbotron_with_page_name ( "View Guardians", $student_row ['first_name'] . " " . $student_row ['last_name'], $our_permission );
-
-if ($system_message) {
-    echo "<p>" . $system_message . "</p>";
-}
-
+//print_jumbotron_with_page_name( "View Guardians", $student_row ['first_name'] . " " . $student_row ['last_name'], $our_permission );
 ?>
-<div class="container">
-
-		<!-- BEGIN  Current Guardian Info -->
-		<h2>Guardian Information</h2>
-		<a
+<div class="jumbotron"><div class="container">
+<h1>View Guardians: &nbsp; <small><?php echo $student_row ['first_name'] . " " . $student_row ['last_name']; ?></small></h1>
+<h2>Logged in as: <small><?php echo $_SESSION['egps_username'] . " " . "(Permission: " . $our_permission; ?>)</small></h2>
+<h3><?php echo $system_message; ?></h3>
+<a
 			href="<?php echo IPP_PATH . "add_guardian.php?student_id=" . $student_row['student_id'];?>"
 			<?php if (!$have_write_permission) echo "onClick=\"return noPermission();\""; ?>><img
 			src="<?php echo IPP_PATH . "images/smallbutton.php?title=New Guardian";?>"
 			border="0"></a>
+</div></div>
+
+
+<div class="container">
+
+
+
+
+		<!-- BEGIN  Current Guardian Info -->
+		
+
                        
 
 <?php
 while ( $guardian = mysql_fetch_array ( $guardians_result ) ) {
     echo "<div class=\"row\"><div class=\"container\">\n";
-    echo "<h3>" . $guardian ['last_name'] . "," . $guardian ['first_name'] . "</h3>
+    echo "<h2>" . $guardian ['last_name'] . "," . $guardian ['first_name'] . "</h2>
                                 <p><a href=\"" . IPP_PATH . "guardian_view.php?student_id=" . $student_id . "&setNotGuardian=" . $guardian ['uid'] . "\"";
     if (! $have_write_permission)
         echo "onClick=\"return noPermission();\"";

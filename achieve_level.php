@@ -336,7 +336,8 @@ echo "<tr><th>Select</th><th>uid</th><th>Test Name</th><th>Results</th><th>Date<
 <p>&nbsp;</p>
 <label>Results</label>
 <textarea class="form-control" spellcheck="true" name="results" tabindex="4" cols="30" rows="3" wrap="soft"><?php if(isset($_POST['results'])) echo $_POST['results']; ?></textarea></td>
-<button type="submit" name="add" value="add" class="btn btn-success">Add</button>                       
+</div>
+<button type="submit" name="add" value="add" class="btn btn-primary">Add</button>                       
 
 </div>
                         </form>

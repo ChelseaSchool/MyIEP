@@ -16,15 +16,17 @@ $MINIMUM_AUTHORIZATION_LEVEL = 100;    //everybody (do checks within document)
 
 
 
-/**
- * Path for IPP required files.
- */
+
 
 if (isset($system_message)) {
     $system_message = $system_message; 
 } else {
     $system_message="";
 }
+
+/**
+ * Path for IPP required files.
+ */
 
 define('IPP_PATH', './');
 
@@ -145,76 +147,30 @@ print_bootstrap_head();
 print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']);
 print_jumbotron_with_page_name("Add Guardian", $student_row['first_name'] . " " . $student_row['last_name'], $current_student_permission)
 ?>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
+<div class="container">
+<?php if ($system_message) { echo "<p>" . $system_message . "</p>";} ?>
 
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    
-                    
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
+<h2>Fill out and click 'Add Guardian'.</h2>
+<form name="addGuardian" enctype="multipart/form-data" action="<?php echo IPP_PATH . "add_guardian.php"; ?>" method="get">
+    <input type="hidden" name="add_guardian" value="1">
+    <input type="hidden" name="student_id" value="<?php echo $student_row['student_id']; ?>">
 
-                        <center>
-                        
-                        </center>
-                        <BR>
-                        <center>
-                        <form name="addGuardian" enctype="multipart/form-data" action="<?php echo IPP_PATH . "add_guardian.php"; ?>" method="get">
-                        <table border="0" cellpadding="0" cellspacing="0" width="80%">
-                        <tr>
-                          <td colspan="2">
-                          <p class="info_text">Fill out and click 'Add Guardian'.</p>
-                          <input type="hidden" name="add_guardian" value="1">
-                          <input type="hidden" name="student_id" value="<?php echo $student_row['student_id']; ?>">
-                          </td>
-                        </tr>
+    <div class="form-group">
+    <label for="first_name">First Name</label>
+<input class="form-control" type="text" tabindex="1" name="first_name" size="30" maxsize="125" value="<?php if (isset($user_row['first_name'])) echo $user_row['first_name']; else if(isset($_POST['first_name'])) echo $_POST['first_name'];?>">
+</div>
 
-                        <tr>
-                          <td bgcolor="#E0E2F2" align="left">First Name:</td>
-                          <td bgcolor="#E0E2F2">
-                            <input type="text" tabindex="1" name="first_name" size="30" maxsize="125" value="<?php if (isset($user_row['first_name'])) echo $user_row['first_name']; else if(isset($_POST['first_name'])) echo $_POST['first_name'];?>">
-                          </td>
-                        </tr>
-                        <tr>
-                          <td bgcolor="#E0E2F2" align="left">Last Name:</td>
-                          <td bgcolor="#E0E2F2">
-                            <input type="text" name="last_name" tabindex="2" size="30" maxsize="125" value="<?php if (isset($user_row['last_name'])) echo $user_row['last_name']; else if(isset($_POST['last_name'])) echo $_POST['last_name']; ?>">
-                          </td>
-                        </tr>
-                        <tr>
-                            <td valign="bottom" align="center" bgcolor="#E0E2F2" colspan="2">&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td valign="bottom" align="center" bgcolor="#E0E2F2" colspan="2">&nbsp;&nbsp;<input tabindex="3" type="submit" value="Add Guardian"></td>
-                        </tr>
-                        </table>
-                        </form>
-                        </center>
+<div class="form-group">
+<label for="last_name">Last Name</label>
+<input class="form-control" type="text" name="last_name" tabindex="2" size="30" maxsize="125" value="<?php if (isset($user_row['last_name'])) echo $user_row['last_name']; else if(isset($_POST['last_name'])) echo $_POST['last_name']; ?>">
+</div>
+<input class="btn btn-primary" tabindex="3" type="submit" value="Add Guardian"></td>
+</form>
 
-                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-            &nbsp;
-            </td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
+
+
+
+        </div>
        <?php print_complete_footer(); ?>
        <?php print_bootstrap_js(); ?>
     </BODY>
