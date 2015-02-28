@@ -375,7 +375,7 @@ if(isset($_POST['edit_accomodation']) && $have_write_permission)
 <input type="datepicker" class="form-control datepicker"  name="end_date" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="<?php echo $accomodation_row['end_date']; ?>">
 </div>                        
 <div class="form-group">
-<input class="btn btn-default" type="submit" tabindex="5" name="Update" value="Update">
+<input class="btn btn-primary" type="submit" tabindex="5" name="Update" value="Update">
  </div>
 </form>
  <!-- END edit accomodation -->

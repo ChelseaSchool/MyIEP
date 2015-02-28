@@ -255,20 +255,23 @@ if(isset($_POST['edit_medical_info']) && $have_write_permission) {
 <label>Date (YYYY-MM-DD)</label>
 <input class="form-control datepicker" required type="datepicker" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" name="date" tabindex="1" value="<?php echo $medical_row['date']; ?>">
 </div>
+<p>&nbsp;</p>
 <label>Optional File Upload (.doc,.pdf,.txt,.rtf)</label>
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
 <input type="file" tabindex="2" name="supporting_file" value="<?php echo $_FILES['supporting_file']['name'] ?>">
-                           
+<p>&nbsp;</p>                          
 <label>Report in File</label>                  
 <input type="checkbox" tabindex="3" name="report_in_file" <?php if($medical_row['copy_in_file']=='Y') echo "checked";?>>
-                           
+
+ <div class="form-group">                          
 <label>Priority Entry</label>
 <input type="checkbox" tabindex="4" name="is_priority" <?php if($medical_row['is_priority']=='Y') echo "checked";?>>
+</div>
 <div class="form-group">                     
 <label>Description</label>
 <textarea class="form-control" required spellcheck="true" tabindex="5" name="description" cols="30" rows="5" wrap="SOFT"><?php echo $medical_row['description']; ?></textarea>
 </div>                        
-<button type="submit" class="button btn-lg btn-default">Submit</button>                        
+<button type="submit" class="button btn-lg btn-primary">Submit</button>                        
 </form>
                         
 <!-- END add new entry -->

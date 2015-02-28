@@ -347,32 +347,33 @@ if(!$medical_result) {
 <input type="hidden" name="add_medical_info" value="1">
 <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
 <div class=form-group">                          
-<label>Date (YYYY-MM-DD)</label>
+<label for="date">Date (YYYY-MM-DD)</label>
 <input class="form-control datepicker" data-date-format="yyyy-mm-dd" type="datepicker" id="datepicker" tabindex="1" name="date" value="<?php if(isset($_POST['date'])) echo $_POST['date']; ?>">
 </div>
-<p>
-<label>Optional File Upload (.doc,.pdf,.txt,.rtf)</label>
+<p>&nbsp;</p>
+<div class="form-group">
+<label for="supporting_file">Optional File Upload (.doc,.pdf,.txt,.rtf)</label>
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
 <input type="file" tabindex="2" name="supporting_file" value="<?php if(isset($_FILES['supporting_file']['name'])) echo $_FILES['supporting_file']['name'] ?>">
-</p>
+</div>
 
 <div class="form-group">
-<label>Description</label>
+<label for="description">Description</label>
 <textarea class="form-control" spellcheck="true" name="description" tabindex="5" cols="30" rows="3" wrap="SOFT"><?php  if(isset($_POST['description'])) echo $_POST['description']; ?></textarea>
 </div>
 
-<p>
-<label>Report in File</label>
+<div class="form-group">
+<label for="report_in_file">Report in File</label>
 <input type="checkbox" tabindex="3" name="report_in_file" <?php if(isset($_POST['report_in_file']) && $_POST['report_in_file']) echo "checked";?>>
-</p>
+</div>
 
 
                        
-<p>
-<label>Priority Entry</label>
+<div class="form-group">
+<label for="is_priority">Priority Entry</label>
 <input type="checkbox" tabindex="4" name="is_priority" <?php if(isset($_POST['is_priority']) && $_POST['is_priority']) echo "checked";?>>
-</p>
-<button type="submit" name="add" value="add" class="btn btn-success">Add Entry</button>                       
+</div>
+<button type="submit" name="add" value="add" class="btn btn-primary">Add Entry</button>                       
 </form>
                        
  <!-- END add new entry -->

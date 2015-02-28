@@ -440,7 +440,7 @@ echo "<button NAME=\"delete\" type=\"submit\" value=\"delete\">Delete Selected</
 							placeholder="Subject or Area">
 					</div>
 					<button type="submit" tabindex="3" name="add" value="add"
-						class="btn btn-default">Submit</button>
+						class="btn btn-primary">Submit</button>
 				</form>
 				<!-- END add accomodation -->
 			</div>
