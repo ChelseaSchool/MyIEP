@@ -545,12 +545,13 @@ body {
 				<div class=form-group>
 					<!-- Hidden -->
 					<input type="hidden" name="student_id"
-						value="<?php echo $student_id; ?>"> <input type="hidden"
-						name="lto" value="<?php echo $goal_id; ?>"> <input type="hidden"
+						value="<?php echo $student_id; ?>"><input type="hidden"
+						name="lto" value="<?php echo $goal_id; ?>">
+						<input type="hidden"
 						name="update_goal" value="1">
 					<!--  End hidden -->
 					<div class="form-group">
-						<label>Goal Area</label> <select required class="form-control"
+						<label>Goal Area</label><select required class="form-control"
 							name="goal_area" placeholder="Choose Goal Area"
 							value="<?php echo $goal_row['area']; ?>">
 
@@ -573,14 +574,12 @@ while ($area_result_row=mysql_fetch_array($area_result)) {
 }
 //$goal=$goal_row['description'];
 ?>
-						</select> <label>Goal</label>
+						</select><label>Goal</label>
 						</p>
 						<textarea spellcheck="true" class="form-control" name="goal_text"
-							spellcheck="true" cols="45" rows="3" wrap="soft">
-							<?php echo $goal_row['goal']; ?>
-						</textarea>
+							spellcheck="true" rows="5"><?php if (isset($goal_row['goal'])) echo $goal_row['goal']; ?></textarea>
 						</p>
-						<label>Review Date</label> <input class="form-control datepicker"
+						<label>Review Date</label><input class="form-control datepicker"
 							autocomplete="off" type="datepicker" id="datepicker"
 							name="goal_review_date" data-provide="datepicker"
 							data-date-format="yyyy-mm-dd"
@@ -622,8 +621,7 @@ while ($area_result_row=mysql_fetch_array($area_result)) {
 						placeholder="<?php echo $student_row['first_name'];?> will ... "
 						required spellcheck="true" class="form-control" spellcheck="true"
 						spellcheck="true" name="objective" tabindex="1" cols="40" rows="3"
-						wrap="soft">
-						<?php if(isset($_POST['objective'])) echo $_POST['objective']; ?>
+						wrap="soft"><?php if(isset($_POST['objective'])) echo $_POST['objective']; ?>
 					</textarea>
 					<label>Review Date (YYYY-MM-DD)</label> <input required
 						type="datepicker" autocomplete="off"
