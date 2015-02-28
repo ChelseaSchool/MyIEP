@@ -164,7 +164,7 @@ if(isset($_POST['edit_strength_or_need']) && $have_write_permission) {
 </div>
 
 <div class="form-group">                      
-<label>Description</label>
+<label>Description <em>(Please include report date)</em></label>
 <textarea class="form-control" spellcheck="true" name="description" tabindex="2" cols="30" rows="5" wrap="soft"><?php echo $strength_row['description'];?></textarea>
 </div>
 <div class="form-group">
@@ -176,7 +176,7 @@ if(isset($_POST['edit_strength_or_need']) && $have_write_permission) {
 </select>
 </div>
                    
-<input type="submit" tabindex="4" name="Update" value="Update">
+<input class="btn btn-primary" type="submit" tabindex="4" name="Update" value="Update">
 
 </form>
 <!-- END add supervisor -->
