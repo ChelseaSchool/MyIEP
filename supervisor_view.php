@@ -261,7 +261,7 @@ while ($support_member_row = mysql_fetch_array($support_member_result)) {
                       
 
 </div>                        
-<button class="btn button-lg button-default" type="submit" name="add" value="add">Submit</button>
+<button class="btn btn-primary" type="submit" name="add" value="add">Submit</button>
 </form>                       
 <!-- END add supervisor -->
 

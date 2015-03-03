@@ -22,12 +22,12 @@ $MINIMUM_AUTHORIZATION_LEVEL = 0; //only super administrator
  *
  */
 
+
+
+$system_message = "";
 /**
  * Path for IPP required files.
  */
-
-$system_message = "";
-
 define('IPP_PATH','./');
 
 /* eGPS required files. */
@@ -171,85 +171,41 @@ print_bootstrap_head();
     </SCRIPT>
 </HEAD>
     <BODY>
-        <table class="shadow" border="0" cellspacing="0" cellpadding="0" align="center">  
+    <?php 
+    print_general_navbar();
+    print_lesser_jumbotron("Edit School Information", $permission_level)
+    ?>
+    <div class="container">
+ <?php if ($system_message) { echo "<p class=\"message\">" . $system_message . "</p>";} ?>
+ <h3>Edit and click Update</h3>
+        <form name="edit_school" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_school.php"; ?>" method="post">
+        <input type="hidden" name="edit_school" value="1">
         
-        <tr>
-            <td class="shadow-left"></td>
-            <td class="shadow-center" valign="top">
-                <table class="frame" width=620px align=center border="0">
-                    <tr align="Center">
-                    <td><center><img src="<?php echo $page_logo_path; ?>"></center></td>
-                    </tr>
-                    <tr><td>
-                    <center><?php navbar("school_info.php"); ?></center>
-                    </td></tr>
-                    <tr>
-                        <td valign="top">
-                        <div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
-
-                        <center><table><tr><td><center><p class="header">- Edit School-</p></center></td></tr></table></center>
-                        <BR>
-
-                        <!-- BEGIN edit school -->
-                        <center>
-                        <form name="edit_school" enctype="multipart/form-data" action="<?php echo IPP_PATH . "edit_school.php"; ?>" method="post">
-                        <table border="0" cellspacing="0" cellpadding ="0" width="80%">
-                        <tr>
-                          <td colspan="3">
-                          <p class="info_text">Edit and click 'Update'.</p>
-                           <input type="hidden" name="edit_school" value="1">
-                          </td>
-                        </tr>
-                        <tr>
-                            <td valign="bottom" bgcolor="#E0E2F2" class="row_default">School Code:</td>
-                            <td bgcolor="#E0E2F2" class="row_default">
-                            <input type="text" tabindex="1" name="school_code" value="<?php echo $school_row['school_code']; ?>" size="30" maxsize="254">
-                            </td>
-                            <td valign="center" align="center" bgcolor="#E0E2F2" rowspan="4" class="row_default"><input type="submit" tabindex="5" value="Update" value="Update"></td>
-                        </tr>
-                        <tr>
-                            <td valign="bottom" bgcolor="#E0E2F2" class="row_default">School Name:</td>
-                            <td bgcolor="#E0E2F2" class="row_default">
-                            <input type="text" tabindex="2" name="school_name" value="<?php echo $school_row['school_name']; ?>" size="30" maxsize="254">
-                            </td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">School Address:</td>
-                           <td bgcolor="#E0E2F2" class="row_default"><textarea spellcheck="true" name="school_address" tabindex="3" cols="30" rows="3" wrap="soft"><?php echo $school_row['school_address']; ?></textarea></td>
-                        </tr>
-                        <tr>
-                           <td bgcolor="#E0E2F2" class="row_default">School Colour:</td>
-                           <td bgcolor="#E0E2F2" class="row_default">
-                               <INPUT TYPE="TEXT" NAME="school_colour" MAXLENGTH="7" tabindex="4" SIZE="7" value="#<?php echo $school_row['red'] . $school_row['green'] . $school_row['blue']; ?>">
-                               <a href="javascript:TCP.popup(document.forms['edit_school'].elements['school_colour'], 1)"><img width="15" height="13" border="0" alt="Click Here to Pick the color" src="<?php echo IPP_PATH . "images/colour_sel.gif"; ?>"></a>
-                           </td>
-                        </tr>
-                        </table>
-                        </form>
-                        </center>
-                        <!-- END add school -->
-
-                        </div>
-                        </td>
-                    </tr>
-                </table></center>
-            </td>
-            <td class="shadow-right"></td>   
-        </tr>
-        <tr>
-            <td class="shadow-left">&nbsp;</td>
-            <td class="shadow-center">
-              <?php navbar("school_info.php"); ?></td>
-            <td class="shadow-right">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="shadow-bottomLeft"></td>
-            <td class="shadow-bottom"></td>
-            <td class="shadow-bottomRight"></td>
-        </tr>
-        </table> 
-        <center></center>
+        <div class="form-group">
+        <label>School Code</label>
+         <input class="form-control" type="text" tabindex="1" name="school_code" value="<?php echo $school_row['school_code']; ?>" size="30" maxsize="254">
+        </div>
+        <div class="form-group">
+        <label>School Name</label>
+        <input class="form-control" type="text" tabindex="2" name="school_name" value="<?php echo $school_row['school_name']; ?>" size="30" maxsize="254">
+        </div>
+        <div class="form-group">
+        <label>School Address</label>
+        <textarea class="form-control" spellcheck="true" name="school_address" tabindex="3" rows="3" wrap="soft"><?php echo $school_row['school_address']; ?></textarea>
+        </div>
+        <div class="form-group">
+       <label>School Color <a href="javascript:TCP.popup(document.forms['edit_school'].elements['school_colour'], 1)"><img width="15" height="13" border="0" alt="Click Here to Pick the color" src="<?php echo IPP_PATH . "images/colour_sel.gif"; ?>"></a></label>
+          <INPUT class="form-control" TYPE="TEXT" NAME="school_colour" MAXLENGTH="7" tabindex="4" SIZE="7" value="#<?php echo $school_row['red'] . $school_row['green'] . $school_row['blue']; ?>">
+         </div> 
+        <button class="btn btn-primary" type="submit" tabindex="5">Update</button>
+        </form>
+        
+        
+        
+        
+        
+        
+        </div>
         <?php print_bootstrap_js(); ?>
     </BODY>
 </HTML>

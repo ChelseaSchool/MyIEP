@@ -366,7 +366,7 @@ $(document).ready(function() {
 					<input type="hidden" name="szBackGetVars" value="<?php echo $szBackGetVars; ?>;"> 
 					<input type="hidden" name="egps_username" value="<?php echo $_GET['egps_username'] ?>;">
 					<p>
-						<button class="btn btn-default" type="submit" value="Add"
+						<button class="pull-right btn btn-primary" type="submit" value="Add"
 							tabindex="10">Create Account</button>
 					</p>
 

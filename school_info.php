@@ -241,8 +241,8 @@ print_html5_primer();
                         </div>
                         <p>
                         <div class="form-group">
-                           <label>School Color</label>
-                           <INPUT class="form-control" TYPE="color" NAME="school_colour" MAXLENGTH="7" tabindex="4" SIZE="7" value="<?php if(isset($_POST['school_colour']))echo $_POST['school_colour']; ?>">
+                           <label>School Color &nbsp;</label>
+                           <INPUT TYPE="color" NAME="school_colour" MAXLENGTH="7" tabindex="4" SIZE="7" value="<?php if(isset($_POST['school_colour']))echo $_POST['school_colour']; ?>">
                            </div> 
                           <button class="btn btn-primary" type="submit" tabindex="5" value="add" value="add">Add School</button>
                         </form>
