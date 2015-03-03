@@ -16,15 +16,15 @@
 // the authorization level for this page!
 $MINIMUM_AUTHORIZATION_LEVEL = 100; // everybody (do checks within document)
 
-/**
- * Path for IPP required files.
- */
+
 
 if (isset ( $system_message ))
     $system_message = $system_message;
 else
     $system_message = "";
-
+/**
+ * Path for IPP required files.
+ */
 define ( 'IPP_PATH', './' );
 
 /* eGPS required files. */
@@ -34,6 +34,7 @@ require_once IPP_PATH . 'include/auth.php';
 require_once IPP_PATH . 'include/log.php';
 require_once IPP_PATH . 'include/user_functions.php';
 require_once IPP_PATH . 'include/navbar.php';
+require_once IPP_PATH . 'include/supporting_functions.php';
 
 header ( 'Pragma: no-cache' ); // don't cache this page!
 
@@ -176,8 +177,43 @@ mysql_data_seek ( $guardian_result, 0 );
               return false;
       }
     </SCRIPT>
+    
+    <?php print_bootstrap_head(); ?>
 </HEAD>
 <BODY>
+<?php print_student_navbar($student_id, $student_row['first_name'] . " " . $student_row['last_name']);
+print_jumbotron_with_page_name("Guardian Notes", $student_row['first_name'] . " " . $student_row['last_name'], $our_permission);
+?>
+<div class="container">
+ <?php if ($system_message) { echo "<p>" . $system_message . "</p>";} ?>
+
+<?php
+$target_row = mysql_fetch_array ( $guardian_result );
+echo "<h2>" . $target_row ['last_name'] . "," . $target_row ['first_name'] . "</h2>";
+?> 
+ 
+ 
+ <form name="addnote" enctype="multipart/form-data"
+									action="<?php echo IPP_PATH . "guardian_notes.php"; ?>"
+									method="get">
+ <input type="hidden" name="guardian_id"
+												value="<?php echo $target_row['guardian_id']; ?>">
+											<input type="hidden" name="student_id"
+												value="<?php echo $_GET['student_id']; ?>">
+											<input type="hidden" name="add_note" value="1">
+Add Note
+<textarea spellcheck="true" tabindex="1" name="note" wrap="soft"></textarea>
+<input type="checkbox" tabindex="2" name="priority_note" value="1"><label for="priority_note">Priority Flag</label>
+<INPUT TYPE="image" tabindex="3" SRC="<?php echo IPP_PATH . "images/smallbutton.php?title=Add"; ?>" border="0" name="add" value="1">
+
+
+
+
+
+
+
+
+
 	<table class="shadow" border="0" cellspacing="0" cellpadding="0"
 		align="center">
 
@@ -186,67 +222,42 @@ mysql_data_seek ( $guardian_result, 0 );
 			<td class="shadow-center" valign="top">
 				<table class="frame" width=620px align=center border="0">
 					<tr align="Center">
-						<td><center>
-								<img src="<?php echo $page_logo_path; ?>">
-							</center></td>
-					</tr>
-					<tr>
-						<td>
-							<center><?php navbar("guardian_view.php?student_id=$student_id"); ?></center>
-						</td>
-					</tr>
-					<tr>
+					
 						<td valign="top">
 							<div id="main">
-                        <?php if ($system_message) { echo "<center><table width=\"80%\"><tr><td><p class=\"message\">" . $system_message . "</p></td></tr></table></center>";} ?>
-
+                       
                         <center>
 									<table width="80%" cellspacing="0" cellpadding="0">
 										<tr>
 											<td><center>
-													<p class="header">- IPP Guardian Notes -</p>
+													
 												</center></td>
 										</tr>
 										<tr>
 											<td><center>
 													<p class="bold_text">
-                        <?php
                         
-                        $target_row = mysql_fetch_array ( $guardian_result );
-                        echo "Guardian: " . $target_row ['last_name'] . "," . $target_row ['first_name'] . "<BR>";
-                        ?></p>
 												</center></td>
 										</tr>
 									</table>
 								</center>
 
 								<!-- BEGIN Add Note -->
-								<form name="addnote" enctype="multipart/form-data"
-									action="<?php echo IPP_PATH . "guardian_notes.php"; ?>"
-									method="get">
+								
 									<center>
 										<table width="80%" border="0" cellpadding="0" cellspacing="0">
-											<input type="hidden" name="guardian_id"
-												value="<?php echo $target_row['guardian_id']; ?>">
-											<input type="hidden" name="student_id"
-												value="<?php echo $_GET['student_id']; ?>">
-											<input type="hidden" name="add_note" value="1">
+											
 											<tr>
-												<td colspan="2" class="wrap_top">Add Note</td>
+												<td colspan="2" class="wrap_top"></td>
 											</tr>
 											<tr>
-												<td class="wrap_left" bgcolor="#E0E2F2" width="100%"><textarea
-														spellcheck="true" tabindex="1" name="note" cols="40"
-														rows="3" wrap="soft"></textarea><BR>
+												<td class="wrap_left" bgcolor="#E0E2F2" width="100%"><BR>
 													<center>
-														<input type="checkbox" tabindex="2" name="priority_note"
-															value="1">Priority Flag
+														
 													</center></td>
 												<td bgcolor="#FFFFFF" class="wrap_right" rowspan="1"
 													width="100"><center>
-														<INPUT TYPE="image" tabindex="3"
-															SRC="<?php echo IPP_PATH . "images/smallbutton.php?title=Add"; ?>"
-															border="0" name="add" value="1">
+														
 													</center></td>
 											</tr>
 											<tr>
@@ -320,5 +331,7 @@ mysql_data_seek ( $guardian_result, 0 );
 		</tr>
 	</table>
 	<center></center>
+	
+	</div>
 </BODY>
 </HTML>

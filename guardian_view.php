@@ -213,7 +213,8 @@ print_student_navbar ( $student_id, $student_row ['first_name'] . " " . $student
 			<?php if (!$have_write_permission) echo "onClick=\"return noPermission();\""; ?>><img
 			src="<?php echo IPP_PATH . "images/smallbutton.php?title=New Guardian";?>"
 			border="0"></a>
-</div></div>
+</div>
+</div>
 
 
 <div class="container">
@@ -325,12 +326,13 @@ while ( $guardian = mysql_fetch_array ( $guardians_result ) ) {
     echo "</div></div>";
 }
 ?>
-                        </table>
+                       
 
 		<!-- END Current Guardian Info -->
 
 		<!-- BEGIN  Previous Guardian Info -->
 		<div class="container">
+			<hr>
 			<h2>Previous Guardian(s)</h2>
                         
                         
@@ -439,7 +441,7 @@ while ( $guardian = mysql_fetch_array ( $guardians_result ) ) {
                         <!-- END Previous Guardian Info -->
 
 
-		</div>
+		</div></div>
 		<footer><?php print_complete_footer(); ?>
 </footer>        <?php print_bootstrap_js(); ?>
     
