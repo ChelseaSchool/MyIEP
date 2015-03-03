@@ -7,6 +7,7 @@
  *  @todo
  *  #. make $webapp external, perhaps in init.php
  */ 
+define('IPP_PATH','./');
 require_once IPP_PATH . 'include/supporting_functions.php';
 //require_once 'Mail.php';
 //remove_credential_reset_lock(); //security override - delete for production
@@ -30,12 +31,12 @@ header('Pragma: no-cache'); //don't cache this page!
 
 $webapp = "https://teamchelsea.net/MyIEP/";
 
-require_once 'etc/init.php';
+require_once IPP_PATH . 'etc/init.php';
 //require_once 'include/db.php';
 //require_once 'include/log.php';
 //require_once(IPP_PATH . 'include/auth.php');
 
-require_once 'include/supporting_functions.php';
+require_once IPP_PATH . 'include/supporting_functions.php';
 //require_once 'include/page_troubleshoot.php';
 
 
