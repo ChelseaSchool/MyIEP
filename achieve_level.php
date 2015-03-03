@@ -325,26 +325,33 @@ echo "<tr><th>Select</th><th>uid</th><th>Test Name</th><th>Results</th><th>Date<
                          
 <label>Test Name</label>
 <input class="form-control" type="text" tabindex="1" name="test_name" size="30" maxsize="255" value="<?php if(isset($_POST['test_name'])) echo $_POST['test_name']; ?>">
-                           
+</div>
+<div class="form-group">                           
 <label>Date (YYYY-MM-DD)</label>
 <input id="datepicker" class="form-control datepicker" tabindex="2" data-date-format="yyyy-mm-dd" name="date" value="<?php if(isset($_POST['date'])) echo $_POST['date']; ?>">
-</div>                         
+</div>   
+<div class="form-group">                           
+
 <label>Optional File Upload(.doc,.pdf,.txt,.rtf)</label>
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
 <input type="file" tabindex="3" name="supporting_file" value="<?php if(isset($_FILES['supporting_file']['name'])) echo $_FILES['supporting_file']['name'] ?>">
+</div>
 <div class="form-group">
-<p>&nbsp;</p>
+
 <label>Results</label>
 <textarea class="form-control" spellcheck="true" name="results" tabindex="4" cols="30" rows="3" wrap="soft"><?php if(isset($_POST['results'])) echo $_POST['results']; ?></textarea></td>
 </div>
 <button type="submit" name="add" value="add" class="btn btn-primary">Add</button>                       
 
-</div>
+<button type="submit" name="add" value="add" class="btn btn-primary">Add</button>                       
+
+
                         </form>
                         </center>
                         <!-- END add new entry --> 
-        <?php print_complete_footer(); ?>
         </div>
+        <?php print_complete_footer(); ?>
+        
         <?php print_bootstrap_js(); ?>
     </BODY>
 </HTML>

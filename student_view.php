@@ -306,7 +306,7 @@ if (!$guardians_result) {
 <div class="col-md-4">
 <h2>Quick Access</h2>
 <h4>Goals &amp; Objectives</h4>
-<p><a class="btn btn-default btn-lg" href="<?php echo IPP_PATH . "long_term_goal_view.php?student_id=" . $student_row['student_id']; ?>" role="button">View &raquo;</a></p>
+<p><a class="btn btn-primary btn-sm" href="<?php echo IPP_PATH . "long_term_goal_view.php?student_id=" . $student_row['student_id']; ?>" role="button">View &raquo;</a></p>
 <hr>
 <h3>More Records: <small><?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?></small></h3>
 <form>
@@ -351,14 +351,14 @@ if (!$guardians_result) {
                                             echo  $student_row['current_grade'];
                                       }
                                 ?></h4>
-<h3><small>Student Number: </small><?php echo $student_row['prov_ed_num'];?></h4>
-
-<p><a class="btn btn-default btn-lg" href="<?php echo IPP_PATH . "edit_general.php?student_id=" . $student_id ?>" role="button">Edit &raquo;</a></p>
+<h4><small>Student Number: </small><?php echo $student_row['prov_ed_num'];?></h4>
+<h4><small>Code: </small><em>Not currently in use.</em></h4>
+<p><a class="btn btn-primary btn-sm" href="<?php echo IPP_PATH . "edit_general.php?student_id=" . $student_id ?>" role="button">Edit &raquo;</a></p>
 <!-- End col --></div>
 <div class="col-md-4">
 <h2>IEP Team</h2>
 <h4><small>Case Manager: </small><?php echo $supervisor_row['egps_username'];?></h4>
-<p><a class="btn btn-default btn-lg" href="<?php echo IPP_PATH . "supervisor_view.php?student_id=" . $_GET['student_id'];?>" role="button">Update Case Manager &raquo;</a></p>
+<p><a class="btn btn-primary btn-sm" href="<?php echo IPP_PATH . "supervisor_view.php?student_id=" . $_GET['student_id'];?>" role="button">Update Case Manager &raquo;</a></p>
 <h4><small>Support Team: </small></h4>
 <table class="table table-striped">
 <?php if (mysql_num_rows($support_member_result) <=0) {
@@ -375,7 +375,7 @@ while ($support_member_row=mysql_fetch_array($support_member_result)) {
         echo "<td>" . $support_member_row['support_area'] . "</td></tr>";
      } ?>
 </table>
-<p><a class="btn btn-default btn-lg" href="<?php echo IPP_PATH . "modify_ipp_permission.php?student_id=" . $_GET['student_id']; ?>" role="button">Update Team &raquo;</a></p>
+<p><a class="btn btn-primary btn-sm" href="<?php echo IPP_PATH . "modify_ipp_permission.php?student_id=" . $_GET['student_id']; ?>" role="button">Update Team &raquo;</a></p>
 
 <!-- End col --></div>
  <!-- Second Row -->
@@ -390,19 +390,20 @@ else
 echo $school_row['school_name'] . "</h4> <p>(since " . $school_row['start_date'] . ")</p>";
 ?>
 
- <p><a class="btn btn-default btn-lg" href="<?php echo IPP_PATH . "school_history.php?student_id=" . $student_id ?>" role="button">Update School History &raquo;</a></p>
+ <p><a class="btn btn-primary btn-sm" href="<?php echo IPP_PATH . "school_history.php?student_id=" . $student_id ?>" role="button">Update School History &raquo;</a></p>
 
 </div><!--End Column -->
 
 <div class="col-md-4">
 <h2>Guardian Information</h2>
-<p><a class="btn btn-default btn-lg" href="<?php echo IPP_PATH . "guardian_view.php?student_id=" . $student_id ?>" role="button">View Guardian Information &raquo;</a></p>
+<p><a class="btn btn-primary btn-sm" href="<?php echo IPP_PATH . "guardian_view.php?student_id=" . $student_id ?>" role="button">View Guardian Information &raquo;</a></p>
 </div><!-- End Column -->
 <!-- End Row -->
 </div>
 
 <!-- To end main container -->
  </div>
+ <?php print_complete_footer(); ?>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

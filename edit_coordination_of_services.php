@@ -323,31 +323,36 @@ if(isset($_POST['edit_coordination_of_services'])) {
                           
 <label>Services</label>
 <input class="form-control" type="text" tabindex="1" name="agency" size="30" maxsize="255" value="<?php echo $coord_row['agency']; ?>">
-                      
+</div>                      
 
-                        
+<div class="form-group">
+
                          <label>Date (YYYY-MM-DD)</label>
                          <input class="form-control datepicker" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" type="datepicker" tabindex="2" name="date" value="<?php echo $coord_row['date']; ?>">
  </div>                          
-  <label>Optional File Upload(.doc,.pdf,.txt,.rtf)</label>
+<p>&nbsp;</p>
+ <label>Optional File Upload(.doc,.pdf,.txt,.rtf)</label>
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
 <input type="file" tabindex="3" name="supporting_file" value="<?php echo $_FILES['supporting_file']['name'] ?>">
-                           
+<p>&nbsp;</p>
+<div class="form-group">
+
 <label>Report in File</label>
 <input type="checkbox" tabindex="4"  name="report_in_file" <?php if($coord_row['report_in_file']=='Y') echo "checked";?>>
+</div>
 <div class="form-group">
 <label>Description</label>
 <textarea class="form-control" spellcheck="true" name="description" tabindex="5" cols="30" rows="5" wrap="soft"><?php echo $coord_row['description']; ?></textarea></td>
 </div>                     
-<input type="submit" tabindex="6" name="Update" value="Update">
+<input class="btn btn-primary" type="submit" tabindex="6" name="Update" value="Update">
                         
  </form>
                     
  <!-- END add new entry -->
 
-                       
+      </div>                   
         <?php print_complete_footer(); ?>
-        </div>
+      
         <?php print_bootstrap_js(); ?>
     </BODY>
 </HTML>

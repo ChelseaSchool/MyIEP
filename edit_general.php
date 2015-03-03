@@ -203,11 +203,16 @@ print_html5_primer();
     <div class="form-group">                     
     <label>First Name</label>
     <input class="form-control" type="text" autocomplete="off" required name="first_name" size="30" maxsize="125" value="<?php echo $student_row['first_name']; ?>">
-    
+    </div>
+    <div class="form-group">
     <label>Last Name</label>
     <input class="form-control" type="text" autocomplete="off" required name="last_name" size="30" maxsize="125" value="<?php echo $student_row['last_name']; ?>">
+    </div>
+    <div class="form-group">
     <label>Birthdate (YYYY-MM-DD)</label>
     <input autocomplete="off" class="form-control datepicker" type="datepicker" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" required name="birthday" value="<?php echo $student_row['birthday']; ?>">
+    </div>
+    <div class="form-group">
     <label>Current Grade</label>
     <SELECT class="form-control" name="current_grade">
                                  <OPTION value="-1" <?php if($student_row['current_grade'] == "-1") echo "selected"; ?>>District Program
@@ -226,24 +231,31 @@ print_html5_primer();
                                  <OPTION value="12" <?php if($student_row['current_grade'] == "12") echo "selected"; ?>>12
                                  <OPTION value="13" <?php if($student_row['current_grade'] == "13") echo "selected"; ?>>13
                             </SELECT>
-                          
+          </div>
+          <div class="form-group">               
           <label>Gender</label>
           <SELECT autocomplete="off" class="form-control" name="gender">
                                 <option value="M" <?php if($student_row['gender'] == "M") echo "SELECTED"; ?>>Male</option>
                                 <option value="F" <?php if($student_row['gender'] == "F") echo "SELECTED"; ?>>Female</option>
           						<option value="O" <?php if ($student_row['gender'] == "O") echo "SELECTED"; ?>>Other</option>
           </SELECT>
+          </div>
+          <div class="form-group">
           <label>Student Number</label>
           <input autocomplete="off" class="form-control" type="text" size="30" maxsize="60" name="prov_ed_num" value="<?php echo $student_row['prov_ed_num'];?>">
           </div>
-          <button type="submit" value="submit" class="btn btn-default btn-large">Update Student Information</button>           
+          <div class="form-group">
+          <label>Code</label>
+          <input class="form-control" type="text" value="" placeholder="Do not use for now">
+          </div>
+          <button type="submit" value="submit" class="btn btn-primary btn-large">Update Student Information</button>           
                      
                         </form>
                         
 
-                        
+    </div><!-- close container -->                    
     <footer><?php print_complete_footer(); ?></footer>
-    </div><!-- close container -->
+    
  	<?php 
  	print_bootstrap_js();
  	?>

@@ -459,12 +459,12 @@ if(!$coord_result) {
 <label>Description</label>
 <textarea class="form-control" spellcheck="true" name="description" tabindex="5" cols="30" rows="3" wrap="soft"><?php if(isset($_POST['description'])) echo $_POST['description']; ?></textarea>
 </div>  
-<input type="submit" tabindex="6" name="add" value="add">
+<input class="btn btn-primary" type="submit" tabindex="6" name="add" value="Add">
 </form>
                        
                         <!-- END add new entry -->
 
-                        
+<p>&nbsp;</p>                        
                         
              
       

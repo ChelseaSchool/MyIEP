@@ -171,7 +171,8 @@ function no_cash() {
 function print_footer() {
 	$footer = <<< EOF
 <div class="container"><footer> 
-        <p>&copy; Chelsea School 2014</p>
+        <p>&nbsp;</p>
+	    <p>&copy; Chelsea School 2014</p>
       </footer></div>
 EOF;
 echo $footer;

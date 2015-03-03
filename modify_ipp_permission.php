@@ -276,7 +276,7 @@ print_student_navbar($student_id, $student_row['first_name'] . " " . $student_ro
         
                 
                     
-                   
+
         <div class="container">
         <?php if ($system_message) { echo "<p class=\"message\">" . $system_message . "</p>";} ?>
 
@@ -300,6 +300,7 @@ print_student_navbar($student_id, $student_row['first_name'] . " " . $student_ro
             <p>Please note: removing yourself from this list will remove
                 your access to this student's IPP (even if you are still
                 listed as the supervisor for this student). You will
+<<<<<<< HEAD
                 have to contact your school based MyIEP administrator to
                 have your permissions restored.</p>
  
@@ -312,6 +313,59 @@ print_student_navbar($student_id, $student_row['first_name'] . " " . $student_ro
                     <th align="center">&nbsp;</th>
                 </tr>
                         <?php
+=======
+                have to contact your school based IPP administrator to
+                have your permissions restored.</p>
+                        
+                        
+                        
+                        <?php
+                        
+                        // print the next and prev links...
+                        ?>
+                        
+                        <?php
+                        /*
+                         *
+                         * echo "<tr><td>";
+                         * if($iCur != 0) {
+                         * //we have previous values...
+                         * echo "<a href=\"./modify_ipp_permissions.php?iCur=" . ($iCur-$iLimit) . "\" class=\"default\">previous $iLimit</a>";
+                         * } else {
+                         * echo "&nbsp;";
+                         * }
+                         */
+                        // echo "</td></tr></table>";
+                        ?>
+                        
+                        <?php
+                        /**
+                         * if ( ($iLimit+$iCur) < $total_support_members) {
+                         * echo "<tr></tr><td align=\"right\"><a href=\"./modify_ipp_permissions.php?iCur=" . ($iCur+$iLimit) . "\" class=\"default\">next ";
+                         * if( $total_support_members-($iCur+$iLimit) > $iLimit) {
+                         * echo $iLimit . "</td>";
+                         * } else {
+                         * echo ($total_support_members-($iCur+$iLimit)) . "</td>";
+                         * }
+                         * } else {
+                         * echo "<td>&nbsp;</td>";
+                         * }
+                         * echo "</tr>\n";
+                         * //end print next and prev links
+                         */
+                        
+                        // print the header row...
+                        ?>
+                        <table class="table table-hover table-striped">
+                <tr>
+                    <th>&nbsp;</th>
+                    <th align="center">Username</th>
+                    <th align="center">permission_level</th>
+                    <th align="center">Support Area</th>
+                    <th align="center">&nbsp;</th>
+                </tr>
+                        <?php
+>>>>>>> af5864f3df8f2657390884e650b2940d669bcb75
                         while ($users_row = mysql_fetch_array($sqlSupportMembers)) {
                             echo "<tr>\n";
                             echo "<td><input type=\"checkbox\" name=\"" . $users_row['egps_username'] . "\"></td>";
@@ -361,17 +415,32 @@ print_student_navbar($student_id, $student_row['first_name'] . " " . $student_ro
             </table>
             </center>
         </form>
+<<<<<<< HEAD
     </div>
     
+=======
+
+        <BR>
+
+    </div>
+>>>>>>> af5864f3df8f2657390884e650b2940d669bcb75
     </td>
     </tr>
     </table>
     </center>
     </td>
+<<<<<<< HEAD
     <td></td>
     </tr>
     </table>
     
+=======
+    <td class="shadow-right"></td>
+    </tr>
+
+
+    </table>
+>>>>>>> af5864f3df8f2657390884e650b2940d669bcb75
 <section id="add">
     <div class="container">
 
@@ -388,6 +457,7 @@ print_student_navbar($student_id, $student_row['first_name'] . " " . $student_ro
             Add member <small>(firstinitial and lastname)</small>
         </h3>
 
+<<<<<<< HEAD
         <p>MyIEP Username: 
         <p>
         <p><input type="text" name="username" length="30"></p>
@@ -396,6 +466,31 @@ print_student_navbar($student_id, $student_row['first_name'] . " " . $student_ro
         </form>
                         
         <!-- END NEW MEMBER ADD -->
+=======
+        <p>IEP-IPP Username: 
+        <p>
+                        
+        
+        
+        <p>
+            
+            <input type="text" name="username" length="30">
+        
+        </p>
+                        <p>(Wildcards: '%'=match any '_'=match single)</p>
+                        <p></p>
+        
+        <input type="submit" value="Search">
+        
+        </p>
+                        
+                        
+                        
+                       
+                        </form>
+                        
+                        <!-- END NEW MEMBER ADD -->
+>>>>>>> af5864f3df8f2657390884e650b2940d669bcb75
 </div>
 </section>
         <?php print_bootstrap_js(); ?>

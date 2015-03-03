@@ -273,11 +273,11 @@ if(isset($_POST['edit_performance_testing']) && $have_write_permission) {
 
 <div class="form-group">
 	<label>Test Name</label>
-	<input type="text" spellcheck="TRUE" tabindex="1" name="test_name" size="30" maxsize="255" value="<?php echo $performance_row['test_name']; ?>">
+	<input class="form-control" type="text" spellcheck="TRUE" tabindex="1" name="test_name" size="30" maxsize="255" value="<?php echo $performance_row['test_name']; ?>">
 </div>
 <div class="form-group">
 	<label>Date: (YYYY-MM-DD)</label>
-	<input id="datepicker" class="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" type="datepicker" tabindex="2" name="date" value="<?php echo $performance_row['date']; ?>">
+	<input id="datepicker" class="form-control datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd" type="datepicker" tabindex="2" name="date" value="<?php echo $performance_row['date']; ?>">
 </div>
 <div class="form-group">
 <label>Optional File Upload <small>(.doc,.pdf,.txt,.rtf)</small></label>
@@ -288,15 +288,15 @@ if(isset($_POST['edit_performance_testing']) && $have_write_permission) {
 <div class=col-md-6>
 <div class="form-group">  
 <label>Results</label>
-<p>
-<textarea autofocus spellcheck="true" name="results" tabindex="4" rows="8" cols="30" wrap="soft"><?php echo $performance_row['results']; ?></textarea>
-</p>
+
+<textarea class="form-control" autofocus spellcheck="true" name="results" tabindex="4" rows="8" cols="30" wrap="soft"><?php echo $performance_row['results']; ?></textarea>
+
 </div>
 
-<div class="form-group">
-<button type="submit" name=update class="btn btn-default">Submit</button>
+
+<button type="submit" name=update class="btn btn-primary">Submit</button>
 <!--  <input type="submit" tabindex="5" name="Update" value="Update">-->
-</div>
+
 </div><!-- Close column -->
 </form>
  <!-- END edit entry -->
