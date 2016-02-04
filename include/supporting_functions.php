@@ -27,7 +27,7 @@ if(!defined('IPP_PATH')) define('IPP_PATH','../');
 
 /** @fn checkSpelling ( $string )
  *  @brief	function to make use of pspell (PEAR): given a string, returns error check and makes spelling recommendations
- *  @detail	No longer necessary; Making use of spellcheck attribute in HTML5 and browsers. 
+ *  @detail	No longer necessary; Making use of spellcheck attribute in HTML5 and browsers.
  *  @todo
  *  1. Refactor so nothing calls this function (it's already been done once but needs confirmation)
  *
@@ -72,7 +72,7 @@ if(!defined('IPP_PATH')) define('IPP_PATH','../');
  *
  * @warning 	Not for arrays. Must construct stripslashes_deep() for arrays.
  * @warning		Missing a parameter in htmlentities. Do not use.
- * @todo		
+ * @todo
  * 1. Test and implement (not done yet)
  * 2. find system to use on all db input: perhaps when UPDATE query is used.
  * 3. htmlentities is missing parameter
@@ -91,7 +91,7 @@ function filter_html($input) {
 /* @fn print_html5_primer()
  * @brief to start html5 doc
  * @remark has constant base path to take advantage of favicon, CSS, site wide JS
- * @todo 
+ * @todo
  * 1. Do not deploy in this state. Does not work yet.
  * 2. Revise so <head> isn't closed; that way JS and CSS can be added on a per file basis.
   * @remark Doesn't return; instead, echoes $print_head
@@ -99,7 +99,7 @@ function filter_html($input) {
 function print_html5_primer()
 {
 	if(!defined('IPP_PATH')) define('IPP_PATH','../');
-	
+
 	$print_head = <<<EOF
 	<!DOCTYPE HTML>
 	<html lang="en">
@@ -110,7 +110,7 @@ function print_html5_primer()
 	<meta name="description" content="Edit Short Term Objective">
 	<meta name="author" content="Rik Goldman" >
 	<title>$page_tite</title>
-	
+
 EOF;
 	echo $print_head;
 }
@@ -124,9 +124,9 @@ EOF;
  *	1. works; now get across project
  */
 function print_intellectual_property() {
-	
+
 		$credit = <<< EOF
-<!-- 
+<!--
 -MyIEP
 -Copyright &copy; 2014 Chelsea School, Hyattsville, MD.
 -License: GPLv2
@@ -152,7 +152,7 @@ return $credit;
  * 1. Substitute header function with no_cash()
  * 3. Test to confirm
  * 4. HTML5 seems to use meta instead of headers, so cache control seems to be all that is necessary for this to be efficient.
- * 
+ *
  */
 
 function no_cash() {
@@ -170,7 +170,7 @@ function no_cash() {
  */
 function print_footer() {
 	$footer = <<< EOF
-<div class="container"><footer> 
+<div class="container"><footer>
         <p>&nbsp;</p>
 	    <p>&copy; Chelsea School 2014</p>
       </footer></div>
@@ -205,7 +205,7 @@ function print_datepicker_depends() {
 	<script src="js/jquery-1.10.2.js"></script>
 	<script src="js/jquery-ui-1.10.4.custom.js"></script>
 	</script>
-	 <script> 
+	 <script>
 	$(function() {
 	$( "#datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
 	});
@@ -218,7 +218,7 @@ EOF;
 
 /**fn print_bootrap_head()
  * @brief stuff for jumbotron and bootstrap.min.css to go in html head.
-* @remark 
+* @remark
 * 1. doesn't require echo
 * 2. doesn't work yet
 */
@@ -245,7 +245,7 @@ EOF;
  */
 
 function print_jumbotron_with_page_name($page_name, $student, $permission) {
-	
+
 	$jumbotron = <<<EOF
 	<div class="jumbotron"><div class="container">
 <h1>$page_name: &nbsp; <small>$student</small></h1>
@@ -268,15 +268,15 @@ function getPermissionName($permission_level) {
 	//returns permission level or NULL on fail.
 	global $error_message;
 	$error_message = "";
-	
+
 	$query = "SELECT level_name FROM permission_levels WHERE level=$permission_level";
 	$result = mysql_query($query);
-    
-    $row = mysql_fetch_row($result); 
-	
+
+    $row = mysql_fetch_row($result);
+
 	return implode(", ", $row);
-	
-	
+
+
 }
 
 
@@ -347,7 +347,7 @@ function print_student_navbar($student_id, $student) {
               	<li><a href="accomodations.php?student_id=$student_id">Accomodations</a></li>
               	<li><a href="snapshots.php?student_id=$student_id">Snapshots</a></li></ul>
             </ul>
-       
+
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Menu <b class="caret"></b></a>
@@ -366,9 +366,9 @@ function print_student_navbar($student_id, $student) {
           </ul>
          </div>
          <!--/.nav-collapse -->
-        
 
-       
+
+
       </div>
     </div>
 EOF;
@@ -384,7 +384,7 @@ EOF;
  *  @todo
  *  1. Remove
  */
- 
+
 
 function print_bootstrap_datepicker_depends() {
     $dependencies = <<<EOF
@@ -450,12 +450,12 @@ function print_general_navbar() {
                         <li><a href="sprint_feedback.php" title="Leave feedback for developers"><span class="glyphicon glyphicon-envelope"></span></a></li>
             <li><a href="help.php" title="Some help here"><span class="glyphicon glyphicon-question-sign"></span></a></li>
             <li><a href="index.php" title="Logout of MyIEP"><span class="glyphicon glyphicon-off"></span></a></li></ul>
-             
+
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration <b class="caret"></b></a>
               <ul class="dropdown-menu">
-               
+
                 <li><a href="./manage_student.php">Students</a></li>
                 <li class="divider"></li>
                 <li><a href="change_ipp_password.php">Reset Password</a></li>
@@ -473,11 +473,11 @@ function print_general_navbar() {
          </div>
 	 </div>
 	 </div>
-    
+
 EOF;
 	echo $general_nav;
 }
-	
+
 /**@fn get_logged_users($count_logged)
  * @param $count_logged bool
  */
@@ -486,12 +486,12 @@ function get_logged_users($count_logged)
 	$query = "SELECT * FROM 'logged_in'";
 	$result = mysql_query($query);
 	$rows = mysql_num_rows($result);
-	
-	if (!isset($count_logged)) 
+
+	if (!isset($count_logged))
 	{
 		$start_logged_table = "<form action=\"superuser_view_logged_in.php\" method=\"post\"><table class=\"table table-hover table-striped\"><tr><th>uid</th><th>username</th><th>session_id</th><th>Last IP</th><th>Time</th><th>Action</th></tr>";
 
-	
+
 		for ($j = 0; $j < $rows ; ++$j):
 			$row = mysql_fetch_row($result);
 			$logged_user_table = "
@@ -502,16 +502,16 @@ function get_logged_users($count_logged)
 				<td>{$row[3]}</td>
 				<td>{$row[4]}</td>
 				<td><button type=\"button\" value=\"delete\" class=\"btn btn-danger\">Delete Record</button></td>
-				</tr>";	
-		
+				</tr>";
+
 endfor;//end of loop
-		
+
 		$print_logged_users = "$start_logged_table" . $logged_user_table . "</table></form>";
-		
+
 		echo $print_logged_users; //return if param is not null
-		
+
 	} //end of if
-	else 
+	else
 	{
 		$count_logged_users = $rows;
 		echo $count_logged_users; //return if param not null
@@ -530,7 +530,7 @@ function print_meta_for_html5($page_title)
 	<link rel="shortcut icon" href="./assets/ico/favicon.ico">
 EOF;
 	echo $metadata;
-} 
+}
 
 /** fn random_password($length)
  * @brief uses curl for php to grap a random password of $length characters

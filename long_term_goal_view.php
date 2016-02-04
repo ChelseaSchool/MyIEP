@@ -9,7 +9,7 @@
  * @todo change to lowercase throughout the code (standardization and consistency (all caps is reserved for constants, globals)
  * @todo Should probably be recase as parameter for a function
  *
- *       @bugs Filter of goal categories fails
+ * @bugs Filter of goal categories fails
  */
 
 /**
@@ -50,7 +50,8 @@ require_once IPP_PATH . 'include/user_functions.php';
 require_once IPP_PATH . 'include/supporting_functions.php';
 
 header ( 'Pragma: no-cache' ); // don't cache this page!
-
+                               
+// checking for valid user and session
 if (isset ( $_POST ['LOGIN_NAME'] ) && isset ( $_POST ['PASSWORD'] )) {
 	if (! validate ( $_POST ['LOGIN_NAME'], $_POST ['PASSWORD'] )) {
 		$system_message = $system_message . $error_message;
@@ -370,11 +371,10 @@ function toggle () //toggles objective details
                             class="glyphicon glyphicon-question-sign"></span></a></li>
                     <li><a onclick="history.go(-1);" title="Back a Page"><span
                             class="glyphicon glyphicon-circle-arrow-left"></span></a></li>
-                    <li><a
-                        href="<?php echo "ipp_pdf.php?student_id=" . $student_row['student_id'] . "&amp;file=ipp.pdf"; ?>">Get
-                            PDF</a></li>
+
                     <li class="dropdown"><a href="#"
-                        class="dropdown-toggle" data-toggle="dropdown">Records: <?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?><b
+                        class="dropdown-toggle" data-toggle="dropdown"><span
+                            class="glyphicon glyphicon-file"></span> Records: <?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?><b
                             class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a
@@ -418,6 +418,29 @@ function toggle () //toggles objective details
                             <li><a
                                 href="<?php echo IPP_PATH . "snapshots.php?student_id=" . $student_row['student_id'];?>">Snapshots</a></li>
                         </ul></li>
+
+
+                    <!-- Dropdown to print Reports -->
+                    <li class="dropdown"><a href="#"
+                        class="dropdown-toggle" data-toggle="dropdown"><span
+                            class="glyphicon glyphicon-print"></span>
+                         Reports: <?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?><b
+                            class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a
+                                href="<?php echo "ipp_pdf.php?student_id=" . $student_row['student_id'] . "&amp;file=ipp.pdf"; ?>"
+                                target="_blank">Get IEP</a></li>
+                            <li><a
+                                href="<?php echo "year_end_review.php?student_id=" . $student_row['student_id'] . "&amp;file=progress.pdf"; ?>"
+                                target="_blank">Get Progress Report</a></li>
+                        </ul></li>
+
+
+
+
+                    <!--  End dropdown for printing reports -->
+
+
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
@@ -638,6 +661,11 @@ function toggle () //toggles objective details
 											 * if ($now > $date_seconds && $short_term_objective_row['achieved']!='Y') {
 											 * $today >= $date_seconds) {
 											 * echo "<p>Review Date (expired)</p><a href=\"" .
+											 *
+											 *
+											 *
+											 *
+											 *
 											 *
 											 *
 											 *

@@ -239,12 +239,9 @@ if (! $guardians_result) {
                             class="glyphicon glyphicon-info-sign"></span></a></li>
                     <li><a onclick="history.go(-1);" title="Back a Page"><span
                             class="glyphicon glyphicon-circle-arrow-left"></span></a></li>
-                    <li><a
-                        href=<?php echo "ipp_pdf.php?student_id=" . $student_row['student_id'] . "&file=ipp.pdf"; ?>>Get
-                            PDF</li>
-                    </a>
                     <li class="dropdown"><a href="#"
-                        class="dropdown-toggle" data-toggle="dropdown">Records: <?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?><b
+                        class="dropdown-toggle" data-toggle="dropdown"><span
+                            class="glyphicon glyphicon-file"></span> Records: <?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?><b
                             class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a
@@ -287,8 +284,27 @@ if (! $guardians_result) {
                                 href="<?php echo IPP_PATH . "accomodations.php?student_id=" . $student_row['student_id'];?>">Accomodations</a></li>
                             <li><a
                                 href="<?php echo IPP_PATH . "snapshots.php?student_id=" . $student_row['student_id'];?>">Snapshots</a></li>
-                        </ul>
-                
+                        </ul> <!-- Dropdown to print Reports -->
+                    
+                    <li class="dropdown"><a href="#"
+                        class="dropdown-toggle" data-toggle="dropdown"><span
+                            class="glyphicon glyphicon-print"></span>
+                         Reports: <?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?><b
+                            class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a
+                                href="<?php echo "ipp_pdf.php?student_id=" . $student_row['student_id'] . "&amp;file=ipp.pdf"; ?>"
+                                target="_blank">Get IEP</a></li>
+                            <li><a
+                                href="<?php echo "year_end_review.php?student_id=" . $student_row['student_id'] . "&amp;file=progress.pdf"; ?>"
+                                target="_blank">Get Progress Report</a></li>
+                        </ul></li>
+
+
+
+
+                    <!--  End dropdown for printing reports -->
+
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
@@ -336,11 +352,41 @@ if (! $guardians_result) {
                 Student View: <small><?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?></small>
             </h1>
             <p>Current Age: <?php echo get_age_by_date($student_row['birthday']) ?></p>
-            <p>Grade: <?php echo $student_row['current_grade']; ?></p>
+
             <p>User: <?php echo $_SESSION['egps_username'] ?> (Access Level: <?php echo $our_permission ?>)
 <?php if($school_row['school_name']=="") echo "<p>Archived Student</p>"?>
 <!-- Placeholder in event of system message -->
 <?php if ($system_message) { echo "<p>" . $system_message . "</p>";} ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -463,7 +509,11 @@ if (! $guardians_result) {
                 <h4>
                     <small>Birthdate: </small><?php echo $student_row['birthday'];?></h4>
                 <h4>
-                    <small>Grade: </small><?php
+                    <small>Current Age: </small><?php echo get_age_by_date($student_row['birthday'])?>
+                </h4>
+
+                <h4>
+                    <small>Entry Grade: </small><?php
 																				switch ($student_row ['current_grade']) {
 																					case '0' :
 																						echo "K or Pre-K";
