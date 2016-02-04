@@ -15,179 +15,183 @@
  * 1. confirm navbar
  */
 
-//the authorization level for this page!
-$MINIMUM_AUTHORIZATION_LEVEL = 100;    //everybody (do checks within document)
+// the authorization level for this page!
+$MINIMUM_AUTHORIZATION_LEVEL = 100; // everybody (do checks within document)
 
 /**
  * Path for IPP required files.
  */
 
-if(isset($system_message)) $system_message = $system_message; else $system_message="";
+if (isset ( $system_message ))
+	$system_message = $system_message;
+else
+	$system_message = "";
 
-define('IPP_PATH','./');
+define ( 'IPP_PATH', './' );
 
 /* eGPS required files. */
-require_once(IPP_PATH . 'etc/init.php');
-require_once(IPP_PATH . 'include/db.php');
-require_once(IPP_PATH . 'include/auth.php');
-require_once(IPP_PATH . 'include/log.php');
-require_once(IPP_PATH . 'include/user_functions.php');
-require_once(IPP_PATH . 'include/supporting_functions.php');
-require_once(IPP_PATH . 'include/navbar.php');
+require_once (IPP_PATH . 'etc/init.php');
+require_once (IPP_PATH . 'include/db.php');
+require_once (IPP_PATH . 'include/auth.php');
+require_once (IPP_PATH . 'include/log.php');
+require_once (IPP_PATH . 'include/user_functions.php');
+require_once (IPP_PATH . 'include/supporting_functions.php');
+require_once (IPP_PATH . 'include/navbar.php');
 
-header('Pragma: no-cache'); //don't cache this page!
-
-//@todo make authentication routine a function
-if (isset($_POST['LOGIN_NAME']) && isset( $_POST['PASSWORD'] )) {
-    if (!validate( $_POST['LOGIN_NAME'] ,  $_POST['PASSWORD'] )) {
-        $system_message = $system_message . $error_message;
-        IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
-        require(IPP_PATH . 'index.php');
-        exit();
-    }
+header ( 'Pragma: no-cache' ); // don't cache this page!
+                               
+// @todo make authentication routine a function
+if (isset ( $_POST ['LOGIN_NAME'] ) && isset ( $_POST ['PASSWORD'] )) {
+	if (! validate ( $_POST ['LOGIN_NAME'], $_POST ['PASSWORD'] )) {
+		$system_message = $system_message . $error_message;
+		IPP_LOG ( $system_message, $_SESSION ['egps_username'], 'ERROR' );
+		require (IPP_PATH . 'index.php');
+		exit ();
+	}
 } else {
-    if (!validate()) {
-        $system_message = $system_message . $error_message;
-        IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
-        require(IPP_PATH . 'index.php');
-        exit();
-    }
+	if (! validate ()) {
+		$system_message = $system_message . $error_message;
+		IPP_LOG ( $system_message, $_SESSION ['egps_username'], 'ERROR' );
+		require (IPP_PATH . 'index.php');
+		exit ();
+	}
 }
-//************* SESSION active past here **************************
+// ************* SESSION active past here **************************
 
-//check permission levels
-$permission_level = getPermissionLevel($_SESSION['egps_username']);
+// check permission levels
+$permission_level = getPermissionLevel ( $_SESSION ['egps_username'] );
 if ($permission_level > $MINIMUM_AUTHORIZATION_LEVEL || $permission_level == NULL) {
-    $system_message = $system_message . "You do not have permission to view this page (IP: " . $_SERVER['REMOTE_ADDR'] . ")";
-    IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
-    require(IPP_PATH . 'security_error.php');
-    exit();
+	$system_message = $system_message . "You do not have permission to view this page (IP: " . $_SERVER ['REMOTE_ADDR'] . ")";
+	IPP_LOG ( $system_message, $_SESSION ['egps_username'], 'ERROR' );
+	require (IPP_PATH . 'security_error.php');
+	exit ();
 }
 
-//This is a bad scenario that shouldn't be possible - just in case, there's an error message
+// This is a bad scenario that shouldn't be possible - just in case, there's an error message
 
-if (!isset($_GET['student_id'])) {
-    echo "You've come to this page without a valid student ID<BR>To what end I wonder...<BR>";
-    exit();
+if (! isset ( $_GET ['student_id'] )) {
+	echo "You've come to this page without a valid student ID<BR>To what end I wonder...<BR>";
+	exit ();
 }
 
-$student_query = "select * from student where student.student_id=" . $_GET['student_id'];
-$student_result = mysql_query($student_query);
-if (!$student_query) {
-    $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$student_query'<BR>";
-    $system_message=$system_message . $error_message;
-    IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
+$student_query = "select * from student where student.student_id=" . $_GET ['student_id'];
+$student_result = mysql_query ( $student_query );
+if (! $student_query) {
+	$error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error () . "<BR>Query: '$student_query'<BR>";
+	$system_message = $system_message . $error_message;
+	IPP_LOG ( $system_message, $_SESSION ['egps_username'], 'ERROR' );
 }
 
-$student_row=mysql_fetch_array($student_result);
-$student_id=$student_row['student_id'];
+$student_row = mysql_fetch_array ( $student_result );
+$student_id = $student_row ['student_id'];
 
-//find support members...
-$support_member_query = "SELECT * FROM support_list WHERE student_id=" . $_GET['student_id'] . " ORDER BY egps_username";
-$support_member_result = mysql_query($support_member_query);
-if (!$support_member_result) {
-    $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$support_member_query'<BR>";
-    $system_message=$system_message . $error_message;
-    IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
+// find support members...
+$support_member_query = "SELECT * FROM support_list WHERE student_id=" . $_GET ['student_id'] . " ORDER BY egps_username";
+$support_member_result = mysql_query ( $support_member_query );
+if (! $support_member_result) {
+	$error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error () . "<BR>Query: '$support_member_query'<BR>";
+	$system_message = $system_message . $error_message;
+	IPP_LOG ( $system_message, $_SESSION ['egps_username'], 'ERROR' );
 }
 
-
-//find the current coding...
-$coding_query = "SELECT * FROM coding WHERE student_id=" . $_GET['student_id'] . " AND end_date IS NULL";
-$coding_result = mysql_query($coding_query);
-if (!$coding_query) {
-    $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$coding_query'<BR>";
-    $system_message=$system_message . $error_message;
-    IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
+// find the current coding...
+$coding_query = "SELECT * FROM coding WHERE student_id=" . $_GET ['student_id'] . " AND end_date IS NULL";
+$coding_result = mysql_query ( $coding_query );
+if (! $coding_query) {
+	$error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error () . "<BR>Query: '$coding_query'<BR>";
+	$system_message = $system_message . $error_message;
+	IPP_LOG ( $system_message, $_SESSION ['egps_username'], 'ERROR' );
 }
-$coding_row=mysql_fetch_array($coding_result);
+$coding_row = mysql_fetch_array ( $coding_result );
 
-//************** validated past here SESSION ACTIVE****************
+// ************** validated past here SESSION ACTIVE****************
 
-//get our permissions for this student...
-$our_permission = getStudentPermission($_GET['student_id']);
+// get our permissions for this student...
+$our_permission = getStudentPermission ( $_GET ['student_id'] );
 
 if ($our_permission != "READ" && $our_permission != "WRITE" && $our_permission != "ASSIGN" && $our_permission != "ALL") {
-  //we don't have permission...
-  $system_message = $system_message . "You do not have permission to view this page (IP: " . $_SERVER['REMOTE_ADDR'] . ")";
-  IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
-  require(IPP_PATH . 'security_error.php');
-  exit();
+	// we don't have permission...
+	$system_message = $system_message . "You do not have permission to view this page (IP: " . $_SERVER ['REMOTE_ADDR'] . ")";
+	IPP_LOG ( $system_message, $_SESSION ['egps_username'], 'ERROR' );
+	require (IPP_PATH . 'security_error.php');
+	exit ();
 }
 
-$supervisor_row="";
-$supervisor_query = "SELECT * FROM supervisor WHERE student_id=" . mysql_real_escape_string($_GET['student_id']) . " AND end_date IS NULL";
-$supervisor_result = mysql_query($supervisor_query);
-if (!$supervisor_result) {
-    $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$supervisor_query'<BR>";
-    $system_message=$system_message . $error_message;
-    IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
+$supervisor_row = "";
+$supervisor_query = "SELECT * FROM supervisor WHERE student_id=" . mysql_real_escape_string ( $_GET ['student_id'] ) . " AND end_date IS NULL";
+$supervisor_result = mysql_query ( $supervisor_query );
+if (! $supervisor_result) {
+	$error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error () . "<BR>Query: '$supervisor_query'<BR>";
+	$system_message = $system_message . $error_message;
+	IPP_LOG ( $system_message, $_SESSION ['egps_username'], 'ERROR' );
 } else {
-    //In theory, should be only one row - this fetches it
-    $supervisor_row=mysql_fetch_array($supervisor_result);
+	// In theory, should be only one row - this fetches it
+	$supervisor_row = mysql_fetch_array ( $supervisor_result );
 }
 
-$school_row="";
+$school_row = "";
 
-
-$school_query = "SELECT * FROM school_history LEFT JOIN school on school_history.school_code=school.school_code WHERE end_date IS NULL AND student_id='" . $_GET['student_id'] . "'";
-$school_result = mysql_query($school_query);
-if (!$school_result) {
-    $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$school_query'<BR>";
-    $system_message=$system_message . $error_message;
-    IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
+$school_query = "SELECT * FROM school_history LEFT JOIN school on school_history.school_code=school.school_code WHERE end_date IS NULL AND student_id='" . $_GET ['student_id'] . "'";
+$school_result = mysql_query ( $school_query );
+if (! $school_result) {
+	$error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error () . "<BR>Query: '$school_query'<BR>";
+	$system_message = $system_message . $error_message;
+	IPP_LOG ( $system_message, $_SESSION ['egps_username'], 'ERROR' );
 } else {
-    //there is only one row (or should be...so get it.)
-    $school_row=mysql_fetch_array($school_result);
+	// there is only one row (or should be...so get it.)
+	$school_row = mysql_fetch_array ( $school_result );
 }
 
-/** @fn get_age_by_date($yyyymmdd)
- *  @brief Assuming no errors, calculate age based on DOB and query date.
- *  @todo Reformat date and validation.
+/**
+ * @fn get_age_by_date($yyyymmdd)
+ * @brief Assuming no errors, calculate age based on DOB and query date.
+ *
+ * @todo Reformat date and validation.
  */
-//make sure they entered a valid date (mm-dd-yyyy)
-function get_age_by_date($yyyymmdd)
-{
-    global $system_message;
-    $bdate = explode("-", $yyyymmdd);
-    $dob_month=$bdate[1]; $dob_day=$bdate[2]; $dob_year=$bdate[0];
-    if (checkdate($dob_month, $dob_day, $dob_year)) {
-        $dob_date = "$dob_year" . "$dob_month" . "$dob_day";
-        $age = floor((date("Ymd")-intval($dob_date))/10000);
-        if (($age < 0) or ($age > 114)) {
-            return $age . "<BR> -->Age warning: Negative or Zero (check D.O.B)<--";
-        }
-
-        return $age;
-    }
-
-    return "-unknown-";
+// make sure they entered a valid date (mm-dd-yyyy)
+function get_age_by_date($yyyymmdd) {
+	global $system_message;
+	$bdate = explode ( "-", $yyyymmdd );
+	$dob_month = $bdate [1];
+	$dob_day = $bdate [2];
+	$dob_year = $bdate [0];
+	if (checkdate ( $dob_month, $dob_day, $dob_year )) {
+		$dob_date = "$dob_year" . "$dob_month" . "$dob_day";
+		$age = floor ( (date ( "Ymd" ) - intval ( $dob_date )) / 10000 );
+		if (($age < 0) or ($age > 114)) {
+			return $age . "<BR> -->Age warning: Negative or Zero (check D.O.B)<--";
+		}
+		
+		return $age;
+	}
+	
+	return "-unknown-";
 }
 
-//Guardian Query
-$guardians_query = "SELECT * FROM guardians LEFT JOIN guardian ON guardians.guardian_id=guardian.guardian_id LEFT JOIN address on guardian.address_id=address.address_id WHERE guardians.student_id=" . $_GET['student_id'] . " AND guardians.to_date IS NULL";
-$guardians_result = mysql_query($guardians_query);
-if (!$guardians_result) {
-    $error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error() . "<BR>Query: '$guardians_query'<BR>";
-    $system_message=$system_message . $error_message;
-    IPP_LOG($system_message,$_SESSION['egps_username'],'ERROR');
-    $guardian_row=mysql_fetch_array($guardians_result_result);
+// Guardian Query
+$guardians_query = "SELECT * FROM guardians LEFT JOIN guardian ON guardians.guardian_id=guardian.guardian_id LEFT JOIN address on guardian.address_id=address.address_id WHERE guardians.student_id=" . $_GET ['student_id'] . " AND guardians.to_date IS NULL";
+$guardians_result = mysql_query ( $guardians_query );
+if (! $guardians_result) {
+	$error_message = $error_message . "Database query failed (" . __FILE__ . ":" . __LINE__ . "): " . mysql_error () . "<BR>Query: '$guardians_query'<BR>";
+	$system_message = $system_message . $error_message;
+	IPP_LOG ( $system_message, $_SESSION ['egps_username'], 'ERROR' );
+	$guardian_row = mysql_fetch_array ( $guardians_result_result );
 }
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Rik Goldman" >
-    <link rel="shortcut icon" href="./assets/ico/favicon.ico">
-    <TITLE><?php echo $page_title; ?></TITLE>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="Rik Goldman">
+<link rel="shortcut icon" href="./assets/ico/favicon.ico">
+<TITLE><?php echo $page_title; ?></TITLE>
 
 
-     <SCRIPT>
+<SCRIPT>
       function notYetImplemented()
       {
           alert("Functionality not yet implemented"); return false;
@@ -199,78 +203,118 @@ if (!$guardians_result) {
       }
     </SCRIPT>
 <!-- Bootstrap core CSS -->
-    <link href="./css/bootstrap.min.css" rel="stylesheet">
+<link href="./css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="css/jumbotron.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="css/jumbotron.css" rel="stylesheet">
 
 
 
 
 
 </head>
-    <BODY>
+<BODY>
 
- <!-- Bootstrap fixed navbar-->
- <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="main.php">MyIEP</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="main.php" title="Return Home"><span class="glyphicon glyphicon-home"></span></a></li>
-            <li><a href="index.php" title="Logout of MyIEP"><span class="glyphicon glyphicon-off"></span></a></li>
-            <li><a href="about.php" title="About MyIEP"><span class="glyphicon glyphicon-info-sign"></span></a></li>
-            <li><a onclick="history.go(-1);" title="Back a Page"><span class="glyphicon glyphicon-circle-arrow-left"></span></a></li>
-            <li><a href=<?php echo "ipp_pdf.php?student_id=" . $student_row['student_id'] . "&file=ipp.pdf"; ?>>Get PDF</li></a>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Records: <?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?><b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                  <li><a href="<?php echo IPP_PATH . "long_term_goal_view.php?student_id=" . $student_row['student_id']; ?>">Goals</a></li>
-                  <li class="divider"></li>
-                  <li><a href="<?php echo IPP_PATH . "guardian_view.php?student_id=" . $student_row['student_id'];?>">Guardians</a></li>
-                  <li><a href="<?php echo IPP_PATH . "strength_need_view.php?student_id=" . $student_row['student_id'];?>">Strengths &amp; Needs</a></li>
-                  <li><a href="<?php echo IPP_PATH . "coordination_of_services.php?student_id=" . $student_row['student_id'];?>">Coordination of Services</a></li>
-                  <li><a href="<?php echo IPP_PATH . "achieve_level.php?student_id=" . $student_row['student_id'];?>">Achievement Level</a></li>
-                  <li><a href="<?php echo IPP_PATH . "medical_info.php?student_id=" . $student_row['student_id'];?>">Medical Information</a></li>
-                  <li><a href="<?php echo IPP_PATH . "medication_view.php?student_id=" . $student_row['student_id'];?>">Medication</a></li>
-                  <li><a href="<?php echo IPP_PATH . "testing_to_support_code.php?student_id=" . $student_row['student_id'];?>">Support Testing</a></li>
-                  <li><a href="<?php echo IPP_PATH . "background_information.php?student_id=" . $student_row['student_id'];?>">Background Information</a></li>
-                  <li><a href="<?php echo IPP_PATH . "year_end_review.php?student_id=" . $student_row['student_id'];?>">Year-End Review</a></li>
-                  <li><a href="<?php echo IPP_PATH . "anecdotals.php?student_id=" . $student_row['student_id'];?>">Anecdotals</a></li>
-                  <li><a href="<?php echo IPP_PATH . "assistive_technology.php?student_id=" . $student_row['student_id'];?>">Assistive Techology</a></li>
-                  <li><a href="<?php echo IPP_PATH . "transition_plan.php?student_id=" . $student_row['student_id'];?>">Transition Plan</a></li>
-                  <li><a href="<?php echo IPP_PATH . "accomodations.php?student_id=" . $student_row['student_id'];?>">Accomodations</a></li>
-                  <li><a href="<?php echo IPP_PATH . "snapshots.php?student_id=" . $student_row['student_id'];?>">Snapshots</a></li></ul>
-            </ul>
+    <!-- Bootstrap fixed navbar-->
+    <div class="navbar navbar-inverse navbar-fixed-top"
+        role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle"
+                    data-toggle="collapse"
+                    data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span> <span
+                        class="icon-bar"></span> <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="main.php">MyIEP</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="main.php" title="Return Home"><span
+                            class="glyphicon glyphicon-home"></span></a></li>
+                    <li><a href="index.php" title="Logout of MyIEP"><span
+                            class="glyphicon glyphicon-off"></span></a></li>
+                    <li><a href="about.php" title="About MyIEP"><span
+                            class="glyphicon glyphicon-info-sign"></span></a></li>
+                    <li><a onclick="history.go(-1);" title="Back a Page"><span
+                            class="glyphicon glyphicon-circle-arrow-left"></span></a></li>
+                    <li><a
+                        href=<?php echo "ipp_pdf.php?student_id=" . $student_row['student_id'] . "&file=ipp.pdf"; ?>>Get
+                            PDF</li>
+                    </a>
+                    <li class="dropdown"><a href="#"
+                        class="dropdown-toggle" data-toggle="dropdown">Records: <?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?><b
+                            class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a
+                                href="<?php echo IPP_PATH . "long_term_goal_view.php?student_id=" . $student_row['student_id']; ?>">Goals</a></li>
+                            <li class="divider"></li>
+                            <li><a
+                                href="<?php echo IPP_PATH . "guardian_view.php?student_id=" . $student_row['student_id'];?>">Guardians</a></li>
+                            <li><a
+                                href="<?php echo IPP_PATH . "strength_need_view.php?student_id=" . $student_row['student_id'];?>">Strengths
+                                    &amp; Needs</a></li>
+                            <li><a
+                                href="<?php echo IPP_PATH . "coordination_of_services.php?student_id=" . $student_row['student_id'];?>">Coordination
+                                    of Services</a></li>
+                            <li><a
+                                href="<?php echo IPP_PATH . "achieve_level.php?student_id=" . $student_row['student_id'];?>">Achievement
+                                    Level</a></li>
+                            <li><a
+                                href="<?php echo IPP_PATH . "medical_info.php?student_id=" . $student_row['student_id'];?>">Medical
+                                    Information</a></li>
+                            <li><a
+                                href="<?php echo IPP_PATH . "medication_view.php?student_id=" . $student_row['student_id'];?>">Medication</a></li>
+                            <li><a
+                                href="<?php echo IPP_PATH . "testing_to_support_code.php?student_id=" . $student_row['student_id'];?>">Support
+                                    Testing</a></li>
+                            <li><a
+                                href="<?php echo IPP_PATH . "background_information.php?student_id=" . $student_row['student_id'];?>">Background
+                                    Information</a></li>
+                            <li><a
+                                href="<?php echo IPP_PATH . "year_end_review.php?student_id=" . $student_row['student_id'];?>">Year-End
+                                    Review</a></li>
+                            <li><a
+                                href="<?php echo IPP_PATH . "anecdotals.php?student_id=" . $student_row['student_id'];?>">Anecdotals</a></li>
+                            <li><a
+                                href="<?php echo IPP_PATH . "assistive_technology.php?student_id=" . $student_row['student_id'];?>">Assistive
+                                    Techology</a></li>
+                            <li><a
+                                href="<?php echo IPP_PATH . "transition_plan.php?student_id=" . $student_row['student_id'];?>">Transition
+                                    Plan</a></li>
+                            <li><a
+                                href="<?php echo IPP_PATH . "accomodations.php?student_id=" . $student_row['student_id'];?>">Accomodations</a></li>
+                            <li><a
+                                href="<?php echo IPP_PATH . "snapshots.php?student_id=" . $student_row['student_id'];?>">Snapshots</a></li>
+                        </ul>
+                
+                </ul>
 
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="index.php">Logout</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Menu <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="./manage_student.php">Students</a></li>
-                <li class="divider"></li>
-                <li><a href="change_ipp_password.php">Reset Password</a></li>
-                <!-- <li><a href="superuser_add_goals.php">Goals Database</a></li>-->
-                <li><a href="./student_archive.php">Archive</a></li>
-                <li><a href="./user_audit.php">Audit</a></li>
-                <li><a href="superuser_manage_coding.php">Manage Codes</a></li>
-                <li><a href="school_info.php">Manage Schools</a></li>
-                <li><a href="superuser_view_logs.php">View Logs</a></li>
-              </ul>
-            </li>
-          </ul>
-         </div>
-         <!--/.nav-collapse -->
-        <!--<div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="index.php">Logout</a></li>
+                    <li class="dropdown"><a href="#"
+                        class="dropdown-toggle" data-toggle="dropdown">Menu
+                            <b class="caret"></b>
+                    </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="./manage_student.php">Students</a></li>
+                            <li class="divider"></li>
+                            <li><a href="change_ipp_password.php">Reset
+                                    Password</a></li>
+                            <!-- <li><a href="superuser_add_goals.php">Goals Database</a></li>-->
+                            <li><a href="./student_archive.php">Archive</a></li>
+                            <li><a href="./user_audit.php">Audit</a></li>
+                            <li><a href="superuser_manage_coding.php">Manage
+                                    Codes</a></li>
+                            <li><a href="school_info.php">Manage Schools</a></li>
+                            <li><a href="superuser_view_logs.php">View
+                                    Logs</a></li>
+                        </ul></li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+            <!--<div class="navbar-collapse collapse">
           <form class="navbar-form navbar-right" role="form" nctype="multipart/form-data" action="jumbotron.php" method="post">
             <div class="form-group">
               <input type="text" placeholder="User Name" class="form-control" value="<?php echo $LOGIN_NAME;?>">
@@ -281,133 +325,251 @@ if (!$guardians_result) {
             <button type="submit" value="submit" class="btn btn-success">Sign in</button>
           </form>
         </div><!--/.navbar-collapse -->
-      </div>
+        </div>
     </div>
 
- <!-- End Navbar -->
-        <!-- Main jumbotron for a primary marketing message or call to action -->
+    <!-- End Navbar -->
+    <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
-      <div class="container">
-        <h1>Student View: <small><?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?></small></h1>
-        <p>Current Age: <?php echo get_age_by_date($student_row['birthday']) ?></p>
-        <p>Grade: <?php echo $student_row['current_grade']; ?></p>
-        <p>User: <?php echo $_SESSION['egps_username'] ?> (Access Level: <?php echo $our_permission ?>)
-<?php if($school_row['school_name']=="") echo "<p>Archived Student</p>"  ?>
+        <div class="container">
+            <h1>
+                Student View: <small><?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?></small>
+            </h1>
+            <p>Current Age: <?php echo get_age_by_date($student_row['birthday']) ?></p>
+            <p>Grade: <?php echo $student_row['current_grade']; ?></p>
+            <p>User: <?php echo $_SESSION['egps_username'] ?> (Access Level: <?php echo $our_permission ?>)
+<?php if($school_row['school_name']=="") echo "<p>Archived Student</p>"?>
 <!-- Placeholder in event of system message -->
 <?php if ($system_message) { echo "<p>" . $system_message . "</p>";} ?>
-        <p><a class="btn btn-primary btn-lg" href="<?php echo IPP_PATH . "ipp_pdf.php?student_id=" . $student_row['student_id'] . "&file=ipp.pdf";?>" target="_blank" role="button">View IEP &raquo;</a></p>
 
-      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            
+            
+            <p>
+                <a class="btn btn-primary btn-lg"
+                    href="<?php echo IPP_PATH . "ipp_pdf.php?student_id=" . $student_row['student_id'] . "&file=ipp.pdf";?>"
+                    target="_blank" role="button">View IEP &raquo;</a>
+            </p>
+
+        </div>
     </div>
 
- <!-- First Row -->
-  <div class="container">
-<div class="row">
-<div class="col-md-4">
-<h2>Quick Access</h2>
-<h4>Goals &amp; Objectives</h4>
-<p><a class="btn btn-primary btn-sm" href="<?php echo IPP_PATH . "long_term_goal_view.php?student_id=" . $student_row['student_id']; ?>" role="button">View &raquo;</a></p>
-<hr>
-<h3>More Records: <small><?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?></small></h3>
-<form>
+    <!-- First Row -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h2>Quick Access</h2>
+                <h4>Goals &amp; Objectives</h4>
+                <p>
+                    <a class="btn btn-primary btn-sm"
+                        href="<?php echo IPP_PATH . "long_term_goal_view.php?student_id=" . $student_row['student_id']; ?>"
+                        role="button">View &raquo;</a>
+                </p>
+                <hr>
+                <h3>
+                    More Records: <small><?php echo $student_row['first_name'] . " " . $student_row['last_name']; ?></small>
+                </h3>
+                <form>
 
-<select name="records" onchange="window.location.href= this.form.records.options[this.form.records.selectedIndex].value" class="form-control">
-<option>Select Record to View</option>
-<option value="<?php echo IPP_PATH . "long_term_goal_view.php?student_id=" . $student_row['student_id']; ?>">Goals &amp; Objectives</option>
-<option class="divider"></option>
-<option  value="<?php echo IPP_PATH . "guardian_view.php?student_id=" . $student_row['student_id'];?>">Guardians</option>
-<option value="strength_need_view.php?student_id=<?php echo $student_row['student_id'];?>">Strengths &amp; Needs</option>
-<option value="<?php echo IPP_PATH . "coordination_of_services.php?student_id=" . $student_row['student_id'];?>">Coordination of Services</option>
-<option value="<?php echo IPP_PATH . "achieve_level.php?student_id=" . $student_row['student_id'];?>">Achievement Level</option>
-<option value="<?php echo IPP_PATH . "medical_info.php?student_id=" . $student_row['student_id'];?>">Medical Information</option>
-<option value="<?php echo IPP_PATH . "medication_view.php?student_id=" . $student_row['student_id'];?>">Medication</option>
-<option value="<?php echo IPP_PATH . "testing_to_support_code.php?student_id=" . $student_row['student_id'];?>">Support Testing</option>
-<option value="<?php echo IPP_PATH . "background_information.php?student_id=" . $student_row['student_id'];?>">Background Information</option>
-<option value="<?php echo IPP_PATH . "year_end_review.php?student_id=" . $student_row['student_id'];?>">Year-End Review</option>
-<option value="<?php echo IPP_PATH . "anecdotals.php?student_id=" . $student_row['student_id'];?>">Anecdotals</option>
-<option value="<?php echo IPP_PATH . "assistive_technology.php?student_id=" . $student_row['student_id'];?>">Assistive Techology</option>
-<option value="<?php echo IPP_PATH . "transition_plan.php?student_id=" . $student_row['student_id'];?>">Transition Plan</option>
-<option value="<?php echo IPP_PATH . "accomodations.php?student_id=" . $student_row['student_id'];?>">Accomodations</option>
-<option value="<?php echo IPP_PATH . "snapshots.php?student_id=" . $student_row['student_id'];?>">Snapshots</option>
-<option value="<?php echo IPP_PATH , "school_history.php?student_id=" . $student_row['student_id'];?>">School History</option>
-</select>
-</form>
+                    <select name="records"
+                        onchange="window.location.href= this.form.records.options[this.form.records.selectedIndex].value"
+                        class="form-control">
+                        <option>Select Record to View</option>
+                        <option
+                            value="<?php echo IPP_PATH . "long_term_goal_view.php?student_id=" . $student_row['student_id']; ?>">Goals
+                            &amp; Objectives</option>
+                        <option class="divider"></option>
+                        <option
+                            value="<?php echo IPP_PATH . "guardian_view.php?student_id=" . $student_row['student_id'];?>">Guardians</option>
+                        <option
+                            value="strength_need_view.php?student_id=<?php echo $student_row['student_id'];?>">Strengths
+                            &amp; Needs</option>
+                        <option
+                            value="<?php echo IPP_PATH . "coordination_of_services.php?student_id=" . $student_row['student_id'];?>">Coordination
+                            of Services</option>
+                        <option
+                            value="<?php echo IPP_PATH . "achieve_level.php?student_id=" . $student_row['student_id'];?>">Achievement
+                            Level</option>
+                        <option
+                            value="<?php echo IPP_PATH . "medical_info.php?student_id=" . $student_row['student_id'];?>">Medical
+                            Information</option>
+                        <option
+                            value="<?php echo IPP_PATH . "medication_view.php?student_id=" . $student_row['student_id'];?>">Medication</option>
+                        <option
+                            value="<?php echo IPP_PATH . "testing_to_support_code.php?student_id=" . $student_row['student_id'];?>">Support
+                            Testing</option>
+                        <option
+                            value="<?php echo IPP_PATH . "background_information.php?student_id=" . $student_row['student_id'];?>">Background
+                            Information</option>
+                        <option
+                            value="<?php echo IPP_PATH . "year_end_review.php?student_id=" . $student_row['student_id'];?>">Year-End
+                            Review</option>
+                        <option
+                            value="<?php echo IPP_PATH . "anecdotals.php?student_id=" . $student_row['student_id'];?>">Anecdotals</option>
+                        <option
+                            value="<?php echo IPP_PATH . "assistive_technology.php?student_id=" . $student_row['student_id'];?>">Assistive
+                            Techology</option>
+                        <option
+                            value="<?php echo IPP_PATH . "transition_plan.php?student_id=" . $student_row['student_id'];?>">Transition
+                            Plan</option>
+                        <option
+                            value="<?php echo IPP_PATH . "accomodations.php?student_id=" . $student_row['student_id'];?>">Accomodations</option>
+                        <option
+                            value="<?php echo IPP_PATH . "snapshots.php?student_id=" . $student_row['student_id'];?>">Snapshots</option>
+                        <option
+                            value="<?php echo IPP_PATH , "school_history.php?student_id=" . $student_row['student_id'];?>">School
+                            History</option>
+                    </select>
+                </form>
 
-</div><!-- End Column -->
-<div class="col-md-4">
-<h2>General Information</h2>
-<h4><small>Name: </small><?php echo $student_row['first_name'] . " " . $student_row['last_name'];?></h4>
-<h4><small>Gender: </small><?php if($student_row['gender'] =="F") echo "Female"; if($student_row['gender'] =="O") echo "Other"; else echo "Male";?></h4>
-<h4><small>Birthdate: </small><?php echo $student_row['birthday'];?></h4>
-<h4><small>Grade: </small><?php
-                                      switch ($student_row['current_grade']) {
-                                        case '0':
-                                           echo "K or Pre-K";
-                                           break;
-                                        case '-1':
-                                           echo "District Program";
-                                           break;
-                                        default:
-                                            echo  $student_row['current_grade'];
-                                      }
-                                ?></h4>
-<h4><small>Student Number: </small><?php echo $student_row['prov_ed_num'];?></h4>
-<h4><small>Code: </small><em>Not currently in use.</em></h4>
-<p><a class="btn btn-primary btn-sm" href="<?php echo IPP_PATH . "edit_general.php?student_id=" . $student_id ?>" role="button">Edit &raquo;</a></p>
-<!-- End col --></div>
-<div class="col-md-4">
-<h2>IEP Team</h2>
-<h4><small>Case Manager: </small><?php echo $supervisor_row['egps_username'];?></h4>
-<p><a class="btn btn-primary btn-sm" href="<?php echo IPP_PATH . "supervisor_view.php?student_id=" . $_GET['student_id'];?>" role="button">Update Case Manager &raquo;</a></p>
-<h4><small>Support Team: </small></h4>
-<table class="table table-striped">
-<?php if (mysql_num_rows($support_member_result) <=0) {
-     echo "<tr><td>none specified</td></tr>";
-     }
+            </div>
+            <!-- End Column -->
+            <div class="col-md-4">
+                <h2>General Information</h2>
+                <h4>
+                    <small>Name: </small><?php echo $student_row['first_name'] . " " . $student_row['last_name'];?></h4>
+                <h4>
+                    <small>Gender: </small>
+                    <?php
+																				if ($student_row ['gender'] == "F") {
+																					echo "Female";
+																				} elseif ($student_row ['gender'] == "O") {
+																					echo "Other";
+																				} else
+																					echo "Male";
+																				
+																				?>
+                </h4>
+                <h4>
+                    <small>Birthdate: </small><?php echo $student_row['birthday'];?></h4>
+                <h4>
+                    <small>Grade: </small><?php
+																				switch ($student_row ['current_grade']) {
+																					case '0' :
+																						echo "K or Pre-K";
+																						break;
+																					case '-1' :
+																						echo "District Program";
+																						break;
+																					default :
+																						echo $student_row ['current_grade'];
+																				}
+																				?></h4>
+                <h4>
+                    <small>Student Number: </small><?php echo $student_row['prov_ed_num'];?></h4>
+                <h4>
+                    <small>Code: </small><em>Not currently in use.</em>
+                </h4>
+                <p>
+                    <a class="btn btn-primary btn-sm"
+                        href="<?php echo IPP_PATH . "edit_general.php?student_id=" . $student_id ?>"
+                        role="button">Edit &raquo;</a>
+                </p>
+                <!-- End col -->
+            </div>
+            <div class="col-md-4">
+                <h2>IEP Team</h2>
+                <h4>
+                    <small>Case Manager: </small><?php echo $supervisor_row['egps_username'];?></h4>
+                <p>
+                    <a class="btn btn-primary btn-sm"
+                        href="<?php echo IPP_PATH . "supervisor_view.php?student_id=" . $_GET['student_id'];?>"
+                        role="button">Update Case Manager &raquo;</a>
+                </p>
+                <h4>
+                    <small>Support Team: </small>
+                </h4>
+                <table class="table table-striped">
+<?php
+
+if (mysql_num_rows ( $support_member_result ) <= 0) {
+	echo "<tr><td>none specified</td></tr>";
+}
 ?>
 <?php
-while ($support_member_row=mysql_fetch_array($support_member_result)) {
-    echo "<tr><td>" . $support_member_row['egps_username'] . "</td>";
-    echo  "<td>" . $support_member_row['permission'] . "</td>";
-    if($support_member_row['support_area'] == "")
-        echo "<td>No area assigned</td>";
-    else
-        echo "<td>" . $support_member_row['support_area'] . "</td></tr>";
-     } ?>
-</table>
-<p><a class="btn btn-primary btn-sm" href="<?php echo IPP_PATH . "modify_ipp_permission.php?student_id=" . $_GET['student_id']; ?>" role="button">Update Team &raquo;</a></p>
 
-<!-- End col --></div>
- <!-- Second Row -->
-<div class="container">
-<div class="row">
-<div class="col-md-4">
-<h2>School Information</h2>
-<h4><small>School Name: </small><?php
-if($school_row['school_name']=="")
-echo "Archived Student</h4>";
-else
-echo $school_row['school_name'] . "</h4> <p>(since " . $school_row['start_date'] . ")</p>";
+while ( $support_member_row = mysql_fetch_array ( $support_member_result ) ) {
+	echo "<tr><td>" . $support_member_row ['egps_username'] . "</td>";
+	echo "<td>" . $support_member_row ['permission'] . "</td>";
+	if ($support_member_row ['support_area'] == "")
+		echo "<td>No area assigned</td>";
+	else
+		echo "<td>" . $support_member_row ['support_area'] . "</td></tr>";
+}
 ?>
+</table>
+                <p>
+                    <a class="btn btn-primary btn-sm"
+                        href="<?php echo IPP_PATH . "modify_ipp_permission.php?student_id=" . $_GET['student_id']; ?>"
+                        role="button">Update Team &raquo;</a>
+                </p>
 
- <p><a class="btn btn-primary btn-sm" href="<?php echo IPP_PATH . "school_history.php?student_id=" . $student_id ?>" role="button">Update School History &raquo;</a></p>
+                <!-- End col -->
+            </div>
+            <!-- Second Row -->
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h2>School Information</h2>
+                        <h4>
+                            <small>School Name: </small><?php
+																												if ($school_row ['school_name'] == "")
+																													echo "Archived Student</h4>";
+																												else
+																													echo $school_row ['school_name'] . "</h4> <p>(since " . $school_row ['start_date'] . ")</p>";
+																												?>
 
-</div><!--End Column -->
+ <p>
+                                <a class="btn btn-primary btn-sm"
+                                    href="<?php echo IPP_PATH . "school_history.php?student_id=" . $student_id ?>"
+                                    role="button">Update School History
+                                    &raquo;</a>
+                            </p>
+                    
+                    </div>
+                    <!--End Column -->
 
-<div class="col-md-4">
-<h2>Guardian Information</h2>
-<p><a class="btn btn-primary btn-sm" href="<?php echo IPP_PATH . "guardian_view.php?student_id=" . $student_id ?>" role="button">View Guardian Information &raquo;</a></p>
-</div><!-- End Column -->
-<!-- End Row -->
-</div>
+                    <div class="col-md-4">
+                        <h2>Guardian Information</h2>
+                        <p>
+                            <a class="btn btn-primary btn-sm"
+                                href="<?php echo IPP_PATH . "guardian_view.php?student_id=" . $student_id ?>"
+                                role="button">View Guardian Information
+                                &raquo;</a>
+                        </p>
+                    </div>
+                    <!-- End Column -->
+                    <!-- End Row -->
+                </div>
 
-<!-- To end main container -->
- </div>
+                <!-- To end main container -->
+            </div>
  <?php print_complete_footer(); ?>
     <!-- Bootstrap core JavaScript
     ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/jquery-2.1.0.min.js"></script>
-    <script src="./js/bootstrap.min.js"></script>
-    </BODY>
+            <!-- Placed at the end of the document so the pages load faster -->
+            <script src="js/jquery-2.1.0.min.js"></script>
+            <script src="./js/bootstrap.min.js"></script>
+
+</BODY>
 </HTML>
