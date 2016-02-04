@@ -5,6 +5,7 @@
  *
  *  @bug	 right hand drop down nav isn't working
  *  @todo docblock documentation
+ *  @todo Add Goal Categories section
  */
 
 /**
@@ -215,13 +216,12 @@ if (isset ( $_POST ['LOGIN_NAME'] ) && isset ( $_POST ['PASSWORD'] )) {
             </div>
             <div class="col-md-4">
 
-                <h2 style="color: grey">Goals Database</h2>
-                <p style="color: grey">Enter goals or objectives into
-                    Goals and Objectives bank.</p>
+                <h2>Goal Categories</h2>
+                <p>Add or remove goal categories.</p>
                 <p>
-                    <a class="btn btn-default" disabled
-                        href="./superuser_add_goals.php" role="button">Update
-                        Goal Bank &raquo;</a>
+                    <a class="btn btn-default"
+                        href="./superuser_add_program_area.php"
+                        role="button">Modify Goal Areas &raquo;</a>
                 </p>
             </div>
         </div>
