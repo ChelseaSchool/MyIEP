@@ -1,11 +1,16 @@
 
 <?php
-/** @file
+// error_reporting ( - 1 );
+// ini_set ( 'display_errors', 'On' );
+
+/**
+ * @file
  * Main menu
  *
- *  @bug	 right hand drop down nav isn't working
- *  @todo docblock documentation
- *  @todo Add Goal Categories section
+ * @bug right hand drop down nav isn't working
+ *
+ * @todo docblock documentation
+ * @todo Add Goal Categories section
  */
 
 /**
