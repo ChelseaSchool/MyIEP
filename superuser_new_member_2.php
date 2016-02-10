@@ -366,7 +366,7 @@ $(document).ready(function() {
 					<input type="hidden" name="szBackGetVars" value="<?php echo $szBackGetVars; ?>;"> 
 					<input type="hidden" name="egps_username" value="<?php echo $_GET['egps_username'] ?>;">
 					<p>
-						<button class="pull-right btn btn-primary" type="submit" value="Add"
+						<button class="btn btn-default" type="submit" value="Add"
 							tabindex="10">Create Account</button>
 					</p>
 
@@ -420,6 +420,6 @@ $(document).ready(function() {
 
 
 <script src="js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js"></script>
+<!--<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js"></script>-->
 </body>
 </html>
