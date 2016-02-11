@@ -15,91 +15,97 @@
  * 1. Replaced checkSpelling() with HTML spellcheck="TRUE"
  * 2. disabled (commented)
  */
+if (! defined ( 'IPP_PATH' ))
+	define ( 'IPP_PATH', '../' );
 
-if(!defined('IPP_PATH')) define('IPP_PATH','../');
-
-/** @fn getPermissionName($permission_level='')
+/**
+ * @fn getPermissionName($permission_level='')
  * @brief determines what resources the logged in user has access to.
- * @param string $permission_level
+ *
+ * @param string $permission_level        	
  * @return NULL or string $permission_name
  */
 
-
-/** @fn checkSpelling ( $string )
- *  @brief	function to make use of pspell (PEAR): given a string, returns error check and makes spelling recommendations
- *  @detail	No longer necessary; Making use of spellcheck attribute in HTML5 and browsers.
- *  @todo
- *  1. Refactor so nothing calls this function (it's already been done once but needs confirmation)
+/**
+ * @fn checkSpelling ( $string )
+ * @brief function to make use of pspell (PEAR): given a string, returns error check and makes spelling recommendations
+ * @detail No longer necessary; Making use of spellcheck attribute in HTML5 and browsers.
  *
- *  @param $string
+ * @todo 1. Refactor so nothing calls this function (it's already been done once but needs confirmation)
+ *      
+ * @param
+ *        	$string
  */
-/* function checkSpelling( $string ) //todo: investigate and justify possibly unconventional function syntax
-{
-   if (!extension_loaded("pspell")) {
-      //spell libraries not loaded so just return the same string...
-      return $string;
-   }
+	/*
+ * function checkSpelling( $string ) //todo: investigate and justify possibly unconventional function syntax
+ * {
+ * if (!extension_loaded("pspell")) {
+ * //spell libraries not loaded so just return the same string...
+ * return $string;
+ * }
+ *
+ * $pspell = pspell_new("en");
+ * $words = explode(" ", $string);
+ * $return = "";
+ * $trim = ".!,?();:'\"\n\t\r";
+ *
+ * foreach($words as $word) {
+ * if (pspell_check($pspell, trim($word,$trim))) {
+ * // this word is fine; print as-is
+ * $return .= $word . " ";
+ * } else {
+ * //get up to 3 possible spellings for glossover...
+ * $suggestions = pspell_suggest($pspell,trim($word,$trim));
+ * $suggest = "";
+ * for($i = 0; $i < 3; $i++) {
+ * $suggest .= $suggestions[$i] . ",";
+ * }
+ * $suggest = substr($suggest, 0, -1); //chop off the last comma - good but; todo: why? comment
+ * $return .= "<span class='mispelt_text' title='$suggest'>$word </span>";
+ * }
+ * }
+ * return $return;
+ * }
+ */
 
-   $pspell = pspell_new("en");
-   $words = explode(" ", $string);
-   $return = "";
-   $trim =  ".!,?();:'\"\n\t\r";
-
-   foreach($words as $word) {
-     if (pspell_check($pspell, trim($word,$trim))) {
-       // this word is fine; print as-is
-       $return .= $word . " ";
-     } else {
-       //get up to 3 possible spellings for glossover...
-       $suggestions = pspell_suggest($pspell,trim($word,$trim));
-       $suggest = "";
-       for($i = 0; $i < 3; $i++) {
-          $suggest .= $suggestions[$i] . ",";
-       }
-       $suggest = substr($suggest, 0, -1);  //chop off the last comma - good but; todo: why? comment
-       $return .= "<span class='mispelt_text' title='$suggest'>$word </span>";
-     }
-   }
-   return $return;
-}
-*/
-
-/** @fn clean_in_and_out($input)
+/**
+ * @fn clean_in_and_out($input)
  * @brief BROKEN DO NOT USE Filters input and escapes output to prepare for MySQL
- * @param $input
- * @return mysql_real_escape_string($input)
- * @detail 		Strips tags, then sanitizes html entities, and then strips slashes. Finally, uses mysql_real_escape_string() to prepare for MySQL use.
  *
- * @warning 	Not for arrays. Must construct stripslashes_deep() for arrays.
- * @warning		Missing a parameter in htmlentities. Do not use.
- * @todo
- * 1. Test and implement (not done yet)
- * 2. find system to use on all db input: perhaps when UPDATE query is used.
- * 3. htmlentities is missing parameter
- *
+ * @param
+ *        	$input
+ * @return mysql_real_escape_string($input) @detail Strips tags, then sanitizes html entities, and then strips slashes. Finally, uses mysql_real_escape_string() to prepare for MySQL use.
+ *        
+ *         @warning Not for arrays. Must construct stripslashes_deep() for arrays.
+ *         @warning Missing a parameter in htmlentities. Do not use.
+ * @todo 1. Test and implement (not done yet)
+ *       2. find system to use on all db input: perhaps when UPDATE query is used.
+ *       3. htmlentities is missing parameter
+ *      
  */
-function clean_in_and_out($input){
-	$input = strip_tags($input);
-	$input = htmlentities($input,$charset="utf8");
-	$input = stripslashes($input);
-	return mysql_real_escape_string($input);
+function clean_in_and_out($input) {
+	$input = strip_tags ( $input );
+	$input = htmlentities ( $input, $charset = "utf8" );
+	$input = stripslashes ( $input );
+	return mysql_real_escape_string ( $input );
 }
 function filter_html($input) {
-	$clean=htmlentities($input, $charset="UTF8");
+	$clean = htmlentities ( $input, $charset = "UTF8" );
 	return $clean;
 }
-/* @fn print_html5_primer()
+/*
+ * @fn print_html5_primer()
  * @brief to start html5 doc
  * @remark has constant base path to take advantage of favicon, CSS, site wide JS
  * @todo
  * 1. Do not deploy in this state. Does not work yet.
  * 2. Revise so <head> isn't closed; that way JS and CSS can be added on a per file basis.
-  * @remark Doesn't return; instead, echoes $print_head
+ * @remark Doesn't return; instead, echoes $print_head
  */
-function print_html5_primer()
-{
-	if(!defined('IPP_PATH')) define('IPP_PATH','../');
-
+function print_html5_primer() {
+	if (! defined ( 'IPP_PATH' ))
+		define ( 'IPP_PATH', '../' );
+	
 	$print_head = <<<EOF
 	<!DOCTYPE HTML>
 	<html lang="en">
@@ -109,23 +115,20 @@ function print_html5_primer()
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Edit Short Term Objective">
 	<meta name="author" content="Rik Goldman" >
-	<title>$page_tite</title>
-
+	<title>$page_title</title>
 EOF;
 	echo $print_head;
 }
 
-
-
-/** @fn print_intellectual_property()
- *	@return string $ip
- *  @brief Print HTML *Comments* with Copyright and license info
- *  @todo
- *	1. works; now get across project
+/**
+ * @fn print_intellectual_property()
+ *
+ * @return string $ip
+ *         @brief Print HTML *Comments* with Copyright and license info
+ * @todo 1. works; now get across project
  */
 function print_intellectual_property() {
-
-		$credit = <<< EOF
+	$credit = <<< EOF
 <!--
 -MyIEP
 -Copyright &copy; 2014 Chelsea School, Hyattsville, MD.
@@ -141,32 +144,33 @@ function print_intellectual_property() {
  USA
 //-->
 EOF;
-return $credit;
+	return $credit;
 }
 
-/** @fn no_cash()
+/**
+ * @fn no_cash()
  *
  * Inserts header('Pragma: no-cache'). Used by most pages.
- * @remark	Not used yet.
- * @todo
- * 1. Substitute header function with no_cash()
- * 3. Test to confirm
- * 4. HTML5 seems to use meta instead of headers, so cache control seems to be all that is necessary for this to be efficient.
+ * @remark Not used yet.
  *
+ * @todo 1. Substitute header function with no_cash()
+ *       3. Test to confirm
+ *       4. HTML5 seems to use meta instead of headers, so cache control seems to be all that is necessary for this to be efficient.
+ *      
  */
-
 function no_cash() {
-	echo header("Cache-Control: no-cache, must-revalidate");
-	echo header('Pragma: no-cache');
-
+	echo header ( "Cache-Control: no-cache, must-revalidate" );
+	echo header ( 'Pragma: no-cache' );
 }
 
-/** @fn print_footer()
- *  @param none
- *  @brief echos copyright in footer and div
- *  @remark echos the content already
- *  @todo
- *  1. consider centering this
+/**
+ * @fn print_footer()
+ *
+ * @param
+ *        	none
+ *        	@brief echos copyright in footer and div
+ *        	@remark echos the content already
+ * @todo 1. consider centering this
  */
 function print_footer() {
 	$footer = <<< EOF
@@ -175,30 +179,31 @@ function print_footer() {
 	    <p>&copy; Chelsea School 2014</p>
       </footer></div>
 EOF;
-echo $footer;
+	echo $footer;
 }
 
-/** @fn print_complete_footer()
- *  @brief outputs copyright in footer tag and full copyright and license in comment
- *  @remark Combines print_footer() and print_intellectual_property()
- *  @todo
- *  1. List all developers in commented IP statement
+/**
+ * @fn print_complete_footer()
+ * @brief outputs copyright in footer tag and full copyright and license in comment
+ * @remark Combines print_footer() and print_intellectual_property()
+ *
+ * @todo 1. List all developers in commented IP statement
  */
 function print_complete_footer() {
-	print_footer();
-	echo print_intellectual_property();
+	print_footer ();
+	echo print_intellectual_property ();
 }
 
-
-/**@fn print_datepicker_depends()
- * @brief 		prints to html the dependencies for  datepicker
- * @detail 		assumes the date form input has an id of "datepicker"; this can be changed to a class instead of an ID.
- * @todo
- * 1. Deploy to anywhere that takes date input
- * @remark use this one
+/**
+ * @fn print_datepicker_depends()
+ * @brief prints to html the dependencies for datepicker
+ * @detail assumes the date form input has an id of "datepicker"; this can be changed to a class instead of an ID.
+ *
+ * @todo 1. Deploy to anywhere that takes date input
+ *       @remark use this one
  */
 function print_datepicker_depends() {
-	$print_depends= <<<EOF
+	$print_depends = <<<EOF
 	<!-- Example Invokation of Datepicker -->
 	<!-- input type=datepicker name="review_date" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd"  -->
 	<link rel="stylesheet" href="./css/smoothness/jquery-ui.css">
@@ -214,18 +219,16 @@ EOF;
 	echo $print_depends;
 }
 
-
-
-/**fn print_bootrap_head()
+/**
+ * fn print_bootrap_head()
  * @brief stuff for jumbotron and bootstrap.min.css to go in html head.
-* @remark
-* 1. doesn't require echo
-* 2. doesn't work yet
-*/
-
+ * @remark
+ * 1. doesn't require echo
+ * 2. doesn't work yet
+ */
 function print_bootstrap_head() {
-	$myieppath='IPP_PATH';
-	$bootstrap_depends=<<<EOF
+	$myieppath = 'IPP_PATH';
+	$bootstrap_depends = <<<EOF
 	<!-- Bootstrap core CSS -->
     <link href="./css/bootstrap.min.css" rel="stylesheet">
 
@@ -236,16 +239,16 @@ EOF;
 	echo $bootstrap_depends;
 }
 
-/**@fn print_jumbotron_with_page_name($page_name)
- * @brief	Outputs to HTML bootstrap banner with names and permissions
- * @param string $page_name
- * @param string $student
+/**
+ * @fn print_jumbotron_with_page_name($page_name)
+ * @brief Outputs to HTML bootstrap banner with names and permissions
+ *
+ * @param string $page_name        	
+ * @param string $student        	
  * @param string $perms
- * @remark echoes HTML jumbotron populated with data
+ *        	@remark echoes HTML jumbotron populated with data
  */
-
 function print_jumbotron_with_page_name($page_name, $student, $permission) {
-
 	$jumbotron = <<<EOF
 	<div class="jumbotron"><div class="container">
 <h1>$page_name: &nbsp; <small>$student</small></h1>
@@ -259,30 +262,20 @@ function print_jumbotron_with_page_name($page_name, $student, $permission) {
 EOF;
 	echo $jumbotron;
 }
-
-
-
-
-
 function getPermissionName($permission_level) {
-	//returns permission level or NULL on fail.
+	// returns permission level or NULL on fail.
 	global $error_message;
 	$error_message = "";
-
+	
 	$query = "SELECT level_name FROM permission_levels WHERE level=$permission_level";
-	$result = mysql_query($query);
-
-    $row = mysql_fetch_row($result);
-
-	return implode(", ", $row);
-
-
+	$result = mysql_query ( $query );
+	
+	$row = mysql_fetch_row ( $result );
+	
+	return implode ( ", ", $row );
 }
-
-
-
 function print_lesser_jumbotron($page_name, $permission) {
-	$permission_name = getPermissionName($permission);
+	$permission_name = getPermissionName ( $permission );
 	$lesser_jumbotron = <<<EOF
 	<div class="jumbotron"><div class="container">
     <h1>$page_name</h1>
@@ -296,12 +289,14 @@ function print_lesser_jumbotron($page_name, $permission) {
 EOF;
 	echo $lesser_jumbotron;
 }
-/** @fn print_student_navbar($student)
+/**
+ * @fn print_student_navbar($student)
  * @brief Outputs HTML student context navbar (bootstrap)
  * @remark
  * * outputs echo directly
  *
- * @param $student
+ * @param
+ *        	$student
  * @return NULL|string
  */
 function print_student_navbar($student_id, $student) {
@@ -375,19 +370,18 @@ EOF;
 	echo $student_nav;
 }
 
-/** @fn print_bootstrap_datepicker_depends()
- *  @brief old depends function for datepicker - kept for properity
- *  @remark
- *  * use other datepicker function in this file
- *  * doesn't require echo, already outputs
- *  * unused
- *  @todo
- *  1. Remove
+/**
+ * @fn print_bootstrap_datepicker_depends()
+ * @brief old depends function for datepicker - kept for properity
+ * @remark
+ * * use other datepicker function in this file
+ * * doesn't require echo, already outputs
+ * * unused
+ *
+ * @todo 1. Remove
  */
-
-
 function print_bootstrap_datepicker_depends() {
-    $dependencies = <<<EOF
+	$dependencies = <<<EOF
 <!-- Example Invokation of Datepicker -->
 	<!-- input type=datepicker name="review_date" id="datepicker" data-provide="datepicker" data-date-format="yyyy-mm-dd"  -->
 	<!-- Bootstrap Datepicker CSS -->
@@ -404,19 +398,19 @@ function print_bootstrap_datepicker_depends() {
 	});
 	</script>
 EOF;
-   echo $dependencies;
+	echo $dependencies;
 }
 
-
-/** @fn print_bootsrap_js()
- *  @brief Prints JavaScript references that bootsrap relies on
- *  @remark
- *  1. Already Echoes
- *  2. Goes within HTML, but at the very bottom to increase load time
- *
+/**
+ * @fn print_bootsrap_js()
+ * @brief Prints JavaScript references that bootsrap relies on
+ * @remark
+ * 1.
+ * Already Echoes
+ * 2. Goes within HTML, but at the very bottom to increase load time
  */
-function print_bootstrap_js(){
-	$bootsrapjs=<<<EOF
+function print_bootstrap_js() {
+	$bootsrapjs = <<<EOF
 <script src="js/jquery-2.1.1.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.10.4.custom.min.js"></script>
@@ -424,10 +418,12 @@ EOF;
 	echo $bootsrapjs;
 }
 
-/** @fn print_general_navbar()
+/**
+ * @fn print_general_navbar()
  * @brief Outputs HTML general context navbar (bootstrap)
  * @remark Remember, use echo
- * @param int $student_id
+ *
+ * @param int $student_id        	
  * @return NULL|string
  */
 function print_general_navbar() {
@@ -478,22 +474,21 @@ EOF;
 	echo $general_nav;
 }
 
-/**@fn get_logged_users($count_logged)
- * @param $count_logged bool
+/**
+ * @fn get_logged_users($count_logged)
+ *
+ * @param $count_logged bool        	
  */
-function get_logged_users($count_logged)
-{
+function get_logged_users($count_logged) {
 	$query = "SELECT * FROM 'logged_in'";
-	$result = mysql_query($query);
-	$rows = mysql_num_rows($result);
-
-	if (!isset($count_logged))
-	{
+	$result = mysql_query ( $query );
+	$rows = mysql_num_rows ( $result );
+	
+	if (! isset ( $count_logged )) {
 		$start_logged_table = "<form action=\"superuser_view_logged_in.php\" method=\"post\"><table class=\"table table-hover table-striped\"><tr><th>uid</th><th>username</th><th>session_id</th><th>Last IP</th><th>Time</th><th>Action</th></tr>";
-
-
-		for ($j = 0; $j < $rows ; ++$j):
-			$row = mysql_fetch_row($result);
+		
+		for($j = 0; $j < $rows; ++ $j) :
+			$row = mysql_fetch_row ( $result );
 			$logged_user_table = "
 				<tr>
 				<td>{$row[0]}</td>
@@ -503,24 +498,19 @@ function get_logged_users($count_logged)
 				<td>{$row[4]}</td>
 				<td><button type=\"button\" value=\"delete\" class=\"btn btn-danger\">Delete Record</button></td>
 				</tr>";
-
-endfor;//end of loop
-
+		endfor
+		; // end of loop
+		
 		$print_logged_users = "$start_logged_table" . $logged_user_table . "</table></form>";
-
-		echo $print_logged_users; //return if param is not null
-
-	} //end of if
-	else
-	{
+		
+		echo $print_logged_users; // return if param is not null
+	}  // end of if
+else {
 		$count_logged_users = $rows;
-		echo $count_logged_users; //return if param not null
-	} //end else
-
-} //end function
-
-function print_meta_for_html5($page_title)
-{
+		echo $count_logged_users; // return if param not null
+	} // end else
+} // end function
+function print_meta_for_html5($page_title) {
 	$metadata = <<<EOF
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -532,56 +522,49 @@ EOF;
 	echo $metadata;
 }
 
-/** fn random_password($length)
+/**
+ * fn random_password($length)
  * @brief uses curl for php to grap a random password of $length characters
- * @param integer $length
+ *
+ * @param integer $length        	
  * @return string $pw_suggestion
- * @todo
- * * conditional: only use if curl is installed and the server can reach outside (?).
+ * @todo * conditional: only use if curl is installed and the server can reach outside (?).
  */
-function random_password($length)
-{
-	$ch = curl_init("https://infamia.com/hints/pwgen.php?length=" . $length . "&quiet");
-	curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
-	$pw_suggestion = curl_exec($ch);
-	curl_close($ch);
-	return $pw_suggestion;
-
+function random_password($length) {
+	$ch = curl_init ( "https://infamia.com/hints/pwgen.php?length=" . $length . "&quiet" );
+	curl_setopt ( $ch, CURLOPT_SSL_VERIFYPEER, false );
+	$pw_suggestion = curl_exec ( $ch );
+	curl_close ( $ch );
+	echo $pw_suggestion;
 }
 
-
-/** @fn generate_password()
- * @param number $length
- * @param string $characters
- * @return boolean
- * @remark echoes a randomly generated pw from the system that meets specified length and character complexity.
+/**
+ * @fn generate_password()
+ *
+ * @param number $length        	
+ * @param string $characters        	
+ * @return boolean @remark echoes a randomly generated pw from the system that meets specified length and character complexity.
  * @author Rik Goldman
  * @copyright 2014 Chelsea School
  * @license GPLv2
  */
-
-function generate_password
-($length=8,$characters='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%^&*()-_{}[]|:<>') {
-
-	if (!is_int($length) || $length<0) {
+function generate_password($length = 8, $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!@#$%^&*()-_{}[]|:<>') {
+	if (! is_int ( $length ) || $length < 0) {
 		return false;
 	}
-	$characters_length=strlen($characters) -1;
+	$characters_length = strlen ( $characters ) - 1;
 	$proposed_password = '';
-	for ($i = $length; $i > 0; $i--) {
-		$proposed_password .= $characters[mt_rand(0, $characters_length)];
+	for($i = $length; $i > 0; $i --) {
+		$proposed_password .= $characters [mt_rand ( 0, $characters_length )];
 	}
-	return $proposed_password;
+	echo $proposed_password;
 }
-
-
 function remove_credential_reset_lock() {
-	session_destroy();
-	$_SESSION=array();
-	if (session_id() != "" || isset($_COOKIE[session_name()]))
-		setcookie(session_name(), '', time() - 2592000, '/');
-	session_destroy();
+	session_destroy ();
+	$_SESSION = array ();
+	if (session_id () != "" || isset ( $_COOKIE [session_name ()] ))
+		setcookie ( session_name (), '', time () - 2592000, '/' );
+	session_destroy ();
 }
-
 
 ?>
