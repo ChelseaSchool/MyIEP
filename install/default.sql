@@ -506,6 +506,7 @@ CREATE TABLE IF NOT EXISTS `program_area` (
   `area` text NOT NULL,
   `start_date` date NOT NULL default '0000-00-00',
   `end_date` date default '0000-00-00',
+  `plop` text,
   PRIMARY KEY  (`uid`),
   KEY `student_id` (`student_id`,`start_date`,`end_date`)
 ) ENGINE=MyISAM CHARSET=utf8 AUTO_INCREMENT=27 ;
