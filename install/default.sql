@@ -391,8 +391,8 @@ CREATE TABLE IF NOT EXISTS `long_term_goal` (
 -- 
 
 INSERT INTO `long_term_goal` (`goal_id`, `student_id`, `review_date`, `goal`, `is_complete`, `area`) VALUES 
-(320, 304, '2008-02-01', 'To participate in classroom activities by listening, raising her hand, and remaining in her seat. ', 'N', 'Behaviour'),
-(321, 304, '2008-02-14', 'To consistently comply with school requests and expectations', 'N', 'Behaviour');
+(320, 304, '2008-02-01', 'To participate in classroom activities by listening, raising her hand, and remaining in her seat. ', 'N', 'Study Skills'),
+(321, 304, '2008-02-14', 'To consistently comply with school requests and expectations', 'N', 'Study Skills');
 
 -- --------------------------------------------------------
 
