@@ -502,7 +502,7 @@ function toggle () //toggles objective details
                         </div>
                         <!-- Modal Header end -->
                         <div class="modal-body">
-                            <small><?php print_goal_area_checklist(); ?></small>
+                            <small><?php //print_goal_area_checklist(); ?></small>
                             <hr>
                             <!-- Toggle displayed objectives' details -->
                             <label><input type="checkbox"
